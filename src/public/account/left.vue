@@ -15,10 +15,10 @@
         <span>{{$t('usercontent.user59')}}</span>
         <!--充提历史-->
       </li>
-      <li :class="{'active': active === 'transaction'}" @click="switch_tab('transaction')">
-        <span>{{$t('usercontent.user60')}}</span>
-        <!--我的订单-->
-      </li>
+      <!--<li :class="{'active': active === 'transaction'}" @click="switch_tab('transaction')">-->
+        <!--<span>{{$t('usercontent.user60')}}</span>-->
+        <!--&lt;!&ndash;我的订单&ndash;&gt;-->
+      <!--</li>-->
     </ul>
   </div>
 </template>

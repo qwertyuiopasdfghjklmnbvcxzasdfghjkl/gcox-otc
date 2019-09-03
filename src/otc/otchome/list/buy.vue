@@ -399,7 +399,7 @@
     min-width: 80px;
     height: 30px;
     line-height: 30px;
-    color: #fff;
+    color: #fff !important;
     text-align: center;
     background-color: #00a0e9;
     border-radius: 4px;
