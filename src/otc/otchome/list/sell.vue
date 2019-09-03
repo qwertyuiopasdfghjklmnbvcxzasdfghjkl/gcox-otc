@@ -198,8 +198,8 @@ export default {
 .undone-left span{color:#999;height:40px;line-height:16px;position:relative;flex:1;text-align:center;}
 .undone-left span::after{content:" ";display:flex;position:absolute;width:100%;height:4px;background-color:#ccc;left:0;bottom:-2px;}
 .undone-left span::before{content:" ";display:flex;position:absolute;z-index:1;width:10px;height:10px;background-color:#ccc;left:calc(50% - 5px);bottom:-5px;border-radius:50%;}
-.undone-left span.active{color:#3283FF;}
-.undone-left span.active::after,.undone-left span.active::before{background-color:#3283FF;}
+.undone-left span.active{color:#00a0e9;}
+.undone-left span.active::after,.undone-left span.active::before{background-color:#00a0e9;}
 .undone-center-sells{color:#F34246;font-size:14px;font-weight:bold;}
 .undone-center-sells p{line-height:32px;width:46px;}
 
@@ -209,7 +209,7 @@ export default {
 .undone-center-adress{font-size:12px;color: #666;line-height: 22px;}
 .undone-right{width:145px;display:flex;flex-flow:column;align-items:center;justify-content:center;}
 .undone-right p{color: #F34246;font-size: 14px;font-weight: bold;line-height:16px;text-align: center;margin-bottom:10px;}
-.undone-right a{display: inline-block;min-width: 80px;height: 30px;line-height: 30px;color: #fff;text-align: center;background-color: #3283FF;border-radius: 4px;}
+.undone-right a{display: inline-block;min-width: 80px;height: 30px;line-height: 30px;color: #fff;text-align: center;background-color: #00a0e9;border-radius: 4px;}
 .undone-right a:hover{background-color: #2565c5;}
 .undone-right a.disabled{color: #999;background-color: #ccc;cursor: not-allowed;}
 

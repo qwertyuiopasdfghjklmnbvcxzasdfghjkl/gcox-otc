@@ -310,7 +310,7 @@
   .curreny /deep/ .filtrate .operation a,
   .curreny /deep/ .filtrate .operation i {
     font-size: 12px;
-    color: #3283FF;
+    color: #00a0e9;
   }
 
   .curreny /deep/ .filtrate .operation i {

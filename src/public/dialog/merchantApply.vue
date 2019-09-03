@@ -128,7 +128,7 @@ export default {
                 this.$router.push({to:'/mycenter/authentication'})
               } else if(msg==='NO_PAY_TYPE'){
                 this.$router.push({to:'/mycenter/settings'})
-              } 
+              }
             }
           })
         })
@@ -182,7 +182,7 @@ export default {
 .form /deep/ .select:hover, .form /deep/ .select:focus{background-color: #F5F5F5; border-color:#3A76E7;background-image: url('../../assets/images/arrow-down-white-hover.png')}
 
 .checkbox-group{overflow: auto;}
-.checkbox-group i{float: left;width: 14px;height: 14px;margin-top: 8px;color: #3283FF;text-indent: 1px;cursor: pointer;}
+.checkbox-group i{float: left;width: 14px;height: 14px;margin-top: 8px;color: #00a0e9;text-indent: 1px;cursor: pointer;}
 .checkbox-group i:hover{color: #2565c5;}
 .checkbox-group span{float: left;min-height: 30px;padding-left: 8px;line-height: 30px;}
 .checkbox-group span em{color: #999999;}

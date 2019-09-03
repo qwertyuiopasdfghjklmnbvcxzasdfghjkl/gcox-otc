@@ -303,12 +303,12 @@ section  .info .detail .edit {display: inline-block; width: 20px; height: 20px; 
 .curreny /deep/ .filtrate .time /deep/ input{width: 100px;padding-right: 24px;background: url(../../assets/images/icon_calendar.png)  no-repeat right 4px center;cursor: pointer;}
 .curreny /deep/ .filtrate .market input{width: 50px;}
 .curreny /deep/ .filtrate .button button {min-width: 60px; border-radius: 3px;}
-.curreny /deep/ .filtrate .button .search{margin-right: 14px;color: #fff;background-color: #3283FF;}
+.curreny /deep/ .filtrate .button .search{margin-right: 14px;color: #fff;background-color: #00a0e9;}
 .curreny /deep/ .filtrate .button .search:hover{background-color: #1a64d4;}
 .curreny /deep/ .filtrate .button .reset{color: #999;border: 1px solid #ccc;}
 .curreny /deep/ .filtrate .button .reset:hover{color: #666;border-color: #bbb;}
 .curreny /deep/ .filtrate .operation a,
-.curreny /deep/ .filtrate .operation i{font-size: 12px;color: #3283FF;}
+.curreny /deep/ .filtrate .operation i{font-size: 12px;color: #00a0e9;}
 .curreny /deep/ .filtrate .operation i{padding-left: 8px;margin-top: 1px;}
 .curreny /deep/ .filtrate .allrepeal i,
 .curreny /deep/ .filtrate .export i{font-size: 14px;}

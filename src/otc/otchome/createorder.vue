@@ -554,7 +554,7 @@ export default {
 .cont-item.timelimit .value select{position: relative; z-index: 1;width: 80px;}
 .cont-item .value span{font-size: 12px;color: #999;}
 .cont-item.tradetype .value span{cursor: pointer;}
-.cont-item.tradetype .value span i{padding-right: 4px;color: #3283FF;}
+.cont-item.tradetype .value span i{padding-right: 4px;color: #00a0e9;}
 .cont-item.tradetype .value span i:hover{color: #2565c5;}
 .cont-item .value input{box-sizing: border-box;width: 100%;height: 30px;padding-left: 12px;padding-right: 12px;font: 12px/normal 'Microsoft YaHei';color: #333;background-color: transparent;border: 1px solid #ccc;}
 .cont-item .value input.error{border-color: #e53f3f;}
@@ -571,7 +571,7 @@ export default {
 .cont-item.button button{width: 74px;height: 30px;font-size: 12px;border-radius: 4px;cursor: pointer;}
 .cont-item.button button.cancel{margin-right: 10px;color: #333;background-color: transparent;border: 1px solid #ccc;}
 .cont-item.button button.cancel:hover{color: #111;border-color: #bbb;}
-.cont-item.button button.comfirm{color: #fff;background-color: #3283FF;}
+.cont-item.button button.comfirm{color: #fff;background-color: #00a0e9;}
 .cont-item.button button.comfirm:hover{background-color: #2565c5;}
 .cont-item.button button.comfirm.disabled{background-color: #999;cursor:not-allowed;}
 .cont-item.button button.comfirm.disabled:hover{background-color: #999;}

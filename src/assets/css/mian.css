@@ -41,8 +41,8 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
 
 
-.v-tip-container{color:#fff;background:#3283FF;border-color:#3283FF;box-shadow:none;-webkit-box-shadow:none;padding:4px 8px;}
-.v-tip-container .v-tip-arrows[class*=' top-']::after, .v-tip-container .v-tip-arrows[class^=top-]::after{border-top:#3283FF;}
+.v-tip-container{color:#fff;background:#00a0e9;border-color:#00a0e9;box-shadow:none;-webkit-box-shadow:none;padding:4px 8px;}
+.v-tip-container .v-tip-arrows[class*=' top-']::after, .v-tip-container .v-tip-arrows[class^=top-]::after{border-top:#00a0e9;}
 .v-tip-container .v-tip-content{line-height:inherit;}
 .icon-paypal {color: #2a74d3;}
 .icon-alipay {color: #1cc5e4;}

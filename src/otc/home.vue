@@ -1,5 +1,6 @@
 <template>
-  <div class="otchome">
+  <div class="cont">
+    <div class="otchome">
       <news />
       <div class="home-bottom">
         <div class="home-bottom-left">
@@ -14,6 +15,7 @@
       <adlist ref="adlist" :params="params" @goToMyCenter="goToMyCenter" @goToSettings="goToSettings"/>
       <chat ref="chat" v-if="getApiToken" v-show="showChat" v-model="showChat" :orderNumber="orderNumber" :switchNew="switchNew" :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
       <em class="chat-icon" :class="{'new':newMsg}" v-if="getApiToken" @click="openChat"></em>
+    </div>
   </div>
 </template>
 
@@ -105,7 +107,7 @@ export default {
   },
   methods: {
     goToMyCenter () {
-      this.$router.push({name: 'mycenter_menu', params: {menu: 'mycenter'}})
+      this.$router.push({name: 'mycenter_menu', params: {menu: 'authentication'}})
     },
     goToSettings () {
       this.$router.push({name: 'mycenter_menu', params: {menu: 'settings'}})
@@ -141,6 +143,11 @@ export default {
 }
 </script>
 <style scoped>
+  .cont{
+    background: url("../assets/img/bg_common.png") no-repeat center #1f1e24;
+    min-height: calc(100vh - 365px);
+    background-attachment: fixed;
+  }
 .otchome{width: 1200px;padding-top: 8px;padding-bottom: 60px;margin: 0 auto;}
 .otchome::before {content: ''; position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: #F2F3F8; z-index: -1;}
 .home-bottom{display: flex;justify-content: space-between;margin-bottom: 8px;}

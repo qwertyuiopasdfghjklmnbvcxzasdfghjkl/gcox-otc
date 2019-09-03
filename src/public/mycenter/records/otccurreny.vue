@@ -201,12 +201,12 @@ export default {
 .otccurreny /deep/ .filtrate .time /deep/ input{width: 100px;padding-right: 24px;background: url(../../../assets/images/icon_calendar.png)  no-repeat right 4px center;cursor: pointer;}
 .otccurreny /deep/ .filtrate .market input{width: 50px;}
 .otccurreny /deep/ .filtrate .button button {min-width: 60px; border-radius: 3px;}
-.otccurreny /deep/ .filtrate .button .search{margin-right: 14px;color: #fff;background-color: #3283FF;}
+.otccurreny /deep/ .filtrate .button .search{margin-right: 14px;color: #fff;background-color: #00a0e9;}
 .otccurreny /deep/ .filtrate .button .search:hover{background-color: #1a64d4;}
 .otccurreny /deep/ .filtrate .button .reset{color: #999;border: 1px solid #ccc;}
 .otccurreny /deep/ .filtrate .button .reset:hover{color: #666;border-color: #bbb;}
 .otccurreny /deep/ .filtrate .operation a,
-.otccurreny /deep/ .filtrate .operation i{font-size: 12px;color: #3283FF;}
+.otccurreny /deep/ .filtrate .operation i{font-size: 12px;color: #00a0e9;}
 .otccurreny /deep/ .filtrate .operation i{padding-left: 8px;margin-top: 1px;}
 .otccurreny /deep/ .filtrate .allrepeal i,
 .otccurreny /deep/ .filtrate .export i{font-size: 14px;}

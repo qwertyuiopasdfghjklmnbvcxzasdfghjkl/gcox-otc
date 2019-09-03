@@ -36,16 +36,21 @@
         <span>{{$t('referral.referral_programme')}}</span>
         <!--我的推荐-->
       </li>
-      <!--<li :class="{'active': active === 'agencyApply'}" @click="switch_tab('agencyApply')" v-if="!showShops">-->
-        <!--&lt;!&ndash;<i class="icon-shield"></i>&ndash;&gt;-->
-        <!--<span>{{$t('business.MERCHANT_APPLICATION')}}</span>-->
-        <!--&lt;!&ndash;商家申请&ndash;&gt;-->
-      <!--</li>-->
-      <!--<li :class="{'active': active === 'agency'}" @click="switch_tab('agency')" v-if="showShops">-->
-        <!--&lt;!&ndash;<i class="icon-shop"></i>&ndash;&gt;-->
-        <!--<span>{{$t('business.MERCHANT_MANAGE')}}</span>-->
-        <!--&lt;!&ndash;商家管理&ndash;&gt;-->
-      <!--</li>-->
+      <li :class="{'active': active === 'settings'}" @click="switch_tab('settings')">
+        <!--<i class="icon-message"></i>-->
+        <span>{{$t('shop.payment')}}</span>
+        <!--设置支付方式-->
+      </li>
+      <li :class="{'active': active === 'agencyApply'}" @click="switch_tab('agencyApply')" v-if="!showShops">
+        <!--<i class="icon-shield"></i>-->
+        <span>{{$t('business.MERCHANT_APPLICATION')}}</span>
+        <!--商家申请-->
+      </li>
+      <li :class="{'active': active === 'agency'}" @click="switch_tab('agency')" v-if="showShops">
+        <!--<i class="icon-shop"></i>-->
+        <span>{{$t('business.MERCHANT_MANAGE')}}</span>
+        <!--商家管理-->
+      </li>
       <!--我的推荐中心-->
       <!-- <li @click="switch_like">
           <i class="icon-like"></i>

@@ -6,20 +6,21 @@
         <router-link :to="{name:'home'}" class="icon_logo item"></router-link>
         <router-link :to="{name:'market'}" class="item"><i class="market"></i> {{$t('home.home_pair')}}<!-- 市场 -->
         </router-link>
-        <router-link :to="{name:'exchange_index2'}" class="item" :class="{active:$route.name === 'exchange_index2' || $route.name === 'exchange_index' || $route.name === 'quickTrade'}">
-           <i class="exchange"></i> {{$t('exchange.exchange_name')}}<!-- 交易所 -->
-           <div class="popover-nav black" ref="nav2" @click="hidePopoverNav('nav2')">
-              <div class="popover-menu">
-                <router-link :to="{name:'quickTrade'}" class="sub-item" tag="div" v-if="false">
-                  <span>{{$t('exchange.oneClickTrade')}}<!-- 一键购买 --></span>
-                </router-link>
-                <router-link :to="{name:'exchange_index2'}" class="sub-item" tag="div">
-                  <span>{{$t('exchange.advanced')}}<!-- 专业版 --></span>
-                </router-link>
-              </div>
-            </div>
-        </router-link>
-        <!-- <router-link :to="{name:'acm'}" class="item"><i class="acm"></i> ACM</router-link> -->
+        <!--<router-link :to="{name:'exchange_index2'}" class="item" :class="{active:$route.name === 'exchange_index2' || $route.name === 'exchange_index' || $route.name === 'quickTrade'}">-->
+           <!--<i class="exchange"></i> {{$t('exchange.exchange_name')}}&lt;!&ndash; 交易所 &ndash;&gt;-->
+           <!--<div class="popover-nav black" ref="nav2" @click="hidePopoverNav('nav2')">-->
+              <!--<div class="popover-menu">-->
+                <!--<router-link :to="{name:'quickTrade'}" class="sub-item" tag="div" v-if="false">-->
+                  <!--<span>{{$t('exchange.oneClickTrade')}}&lt;!&ndash; 一键购买 &ndash;&gt;</span>-->
+                <!--</router-link>-->
+                <!--<router-link :to="{name:'exchange_index2'}" class="sub-item" tag="div">-->
+                  <!--<span>{{$t('exchange.advanced')}}&lt;!&ndash; 专业版 &ndash;&gt;</span>-->
+                <!--</router-link>-->
+              <!--</div>-->
+            <!--</div>-->
+        <!--</router-link>-->
+        <a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="acm"></i> OTC</a>
+        <router-link :to="{name:'otc_index'}" v-if="isLogin" class="item"><i class="acm"></i> OTC</router-link>
         <a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="account"></i> {{$t('usercontent.user56')}}<!-- 资产管理 --></a>
         <router-link v-if="isLogin" :to="{name:'account'}" class="item"><i class="account"></i> {{$t('usercontent.user56')}}<!-- 资产管理 --></router-link>
         <router-link v-if="isLogin" v-show="false" :to="{name:'fiat'}" class="item"><i class="icon-curry"></i> FIAT<!-- FIAT --></router-link>
@@ -243,7 +244,7 @@
 
     a {
       font-family: 'ethnocentric';
-      color: #fff;
+      color: #fff !important;
 
       div {
         font-family: PingFangSC-Regular, Microsoft YaHei, sans-serif;

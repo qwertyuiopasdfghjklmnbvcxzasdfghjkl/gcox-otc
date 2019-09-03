@@ -40,7 +40,7 @@
     					</span>
     					: {{(Number(vote.statistics.estimateProfit)+'').toMoney()}} GCOX
     				</div>
-    				
+
     			</div>
     			<div class="records">
     				<div class="item header">
@@ -89,7 +89,7 @@
     					</span>
     					: {{(Number(mining.statistics.estimateProfit)+'').toMoney()}} GCOX
     				</div>
-    				
+
     			</div>
     			<div class="records">
     				<div class="item header">
@@ -113,7 +113,7 @@
     						  <i class="tips-icon">?</i>
     						  <em class="tips-text">{{$t('vote_mining.community_daily_profit_tips')}} GCOX<!--每天社區可獲得的GCOX--></em>
     						</span>
-    						: 
+    						:
     						<p>{{(Number(community.statistics.dailyProfit)+'').toMoney()}} GCOX</p>
     					</div>
     					<div>
@@ -122,7 +122,7 @@
     						  <i class="tips-icon">?</i>
     						  <em class="tips-text">{{$t('vote_mining.community_profit_tips')}} GCOX<!--社區已經獲得的GCOX--></em>
     						</span>
-    						: 
+    						:
     						<p>{{(Number(community.statistics.totalProfit)+'').toMoney()}} GCOX</p>
     					</div>
     					<div>
@@ -131,7 +131,7 @@
     						  <i class="tips-icon">?</i>
     						  <em class="tips-text">{{$t('vote_mining.community_estimate_profit_tips')}} GCOX<!--社區未來預估會獲得的GCOX--></em>
     						</span>
-    						: 
+    						:
     						<p>{{(Number(community.statistics.estimateProfit)+'').toMoney()}} GCOX</p>
     					</div>
     				</div>
@@ -148,7 +148,7 @@
     						  <i class="tips-icon">?</i>
     						  <em class="tips-text">{{$t('vote_mining.community_member_profit_tips')}} 20%<!--社區成員收益總額的20%--></em>
     						</span>
-    						: 
+    						:
     						<p>{{(Number(community.statistics.myProfit)+'').toMoney()}} GCOX</p>
     					</div>
     					<div>
@@ -157,7 +157,7 @@
     						  <i class="tips-icon">?</i>
     						  <em class="tips-text">{{($t('vote_mining.community_member_total_profit_tips')).format('GCOX')}}<!--社區所有成員未來預估和已經獲得的GCOX總額--></em>
     						</span>
-    						: 
+    						:
     						<p>{{(Number(community.statistics.memberProfit)+'').toMoney()}} GCOX</p>
     					</div>
     				</div>
@@ -329,7 +329,7 @@ export default {
 .tabs span:nth-of-type(2){z-index: 2;}
 .tabs span:nth-of-type(3){z-index: 1;}
 .tabs span.active {background-color: #0D66EF; color: #fff; font-size: 24px; border-color: #0D66EF;}
-.tabs button {position: absolute; right: 25px; top: 15px; height: 40px; background-color: #3283FF; border: none; border-radius: 20px; font-size: 16px; color: #fff; padding: 0 20px; cursor: pointer;}
+.tabs button {position: absolute; right: 25px; top: 15px; height: 40px; background-color: #00a0e9; border: none; border-radius: 20px; font-size: 16px; color: #fff; padding: 0 20px; cursor: pointer;}
 .tabs button:hover {background-color: #0044ad;}
 
 .statistics {height: 100px; line-height: 100px; font-size: 22px; padding-left: 55px; padding-right: 55px; display: flex; justify-content: space-between;}

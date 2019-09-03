@@ -94,7 +94,7 @@ export default {
 section > h3{height: 55px; padding-left: 20px; font-weight: normal;font-size: 18px;line-height: 55px;color: #333;text-indent: 8px;border-bottom: 1px solid #e7e7e7;}
 section > article {padding: 20px 20px 40px; color: #333;}
 section > article p {line-height: 35px;}
-.btn-apply {width: 160px; height: 50px; background-color: #3283FF; color: #fff; cursor: pointer; border-radius: 4px; font-size: 16px;}
+.btn-apply {width: 160px; height: 50px; background-color: #00a0e9; color: #fff; cursor: pointer; border-radius: 4px; font-size: 16px;}
 .btn-apply:hover {background-color: #2565c5;}
 </style>
 
