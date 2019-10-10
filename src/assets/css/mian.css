@@ -2,7 +2,7 @@
 /*====================== 初始化 ====================*/
 html,body{min-height:100%;min-width: 1200px; overflow-x: hidden;}
 #app{width:100%;height:100%;}
-body { font-size:14px;font-family:PingFangSC-Regular,Microsoft YaHei,sans-serif; background-color:#1f1e24; box-sizing: border-box;}
+body { font-size:14px;font-family:ArialMT,PingFangSC-Regular,Microsoft YaHei,sans-serif; box-sizing: border-box;}
 body,div,ul,ol,li,p,span,i,strong,a,em,dl,dt,dd,h1,h2,h3,h4,tr,td,th{margin:0;padding:0;border:0;}
 em,i{ font-style:normal;}
 ul,ol{ list-style:none;}
@@ -84,13 +84,13 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
 .mask-layer {position: fixed; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,.6); z-index: 9999999;}
 
 
-@font-face {
-	font-family:'ethnocentric';
-	src: url('./fonts/ethnocentric rg.ttf') format('truetype');
-}
+/*@font-face {*/
+	/*font-family:'ethnocentric';*/
+	/*src: url('./fonts/ethnocentric rg.ttf') format('truetype');*/
+/*}*/
 .pointer {cursor: pointer;}
 .inline {display: inline-block; vertical-align: middle;}
-.efont{font-family: ethnocentric,PingFangSC-Regular,Microsoft YaHei,sans-serif;}
+.efont{font-family: PingFangSC-Regular,Microsoft YaHei,sans-serif;}
 .rang-down {color: #f1304a!important;}
 .rang-up {color: #1bc863!important;}
 
@@ -285,4 +285,23 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
 }
 .mint-btn.small.round {
 	border-radius: 25px;
+}
+
+.red{
+  color: #E65656;
+}
+.green{
+  color: #299D82;
+}
+.red_button{
+  background: #E65656;
+  color: #ffffff;
+}
+.green_button{
+  background: #299D82;
+  color: #ffffff;
+}
+.yellow_button{
+  background: #F0B936;
+  color: #ffffff;
 }

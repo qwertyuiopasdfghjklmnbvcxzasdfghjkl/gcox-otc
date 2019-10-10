@@ -80,7 +80,7 @@
                     </li>
                     <li class="form-row">
                       <label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}<!--收款人姓名--><em class="asterisk">&nbsp;*</em></label>
-                      <input class="form-input" type="text" name="wechat_name" :value="wechatData.wechat_name" autocomplete="off" readonly/>
+                      <input class="form-input" type="text" name="wechat_name" :value="wechatData.wechat_name" autocomplete="off"/>
                     </li>
                     <li class="form-row">
                       <label class="form-label">{{$t('otc_legal.otc_legal_Wechat_number')}}<!--微信账号--><em class="asterisk">&nbsp;*</em></label>
