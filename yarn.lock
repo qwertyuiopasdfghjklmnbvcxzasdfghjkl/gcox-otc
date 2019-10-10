@@ -2251,6 +2251,11 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+cryptocurrency-icons@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/cryptocurrency-icons/-/cryptocurrency-icons-0.16.1.tgz#33ec0b828c666f773b53866b4b803b2a06c28efc"
+  integrity sha512-C6y+r56g0ZJzZ9kCbeKa/WXb/oz1elilsaSGjv86T93P0oZWr4v5pxnbtZrEnvHn63qbTxo/Pz3NvzLbKrnQVQ==
+
 css-color-names@0.0.4, css-color-names@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -9373,6 +9378,11 @@ vue-concise-slider@2.4.8:
     eslint "^2.10.2"
     vue "^2.1.3"
     vue-loader "^8.3.0"
+
+vue-cryptoicon@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/vue-cryptoicon/-/vue-cryptoicon-0.1.6.tgz#8072f2d187c27fea3bf5243b2bf434b682b26bf6"
+  integrity sha512-v9uLSY+E9lSk0RA+hVtVBexh7gkIm7+tDugFGkwuNmtmyZD0AAjg9L0e1VellCaGZuwWowGDNmdv0nuinTBUGA==
 
 vue-echarts@^4.0.3:
   version "4.0.3"

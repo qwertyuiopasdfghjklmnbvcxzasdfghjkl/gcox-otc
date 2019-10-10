@@ -17,6 +17,7 @@ import Activationsuccess from '@/public/email/activationsuccess'
 import account from '../public/account'
 import error from '../public/error'
 import success from '../public/success'
+import transaction from '../public/index/transaction'
 
 Vue.use(Router)
 
@@ -25,8 +26,19 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: {
+        name: 'home'
+      }
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Index
+    },
+    {
+      path: '/transaction',
+      name: 'transaction',
+      component: transaction
     },
     {
       path: '/acm',

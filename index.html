@@ -12,24 +12,28 @@
   <title>GCOX - Global Crypto Offering Exchange</title>
   <!-- NASH360 WebTracker Tag Manager -->
   <script type="text/javascript">
-      var _mtm = _mtm || [];
-      _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src='https://tracking.tupleai.com/js/container_YtuIEpLc.js'; s.parentNode.insertBefore(g,s);
+    var _mtm = _mtm || []
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'})
+    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0]
+    g.type = 'text/javascript'
+    g.async = true
+    g.defer = true
+    g.src = 'https://tracking.tupleai.com/js/container_YtuIEpLc.js'
+    s.parentNode.insertBefore(g, s)
   </script>
   <!-- End NASH360 WebTracker Tag Manager -->
 
   <!-- NASH360 WebTracker NoJS Tracker -->
   <noscript>
-      <p><img src="//tracking.tupleai.com/js/tracker.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p>
+    <p><img src="//tracking.tupleai.com/js/tracker.php?idsite=3&amp;rec=1" style="border:0;" alt=""/></p>
   </noscript>
   <!-- End NASH360 WebTracker -->
 
   <!-- NASH360 WebTracker Push Notification -->
-  <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="/manifest.json"/>
   <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
   <!-- End NASH360 WebTracker Push Notification -->
-  
+
   <script src="/static/charting_library/charting_library.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="/static/js/dataUpdater.js" type="text/javascript" charset="utf-8"></script>
   <script src="/static/js/datafees.js" type="text/javascript" charset="utf-8"></script>
@@ -80,16 +84,20 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135198121-1"></script>
 <script>
-  var protocol = location.protocol;
-  var host = location.host.toLowerCase();
-  if(host.indexOf('gcox.com') !== -1 && protocol !== 'https:') {
-    location.href = 'https://gcox.com';
+  var protocol = location.protocol
+  var host = location.host.toLowerCase()
+  if (host.indexOf('gcox.com') !== -1 && protocol !== 'https:') {
+    location.href = 'https://gcox.com'
   }
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  window.dataLayer = window.dataLayer || []
 
-  gtag('config', 'UA-135198121-1');
+  function gtag () {
+    dataLayer.push(arguments)
+  }
+
+  gtag('js', new Date())
+
+  gtag('config', 'UA-135198121-1')
 
 </script>
 </body>

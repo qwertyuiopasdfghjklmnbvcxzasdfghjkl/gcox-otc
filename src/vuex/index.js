@@ -9,7 +9,8 @@ let userInfo = null
 
 try {
   userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
-} catch (ex) {}
+} catch (ex) {
+}
 
 const last24h = {open: '0', high: '0', bottom: '0', close: '0', vol: '0', rfvol: '0', percent: '0'}
 const fixed = 8
@@ -31,10 +32,10 @@ export default new Vuex.Store({
     networkSignal: 0,
     events: {},
     btcValues: {},
-    sysParams:{} //System params
+    sysParams: {} // System params
   },
   getters: {
-    getSysParams(state){
+    getSysParams (state) {
       return state.sysParams
     },
     getUserInfo (state) {

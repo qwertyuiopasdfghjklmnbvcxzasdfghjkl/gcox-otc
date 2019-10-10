@@ -2,7 +2,7 @@
   <div class="bottom-container">
     <div class="bottom">
       <div class="left">
-        <div><img src="../assets/img/logo.svg" class="logo"></div>
+        <div><img src="../assets/img/logo.png" class="logo"></div>
         <div class="mt30">{{$t('about.slogen')}}<!-- 你最爱的名人币交易所 --></div>
         <div class="mt20 share">
           <a href="https://www.facebook.com/GCOX.Official/" target="_blank"><img src="../assets/img/facebook.svg"></a>
@@ -96,7 +96,7 @@
             firstLevel: 2,
           },
           res => {
-            
+
             res.filter(data => {
               if (data.secondLevel === 3) {
                 this.about.push(data)

@@ -30,17 +30,24 @@ import 'echarts/lib/component/title.js'
 import loading from '@/components/loading'
 
 import VueClipboard from 'vue-clipboard2'
-// import gjh from '../src/public/mycenter/gjh'
+import gjh from '../src/gjh'
 
-import * as Sentry from '@sentry/browser'
-import * as Integrations from '@sentry/integrations'
+// import * as Sentry from '@sentry/browser'
+// import * as Integrations from '@sentry/integrations'
 
-if(process.env.NODE_ENV !== 'development'){
-  Sentry.init({
-    dsn: 'https://0502e238d6194626b8c23f27dff83ba9@sentry.io/1538112',
-    integrations: [new Integrations.Vue({Vue, attachProps: true})],
-  });
-}
+// if(process.env.NODE_ENV !== 'development'){
+//   Sentry.init({
+//     dsn: 'https://0502e238d6194626b8c23f27dff83ba9@sentry.io/1538112',
+//     integrations: [new Integrations.Vue({Vue, attachProps: true})],
+//   });
+// }
+
+import Cryptoicon from 'vue-cryptoicon'
+// For all icons
+import icon from 'vue-cryptoicon/src/icons'
+
+Cryptoicon.add(icon)
+Vue.use(Cryptoicon)
 
 Vue.use(VeeValidate)
 Vue.use(VueI18n)
@@ -70,7 +77,7 @@ if (lang === 'en') {
 }
 langApi.getLanguage(lang, (res) => {
   i18n.locale = lang
-  i18n.setLocaleMessage(lang, res)
+  i18n.setLocaleMessage(lang, Object.assign(res, gjh))
   window.vm = new Vue({
     el: '#app',
     router,

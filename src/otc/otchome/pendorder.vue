@@ -74,7 +74,8 @@
                   <em :title="data.nickname||data.username">{{data.nickname||data.username}}</em>
               </span>
         <span class="trust">
-                  <p :title="$t('otc_exchange.otc_exchange_transactions_completed2').format(`${data.score||0}`)">{{$t('otc_exchange.otc_exchange_transactions_completed2').format(`${data.score||0}`)}}
+                  <p :title="$t('otc_exchange.otc_exchange_transactions_completed2').format(`${data.score||0}`)">
+                    {{$t('otc_exchange.otc_exchange_transactions_completed2').format(`${data.score||0}`)}}
                     <!--交易多少笔--></p>
                   <p>{{$t('otc_ad.otc_ad_Praise')}}<!--好评-->：{{Math.floor(data.user_level||0)}}%</p>
               </span>
@@ -290,18 +291,18 @@
                   }
                 })
               } else {
-                if (this.isShop) {
-                  successCallback && successCallback(res.data.pay_type)
-                } else {
-                  let lang = this.getLang === 'zh-CN' ? '非商家无法发布广告，是否立即申请？' : (this.getLang === 'cht' ? '非商戶無法發布廣告，是否立即申請？' : 'Non-merchase can\'t post ads, do you apply now?')
-                  Vue.$confirmDialog({
-                    id: 'goShopsApply',
-                    content: lang,
-                    okCallback: () => {
-                      this.$router.push({path: '/mycenter/agencyApply'})
-                    }
-                  })
-                }
+                // if (this.isShop) {
+                successCallback && successCallback(res.data.pay_type)
+                // } else {
+                //   let lang = this.getLang === 'zh-CN' ? '非商家无法发布广告，是否立即申请？' : (this.getLang === 'cht' ? '非商戶無法發布廣告，是否立即申請？' : 'Non-merchase can\'t post ads, do you apply now?')
+                //   Vue.$confirmDialog({
+                //     id: 'goShopsApply',
+                //     content: lang,
+                //     okCallback: () => {
+                //       this.$router.push({path: '/mycenter/agencyApply'})
+                //     }
+                //   })
+                // }
               }
             }, (res) => {
               if (res.msg === 'NO_PAY_TYPE') {

@@ -1,11 +1,14 @@
 <template>
   <div class="header-container">
     <div class="header-bg"></div>
+    <div class="w1200 header-top">
+      <p><switch-vi/>余额 USDT：0.00</p>
+    </div>
     <div class="header w1200 ui-flex ui-flex-justify">
-      <div class="ui-flex-1">
+      <div class="">
         <router-link :to="{name:'home'}" class="icon_logo item"></router-link>
-        <router-link :to="{name:'market'}" class="item"><i class="market"></i> {{$t('home.home_pair')}}<!-- 市场 -->
-        </router-link>
+        <!--<router-link :to="{name:'market'}" class="item"><i class="market"></i> {{$t('home.home_pair')}}&lt;!&ndash; 市场 &ndash;&gt;-->
+        <!--</router-link>-->
         <!--<router-link :to="{name:'exchange_index2'}" class="item" :class="{active:$route.name === 'exchange_index2' || $route.name === 'exchange_index' || $route.name === 'quickTrade'}">-->
            <!--<i class="exchange"></i> {{$t('exchange.exchange_name')}}&lt;!&ndash; 交易所 &ndash;&gt;-->
            <!--<div class="popover-nav black" ref="nav2" @click="hidePopoverNav('nav2')">-->
@@ -19,14 +22,15 @@
               <!--</div>-->
             <!--</div>-->
         <!--</router-link>-->
-        <a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="acm"></i> OTC</a>
-        <router-link :to="{name:'otc_index'}" v-if="isLogin" class="item"><i class="acm"></i> OTC</router-link>
-        <a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="account"></i> {{$t('usercontent.user56')}}<!-- 资产管理 --></a>
-        <router-link v-if="isLogin" :to="{name:'account'}" class="item"><i class="account"></i> {{$t('usercontent.user56')}}<!-- 资产管理 --></router-link>
-        <router-link v-if="isLogin" v-show="false" :to="{name:'fiat'}" class="item"><i class="icon-curry"></i> FIAT<!-- FIAT --></router-link>
-        <router-link v-if="isLogin" :to="{name:'mycenter_menu', params:{menu:'referral'}}" class="item"><i class="icon-users"></i> {{$t('referral.referral_programme')}}<!-- 我的推荐 --></router-link>
+        <!--<a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="acm"></i> OTC</a>-->
+
+        <!--<a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="account"></i> {{$t('usercontent.user56')}}&lt;!&ndash; 资产管理 &ndash;&gt;</a>-->
+        <!--<router-link v-if="isLogin" :to="{name:'account'}" class="item"><i class="account"></i> {{$t('usercontent.user56')}}&lt;!&ndash; 资产管理 &ndash;&gt;</router-link>-->
+        <!--<router-link v-if="isLogin" v-show="false" :to="{name:'fiat'}" class="item"><i class="icon-curry"></i> FIAT&lt;!&ndash; FIAT &ndash;&gt;</router-link>-->
+        <!--<router-link v-if="isLogin" :to="{name:'mycenter_menu', params:{menu:'referral'}}" class="item"><i class="icon-users"></i> {{$t('referral.referral_programme')}}&lt;!&ndash; 我的推荐 &ndash;&gt;</router-link>-->
       </div>
-      <div class="right">
+      <div class="right ui-flex-1">
+        <router-link :to="{name:'home'}" class="item" :activeClass="'active'">P2P交换</router-link>
           <router-link to="" class="item" v-if="isLogin">
             <span style="color: #fff;">{{displayUsername}}</span>
             <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
@@ -66,8 +70,10 @@
   import langApi from '@/api/language'
   import utils from '@/assets/js/utils'
   import quickLogin from '@/components/quickLogin'
+  import switchVi from './switch-vi'
 
   export default {
+    components: {switchVi},
     data () {
       return {}
     },
@@ -125,7 +131,8 @@
 
 <style lang="less" scoped>
   .header-container {
-    height: 70px;
+    height: 100px;
+
   }
 
   .header-bg {
@@ -134,19 +141,44 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 70px;
-    background-color: #151517;
+    height: 100px;
+    background-color: #0C0D34;
   }
 
-  .header {
+  .header-top{
     position: fixed;
     z-index: 1000;
     top: 0;
     left: 0;
     right: 0;
-    height: 70px;
-    line-height: 70px;
-    font-size: 12px;
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    border-bottom: 2px solid #13143A;
+    color: #ffffff;
+    p{
+      display: flex;
+      align-items: center;
+    }
+  }
+  .header {
+    position: fixed;
+    z-index: 1000;
+    top: 40px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    line-height: 60px;
+    font-size: 14px;
+
+    .right{
+      display: flex;
+      justify-content: flex-end;
+      .active{
+        color: #F0B936 !important;
+        border-bottom: 2px solid #F0B936;
+      }
+    }
 
     .item {
       display: inline-block;
@@ -157,7 +189,7 @@
 
       .popover-nav {
         position: absolute;
-        top: 69px;
+        top: 60px;
         left: 50%;
         transform: translateX(-50%);
         border-radius: 4px;
@@ -231,19 +263,19 @@
     }
 
     .item + .item {
-      margin-left: 25px;
+      margin-left: 30px;
     }
 
     .icon_logo {
-      width: 120px;
-      background-image: url('../assets/img/logo.svg');
+      width: 82px;
+      background-image: url('../assets/img/logo.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
     }
 
     a {
-      font-family: 'ethnocentric';
+      /*font-family: 'ethnocentric';*/
       color: #fff !important;
 
       div {
@@ -300,4 +332,5 @@
       }
     }
   }
+
 </style>
