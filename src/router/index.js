@@ -18,6 +18,7 @@ import account from '../public/account'
 import error from '../public/error'
 import success from '../public/success'
 import transaction from '../public/index/transaction'
+import advertising from '../public/index/advertising'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
       path: '/transaction',
       name: 'transaction',
       component: transaction
+    },
+    {
+      path: '/advertising',
+      name: 'advertising',
+      component: advertising
     },
     {
       path: '/acm',

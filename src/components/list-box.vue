@@ -2,8 +2,9 @@
   <ul>
     <li v-for="data in datas" :key="data.ad_id">
       <div>
-        <h6><span :class="type === 'sell'? 'red': 'green'">{{data.cur_price}}</span> {{data.currency}}/{{data.symbol}}</h6>
-        <p>{{$t('gcox_otc.max')}}： {{data.max_amount}} BTC</p>
+        <h6><span :class="type === 'sell'? 'red': 'green'">{{data.cur_price}}</span> {{data.currency}}/{{data.symbol}}
+        </h6>
+        <p>{{$t('gcox_otc.max')}}： {{data.max_amount}} {{data.symbol}}</p>
       </div>
       <div>
         <!--<p>招商银行-China merchants</p>-->
@@ -29,7 +30,7 @@
         </p>
       </div>
       <div>
-        <button :class="type === 'sell'? 'red_button':'green_button'">
+        <button :class="type === 'sell'? 'red_button':'green_button'" @click="sub(data)">
           {{type === 'sell'? $t('gcox_otc.sell'): $t('gcox_otc.buy')}}
         </button>
       </div>
@@ -52,7 +53,11 @@
     created () {
 
     },
-    methods: {}
+    methods: {
+      sub (d) {
+        this.$emit('submit', d)
+      }
+    }
 
   }
 </script>
