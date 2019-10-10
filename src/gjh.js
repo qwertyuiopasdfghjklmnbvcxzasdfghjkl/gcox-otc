@@ -23,6 +23,7 @@ export default {
     'pay_window': '付款窗口',
     'base': '基本',
     'detail': '详细',
-    'i_want': '我想要'
+    'i_want': '我想要',
+    'new_advertising': '创建新的广告'
   }
 }
