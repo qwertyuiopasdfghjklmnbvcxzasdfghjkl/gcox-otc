@@ -2,30 +2,37 @@
   <div ref="withdrawBox" class="withdrawBox" @click="showDropdown=false;showSymbol=false">
     <div class="koall-verify-all">
       <div class="koall-verify-title">
-        <router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}<!--我的资产--></router-link>
-        >
-        <span>{{$t('account.estimated_value_withdrawal')}}<!--提现--></span>
+        <p>{{$t('account.estimated_value_withdrawal')}}<!--提现--></p>
+        <small @click="close()">
+          <img src="../../assets/img/close.png">
+        </small>
       </div>
-      <div>
-        <p class="tbsm">
-          <span>{{$t('usercontent.description')}} </span>
-          <span style="padding-left:4px ">{{$t('usercontent.description-text')}}</span>
-        </p>
-      </div>
+      <!--<div>-->
+        <!--<p class="tbsm">-->
+          <!--<span>{{$t('usercontent.description')}} </span>-->
+          <!--<span style="padding-left:4px ">{{$t('usercontent.description-text')}}</span>-->
+        <!--</p>-->
+      <!--</div>-->
       <div class="input-box">
-        <div class="filed symbol">
-          <em>
-            {{$t('usercontent.user86')}}
-          </em>
-          <div class="withAdress">
-            <p class="drown" @click.stop="showSymbol=!showSymbol">{{symbol}}</p>
-            <ul v-show="showSymbol">
-              <li v-for="item in allData"
-                  @click.prevent="changeW(item)"
-                  :class="{active: item.symbol === symbol}">{{item.symbol}}
-              </li>
-            </ul>
-          </div>
+        <!--<div class="filed symbol">-->
+          <!--<em>-->
+            <!--{{$t('usercontent.user86')}}-->
+          <!--</em>-->
+          <!--<div class="withAdress">-->
+            <!--<p class="drown" @click.stop="showSymbol=!showSymbol">{{symbol}}</p>-->
+            <!--<ul v-show="showSymbol">-->
+              <!--<li v-for="item in allData"-->
+                  <!--@click.prevent="changeW(item)"-->
+                  <!--:class="{active: item.symbol === symbol}">{{item.symbol}}-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
+        <div>
+          <p>
+            <span>{{$t('account.estimated_value_available')}}<!--可用余额-->：</span>
+            <small class="green">{{available}} {{symbol}}</small>
+          </p>
         </div>
         <div class="filed">
           <em>
@@ -43,9 +50,9 @@
               <li v-else>{{$t('usercontent.no-address')}}</li>
             </ul>
           </div>
-          <p @click="useNewAddress" class="add-address">
-            {{$t('account.user_new_address')}}<!--使用新地址-->
-          </p>
+          <!--<p @click="useNewAddress" class="add-address">-->
+            <!--{{$t('account.user_new_address')}}&lt;!&ndash;使用新地址&ndash;&gt;-->
+          <!--</p>-->
         </div>
         <div class="filed">
           <div class="filed-number">
@@ -63,42 +70,42 @@
           </div>
           <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
         </div>
-        <div class="filed">
-          <div class="withdraw-info f-cb">
-            <div class="ng-binding">
-              <p>{{$t('exchange.advanced_fee')}}<!--手续费--> </p>
-              <span>{{procedureFee}} {{symbol}}</span>
-            </div>
-            <div class="ng-binding">
-              <p>{{$t('account.user_Actual_arrival')}}<!--实际到账--> </p>
-              <span>{{lastMount}} {{symbol}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="filed">
-          <em>
-            {{$t('usercontent.user11')}}<!--资金密码-->
-          </em>
-          <div class="withAdress" style="position:relative;" :class="{error:errors.has('payPassword')}">
-            <input :type="showPayPW?'text':'password'" maxlength="100" v-validate="'required'"
-                   data-vv-name="payPassword" v-model="payPassword"/>
-            <div class="pwd-isShow" @click="showPayPW=!showPayPW">
-              <img src="../../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPayPW">
-              <img src="../../assets/img/hide_password.png" alt="" style="opacity: 0.8;" v-else>
-            </div>
-          </div>
-          <em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>
-        </div>
-        <div class="filed">
-          <em>
-            {{$t('usercontent.user61')}}<!--谷歌验证码-->
-          </em>
-          <div class="withAdress" style="position:relative;" :class="{error:errors.has('googleCode')}">
-            <input type="text" maxlength="6" v-validate="'required'"
-                   data-vv-name="googleCode" v-model="googleCode"/>
-          </div>
-          <em class="error" v-if="errors.has('googleCode')">{{getErrors('googleCode')}}</em>
-        </div>
+        <!--<div class="filed">-->
+          <!--<div class="withdraw-info f-cb">-->
+            <!--<div class="ng-binding">-->
+              <!--<p>{{$t('exchange.advanced_fee')}}&lt;!&ndash;手续费&ndash;&gt; </p>-->
+              <!--<span>{{procedureFee}} {{symbol}}</span>-->
+            <!--</div>-->
+            <!--<div class="ng-binding">-->
+              <!--<p>{{$t('account.user_Actual_arrival')}}&lt;!&ndash;实际到账&ndash;&gt; </p>-->
+              <!--<span>{{lastMount}} {{symbol}}</span>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="filed">-->
+          <!--<em>-->
+            <!--{{$t('usercontent.user11')}}&lt;!&ndash;资金密码&ndash;&gt;-->
+          <!--</em>-->
+          <!--<div class="withAdress" style="position:relative;" :class="{error:errors.has('payPassword')}">-->
+            <!--<input :type="showPayPW?'text':'password'" maxlength="100" v-validate="'required'"-->
+                   <!--data-vv-name="payPassword" v-model="payPassword"/>-->
+            <!--<div class="pwd-isShow" @click="showPayPW=!showPayPW">-->
+              <!--<img src="../../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPayPW">-->
+              <!--<img src="../../assets/img/hide_password.png" alt="" style="opacity: 0.8;" v-else>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>-->
+        <!--</div>-->
+        <!--<div class="filed">-->
+          <!--<em>-->
+            <!--{{$t('usercontent.user61')}}&lt;!&ndash;谷歌验证码&ndash;&gt;-->
+          <!--</em>-->
+          <!--<div class="withAdress" style="position:relative;" :class="{error:errors.has('googleCode')}">-->
+            <!--<input type="text" maxlength="6" v-validate="'required'"-->
+                   <!--data-vv-name="googleCode" v-model="googleCode"/>-->
+          <!--</div>-->
+          <!--<em class="error" v-if="errors.has('googleCode')">{{getErrors('googleCode')}}</em>-->
+        <!--</div>-->
         <div class="filed">
           <input type="button" class="BNB-subbtn" :value="$t('account.user_submit')" @click="walletWithdraw"/><!--提交-->
         </div>
@@ -127,6 +134,7 @@
     components: {
       numberbox
     },
+    props: ['item', 'all_data'],
     data () {
       return {
         symbol: null,
@@ -195,8 +203,8 @@
       }
     },
     created () {
-      let item = this.$route.params.item
-      this.allData = this.$route.params.allData
+      let item = this.item || this.$route.params.item
+      this.allData = this.all_data || this.$route.params.allData
       if (!item || item === 'undefined') {
         //console.log('error')
         this.$router.push({

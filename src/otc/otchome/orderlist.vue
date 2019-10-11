@@ -2,24 +2,24 @@
   <div class="order-list">
     <ul class="order-list-title">
       <li :class="{active: params.state === 1}" @click="params.state = 1">
-        <img v-if="params.state === 1" src="src/assets/img/icon-deal02.png"/>
-        <img v-else src="src/assets/img/icon-deal01.png"/>
+        <img v-if="params.state === 1" src="../../assets/img/icon-deal02.png"/>
+        <img v-else src="../../assets/img/icon-deal01.png"/>
         <span>{{$t('public0.public140')}}<!--未完成订单--></span>
       </li>
       <li :class="{active: params.state === 2}" @click="params.state = 2">
-        <img v-if="params.state === 2" src="src/assets/img/icon-deal04.png"/>
-        <img v-else src="src/assets/img/icon-deal03.png"/>
+        <img v-if="params.state === 2" src="../../assets/img/icon-deal04.png"/>
+        <img v-else src="../../assets/img/icon-deal03.png"/>
         <span>{{$t('otc_ad.otc_ad_Order_completed')}}<!--已完成订单--></span>
       </li>
       <li :class="{active: params.state === 3}" @click="params.state = 3">
-        <img v-if="params.state === 3" src="src/assets/img/icon-deal06.png"/>
-        <img v-else src="src/assets/img/icon-deal05.png"/>
+        <img v-if="params.state === 3" src="../../assets/img/icon-deal06.png"/>
+        <img v-else src="../../assets/img/icon-deal05.png"/>
         <span>{{$t('otc_ad.otc_ad_cancelled_order')}}<!--已取消订单--></span>
       </li>
 
       <li :class="{active: params.state === 4}" @click="params.state = 4">
-        <img v-if="params.state === 4" src="src/assets/img/icon-deal08.png"/>
-        <img v-else src="src/assets/img/icon-deal07.png"/>
+        <img v-if="params.state === 4" src="../../assets/img/icon-deal08.png"/>
+        <img v-else src="../../assets/img/icon-deal07.png"/>
         <span>{{$t('gcox_otc.you_advertising')}}<!--你的广告--></span>
       </li>
 

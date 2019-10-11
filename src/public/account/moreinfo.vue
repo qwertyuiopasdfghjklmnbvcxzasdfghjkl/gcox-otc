@@ -268,7 +268,7 @@
         // })
         utils.setDialog(withdrawInfo, {
           item: data,
-          allData: this.allData,
+          all_data: this.allData,
           okCallback: () => {
             this.$emit('updateMyAssets')
           }

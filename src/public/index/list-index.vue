@@ -1,7 +1,7 @@
 <template>
   <div class="cont">
     <div class="top w1200">
-      <h4><img src="src/assets/img/flag.png">
+      <h4><img src="../../assets/img/flag.png">
         <span v-html="$t('gcox_otc.you_want').format('green',$t('gcox_otc.buy'),params.name)"></span>
       </h4>
       <list-box :datas="buyDatas" :type="'buy'">
@@ -12,7 +12,7 @@
       </list-box>
     </div>
     <div class="top bottom w1200">
-      <h4><img src="src/assets/img/flag.png">
+      <h4><img src="../../assets/img/flag.png">
         <span v-html="$t('gcox_otc.you_want').format('red',$t('gcox_otc.sell'),params.name)"></span>
       </h4>
       <list-box :datas="sellDatas" :type="'sell'" @submit="sell">
