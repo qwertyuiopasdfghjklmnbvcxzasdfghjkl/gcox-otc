@@ -3,7 +3,7 @@
     <h4 class="fs30 text-center">Buy and sell digital currency</h4>
     <p class="fs18 f-c-gray text-center mt20">{{$t('gcox_otc.otc_describe')}}<!-- otc是一个强大而无缝的交易平台，可以连接法定和加密的世界。  --></p>
     <div class="tips ui-flex mt70">
-    <img src="src/assets/img/otc_describe.jpg">
+    <img src="../../assets/img/otc_describe.jpg">
       <!--<div class="ui-flex-1 ui-flex ui-flex-center">-->
         <!--<div>-->
           <!--<img src="../../assets/img/icon-knowledge.png">-->

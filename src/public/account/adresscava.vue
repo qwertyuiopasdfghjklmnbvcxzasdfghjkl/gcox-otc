@@ -4,7 +4,7 @@
     <div class="koall-verify-title">
       <p>{{$t('usercontent.user71')}}<!--充值--></p>
       <small @click="close()">
-        <img src="src/assets/img/close.png">
+        <img src="../../assets/img/close.png">
       </small>
       <!--<router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}&lt;!&ndash;我的资产&ndash;&gt;</router-link>-->
       <!--&gt;-->

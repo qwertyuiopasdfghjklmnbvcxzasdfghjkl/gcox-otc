@@ -25,8 +25,8 @@
           <img :src="data.header_image||avatarUrl" width="20"/>{{data.nickname||data.username}}
         </p>
         <p>
-          <img v-for="item in Math.floor(data.user_level/20||0)" src="src/assets/img/star.png">
-          <img v-for="item in (5 - Math.floor(data.user_level/20||0))" src="src/assets/img/nostar.png">
+          <img v-for="item in Math.floor(data.user_level/20||0)" src="../assets/img/star.png">
+          <img v-for="item in (5 - Math.floor(data.user_level/20||0))" src="../assets/img/nostar.png">
         </p>
       </div>
       <div>
