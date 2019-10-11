@@ -1,6 +1,6 @@
 <template>
   <div class="ad-container">
-    <ul class="ad-tabs">
+    <ul class="tab_tit">
       <li class="ad-tabs-item" :class="{active:active==='current'}" @click="active='current'">
         {{$t('public0.public155')}}<!--当前广告-->
       </li>
@@ -8,7 +8,7 @@
         {{$t('public0.public156')}}<!--历史广告-->
       </li>
     </ul>
-    <div class="ad-wrap" v-if="getApiToken">
+    <div class="" v-if="getApiToken">
       <div class="ad-box ad-box-current" v-if="active==='current'">
         <ul class="ad-list ad-list-current" v-if="!currentLoading && cDatas.length > 0">
           <li class="ad-list-item">
@@ -275,7 +275,9 @@
 <style scoped>
   .ad-container {
     position: relative;
-    background-color:  rgba(27, 26, 31, 0.9);
+    color: #333333;
+    padding: 15px;
+    /*background-color:  rgba(27, 26, 31, 0.9);*/
   }
 
   .ad-tabs {
@@ -285,12 +287,15 @@
     border-bottom: 1px solid #333;
   }
 
+  .tab_tit{
+    display: flex;
+
+  }
   .ad-tabs-item {
     height: 48px;
     line-height: 48px;
     margin-right: 40px;
     margin-bottom: -1px;
-    color: #ffffff;
     border-bottom: 2px solid transparent;
     cursor: pointer;
   }
@@ -307,7 +312,7 @@
   .ad-list {
     display: flex;
     flex-flow: column;
-    padding: 0 20px 24px 20px;
+    margin-top: 10px;
   }
 
   .ad-list-history {
@@ -318,19 +323,20 @@
     display: flex;
     justify-content: space-between;
     height: 40px;
+    padding: 4px 0;
     line-height: 40px;
-    color: #ffffff;
-    border-bottom: 1px solid #333;
+    /*color: #ffffff;*/
+    border-bottom: 1px solid #eee;
     cursor: pointer;
   }
 
   .ad-list-item span {
-    font-size: 12px;
-    color: #fff;
+    font-size: 14px;
+    /*color: #fff;*/
   }
 
   .ad-list-item:first-of-type span {
-    color: #fff;
+    /*color: #fff;*/
   }
 
   .ad-list-item-coin {
@@ -403,6 +409,6 @@
   .ad-nodata-text {
     height: 40px;
     line-height: 20px;
-    color: #fff;
+    color: #333;
   }
 </style>

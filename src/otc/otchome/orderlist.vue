@@ -2,14 +2,28 @@
   <div class="order-list">
     <ul class="order-list-title">
       <li :class="{active: params.state === 1}" @click="params.state = 1">
-        {{$t('public0.public140')}}<!--未完成订单-->
+        <img v-if="params.state === 1" src="src/assets/img/icon-deal02.png"/>
+        <img v-else src="src/assets/img/icon-deal01.png"/>
+        <span>{{$t('public0.public140')}}<!--未完成订单--></span>
       </li>
       <li :class="{active: params.state === 2}" @click="params.state = 2">
-        {{$t('otc_ad.otc_ad_Order_completed')}}<!--已完成订单-->
+        <img v-if="params.state === 2" src="src/assets/img/icon-deal04.png"/>
+        <img v-else src="src/assets/img/icon-deal03.png"/>
+        <span>{{$t('otc_ad.otc_ad_Order_completed')}}<!--已完成订单--></span>
       </li>
       <li :class="{active: params.state === 3}" @click="params.state = 3">
-        {{$t('otc_ad.otc_ad_cancelled_order')}}<!--已取消订单-->
+        <img v-if="params.state === 3" src="src/assets/img/icon-deal06.png"/>
+        <img v-else src="src/assets/img/icon-deal05.png"/>
+        <span>{{$t('otc_ad.otc_ad_cancelled_order')}}<!--已取消订单--></span>
       </li>
+
+      <li :class="{active: params.state === 4}" @click="params.state = 4">
+        <img v-if="params.state === 4" src="src/assets/img/icon-deal08.png"/>
+        <img v-else src="src/assets/img/icon-deal07.png"/>
+        <span>{{$t('gcox_otc.you_advertising')}}<!--你的广告--></span>
+      </li>
+
+
     </ul>
     <div class="order-list-content" v-if="getApiToken">
       <div class="uncompleted" v-if="params.state === 1">
@@ -125,6 +139,10 @@
         </div>
         <loading v-if="loading3"/>
       </div>
+
+      <div v-if="params.state === 4">
+        <adlist></adlist>
+      </div>
     </div>
   </div>
 </template>
@@ -140,10 +158,12 @@
   import sellitem from '@/otc/otchome/list/sell'
   import loading from '@/components/loading'
   import page from '@/components/page'
+  import Adlist from './adlist'
 
   export default {
     props: ['hparams'],
     components: {
+      Adlist,
       loading,
       page
     },
@@ -398,33 +418,45 @@
 
 <style scoped>
   .order-list {
-    margin-bottom: 8px;
-    background-color: rgba(27, 26, 31, 0.9);
+    min-height:272px;
+    background:rgba(251,251,251,1);
+    border:1px solid rgba(238,238,238,1);
+    box-shadow:0px 6px 6px 0px rgba(0, 0, 0, 0.05);
+    margin: 40px auto;
   }
 
   .order-list-title {
-    height: 49px;
-    padding: 0 20px;
-    border-bottom: 1px solid #333;
+    height: 60px;
+    padding: 0;
+    background: #EEEEEE;
+    font-size: 16px;
   }
 
   .order-list-title li {
     float: left;
-    height: 48px;
-    margin: 0 40px -2px 0;
-    line-height: 49px;
-    color: #ffffff;
-    border-bottom: 2px solid transparent;
+    height: 36px;
+    padding: 10px 34px;
+    line-height: 36px;
+    border-top: 4px solid transparent;
     cursor: pointer;
+    color: #666666;
+    display: flex;
+    align-items: center;
+  }
+
+  .order-list-title li img{
+    width: 16px;
+    margin-right: 5px;
   }
 
   .order-list-title li.active {
-    color: #00a0e9;
-    border-bottom-color: #00a0e9;
+    color: #EFBC3F;
+    border-top-color: #EFBC3F;
+    background: #FCFCFC;
   }
 
   .order-list-title li:hover {
-    color: #00a0e9;
+    /*color: #EFBC3F;*/
   }
 
   .uncompleted-list {

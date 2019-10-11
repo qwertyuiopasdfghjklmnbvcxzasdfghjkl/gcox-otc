@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/public'
 import exchange from './exchange'
+import control from './control'
 import otc from './otc'
 import cms from './cms'
 import login from '@/public/login'
@@ -138,5 +139,5 @@ export default new Router({
         name: 'home'
       }
     }
-  ].concat(exchange, otc, cms)
+  ].concat(exchange, otc, cms, control)
 })

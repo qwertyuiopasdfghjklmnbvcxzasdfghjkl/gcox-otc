@@ -62,7 +62,7 @@
             </div>
             <div class="form-button">
                 <input class="cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="switch_tab('mycenter')"><!--取消-->
-                <input class="confirm" :class="{disabled: isUploading || isSubmit}" type="button" :value="$t('exchange.exchange_determine')" @click="isSubmit ? false : identity1()"><!--确定-->
+                <input class="confirm yellow_button" :class="{disabled: isUploading || isSubmit}" type="button" :value="$t('exchange.exchange_determine')" @click="isSubmit ? false : identity1()"><!--确定-->
             </div>
         </form>
         <uploading v-if="isUploading"/>
@@ -203,24 +203,24 @@ export default {
 .form-row::after {content: ''; display: block; clear: both; zoom:1;}
 .form-row .row-label{float: left;width: 150px;min-height: 30px;padding-right: 10px;line-height: 30px;color: #111;}
 .form-row .row-label em.asterisk{position: relative;top: 5px;line-height: 0;font-size: 18px;color: red;}
-.form-row .row-text{float: left;width: 290px;height: 28px;color: #111;background-color: #FFF;border: 1px solid #9EC2F9;}
+.form-row .row-text{float: left;width: 290px;height: 28px;color: #111;background-color: #FFF;border: 1px solid #EEEEEE;}
 .form-row .row-text.error{border-color: #e53f3f;}
 .form-row .row-error{float: left;height: 30px;line-height: 30px;color: #e53f3f;text-indent: 10px;}
-.form-row .row-file{position: relative;float: left;width: 180px;}
-.form-row .row-file-img{width: 180px;height: 130px; background-color: #F6F6F6;}
+.form-row .row-file{position: relative;float: left;width: 206px;}
+.form-row .row-file-img{width: 206px;height: 130px; background-color: #F6F6F6;}
 .form-row .row-file-img.error{border-color: #e53f3f;}
 .form-row .row-file-img /deep/ img{width: 100%;height: 100%;}
-.form-row .row-file-input{position: absolute;top: 0;left: 0;width: 180px;height: 130px;}
+.form-row .row-file-input{position: absolute;top: 0;left: 0;width: 206px;height: 130px;}
 .form-row .row-file-input input{width: 100%;height: 100%;opacity: 0;cursor: pointer;}
 .form-row .row-file-prompt{height: 30px;line-height: 30px;color: #333;white-space: nowrap; text-align: center;}
 .form-row .row-file-prompt.error{color: #e53f3f;}
 .form-row .row-description{float: right;width: 550px;min-height: 30px;padding-left: 10px;line-height: 30px;color: #333;}
 .form-button{font-size: 0;line-height: 0;padding-left: 160px;}
 .form-button input{min-width: 120px;height: 40px;padding-left: 24px;padding-right: 24px;border-radius: 4px;cursor: pointer; font-size: 14px;}
-.form-button input.cancel{margin-right: 30px;color: #9EC2F9;background-color: transparent;border: 1px solid #9EC2F9;}
-.form-button input.cancel:hover{color: #3890F9;border-color: #3890F9;}
-.form-button input.confirm{color: #fff;background-color: #3890F9;}
-.form-button input.confirm:hover{background-color: #206cc7;}
+.form-button input.cancel{margin-right: 30px;color: #666666;background-color: transparent;border: 1px solid #666666;}
+.form-button input.cancel:hover{color: #666666;border-color: #666666;}
+.form-button input.confirm{color: #fff;background-color: #F0B936;}
+.form-button input.confirm:hover{background-color: #F0B936;}
 .form-button input.confirm.disabled{background-color: #999;cursor: not-allowed}
 .form-button input.confirm.disabled:hover{background-color: #999;}
 </style>
