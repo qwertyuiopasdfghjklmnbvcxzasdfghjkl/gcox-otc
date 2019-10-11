@@ -1,5 +1,6 @@
 export default {
   'gcox_otc': {
+    'P2P_swop': 'P2P交换',
     'max': '最大值',
     'you_want': '您想要 <span class="{0}">{1}</span> {2} ？',
     'buy': '购买',
@@ -24,6 +25,17 @@ export default {
     'base': '基本',
     'detail': '详细',
     'i_want': '我想要',
-    'new_advertising': '创建新的广告'
+    'new_advertising': '创建新的广告',
+    'control_panel': '控制面板',
+    'overall': '总体',
+    'P2P_deal': 'P2P交易',
+    'your_sell_advertising': '你的销售广告',
+    'your_buy_advertising': '你的购买广告',
+    'appraisement': '估计资产价值',
+    'you_advertising': '你的广告',
+    'show_all_symbol': '显示所有货币',
+    'fee': '存款费用',
+    'explain': '此押金地址只接受{0}。不要发送其他硬币。',
+    'symbol_address': '比特币地址'
   }
 }

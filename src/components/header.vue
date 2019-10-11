@@ -2,7 +2,10 @@
   <div class="header-container">
     <div class="header-bg"></div>
     <div class="w1200 header-top">
-      <p><switch-vi/>余额 USDT：0.00</p>
+      <p>
+        <switch-vi/>
+        余额 USDT：0.00
+      </p>
     </div>
     <div class="header w1200 ui-flex ui-flex-justify">
       <div class="">
@@ -10,17 +13,17 @@
         <!--<router-link :to="{name:'market'}" class="item"><i class="market"></i> {{$t('home.home_pair')}}&lt;!&ndash; 市场 &ndash;&gt;-->
         <!--</router-link>-->
         <!--<router-link :to="{name:'exchange_index2'}" class="item" :class="{active:$route.name === 'exchange_index2' || $route.name === 'exchange_index' || $route.name === 'quickTrade'}">-->
-           <!--<i class="exchange"></i> {{$t('exchange.exchange_name')}}&lt;!&ndash; 交易所 &ndash;&gt;-->
-           <!--<div class="popover-nav black" ref="nav2" @click="hidePopoverNav('nav2')">-->
-              <!--<div class="popover-menu">-->
-                <!--<router-link :to="{name:'quickTrade'}" class="sub-item" tag="div" v-if="false">-->
-                  <!--<span>{{$t('exchange.oneClickTrade')}}&lt;!&ndash; 一键购买 &ndash;&gt;</span>-->
-                <!--</router-link>-->
-                <!--<router-link :to="{name:'exchange_index2'}" class="sub-item" tag="div">-->
-                  <!--<span>{{$t('exchange.advanced')}}&lt;!&ndash; 专业版 &ndash;&gt;</span>-->
-                <!--</router-link>-->
-              <!--</div>-->
-            <!--</div>-->
+        <!--<i class="exchange"></i> {{$t('exchange.exchange_name')}}&lt;!&ndash; 交易所 &ndash;&gt;-->
+        <!--<div class="popover-nav black" ref="nav2" @click="hidePopoverNav('nav2')">-->
+        <!--<div class="popover-menu">-->
+        <!--<router-link :to="{name:'quickTrade'}" class="sub-item" tag="div" v-if="false">-->
+        <!--<span>{{$t('exchange.oneClickTrade')}}&lt;!&ndash; 一键购买 &ndash;&gt;</span>-->
+        <!--</router-link>-->
+        <!--<router-link :to="{name:'exchange_index2'}" class="sub-item" tag="div">-->
+        <!--<span>{{$t('exchange.advanced')}}&lt;!&ndash; 专业版 &ndash;&gt;</span>-->
+        <!--</router-link>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</router-link>-->
         <!--<a href="javascript:;" v-if="!isLogin" class="item" @click="showQuickLogin"><i class="acm"></i> OTC</a>-->
 
@@ -30,36 +33,61 @@
         <!--<router-link v-if="isLogin" :to="{name:'mycenter_menu', params:{menu:'referral'}}" class="item"><i class="icon-users"></i> {{$t('referral.referral_programme')}}&lt;!&ndash; 我的推荐 &ndash;&gt;</router-link>-->
       </div>
       <div class="right ui-flex-1">
-        <router-link :to="{name:'home'}" class="item" :activeClass="'active'">P2P交换</router-link>
-          <router-link to="" class="item" v-if="isLogin">
-            <span style="color: #fff;">{{displayUsername}}</span>
-            <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
-              <div class="popover-menu">
-                <router-link :to="{name:'mycenter_menu', params:{menu:'mycenter'}}" class="sub-item" tag="div">
-                  <i class="security"></i>
-                  <span>{{$t('usercontent.user37')}}<!-- 个人信息中心 --></span>
-                </router-link>
-                <router-link :to="{name:'mycenter_menu', params:{menu:'authentication'}}" class="sub-item" tag="div">
-                  <i class="verification"></i>
-                  <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
-                </router-link>
-                <router-link :to="{name:'mycenter_menu', params:{menu:'message'}}" class="sub-item" tag="div">
-                  <i class="message"></i>
-                  <span>{{$t('usercontent.user41')}}<!-- 系统消息 --></span>
-                </router-link>
-                <div class="sub-item" @click="logout">
-                  <i class="logout"></i>
-                  <span>{{$t('public.navigation_logout')}}<!-- 退出 --></span>
-                </div>
+        <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}</router-link>
+
+        <router-link to="" class="item">
+          <span style="color: #fff;">{{$t('gcox_otc.control_panel')}}</span>
+          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
+            <div class="popover-menu">
+              <router-link :to="{name:'overall'}" class="sub-item" tag="div">
+                <i class="overall"></i>
+                <span>{{$t('gcox_otc.overall')}}<!-- 总体 --></span>
+              </router-link>
+              <router-link :to="{name:'control_deal'}" class="sub-item" tag="div">
+                <i class="deal"></i>
+                <span>{{$t('gcox_otc.P2P_deal')}}<!-- P2P交易 --></span>
+              </router-link>
+              <router-link :to="{name:'control_wallet'}" class="sub-item" tag="div">
+                <i class="wallet"></i>
+                <span>{{$t('exchange.exchange_wallet')}}<!-- 钱包 --></span>
+              </router-link>
+              <router-link :to="{name:'control_kyc'}" class="sub-item" tag="div">
+                <i class="kyc"></i>
+                <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
+              </router-link>
+            </div>
+          </div>
+        </router-link>
+
+        <router-link to="" class="item" v-if="isLogin">
+          <span style="color: #fff;">{{displayUsername}}</span>
+          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
+            <div class="popover-menu">
+              <router-link :to="{name:'mycenter_menu', params:{menu:'mycenter'}}" class="sub-item" tag="div">
+                <i class="security"></i>
+                <span>{{$t('usercontent.user37')}}<!-- 个人信息中心 --></span>
+              </router-link>
+              <router-link :to="{name:'mycenter_menu', params:{menu:'authentication'}}" class="sub-item" tag="div">
+                <i class="verification"></i>
+                <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
+              </router-link>
+              <router-link :to="{name:'mycenter_menu', params:{menu:'message'}}" class="sub-item" tag="div">
+                <i class="message"></i>
+                <span>{{$t('usercontent.user41')}}<!-- 系统消息 --></span>
+              </router-link>
+              <div class="sub-item" @click="logout">
+                <i class="logout"></i>
+                <span>{{$t('public.navigation_logout')}}<!-- 退出 --></span>
               </div>
             </div>
-          </router-link>
-          <a v-show="!isLogin" class="item pointer" @click="showQuickLogin">{{$t('login_register.login')}}
-            <!-- 登录 --></a>
-          <router-link v-show="!isLogin" :to="{name:'register'}" class="item f-c-blue">{{$t('login_register.register')}}
-            <!-- 注册 --></router-link>
-          <a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>
-          <a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>
+          </div>
+        </router-link>
+        <a v-show="!isLogin" class="item pointer" @click="showQuickLogin">{{$t('login_register.login')}}
+          <!-- 登录 --></a>
+        <router-link v-show="!isLogin" :to="{name:'register'}" class="item f-c-blue">{{$t('login_register.register')}}
+          <!-- 注册 --></router-link>
+        <a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>
+        <a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>
       </div>
     </div>
   </div>
@@ -99,7 +127,7 @@
       ...mapActions(['setLang', 'setApiToken']),
       showQuickLogin () {
         utils.setDialog(quickLogin, {
-          backClose:true
+          backClose: true
         })
       },
       setLanguage (lang) {
@@ -118,7 +146,7 @@
         this.setApiToken(null)
       },
       hidePopoverNav (target) {
-        if(this.$refs[target]){
+        if (this.$refs[target]) {
           this.$refs[target].style.display = 'none'
           setTimeout(() => {
             this.$refs[target].removeAttribute('style')
@@ -145,7 +173,7 @@
     background-color: #0C0D34;
   }
 
-  .header-top{
+  .header-top {
     position: fixed;
     z-index: 1000;
     top: 0;
@@ -156,11 +184,13 @@
     font-size: 14px;
     border-bottom: 2px solid #13143A;
     color: #ffffff;
-    p{
+
+    p {
       display: flex;
       align-items: center;
     }
   }
+
   .header {
     position: fixed;
     z-index: 1000;
@@ -171,10 +201,11 @@
     line-height: 60px;
     font-size: 14px;
 
-    .right{
+    .right {
       display: flex;
       justify-content: flex-end;
-      .active{
+
+      .active {
         color: #F0B936 !important;
         border-bottom: 2px solid #F0B936;
       }
@@ -185,7 +216,10 @@
       height: 100%;
       vertical-align: middle;
       position: relative;
-      &+.item {margin-left: 60px;}
+
+      & + .item {
+        margin-left: 60px;
+      }
 
       .popover-nav {
         position: absolute;
@@ -194,7 +228,7 @@
         transform: translateX(-50%);
         border-radius: 4px;
         background: #fff;
-        min-width: 150px;
+        min-width: 130px;
         border: 1px solid #ebeef5;
         z-index: 2000;
         color: #606266;
@@ -203,12 +237,17 @@
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
         word-break: break-all;
         display: none;
-        &.en {min-width: 200px;}
+
+        &.en {
+          min-width: 200px;
+        }
+
         &.black {
           background: #3F3B3B;
           border-radius: 0;
           border: none;
           color: #fff;
+
           .popover-menu .sub-item:hover {
             background-color: #333030;
             color: #00a0e9;
@@ -217,10 +256,11 @@
 
         .popover-menu {
           line-height: 40px;
+          padding: 10px 0;
 
           .sub-item {
-            padding: 0 10px;
-            border-bottom: 1px solid rgba(21, 23, 32, .08);
+            padding: 0 20px;
+            /*border-bottom: 1px solid rgba(21, 23, 32, .08);*/
             cursor: pointer;
             display: flex;
             position: relative;
@@ -235,9 +275,24 @@
               background: no-repeat 0;
               background-size: 20px 20px;
             }
-            span{
+
+            span {
               white-space: nowrap;
             }
+
+            .overall {
+              background-image: url('../assets/img/icon_otc01.png');
+            }
+            .deal {
+              background-image: url('../assets/img/icon_otc02.png');
+            }
+            .wallet {
+              background-image: url('../assets/img/icon_otc03.png');
+            }
+            .kyc {
+              background-image: url('../assets/img/icon_otc04.png');
+            }
+
             .security {
               background-image: url('../assets/img/icon-security.svg');
             }

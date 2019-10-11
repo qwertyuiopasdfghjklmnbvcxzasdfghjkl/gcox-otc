@@ -1,39 +1,46 @@
 <template>
   <div class="adressCava" @click="showSymbol = false">
+
     <div class="koall-verify-title">
-      <router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}<!--我的资产--></router-link>
-      >
-      <span>{{$t('usercontent.recharge')}}<!--数字货币充值--></span>
+      <p>{{$t('usercontent.user71')}}<!--充值--></p>
+      <small @click="close()">
+        <img src="src/assets/img/close.png">
+      </small>
+      <!--<router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}&lt;!&ndash;我的资产&ndash;&gt;</router-link>-->
+      <!--&gt;-->
+      <!--<span>{{$t('usercontent.recharge')}}&lt;!&ndash;数字货币充值&ndash;&gt;</span>-->
+    </div>
+    <div class="copy">
+      <p>{{$t('gcox_otc.symbol_address')}}</p>
+      <p class="address">{{addr}}</p>
+      <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
     </div>
     <div class="tsmb">
-      <div class="tsmb-flex">
-        <p>{{$t('usercontent.notice')}}</p>
-        <label>
-          <p>{{$t('usercontent.not1').format(symbol)}}</p>
-          <!--<p>{{$t('usercontent.not2').format(symbol,'0.01')}}</p>-->
-        </label>
-      </div>
-      <div class="tsmb-flex blue">
-        <p>{{$t('usercontent.not3')}}</p>
-        <label style="padding-left: 4px">
-          <p>{{$t('usercontent.not3-1').format(symbol)}}</p>
-        </label>
-      </div>
+      <!--<div class="tsmb-flex">-->
+        <!--<p>{{$t('usercontent.notice')}}</p>-->
+        <!--<label>-->
+          <!--<p>{{$t('usercontent.not1').format(symbol)}}</p>-->
+          <!--&lt;!&ndash;<p>{{$t('usercontent.not2').format(symbol,'0.01')}}</p>&ndash;&gt;-->
+        <!--</label>-->
+      <!--</div>-->
+      <!--<div class="tsmb-flex blue">-->
+        <!--<p>{{$t('usercontent.not3')}}</p>-->
+        <!--<label style="padding-left: 4px">-->
+          <!--<p>{{$t('usercontent.not3-1').format(symbol)}}</p>-->
+        <!--</label>-->
+      <!--</div>-->
+      <p>{{$t('gcox_otc.fee')}}  {{procedureFee}}</p>
+      <p>* {{$t('gcox_otc.explain').format(symbol)}}</p>
     </div>
-    <div class="title-div">
-      <small>{{$t('usercontent.user86')}}</small>
-      <p @click.stop="showSymbol = !showSymbol">{{symbol}}</p>
-      <ul v-show="showSymbol">
-        <li v-for="item in allData" @click.prevent="icheck(item)">{{item.symbol}}</li>
-      </ul>
-    </div>
+    <!--<div class="title-div">-->
+    <!--<small>{{$t('usercontent.user86')}}</small>-->
+    <!--<p @click.stop="showSymbol = !showSymbol">{{symbol}}</p>-->
+    <!--<ul v-show="showSymbol">-->
+    <!--<li v-for="item in allData" @click.prevent="icheck(item)">{{item.symbol}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
     <div class="bottom-box">
-      <div class="copy">
-        <p>{{addr}}</p>
-        <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('usercontent.copy')}}</label>
-      </div>
       <div class="qrad">
-        <p>{{$t('usercontent.qrcode')}}</p>
         <div ref="qrcode" class="qrcode"></div>
       </div>
     </div>
@@ -45,13 +52,15 @@
   import userUtils from '@/api/wallet'
 
   export default {
+    props: ['paramSymbol'],
     data () {
       return {
         addr: null,
         symbol: null,
         allData: [],
         showSymbol: false,
-        minWithdraw: ''
+        minWithdraw: '',
+        procedureFee: ''
       }
     },
     watch: {
@@ -64,8 +73,7 @@
       }
     },
     created () {
-      let symbol = this.$route.params.symbol
-      this.symbol = symbol || 'ETH'
+      this.symbol = this.paramSymbol || 'ETH'
       this.getListAccount()
       //console.log(this.addr, this.symbol)
       this.$nextTick(() => {
@@ -94,55 +102,52 @@
             if (next.type === 1) {
               if (next.symbol === this.symbol) {
                 this.addr = next.address
-                this.minWithdraw = next.minWithdraw
+                this.procedureFee = next.procedureFee
                 //console.log(next)
               }
             }
             return next.type === 1
           })
         })
+      },
+      close () {
+        this.$emit('removeDialog')
       }
     }
   }
 </script>
 <style scoped lang="less">
   .koall-verify-title {
-    color: #979799;
-
-    a {
-      color: #ffffff;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 30px;
+    img{
+      width: 16px;
+      cursor: pointer;
     }
   }
 
   .adressCava {
-    padding: 14px 18px 80px;
-    background-color: #19181c;
-    color: #f1f1f2;
-    font-size: 14px;
+    background-color: #fff;
+    font-size: 16px;
+    width: 900px;
+    border-radius:8px;
+    padding-bottom: 40px;
 
     .tsmb {
-      margin-top: 20px;
-      background-color: #1d1c23;
+      margin: 10px auto;
+      width: 480px;
       padding: 10px;
       line-height: 30px;
+      background: #eeeeee;
+      border-left: 4px solid #F0B936;
 
-      .tsmb-flex {
-        display: flex;
-
-        & > p {
-          min-width: 110px;
-          white-space: nowrap;
-          padding-right: 10px;
-        }
-
-        & > label {
-
-        }
-      }
-
-      .blue {
-        color: #00a0e9;
-      }
+     p{
+       padding: 6px;
+     }
     }
 
     .title-div {
@@ -215,48 +220,58 @@
       }
     }
   }
+  .copy {
+    width: 500px;
+    border: 1px solid hsla(0, 0%, 100%, .12);
+    margin: 10px auto;
+    position: relative;
+    .address{
+      padding: 15px;
+      border:1px solid #cccccc;
+      border-radius:3px;
+      margin: 10px auto;
+      color: #666;
+      font-size: 18px;
+      padding-right: 50px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    label {
+      background: url("../../assets/img/cype.png") no-repeat center #eeeeee;
+      background-size: 24px;
+      text-align: center;
+      position: absolute;
+      cursor: pointer;
+      right: 6px;
+      width: 44px;
+      height: 44px;
+      bottom: 16px;
+    }
 
+  }
   .bottom-box {
     display: flex;
     /*justify-content: space-between;*/
     align-items: center;
-    margin-top: 80px;
+    justify-content: center;
+    margin: 0px auto;
 
-    .copy {
-      width: 650px;
-      height: 60px;
-      line-height: 60px;
-      border: 1px solid hsla(0, 0%, 100%, .12);
-      display: flex;
-      justify-content: space-between;
-      margin-right: 20px;
 
-      label {
-        background: #2e2c3c;
-        text-align: center;
-        padding: 0 50px;
-        cursor: pointer;
-      }
-
-      p {
-        flex: 1;
-        padding-left: 6px;
-      }
-    }
 
     .qrad {
       width: 220px;
       text-align: center;
-      background: #4c4a64;
-      line-height: 60px;
-      height: 60px;
-      position: relative;
+      /*background: #4c4a64;*/
+      /*line-height: 60px;*/
+      /*height: 60px;*/
+      /*position: relative;*/
 
       .qrcode {
-        display: none;
-        position: absolute;
-        top: 62px;
-        left: 0;
+        display: block;
+        /*position: absolute;*/
+        /*top: 62px;*/
+        /*left: 0;*/
         width: 190px;
         padding: 15px;
         background: #ffffff;
@@ -264,12 +279,6 @@
 
         img {
           width: 190px;
-        }
-      }
-
-      &:hover {
-        .qrcode {
-          display: block;
         }
       }
     }
