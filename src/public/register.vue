@@ -44,7 +44,7 @@
               《<a :href="walletAgreement" target="_blank">{{$t('usercontent.wallet-rule')}}<!--钱包使用条款--></a>》、《<a :href="useAgreement" target="_blank">{{$t('usercontent.use-rule')}}<!--使用条款--></a>》、《<a :href="privacyAgreement" target="_blank">{{$t('usercontent.foot-policy')}}<!--隐私条款--></a>》
             </span>
         </div>
-        <div class="text-right mt60"><button type="button" class="mint-btn default round efont" style="width: 140px;" :disabled="!checked" @click="register">{{$t('login_register.register')}}<!-- 注册 --></button></div>
+        <div class="text-right mt60"><button type="button" class="register_button mint-btn default round efont" style="width: 140px;" :disabled="!checked" @click="register">{{$t('login_register.register')}}<!-- 注册 --></button></div>
       </div>
       <div class="mask-layer ui-flex ui-flex-center ui-flex-column" v-show="locked">
         <loading/>
@@ -167,37 +167,29 @@ export default {
 
 <style lang="less" scoped>
 .register {
-  width: 670px;
+  width: 600px;
   margin: 0 auto;
   padding-top: 60px;
   padding-bottom: 60px;
   .header {
-    height: 50px;
-    padding: 8px 0;
-    line-height: 34px;
+    height: 30px;
+    padding: 10px;
+    line-height: 30px;
+    background: #13143A;
+    text-align: center;
     div:first-of-type {
       font-size: 20px;
-      height: 60px;
-      line-height: 60px;
       color: #fff;
     }
     .login {
         position: relative;
         padding-right: 15px;
         .text {
-            line-height: 60px;
             font-size: 14px;
             color: #00A0E9;
-            margin-right: 15px;
+          cursor: pointer;
         }
         .border-bg {
-            background: url('../assets/img/border-bg.png') no-repeat 100%;
-            cursor: pointer;
-            width: 50px;
-            height: 60px;
-            position: absolute;
-            right: 0;
-            top: 0;
         }
     }
   }
@@ -211,6 +203,7 @@ export default {
       height: 30px;
       line-height: 30px;
       border: none;
+      padding: 5px;
       width: 100%;
       outline: none;
       background-color: transparent;
@@ -244,8 +237,16 @@ export default {
 .checkbox-group i{float: left;width: 14px;height: 14px;margin-top: 8px;color: #888;text-indent: 1px;cursor: pointer;}
 .checkbox-group i:hover{color: #888;}
 .checkbox-group i.icon-checkbox-checked {color: #00A0E9;}
-.checkbox-group span{float: left;width: 630px;min-height: 30px;padding-left: 8px;line-height: 30px;}
+.checkbox-group span{float: left;min-height: 30px;padding-left: 8px;line-height: 30px;}
 .checkbox-group span a{color: #00A0E9;text-decoration: underline;}
 .checkbox-group span a:hover{color: #00A0E9;}
+
+.register_button{
+  width:112px;
+  height:50px;
+  background:rgba(19,20,58,1);
+  border-radius:3px;
+  color: #ffffff;
+}
 </style>
 

@@ -88,7 +88,7 @@
             symbol: 'USDT'
           },
           {
-            img: 'Cash',
+            img: 'bch',
             name: 'Bitcoin Cash',
             symbol: 'CASH'
           },
@@ -98,7 +98,7 @@
             symbol: 'LTC'
           },
           {
-            img: 'Litecoin',
+            img: 'xrp',
             name: 'Ripple',
             symbol: 'RIPPLE'
           }

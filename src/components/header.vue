@@ -35,8 +35,11 @@
       <div class="right ui-flex-1">
         <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}</router-link>
 
-        <router-link to="" class="item">
-          <span style="color: #fff;">{{$t('gcox_otc.control_panel')}}</span>
+        <router-link to="" class="item" v-if="isLogin">
+          <span style="color: #fff;" class="nav-title">
+            {{$t('gcox_otc.control_panel')}}<!--控制面板-->
+            <img src="../assets/img/icon-otc10.png"/>
+          </span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
             <div class="popover-menu">
               <router-link :to="{name:'overall'}" class="sub-item" tag="div">
@@ -60,21 +63,25 @@
         </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
-          <span style="color: #fff;">{{displayUsername}}</span>
+          <span style="color: #fff;" class="nav-title">{{displayUsername}}<img src="../assets/img/icon-otc10.png"/></span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
             <div class="popover-menu">
-              <router-link :to="{name:'mycenter_menu', params:{menu:'mycenter'}}" class="sub-item" tag="div">
-                <i class="security"></i>
-                <span>{{$t('usercontent.user37')}}<!-- 个人信息中心 --></span>
+              <router-link :to="{name:'usercenter_abstract'}" class="sub-item" tag="div">
+                <i class="abstract"></i>
+                <span>{{$t('home.intro')}}<!-- 简介 --></span>
               </router-link>
-              <router-link :to="{name:'mycenter_menu', params:{menu:'authentication'}}" class="sub-item" tag="div">
-                <i class="verification"></i>
-                <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
+              <router-link :to="{name:'usercenter_set'}" class="sub-item" tag="div">
+                <i class="set"></i>
+                <span>{{$t('user.set')}}<!-- 设置 --></span>
               </router-link>
-              <router-link :to="{name:'mycenter_menu', params:{menu:'message'}}" class="sub-item" tag="div">
-                <i class="message"></i>
-                <span>{{$t('usercontent.user41')}}<!-- 系统消息 --></span>
-              </router-link>
+              <!--<router-link :to="{name:'mycenter_menu', params:{menu:'authentication'}}" class="sub-item" tag="div">-->
+                <!--<i class="verification"></i>-->
+                <!--<span>{{$t('usercontent.user38')}}&lt;!&ndash; KYC认证 &ndash;&gt;</span>-->
+              <!--</router-link>-->
+              <!--<router-link :to="{name:'mycenter_menu', params:{menu:'message'}}" class="sub-item" tag="div">-->
+                <!--<i class="message"></i>-->
+                <!--<span>{{$t('usercontent.user41')}}&lt;!&ndash; 系统消息 &ndash;&gt;</span>-->
+              <!--</router-link>-->
               <div class="sub-item" @click="logout">
                 <i class="logout"></i>
                 <span>{{$t('public.navigation_logout')}}<!-- 退出 --></span>
@@ -86,8 +93,8 @@
           <!-- 登录 --></a>
         <router-link v-show="!isLogin" :to="{name:'register'}" class="item f-c-blue">{{$t('login_register.register')}}
           <!-- 注册 --></router-link>
-        <a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>
-        <a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>
+        <!--<a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>-->
+        <!--<a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>-->
       </div>
     </div>
   </div>
@@ -292,6 +299,12 @@
             .kyc {
               background-image: url('../assets/img/icon_otc04.png');
             }
+            .abstract {
+              background-image: url('../assets/img/icon_otc05.png');
+            }
+            .set {
+              background-image: url('../assets/img/icon_otc06.png');
+            }
 
             .security {
               background-image: url('../assets/img/icon-security.svg');
@@ -306,7 +319,7 @@
             }
 
             .logout {
-              background-image: url('../assets/img/icon-logout.svg');
+              background-image: url('../assets/img/icon_otc07.png');
             }
           }
         }
@@ -318,7 +331,7 @@
     }
 
     .item + .item {
-      margin-left: 30px;
+      margin-left: 48px;
     }
 
     .icon_logo {
@@ -385,6 +398,15 @@
           }
         }
       }
+    }
+  }
+  .nav-title{
+    display: flex;
+    align-items: center;
+    img{
+      width: 12px;
+      height: 7px;
+      margin-left: 4px;
     }
   }
 

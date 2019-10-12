@@ -26,8 +26,8 @@
           <input type="text" name="googleCode" :class="{efont:!formData.googleCode}" v-model="formData.googleCode" maxlength="6" v-validate="'required|length:6'" :placeholder="$t('account.user_center_Google_verification_code')"> <!--谷歌验证码-->
         </div>
         <div class="error-msg" v-if="needGoogleCode">{{errors.has('googleCode')?$t('login_register.inputGoogleAuthCode'):null}}</div>
-        <div class="text-right"><router-link :to="{name:'findpwd'}" class="f-c-main f12">{{$t('login_register.forget_password')}}<!-- 忘记密码？ --></router-link></div>
-        <div class="text-right mt30"><button type="button" class="mint-btn default round efont" style="width: 140px;" :disabled="errors.any()" @click="login">{{$t('login_register.login')}}<!-- 登录 --></button></div>
+        <div class="text-left"><router-link :to="{name:'findpwd'}" class="f-c-main f12">{{$t('login_register.forget_password')}}<!-- 忘记密码？ --></router-link></div>
+        <div class="text-right mt30"><button type="button" class="login_button mint-btn default round efont" style="width: 140px;" :disabled="errors.any()" @click="login">{{$t('login_register.login')}}<!-- 登录 --></button></div>
       </div>
       <div class="mask-layer ui-flex ui-flex-center ui-flex-column" v-show="locked">
         <loading/>
@@ -68,7 +68,7 @@ export default {
     }
   },
   created () {
-    
+
   },
   methods: {
     ...mapActions(['setApiToken']),
@@ -97,7 +97,7 @@ export default {
         } else {
           this.loginAC(formData)
         }
-        
+
       })
     },
     loginAC(formData){
@@ -130,37 +130,31 @@ export default {
 
 <style lang="less" scoped>
 .login {
-  width: 670px;
+  width: 600px;
   margin: 0 auto;
   padding-top: 60px;
   padding-bottom: 60px;
   .header {
-    height: 50px;
-    padding: 8px 0;
-    line-height: 34px;
+    height: 30px;
+    padding: 10px;
+    line-height: 30px;
+    background: #13143A;
+    text-align: center;
     div:first-of-type {
       font-size: 20px;
-      height: 60px;
-      line-height: 60px;
       color: #fff;
     }
     .register {
         position: relative;
         padding-right: 15px;
         .text {
-            line-height: 60px;
             font-size: 14px;
             color: #00A0E9;
-            margin-right: 15px;
+          cursor: pointer;
         }
         .border-bg {
-            background: url('../assets/img/border-bg.png') no-repeat 100%;
-            cursor: pointer;
-            width: 50px;
-            height: 60px;
-            position: absolute;
-            right: 0;
-            top: 0;
+            /*background: url('../assets/img/border-bg.png') no-repeat 100%;*/
+
         }
     }
   }
@@ -173,6 +167,7 @@ export default {
     input {
       height: 30px;
       line-height: 30px;
+      padding: 5px;
       border: none;
       width: 100%;
       outline: none;
@@ -202,5 +197,11 @@ export default {
     }
   }
 }
-
+.login_button{
+  width:112px;
+  height:50px;
+  background:rgba(19,20,58,1);
+  border-radius:3px;
+  color: #ffffff;
+}
 </style>

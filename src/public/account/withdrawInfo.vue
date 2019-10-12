@@ -28,15 +28,15 @@
             <!--</ul>-->
           <!--</div>-->
         <!--</div>-->
-        <div>
-          <p>
-            <span>{{$t('account.estimated_value_available')}}<!--可用余额-->：</span>
-            <small class="green">{{available}} {{symbol}}</small>
+        <div class="filed">
+          <em>{{$t('account.estimated_value_available')}}<!--可用余额--></em>
+          <p class="c-box">
+            <small>{{available}} {{symbol}}</small>
           </p>
         </div>
         <div class="filed">
           <em>
-            {{$t('account.user_Pick_up_address').format(symbol)}}<!--提现地址-->
+            {{$t('account.user_Pick_up_address').format(symbol)}}<!--提现地址--> *
           </em>
           <div class="withAdress" style="position:relative;" :class="{error:errors.has('selToAddress')}">
             <input type="text" maxlength="100" v-validate="'required'"
@@ -56,17 +56,17 @@
         </div>
         <div class="filed">
           <div class="filed-number">
-            <em>{{$t('account.user_Draw_the_number')}}<!--提现数量--> </em>
+            <em>{{$t('account.user_Draw_the_number')}}<!--提现数量-->  *</em>
 
           </div>
           <div class="number" :class="{error:errors.has('amount')}">
             <numberbox v-validate="'required|isLessMin|isMoreMax'" :accuracy="8" data-vv-name="amount" class="numberAll"
                        type="text" v-model="amount"/>
-            <a href="javascript:;" @click="allWithdraw">{{$t('account.user_All_cash')}}<!--全部提现--></a>
-            <span>
-              {{$t('account.estimated_value_available')}}<!--可用余额-->：<small
-              class="green">{{available}} {{symbol}}</small>
-            </span>
+            <a href="javascript:;" @click="allWithdraw">Max<!--全部提现--></a>
+            <!--<span>-->
+              <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
+              <!--class="green">{{available}} {{symbol}}</small>-->
+            <!--</span>-->
           </div>
           <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
         </div>
@@ -205,13 +205,11 @@
     created () {
       let item = this.item || this.$route.params.item
       this.allData = this.all_data || this.$route.params.allData
+      console.log(item,this.allData)
       if (!item || item === 'undefined') {
         //console.log('error')
         this.$router.push({
-          name: 'account_menu',
-          params: {
-            menu: 'pandect'
-          }
+          name: 'control_wallet',
         })
       } else {
         this.symbol = item.symbol
@@ -299,8 +297,8 @@
           alias: this.alias,
           toAddress: this.toAddress,
           amount: this.amount,
-          payPassword: this.payPassword,
-          googleCode: this.googleCode
+          // payPassword: this.payPassword,
+          // googleCode: this.googleCode
         }
         this.$validator.validateAll(validData).then((validResult) => {
           if (!validResult) {
@@ -340,6 +338,9 @@
         this.procedure = item.procedureFee
         this.minWithdraw = item.minWithdraw
         this.showSymbol = false
+      },
+      close(){
+        this.$emit('removeDialog')
       }
     }
   }
@@ -360,11 +361,13 @@
   }
 
   .withdrawBox {
-    padding: 14px 18px 90px;
-    background-color: #19181c;
-    color: #f1f1f2;
+    padding: 0;
+    background-color: #fff;
+    color: #333;
     overflow: hidden;
     position: relative;
+    width: 900px;
+    border-radius:8px;
   }
 
   .tbsm {
@@ -440,17 +443,13 @@
   }
 
   .withdrawBox .filed .BNB-subbtn {
-    margin: 60px 0;
-    height: 40px;
-    line-height: 40px;
-    width: 100%;
-    cursor: pointer;
-    font-size: 12px;
-    color: #f1f1f2;
-    background-color: #2e2c3c;
-    border: 1px solid #312e45;
-    text-align: center;
-    box-sizing: initial;
+    width:130px;
+    height:50px;
+    background:rgba(240,185,54,1);
+    border-radius:3px;
+    color: #ffffff;
+    margin: 5px auto;
+    display: block;
   }
 
   .withdrawBox .filed .BNB-subbtn:hover {
@@ -460,9 +459,6 @@
 
   .withdrawBox .filed .withAdress {
     position: relative;
-    color: #999;
-    font-size: 14px;
-    height: 30px;
     border-bottom: 1px solid hsla(0, 0%, 100%, .12);
 
     .pwd-isShow {
@@ -529,40 +525,40 @@
 
   .withAdress input {
     width: 529px;
-    padding-right: 6px;
     background-color: transparent;
-    height: 30px;
-    color: #ffffff;
+    height: 20px;
+    padding: 15px;
+    font-size: 18px;
   }
 
   .withAdress ul {
     position: absolute;
     z-index: 22;
-    width: 570px;
-    top: 30px;
-    left: -1px;
-    border: 1px solid #283149;
+    width: 470px;
+    top: 50px;
+    left: 0;
+    background: #ffffff;
     padding: 6px 0;
+    box-shadow: 0 0 6px #eeeeee;
   }
 
   .withAdress ul li {
     height: 30px;
     line-height: 30px;
-    font-size: 12px;
-    color: #fff;
+    font-size: 16px;
     text-indent: 12px;
-    background-color: #19181c;
+    background-color: #ffffff;
     cursor: pointer;
     padding: 0 6px;
 
     &.active {
-      background-color: #242328;
+      background-color: #eeeeee;
       color: #00B5FF;
     }
   }
 
   .withAdress ul li:hover {
-    background-color: #242328;
+    background-color: #eeeeee;
     color: #00B5FF;
   }
 
@@ -626,7 +622,14 @@
   }
 
   .number a {
-    color: #00B5FF;
+    width:58px;
+    height:50px;
+    background:#13143A;
+    border-radius:3px;
+    text-align: center;
+    color: #ffffff;
+    line-height: 50px;
+    font-size: 18px;
   }
 
   .number a:hover {
@@ -634,13 +637,18 @@
   }
 
   .number .numberAll {
-    position: absolute;
-    left: 0;
-    width: 408px;
-    height: 28px;
-    line-height: 28px;
-    color: #ffffff;
-    background-color: transparent;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*width: 408px;*/
+    /*height: 28px;*/
+    /*line-height: 28px;*/
+    /*color: #ffffff;*/
+    /*background-color: transparent;*/
+    height: 20px;
+    flex: 1;
+    padding: 15px;
+    font-size: 18px;
+    background: transparent;
   }
 
   .number span {
@@ -681,21 +689,21 @@
   /* .koall-verify-title{width: 100%;height: 16px;line-height: 16px;margin-top: 2px;} */
   .koall-verify-title {
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    line-height: 30px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eeeeee;
   }
 
   .koall-verify-title p {
-    height: 50px;
-    line-height: 50px;
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
-    background-color: #0D66EF;
+    font-size: 18px;
   }
 
-  .koall-verify-title span {
-    text-decoration: none;
-    font-size: 14px;
-    color: #979799;
+  .koall-verify-title img {
+    width: 16px;
   }
 
   .koall-verify-title a {
@@ -710,6 +718,30 @@
   .koall-verify-all {
     display: block;
     width: 100%;
+  }
+  .withdrawBox .filed>em:not(.error){
+    width: 80px;
+  }
+  .filed{
+    .filed-number{
+      width: 80px;
+      display: inline-block;
+    }
+    .number, .withAdress, .c-box{
+      width:470px;
+      height:50px;
+      padding: 0;
+      background:#eeeeee;
+      border-radius:3px;
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      small{
+        height: 20px;
+        padding: 15px;
+        font-size: 18px;
+      }
+    }
   }
 
   .filed-number {
@@ -739,7 +771,7 @@
   }
 
   .input-box {
-    padding-top: 20px;
+    padding-top: 30px;
     width: 570px;
     margin: 0 auto;
   }

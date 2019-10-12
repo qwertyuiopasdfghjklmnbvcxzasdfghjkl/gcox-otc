@@ -60,12 +60,18 @@
         </div>
       </div>
     </div>
+    <div class="lang">
+      <a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>
+      <a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>
+    </div>
   </div>
 </template>
 
 <script>
   import {mapGetters, mapActions} from 'vuex'
   import market from '../api/market'
+  import langApi from '@/api/language'
+  import utils from '@/assets/js/utils'
 
   export default {
     name: 'bottom',
@@ -109,7 +115,19 @@
               }
             })
           })
-      }
+      },
+      setLanguage (lang) {
+        this.setLang(lang)
+        if (!utils.isPlainEmpty(this.$i18n.getLocaleMessage(lang))) {
+          this.$i18n.locale = lang
+          return
+        }
+        //console.log('change langugae')
+        langApi.getLanguage(lang, (res) => {
+          this.$i18n.locale = lang
+          this.$i18n.setLocaleMessage(lang, res)
+        })
+      },
     }
   }
 </script>
@@ -122,7 +140,7 @@
   .bottom {
     width: 1190px;
     padding-top: 35px;
-    padding-bottom: 50px;
+    padding-bottom: 26px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -198,6 +216,15 @@
         cursor: pointer;
         font-size: 12px;
       }
+    }
+  }
+  .lang{
+    width: 1190px;
+    margin: 0 auto;
+    padding: 20px 0;
+    border-top: 2px solid #1C1C1F;
+    a{
+      color: #ffffff !important;
     }
   }
 </style>
