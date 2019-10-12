@@ -31,7 +31,8 @@
 
     <tipbox/>
     <!--<news/>-->
-    <download/>
+
+    <!--<download/>-->
 
     <!--<regbox/>-->
   </div>

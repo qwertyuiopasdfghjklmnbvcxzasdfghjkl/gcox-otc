@@ -31,17 +31,18 @@
               <!--{{$t('account.stake')}}&lt;!&ndash;锁仓&ndash;&gt;-->
               <!--</span>-->
 
-              <span class="reche icon_withdraw yellow_button"
-                    :class="{disabled: Number(item.withdrawFlag) !== 1}"
-                    @click="Number(item.withdrawFlag) !== 1 ? false : withdrawDalog()"
-                    :title="$t('account.estimated_value_withdrawal')">
-                                {{$t('usercontent.user70')}}<!--提现-->
-                            </span>
-              <span class="ewm recharge "
+
+              <span class="ewm recharge yellow_button"
                     :class="{disabled: Number(item.rechargeFlag) !== 1}"
                     @click="Number(item.rechargeFlag) !== 1 ? false : scanEWM()"
                     :title="$t('account.estimated_value_deposit')">
                                 {{$t('usercontent.user71')}}<!--充值-->
+                            </span>
+              <span class="reche icon_withdraw "
+                                         :class="{disabled: Number(item.withdrawFlag) !== 1}"
+                                         @click="Number(item.withdrawFlag) !== 1 ? false : withdrawDalog()"
+                                         :title="$t('account.estimated_value_withdrawal')">
+                                {{$t('usercontent.user70')}}<!--提现-->
                             </span>
               <!--<span  class="buy icon_recharge"-->
               <!--:class="{disabled: Number(item.rechargeFlag) !== 1 || Number(item.withdrawFlag) !== 1}"-->
@@ -585,9 +586,8 @@
     box-sizing: border-box;
     vertical-align: text-bottom;
     position: relative;
-    border: 1px solid #333333;
     border-radius: 3px;
-
+    margin-right: 26px;
   }
 
   .depositBox .filed span.disabled {
@@ -596,8 +596,8 @@
   }
 
   .depositBox .filed span.icon_withdraw {
-    border: none;
-    margin-right: 26px;
+
+    border: 1px solid #333333;
   }
 
   .depositBox:after {

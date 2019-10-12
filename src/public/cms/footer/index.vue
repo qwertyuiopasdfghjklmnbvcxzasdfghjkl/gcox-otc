@@ -64,52 +64,44 @@
     align-items: flex-start;
 
     .ul-nav {
-      width: 180px;
+      width: 220px;
       /*flex: 1;*/
-      background: #19181c;
+      background: #fff;
+      border: 1px solid #eeeeee;
+      border-radius:4px;
+      li:last-child{
+        span{
+          border-bottom: none;
+        }
+      }
 
       a {
         display: block;
-        font-size: 14px;
-        line-height: 42px;
+        font-size: 16px;
         overflow: hidden;
-        padding-left: 16px;
         position: relative;
 
         span {
           display: block;
-          width: 100%;
-          height: 100%;
-          float: left;
-          border-bottom: 2px solid hsla(240, 4%, 89%, .1);
-          color: #f1f1f2;
+          border-bottom: 1px solid #eeeeee;
+          color: #333;
+          padding: 18px 0;
+          text-indent: 50px;
         }
 
-        i {
-          background: transparent;
-          display: block;
-          width: 8px;
-          height: 4px;
-          position: absolute;
-          left: 0;
-          top: 18px;
-        }
 
         &.router-link-active {
           span {
-            color: #00a0e9;
-            border-bottom: 2px solid #00a0e9;
+            color: #fff;
+            background: #F0B936;
           }
 
-          i {
-            background: #00a0e9;
-          }
         }
       }
     }
 
     .right-cont {
-      width: 1010px;
+      width: 950px;
       /*flex: 1;*/
     }
   }

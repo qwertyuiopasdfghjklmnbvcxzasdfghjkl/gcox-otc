@@ -2,7 +2,7 @@
   <div class="cont">
     <h4 class="title" v-html="title"></h4>
     <small class="small" v-html="small"></small>
-    <div v-html="data"></div>
+    <div class="detail_cont" v-html="data"></div>
   </div>
 </template>
 
@@ -60,19 +60,18 @@
 
 <style scoped lang="less">
   .cont {
-    background-color: #19181c;
+    background-color: #ffffff;
     width: 950px;
     min-height: 300px;
     overflow: hidden;
-    color: #ffffff;
-    padding: 30px;
+    color: #333333;
     margin-bottom: 50px;
     padding-bottom: 50px;
     &>.title{
       font-size: 18px;
       text-align: center;
       line-height: 34px;
-      color: #ffffff;
+      color: #333333;
     }
     &>.small{
       text-align: center;
@@ -88,5 +87,9 @@
     a{
       color: #00B5FF;
     }
+  }
+  .detail_cont{
+    padding: 30px;
+    border:1px solid #eeeeee;
   }
 </style>
