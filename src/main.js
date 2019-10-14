@@ -67,6 +67,10 @@ let i18n = window.$i18n = new VueI18n({
 
 Vue.config.productionTip = false
 
+router.afterEach(() => {
+  window.scrollTo(0, 0)
+})
+
 /* eslint-disable no-new */
 let lang = window.localStorage.getItem('lang') || 'en'
 let tar = document.getElementsByTagName('title')

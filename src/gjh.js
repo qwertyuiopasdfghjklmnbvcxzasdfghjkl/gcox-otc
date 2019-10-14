@@ -67,6 +67,7 @@ export default {
     'buy_form': '购买{0}从',
     'sell_to': '出售{0}至',
     'back_communications': '回传讯{0}',
-    'no_communications': '没有反馈'
+    'no_communications': '没有反馈',
+    'pay_way': '付款方式'
   }
 }

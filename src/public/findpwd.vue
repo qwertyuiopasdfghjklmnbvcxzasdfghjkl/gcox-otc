@@ -13,9 +13,9 @@
       </div>
       <div class="error-msg">{{ msgs['email'][errors.firstRule('email')]}}</div>
       <p class="mt10 f-c-green">{{$t('login_register.findPwdTip')}}<!-- 提交之后，您会收到一封关于如何重置密码的说明邮件 --></p>
-      <div class="text-right mt30"><button type="button" class="mint-btn default round efont" style="width: 140px;" :disabled="errors.any()" @click="sendMail">{{$t('otc_legal.otc_legal_confirm')}}<!-- 确定 --></button></div>
+      <div class="text-right mt30"><button type="button" class="login_button mint-btn default round efont" style="width: 140px;" :disabled="errors.any()" @click="sendMail">{{$t('otc_legal.otc_legal_confirm')}}<!-- 确定 --></button></div>
     </div>
-    
+
   </div>
 </template>
 
@@ -94,38 +94,29 @@ export default {
   margin: 0 auto;
 }
 .register {
-  width: 670px;
+  width: 600px;
   margin: 0 auto;
   padding-top: 60px;
   padding-bottom: 60px;
   .header {
-    height: 50px;
-    padding: 8px 0;
-    line-height: 34px;
+    height: 30px;
+    padding: 10px;
+    line-height: 30px;
+    background: #13143A;
+    text-align: center;
     div:first-of-type {
       font-size: 20px;
-      height: 60px;
-      line-height: 60px;
       color: #fff;
     }
     .login {
         position: relative;
         padding-right: 15px;
         .text {
-            line-height: 60px;
-            font-size: 14px;
-            color: #00A0E9;
-            margin-right: 15px;
+          font-size: 14px;
+          color: #00A0E9;
+          cursor: pointer;
         }
-        .border-bg {
-            background: url('../assets/img/border-bg.png') no-repeat 100%;
-            cursor: pointer;
-            width: 50px;
-            height: 60px;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
+
     }
   }
   .form-item {
@@ -151,6 +142,13 @@ export default {
     line-height: 30px;
     color: #f1304a;
     font-size: 12px;
+}
+.login_button{
+  width:112px;
+  height:50px;
+  background:rgba(19,20,58,1);
+  border-radius:3px;
+  color: #ffffff;
 }
 </style>
 

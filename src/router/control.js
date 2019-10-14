@@ -2,6 +2,7 @@ import overall from '../public/control_panel/overall'
 import deal from '../public/control_panel/deal'
 import wallet from '../public/control_panel/wallet'
 import kyc from '../public/control_panel/kyc'
+import pay from '../public/control_panel/pay'
 
 export default [
   {
@@ -23,5 +24,10 @@ export default [
     path: '/control_kyc',
     name: 'control_kyc',
     component: kyc
+  },
+  {
+    path: '/control_pay',
+    name: 'control_pay',
+    component: pay
   }
 ]

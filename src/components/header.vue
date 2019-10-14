@@ -54,6 +54,10 @@
                 <i class="wallet"></i>
                 <span>{{$t('exchange.exchange_wallet')}}<!-- 钱包 --></span>
               </router-link>
+              <router-link :to="{name:'control_pay'}" class="sub-item" tag="div">
+                <i class="pay"></i>
+                <span>{{$t('gcox_otc.pay_way')}}<!-- 付款方式 --></span>
+              </router-link>
               <router-link :to="{name:'control_kyc'}" class="sub-item" tag="div">
                 <i class="kyc"></i>
                 <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
@@ -89,8 +93,8 @@
             </div>
           </div>
         </router-link>
-        <a v-show="!isLogin" class="item pointer" @click="showQuickLogin">{{$t('login_register.login')}}
-          <!-- 登录 --></a>
+        <router-link v-show="!isLogin" class="item pointer"  :to="{name:'login'}">{{$t('login_register.login')}}
+          <!-- 登录 --></router-link>
         <router-link v-show="!isLogin" :to="{name:'register'}" class="item f-c-blue">{{$t('login_register.register')}}
           <!-- 注册 --></router-link>
         <!--<a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>-->
@@ -294,6 +298,9 @@
               background-image: url('../assets/img/icon_otc02.png');
             }
             .wallet {
+              background-image: url('../assets/img/icon_otc03.png');
+            }
+            .pay {
               background-image: url('../assets/img/icon_otc03.png');
             }
             .kyc {
