@@ -108,8 +108,8 @@
 
 <style scoped lang="less">
   .message {
-    color: #ffffff;
-    background: rgba(27, 26, 31, 0.9);
+    color: #333333;
+    border:1px solid #eeeeee;;
     padding: 20px;
     min-height: 200px;
     .message-nodata{
@@ -128,14 +128,14 @@
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
-      color: #979799;
+      color: #666666;
       .main{
         width: 76%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         display: inline-block;
-        color: #f1f1f2;
+        color: #333;
         font-size: 12px;
       }
     }

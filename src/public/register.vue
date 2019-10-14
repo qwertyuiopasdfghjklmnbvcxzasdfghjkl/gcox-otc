@@ -9,7 +9,8 @@
       </div>
       <div form autocomplete="off" onsubmit="return false">
         <div class="mt50 form-item">
-          <input type="text" name="username" :class="{efont:!formData.username}" v-model="formData.username" maxlength="60" v-validate="'required|email'" :placeholder="$t('otc_exchange.otc_exchange_Email')"> <!--email-->
+          <input type="text" name="username" :class="{efont:!formData.username}" v-model="formData.username" maxlength="60"
+                 v-validate="'required|email'" :placeholder="$t('otc_exchange.otc_exchange_Email')"> <!--email-->
         </div>
         <div class="error-msg">{{ msgs['username'][errors.firstRule('username')]}}</div>
         <div class="form-item">
@@ -37,13 +38,13 @@
         <div class="form-item">
           <input type="text" name="ref" :class="{efont:!formData.ref}" v-model="formData.ref" maxlength="256" :placeholder="$t('public0.public244')"> <!--邀请码-->
         </div>
-        <div class="checkbox-group mt30">
-            <i :class="[checked?'icon-checkbox-checked':'icon-checkbox-unchecked']" @click="checked=!checked"></i>
-            <span>
-              <em @click="checked=!checked">{{$t('login_register.agree_Service')}}<!--我已阅读并同意--></em>
-              《<a :href="walletAgreement" target="_blank">{{$t('usercontent.wallet-rule')}}<!--钱包使用条款--></a>》、《<a :href="useAgreement" target="_blank">{{$t('usercontent.use-rule')}}<!--使用条款--></a>》、《<a :href="privacyAgreement" target="_blank">{{$t('usercontent.foot-policy')}}<!--隐私条款--></a>》
-            </span>
-        </div>
+        <!--<div class="checkbox-group mt30">-->
+            <!--<i :class="[checked?'icon-checkbox-checked':'icon-checkbox-unchecked']" @click="checked=!checked"></i>-->
+            <!--<span>-->
+              <!--<em @click="checked=!checked">{{$t('login_register.agree_Service')}}&lt;!&ndash;我已阅读并同意&ndash;&gt;</em>-->
+              <!--《<a :href="walletAgreement" target="_blank">{{$t('usercontent.wallet-rule')}}&lt;!&ndash;钱包使用条款&ndash;&gt;</a>》、《<a :href="useAgreement" target="_blank">{{$t('usercontent.use-rule')}}&lt;!&ndash;使用条款&ndash;&gt;</a>》、《<a :href="privacyAgreement" target="_blank">{{$t('usercontent.foot-policy')}}&lt;!&ndash;隐私条款&ndash;&gt;</a>》-->
+            <!--</span>-->
+        <!--</div>-->
         <div class="text-right mt60"><button type="button" class="register_button mint-btn default round efont" style="width: 140px;" :disabled="!checked" @click="register">{{$t('login_register.register')}}<!-- 注册 --></button></div>
       </div>
       <div class="mask-layer ui-flex ui-flex-center ui-flex-column" v-show="locked">
@@ -64,7 +65,7 @@ export default {
     return {
       locked: false,
       gtLocked: false,
-      checked: false,
+      checked: true,
       showPass:false,
       showPassConfig:false,
       formData: {
@@ -207,7 +208,7 @@ export default {
       width: 100%;
       outline: none;
       background-color: transparent;
-      color: #fff;
+      /*color: #fff;*/
     }
   }
 }

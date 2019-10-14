@@ -9,11 +9,15 @@
       </div>
       <div form autocomplete="off" onsubmit="return false">
         <div class="mt50 form-item">
-          <input type="text" name="username" :class="{efont:!formData.username}" v-model="formData.username" maxlength="60" v-validate="'required|email'" :placeholder="$t('account.user_center_account')" v-focus> <!--email-->
+          <input type="text" name="username" :class="{efont:!formData.username}"
+                 v-model="formData.username" maxlength="60" v-validate="'required|email'"
+                 :placeholder="$t('account.user_center_account')" v-focus> <!--email-->
         </div>
         <div class="error-msg">{{ msgs['username'][errors.firstRule('username')]}}</div>
         <div class="form-item">
-          <input :type="showPass?'text':'password'" name="password" :class="{efont:!formData.password}" v-model="formData.password" maxlength="256" v-validate="'required'" :placeholder="$t('exchange.exchange_password')"> <!--密码-->
+          <input :type="showPass?'text':'password'" name="password"
+                 :class="{efont:!formData.password}" v-model="formData.password"
+                 maxlength="256" v-validate="'required'" :placeholder="$t('exchange.exchange_password')"> <!--密码-->
           <div class="show-pwd-box">
             <div class="pwd-isShow" @click="showPass=!showPass">
               <img src="../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPass">
@@ -23,7 +27,9 @@
         </div>
         <div class="error-msg">{{ msgs['password'][errors.firstRule('password')]}}</div>
         <div class="form-item" v-if="needGoogleCode">
-          <input type="text" name="googleCode" :class="{efont:!formData.googleCode}" v-model="formData.googleCode" maxlength="6" v-validate="'required|length:6'" :placeholder="$t('account.user_center_Google_verification_code')"> <!--谷歌验证码-->
+          <input type="text" name="googleCode" :class="{efont:!formData.googleCode}"
+                 v-model="formData.googleCode" maxlength="6" v-validate="'required|length:6'"
+                 :placeholder="$t('account.user_center_Google_verification_code')"> <!--谷歌验证码-->
         </div>
         <div class="error-msg" v-if="needGoogleCode">{{errors.has('googleCode')?$t('login_register.inputGoogleAuthCode'):null}}</div>
         <div class="text-left"><router-link :to="{name:'findpwd'}" class="f-c-main f12">{{$t('login_register.forget_password')}}<!-- 忘记密码？ --></router-link></div>
@@ -172,7 +178,7 @@ export default {
       width: 100%;
       outline: none;
       background-color: transparent;
-      color: #fff;
+      /*color: #fff;*/
     }
   }
 }

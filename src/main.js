@@ -79,9 +79,11 @@ if (lang === 'en') {
 } else {
   tar[0].innerText = 'GCOX-比特币以太坊专业数字货币交易网站'
 }
+
+// Object.assign(res, gjh)
 langApi.getLanguage(lang, (res) => {
   i18n.locale = lang
-  i18n.setLocaleMessage(lang, Object.assign(res, gjh))
+  i18n.setLocaleMessage(lang, gjh)
   window.vm = new Vue({
     el: '#app',
     router,
