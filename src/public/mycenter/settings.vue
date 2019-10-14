@@ -516,7 +516,7 @@ export default {
 
 <style scoped>
 .form-list{display: flex;flex-flow: column;}
-.form-item{margin-top: 8px;background-color: #FFF; border-radius: 4px; box-shadow: 0 1px 3px #e2e2e2;}
+.form-item{margin-top: 15px;background-color: #FFF; border-radius: 4px; box-shadow: 0 1px 6px #e2e2e2;}
 .form-item:first-of-type{margin-top: 0;}
 .form-item h3{height: 55px; padding-left: 20px; font-weight: normal;font-size: 18px;line-height: 55px;color: #333;text-indent: 8px;border-bottom: 1px solid #e7e7e7;}
 
