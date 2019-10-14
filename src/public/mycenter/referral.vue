@@ -23,12 +23,12 @@
 
     <div class="ref-profit mt50 ui-flex">
       <div class="ui-flex-1">
-        <p class="fs16">{{$t('referral.refunded')}} (ACM) <!-- Refunded --></p>
-        <p class="f-c-main fs24 mt10"><strong>{{invitedInfo.rewardCount | numbean}}</strong></p>
+        <p class="fs20">{{$t('referral.refunded')}} (ACM) <!-- Refunded --></p>
+        <p class="f-c-main fs32 mt10"><strong>{{invitedInfo.rewardCount | numbean}}</strong></p>
       </div>
       <div class="ml15 ui-flex-1">
-        <p class="fs16">{{$t('referral.invitees_num')}}<!-- Number of Invitees --></p>
-        <p class="f-c-main fs24 mt10"><strong>{{invitedInfo.invitedCount}} {{$t('referral.invitees')}}<!-- Invitees --></strong></p>
+        <p class="fs20">{{$t('referral.invitees_num')}}<!-- Number of Invitees --></p>
+        <p class="f-c-main fs32 mt10"><strong>{{invitedInfo.invitedCount}} {{$t('referral.invitees_num')}}<!-- Invitees --></strong></p>
       </div>
     </div>
 
@@ -188,7 +188,7 @@
       this.getInvitedRecord()
     },
     mounted(){
-      
+
     },
     methods: {
       ...mapActions([]),
@@ -255,29 +255,29 @@
           height: 116,
         })
       },
-      
+
     }
   }
 </script>
 
 <style scoped lang="less">
 .referral {
-  color: #ffffff;
-  background: rgba(27, 26, 31, 0.9);
+  color: #333333;
   padding: 20px;
   min-height: 200px;
+  border:1px solid #eeeeee;
 }
 .ref-info {
   .ref-qr {width: 136px;}
   .inviteQR {
-    width: 116px; height: 116px; background-color: #fff; padding: 10px; 
+    width: 116px; height: 116px; background-color: #fff; padding: 10px;
     /deep/ img, canvas {width: 100%;}
   }
   .item {
-    line-height: 40px; border-bottom: 1px solid #302826;
+    line-height: 40px; border-bottom: 1px solid #eee;
     position: relative;
     span {display: inline-block; min-width: 130px; vertical-align: middle;}
-    .copy {position: absolute; right: 0; width: 100px; height: 26px; background-color: #616060; border:none; color: #fff; cursor: pointer; margin-top: 7px; font-size: 14px;}
+    .copy {position: absolute; right: 0; width: 100px; height: 26px; background-color: #0C0D34; border:none; color: #fff; cursor: pointer; margin-top: 7px; font-size: 14px;}
     .media {
       font-size: 20px;
       display: inline-block;
@@ -285,15 +285,15 @@
       a {cursor: pointer;}
       a + a {margin-left: 20px;}
     }
-    
+
   }
 }
 .ref-profit {
-  > div { background-color: #3F3A3A; padding:18px 0;  text-align: center;}
+  > div { padding:18px 0;  text-align: center;}
 }
 .ref-history {
   .tabs {
-    border-bottom: 1px solid #413E3D;
+    border-bottom: 1px solid #eee;
     li {color: #444140; text-align: center; font-size: 16px; cursor: pointer; font-weight: 600; line-height:40px; position: relative;}
     li.active {color: #00a0e9;}
     li:after {
@@ -304,7 +304,7 @@
       left: 50%;
       margin-left: -55px;
       bottom: -3px;
-      background-color: #444140;
+      background-color: transparent;
     }
     li.active:after {
       background-color: #00a0e9;
@@ -352,6 +352,10 @@
     height: 40px;
     line-height: 20px;
     color: #A1A1A1;
+  }
+  .ref-history-list{
+    border: 1px solid #eeeeee;
+    padding: 10px;
   }
 </style>
 

@@ -70,7 +70,8 @@
         params: {
           img: 'btc',
           name: 'Bitcoin',
-          symbol: 'BTC'
+          symbol: 'BTC',
+          currency: 'CNY'
         }
       }
     },

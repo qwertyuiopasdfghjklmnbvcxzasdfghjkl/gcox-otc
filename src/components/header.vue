@@ -33,7 +33,13 @@
         <!--<router-link v-if="isLogin" :to="{name:'mycenter_menu', params:{menu:'referral'}}" class="item"><i class="icon-users"></i> {{$t('referral.referral_programme')}}&lt;!&ndash; 我的推荐 &ndash;&gt;</router-link>-->
       </div>
       <div class="right ui-flex-1">
+
+        <router-link :to="{name:'msg'}" class="item msg">
+          <img src="../assets/img/msg.png" width="40"/>
+        </router-link>
+
         <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}</router-link>
+        <router-link :to="{name:'invite'}" class="item" :activeClass="'active'">{{$t('gcox_otc.invite')}}</router-link>
 
         <router-link to="" class="item" v-if="isLogin">
           <span style="color: #fff;" class="nav-title">
@@ -67,7 +73,7 @@
         </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
-          <span style="color: #fff;" class="nav-title">{{displayUsername}}<img src="../assets/img/icon-otc10.png"/></span>
+          <span style="color: #fff;" class="nav-title">{{displayUsername}}<img v-if="displayUsername" src="../assets/img/icon-otc10.png"/></span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
             <div class="popover-menu">
               <router-link :to="{name:'usercenter_abstract'}" class="sub-item" tag="div">
@@ -416,5 +422,9 @@
       margin-left: 4px;
     }
   }
-
+.msg{
+  img{
+    vertical-align: middle;
+  }
+}
 </style>

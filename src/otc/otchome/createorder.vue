@@ -3,21 +3,21 @@
     <div class="title">{{$t(ad_id ? 'otc_ad.otc_edit_title' : 'otc_ad.otc_post_title').format(tradeParams.title1,
       formData.symbol)}}<!--发布广告||修改广告--></div>
     <div class="cont">
-      <div class="cont-item currency">
-        <div class="row">
-          <label>{{$t('otc_ad.otc_current_currency')}}：<!--当前法币--></label>
-          <div class="value">
-            <select v-model="formData.currency">
-              <option v-for="item in currencyList" :key="item.id" :value="item.currency">
-                {{$t(`otc_exchange.otc_exchange_${item.currency}`)}}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="prompt"></div>
-      </div>
+      <!--<div class="cont-item currency">-->
+      <!--<div class="row">-->
+      <!--<label>{{$t('otc_ad.otc_current_currency')}}：&lt;!&ndash;当前法币&ndash;&gt;</label>-->
+      <!--<div class="value">-->
+      <!--<select v-model="formData.currency">-->
+      <!--<option v-for="item in currencyList" :key="item.id" :value="item.currency">-->
+      <!--{{$t(`otc_exchange.otc_exchange_${item.currency}`)}}-->
+      <!--</option>-->
+      <!--</select>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="prompt"></div>-->
+      <!--</div>-->
       <div class="cont-item exchange">
-        <div class="row">
+        <div class="column">
           <label>{{$t('otc_exchange.otc_exchange_Bid')}}：<!--对标交易所--></label>
           <div class="value">
             <select v-model="formData.bench_marking_id">
@@ -29,168 +29,211 @@
         </div>
         <div class="prompt"></div>
       </div>
-      <div class="cont-item currentprice">
-        <div class="row">
-          <label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：<!--交易所价格--></label>
-          <div class="value">
-            <span>{{benchItem.lowestPrice}}</span>
-          </div>
-        </div>
-        <div class="prompt"></div>
-      </div>
-      <div class="cont-item premium" v-if="!isATN">
-        <div class="row">
-          <label class="label-tips">
-            <span>{{$t('otc_ad.otc_ad_Premium')}}：<!--溢价--></span>
-            <div class="tips">
-                        <span class="tips-container">
-                          <i class="tips-icon" v-tip.top="tip1">?</i>
-                          <!--对交易所价格的浮动比例-->
-                          <!--
-                          <em class="tips-text">{{$t('otc_exchange.otc_exchange_price_float_rate')}}</em>
-                          -->
-                        </span>
+
+      <!--<div class="cont-item currentprice">-->
+      <!--<div class="row">-->
+      <!--<label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：&lt;!&ndash;交易所价格&ndash;&gt;</label>-->
+      <!--<div class="value">-->
+      <!--<span>{{benchItem.lowestPrice}}</span>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="prompt"></div>-->
+      <!--</div>-->
+      <!--<div class="cont-item premium" v-if="!isATN">-->
+      <!--<div class="row">-->
+      <!--<label class="label-tips">-->
+      <!--<span>{{$t('otc_ad.otc_ad_Premium')}}：&lt;!&ndash;溢价&ndash;&gt;</span>-->
+      <!--<div class="tips">-->
+      <!--<span class="tips-container">-->
+      <!--<i class="tips-icon" v-tip.top="tip1">?</i>-->
+      <!--&lt;!&ndash;对交易所价格的浮动比例&ndash;&gt;-->
+      <!--&lt;!&ndash;-->
+      <!--<em class="tips-text">{{$t('otc_exchange.otc_exchange_price_float_rate')}}</em>-->
+      <!--&ndash;&gt;-->
+      <!--</span>-->
+      <!--</div>-->
+      <!--</label>-->
+      <!--<div class="value">-->
+      <!--<numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6" :accuracy="2"-->
+      <!--v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>-->
+      <!--<em>%</em>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="prompt">{{getErrorMsg('price_rate')}}</div>-->
+      <!--</div>-->
+      <!--<div class="cont-item price" v-if="!isATN">-->
+      <!--<div class="row">-->
+      <!--<label>{{$t('otc_exchange.otc_exchange_price')}}&lt;!&ndash;溢价后单价&ndash;&gt; ({{formData.currency}})：</label>-->
+      <!--<div class="value">-->
+      <!--<span>{{curPrice}}</span>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="prompt"></div>-->
+      <!--</div>-->
+      <div class="box">
+        <p class="title_p">{{$t('exchange.exchange_price')}}</p>
+        <div class="cont-item acceptable" v-if="!isATN">
+          <div class="row">
+            <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> </label>
+            <span class="wn">{{benchItem.lowestPrice}} {{formData.currency}}/{{formData.symbol}}</span>
+            <div class="value w250">
+              <numberbox :class="{error: errors.has('lowest_price')}" v-model="formData.lowest_price" :size="13"
+                         :accuracy="2" v-validate="'intOrDecimal|maxInputValue:9999999999'"
+                         data-vv-name="lowest_price"/>
             </div>
-          </label>
-          <div class="value">
-            <numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6" :accuracy="2"
-                       v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>
-            <em>%</em>
+            <p class="small">
+              <span>{{$t('gcox_otc.redeme').format(formData.currency,formData.symbol)}}</span>
+              <span v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>
+            </p>
           </div>
+          <div class="prompt">{{getErrorMsg('lowest_price')}}</div>
         </div>
-        <div class="prompt">{{getErrorMsg('price_rate')}}</div>
-      </div>
-      <div class="cont-item price" v-if="!isATN">
-        <div class="row">
-          <label>{{$t('otc_exchange.otc_exchange_price')}}<!--溢价后单价--> ({{formData.currency}})：</label>
-          <div class="value">
-            <span>{{curPrice}}</span>
-          </div>
-        </div>
-        <div class="prompt"></div>
-      </div>
-      <div class="cont-item acceptable" v-if="!isATN">
-        <div class="row">
-          <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> ({{formData.currency}})：</label>
-          <div class="value">
-            <numberbox :class="{error: errors.has('lowest_price')}" v-model="formData.lowest_price" :size="13"
-                       :accuracy="2" v-validate="'intOrDecimal|maxInputValue:9999999999'" data-vv-name="lowest_price"/>
-          </div>
-        </div>
-        <div class="prompt">{{getErrorMsg('lowest_price')}}</div>
-      </div>
-      <div class="cont-item quantity">
-        <div class="row">
-          <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少--> ({{formData.symbol}})：<em
-            class="asterisk">&nbsp;*</em></label>
-          <div class="value">
-            <numberbox :class="{error: errors.has('symbol_count')}" v-model="formData.symbol_count" :size="15"
-                       :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|maxInputValue:9999999999'"
-                       data-vv-name="symbol_count"/>
-          </div>
-        </div>
-        <div class="prompt">{{getErrorMsg('symbol_count')}}<!--请输入币种数量--></div>
-      </div>
-      <div class="cont-item tradelimit">
-
-
-        <label>{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额--> ({{formData.ad_type === 1 ? formData.symbol :
-          formData.currency}})：<em class="asterisk">&nbsp;*</em></label>
-        <div class="move">
-          <div class="value">
-            <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"
-                       :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
-                       v-validate="'required|intOrDecimal|minAmountValid|minamount|maxInputValue:9999999999,public0.public258'"
-                       data-vv-name="min_amount"/>
-            <em>{{$t('public0.public114')}}<!--最小限额--></em>
-          </div>
-          <div class="prompt">{{getErrorMsg('min_amount')}}</div>
-          <div class="value">
-            <numberbox id="ads_max_amount" :class="{error: errors.has('max_amount')}" v-model="formData.max_amount"
-                       :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
-                       v-validate="'required|intOrDecimal|maxamount|maxInputValue:9999999999,public0.public259'"
-                       data-vv-name="max_amount"/>
-            <em>{{$t('public0.public115')}}<!--最大限额--></em>
-          </div>
-          <div class="prompt">{{getErrorMsg('max_amount')}}</div>
-        </div>
-
-      </div>
-      <div class="cont-item tradetype">
-        <div class="row">
-          <label>{{$t('otc_exchange.otc_exchange_transaction_method')}}：<!--交易方式--><em
-            class="asterisk">&nbsp;*</em></label>
-          <div class="value">
-            <input :class="{error: errors.has('pay_type')}" type="hidden" v-validate="'required'" data-vv-name="pay_type"
-                   v-model="formData.pay_type"/>
-            <span v-for="item in payments" :key="item.id" @click="setPayment(item)"
-                  v-if="myPayType.indexOf(item.id) !== -1">
-                        <i :class="[item.checked ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked']"></i>{{$t(item.key)}}
-                    </span>
-          </div>
-        </div>
-
-        <div class="prompt">{{getErrorMsg('pay_type')}}</div>
-      </div>
-      <div class="cont-item dispose">
-        <div class="row">
-          <label class="label-tips">
-            <span>{{$t('otc_ad.otc_ad_maximum_orders')}}：<!--最大处理订单数--><em class="asterisk">&nbsp;*</em></span>
-            <div class="tips">
-                        <span class="tips-container">
-                          <i class="tips-icon" v-tip.top="tip2">?</i>
-                          <!--单个广告可同时存在的未完成订单最大数量-->
-                          <!--
-                          <em class="tips-text">{{$t('otc_ad.otc_ad_max_uncompleted_orders')}}</em>
-                          -->
-                        </span>
+        <div class="cont-item quantity">
+          <div class="row">
+            <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少--> </label>
+            <div class="value">
+              <numberbox :class="{error: errors.has('symbol_count')}" v-model="formData.symbol_count" :size="15"
+                         :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|maxInputValue:9999999999'"
+                         data-vv-name="symbol_count"/>
             </div>
-          </label>
-          <div class="value">
-            <numberbox :class="{error: errors.has('max_process_num')}" v-model="formData.max_process_num"
-                       :size="maxOrderProcessing.toString().length"
-                       v-validate="`required|pInteger|otcProcessNumValid:${1},${maxOrderProcessing}`"
-                       data-vv-name="max_process_num"/>
+            <p class="small"></p>
           </div>
+          <div class="prompt">{{getErrorMsg('symbol_count')}}<!--请输入币种数量--></div>
         </div>
-        <div class="prompt">{{getErrorMsg('max_process_num')}}</div>
-      </div>
-      <div class="cont-item good">
-        <div class="row">
-          <label class="label-tips">
-            <span>{{$t('otc_exchange.otc_exchange_Good_rating')}}：<!--好评率--><em class="asterisk">&nbsp;*</em></span>
-            <div class="tips">
-                        <span class="tips-container">
-                          <i class="tips-icon" v-tip.top="tip3">?</i>
-                          <!--要求对手方好评率必须大于此设定值-->
-                          <!--
-                          <em class="tips-text">{{$t('otc_exchange.otc_exchange_good_rating')}}</em>
-                          -->
-                        </span>
+        <div class="cont-item tradelimit">
+          <div class="row">
+            <label class="move">{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额--> ({{formData.ad_type === 1 ?
+              formData.symbol :
+              formData.currency}})</label>
+            <div class="">
+              <div class="value">
+                <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"
+                           :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
+                           v-validate="'required|intOrDecimal|minAmountValid|minamount|maxInputValue:9999999999,public0.public258'"
+                           data-vv-name="min_amount"/>
+                <em>{{$t('public0.public114')}}<!--最小限额--></em>
+              </div>
+              <div class="prompt">{{getErrorMsg('min_amount')}}</div>
+              <div class="value">
+                <numberbox id="ads_max_amount" :class="{error: errors.has('max_amount')}" v-model="formData.max_amount"
+                           :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
+                           v-validate="'required|intOrDecimal|maxamount|maxInputValue:9999999999,public0.public259'"
+                           data-vv-name="max_amount"/>
+                <em>{{$t('public0.public115')}}<!--最大限额--></em>
+              </div>
+              <div class="prompt">{{getErrorMsg('max_amount')}}</div>
             </div>
-          </label>
-          <div class="value">
-            <numberbox :class="{error: errors.has('praise_rate')}" v-model="formData.praise_rate" :size="4"
-                       :accuracy="1" v-validate="'required|ratingValid'" data-vv-name="praise_rate"/>
-            <em>%</em>
           </div>
         </div>
-        <div class="prompt">{{getErrorMsg('praise_rate')}}</div>
       </div>
-      <div class="cont-item timelimit">
-        <div class="row">
-          <label>{{$t('otc_ad.otc_ad_expiration_pay')}}：<!--付款期限--><em class="asterisk">&nbsp;*</em></label>
-          <div class="value">
-            <select v-model="formData.pay_limit_time" v-validate="'required'" data-vv-name="pay_limit_time">
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
-            <em>{{$t('otc_ad.otc_ad_minute')}}<!--分钟--></em>
+
+      <div class="box">
+        <p class="title_p">{{$t('gcox_otc.pay_info')}}</p>
+        <div class="cont-item">
+          <div class="row">
+            <label>{{$t('gcox_otc.pay_way')}}</label>
+            <p class="value flex">
+              <b>{{$t('gcox_otc.bank_transfer')}}</b>
+              <router-link :to="{name: 'control_pay'}">{{$t('gcox_otc.add')}}</router-link>
+            </p>
           </div>
         </div>
-        <div class="prompt">{{getErrorMsg('pay_limit_time')}}<!--请输入付款期限--></div>
+        <div class="column cont-item">
+          <label>{{$t('gcox_otc.bank_name')}}</label>
+          <div class="value">
+            <p>{{bankData.card_bank}}</p>
+          </div>
+        </div>
+        <div class="column cont-item">
+          <label>{{$t('gcox_otc.bank_card_id')}}</label>
+          <div class="value">
+            <p>{{bankData.card_number}}</p>
+          </div>
+        </div>
+        <div class="column cont-item">
+          <label>{{$t('gcox_otc.bank_user')}}</label>
+          <div class="value">
+            <p>{{bankData.card_name}}</p>
+          </div>
+          <div class="prompt"></div>
+        </div>
+        <div class="cont-item dispose">
+          <div class="row">
+            <label class="label-tips">
+              <span>{{$t('otc_ad.otc_ad_maximum_orders')}}<!--最大处理订单数--></span>
+              <!--<div class="tips">-->
+              <!--<span class="tips-container">-->
+              <!--<i class="tips-icon" v-tip.top="tip2">?</i>-->
+              <!--&lt;!&ndash;单个广告可同时存在的未完成订单最大数量&ndash;&gt;-->
+              <!--&lt;!&ndash;-->
+              <!--<em class="tips-text">{{$t('otc_ad.otc_ad_max_uncompleted_orders')}}</em>-->
+              <!--&ndash;&gt;-->
+              <!--</span>-->
+              <!--</div>-->
+            </label>
+            <div class="value">
+              <numberbox :class="{error: errors.has('max_process_num')}" v-model="formData.max_process_num"
+                         :size="maxOrderProcessing.toString().length"
+                         v-validate="`required|pInteger|otcProcessNumValid:${1},${maxOrderProcessing}`"
+                         data-vv-name="max_process_num"/>
+            </div>
+          </div>
+          <div class="prompt">{{getErrorMsg('max_process_num')}}</div>
+        </div>
+        <div class="cont-item good">
+          <div class="row">
+            <label class="label-tips">
+              <span>{{$t('otc_exchange.otc_exchange_Good_rating')}}<!--好评率--></span>
+              <!--<div class="tips">-->
+              <!--<span class="tips-container">-->
+              <!--<i class="tips-icon" v-tip.top="tip3">?</i>-->
+              <!--&lt;!&ndash;要求对手方好评率必须大于此设定值&ndash;&gt;-->
+              <!--&lt;!&ndash;-->
+              <!--<em class="tips-text">{{$t('otc_exchange.otc_exchange_good_rating')}}</em>-->
+              <!--&ndash;&gt;-->
+              <!--</span>-->
+              <!--</div>-->
+            </label>
+            <div class="value">
+              <numberbox :class="{error: errors.has('praise_rate')}" v-model="formData.praise_rate" :size="4"
+                         :accuracy="1" v-validate="'required|ratingValid'" data-vv-name="praise_rate"/>
+              <em>%</em>
+            </div>
+          </div>
+          <div class="prompt">{{getErrorMsg('praise_rate')}}</div>
+        </div>
+        <div class="cont-item timelimit">
+          <div class="row">
+            <label>{{$t('otc_ad.otc_ad_expiration_pay')}}<!--付款期限--></label>
+            <div class="value">
+              <select v-model="formData.pay_limit_time" v-validate="'required'" data-vv-name="pay_limit_time">
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+              <em>{{$t('otc_ad.otc_ad_minute')}}<!--分钟--></em>
+            </div>
+          </div>
+          <div class="prompt">{{getErrorMsg('pay_limit_time')}}<!--请输入付款期限--></div>
+        </div>
       </div>
+      <!--<div class="cont-item tradetype">-->
+      <!--<div class="row">-->
+      <!--<label>{{$t('otc_exchange.otc_exchange_transaction_method')}}：&lt;!&ndash;交易方式&ndash;&gt;<em-->
+      <!--class="asterisk">&nbsp;*</em></label>-->
+      <!--<div class="value">-->
+      <!--<input :class="{error: errors.has('pay_type')}" type="hidden" v-validate="'required'" data-vv-name="pay_type"-->
+      <!--v-model="formData.pay_type"/>-->
+      <!--<span v-for="item in payments" :key="item.id" @click="setPayment(item)"-->
+      <!--v-if="myPayType.indexOf(item.id) !== -1">-->
+      <!--<i :class="[item.checked ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked']"></i>{{$t(item.key)}}-->
+      <!--</span>-->
+      <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="prompt">{{getErrorMsg('pay_type')}}</div>-->
+      <!--</div>-->
+
       <div class="cont-item button">
         <!--<button class="cancel" @click="closeDalg">{{$t('otc_legal.otc_legal_cancel')}}&lt;!&ndash;取消&ndash;&gt;</button>-->
         <button class="yellow_button" :class="{disabled:locked}" @click="saveAds">{{$t('otc_ad.otc_ad_confirm')}}
@@ -250,7 +293,8 @@
           lowestPrice: null
         },
         benchDatas: [], // 对标交易所
-        isATN: false
+        isATN: false,
+        bankData: {}
       }
     },
     computed: {
@@ -301,13 +345,13 @@
           return {
             title1: this.$t('otc_exchange.otc_exchange_sell'), // 出售
             title2: this.$t('public0.public137'), // 可接受的最低单价
-            title3: this.$t('public0.public117') // 我要出售多少
+            title3: this.$t('gcox_otc.buy_number') // 购买数量
           }
         } else if (this.formData.ad_type === 1) {
           return {
             title1: this.$t('otc_exchange.otc_exchange_buy'), // 购买
             title2: this.$t('public0.public136'), // 可接受的最高单价
-            title3: this.$t('public0.public116') // 我要购买多少
+            title3: this.$t('gcox_otc.sell_number') // 出售数量
           }
         }
       },
@@ -346,6 +390,7 @@
       }
     },
     created () {
+      this.getBank()
       this.isATN = additional.includes(this.params.symbol)
       Validator.extend('minAmountValid', {
         getMessage: (field, args) => {
@@ -384,6 +429,16 @@
       })
     },
     methods: {
+      getBank () {
+        otcApi.getPaySettings((res) => {
+          // 银行卡
+          this.bankData = {
+            card_name: res.data.card_name,
+            card_bank: res.data.card_bank,
+            card_number: res.data.card_number
+          }
+        })
+      },
       fnGetBenchExchange () { // 获取对标交易所
         otcApi.getBenchExchange((res) => {
           this.benchDatas = res
@@ -559,6 +614,13 @@
           }
           Vue.$confirmDialog({showCancel: false, content: errMsg})
         })
+      },
+      maket (id) {
+        this.benchDatas.filter(res => {
+          if (res.bench_marking_id === id) {
+            return res.marking_name
+          }
+        })
       }
     }
   }
@@ -579,12 +641,12 @@
     color: #fff;
     font-size: 18px;
     text-align: center;
-    background:rgba(19,20,58,1);
+    background: rgba(19, 20, 58, 1);
   }
 
   .createorder .cont {
-    padding: 20px 30px 20px 30px;
-    border:1px solid #eeeeee;
+    padding: 40px;
+    border: 1px solid #eeeeee;
   }
 
   .cont-item .row {
@@ -593,17 +655,17 @@
     align-items: center;
   }
 
-  .cont-item{
-    width: 700px;
+  .cont-item {
     margin: 0 auto;
   }
+
   .cont-item label {
     display: block;
     height: 24px;
     line-height: 24px;
     font-size: 16px;
     color: #333;
-    width: 230px;
+    width: 190px;
   }
 
   .cont-item label em.asterisk {
@@ -666,11 +728,11 @@
   }
 
   .cont-item .value select {
-    height: 34px;
+    height: 50px;
     padding-left: 12px;
     padding-right: 16px;
-    font-size: 12px;
-    color: #333;
+    font-size: 16px;
+    color: #666666;
     background-position: right 4px center;
     border: 1px solid #ccc;
     cursor: pointer;
@@ -681,14 +743,18 @@
     width: 280px;
   }
 
+  .exchange {
+    border-bottom: 1px solid #eeeeee;
+  }
+
   .cont-item.exchange .value select {
-    width: 280px;
+    width: 100%;
   }
 
   .cont-item.timelimit .value select {
     position: relative;
     z-index: 1;
-    width: 280px;
+    width: 100%;
   }
 
   .cont-item .value span {
@@ -711,8 +777,8 @@
 
   .cont-item .value input {
     box-sizing: border-box;
-    width: 280px;
-    height: 34px;
+    width: 100%;
+    height: 50px;
     padding-left: 12px;
     padding-right: 12px;
     font: 12px/normal 'Microsoft YaHei';
@@ -730,17 +796,17 @@
   .cont-item.dispose .value input,
   .cont-item.timelimit .value input,
   .cont-item.good .value input {
-    width: 280px;
+    width: 100%;
   }
 
   .cont-item.acceptable .value input,
   .cont-item.quantity .value input {
-    width: 280px;
+    width: 100%;
   }
 
   .cont-item .value em {
     position: absolute;
-    top: 0;
+    top: 10px;
     right: 13px;
     height: 30px;
     line-height: 30px;
@@ -755,8 +821,8 @@
   }
 
   .cont-item .prompt {
-    height: 20px;
-    line-height: 20px;
+    height: 24px;
+    line-height: 24px;
     font-size: 12px;
     color: #e53f3f;
     white-space: nowrap;
@@ -770,12 +836,12 @@
   }
 
   .cont-item.button button {
-    width:130px;
-    height:60px;
-    background:rgba(240,185,54,1);
+    width: 130px;
+    height: 60px;
+    background: rgba(240, 185, 54, 1);
     color: #ffffff;
     font-size: 16px;
-    border-radius:4px 3px 3px 3px;
+    border-radius: 4px 3px 3px 3px;
     cursor: pointer;
   }
 
@@ -808,9 +874,83 @@
   .cont-item.button button.comfirm.disabled:hover {
     background-color: #999;
   }
-  .move{
+
+  .move {
     position: relative;
-    top: -28px;
-    left: 230px;
+    top: -48px;
+    /*left: 230px;*/
+  }
+
+  .cont .column {
+    overflow: auto;
+  }
+
+  .cont .column label {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  .cont .column .value {
+    width: 670px !important;
+    height: 50px;
+  }
+
+  .box {
+  }
+
+  .box .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .box .flex a {
+    color: #F0B936;
+    width: 70px;
+    text-align: center;
+  }
+
+  .box .wn {
+    display: inline-block;
+    width: 218px;
+    font-weight: 600;
+  }
+
+  .box .cont-item {
+    border-left: 4px solid #eeeeee;
+    padding-left: 14px;
+  }
+
+  .box .cont-item .value {
+    width: 470px;
+    height: 50px;
+  }
+
+  .box .title_p {
+    font-size: 18px;
+    margin: 30px 0 22px 0;
+  }
+
+  .w250 {
+    width: 250px !important;
+  }
+
+  .box .value > p {
+    height: 20px;
+    line-height: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .small {
+    font-size: 16px;
+    color: #aaaaaa;
+    margin-left: 60px;
+  }
+
+  .small span {
+    display: block;
+    margin-top: 10px;
+    line-height: 24px;
   }
 </style>

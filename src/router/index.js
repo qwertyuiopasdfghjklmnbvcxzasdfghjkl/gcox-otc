@@ -21,6 +21,8 @@ import error from '../public/error'
 import success from '../public/success'
 import transaction from '../public/index/transaction'
 import advertising from '../public/index/advertising'
+import invite from '../public/invite'
+import msg from '../public/msg'
 
 Vue.use(Router)
 
@@ -48,11 +50,11 @@ export default new Router({
       name: 'advertising',
       component: advertising
     },
-    {
-      path: '/acm',
-      name: 'acm',
-      component: acm
-    },
+    // {
+    //   path: '/acm',
+    //   name: 'acm',
+    //   component: acm
+    // },
     {
       path: '/login',
       name: 'login',
@@ -83,47 +85,59 @@ export default new Router({
       component: Activationsuccess,
       meta: {goHome: true, noEntry: true}
     },
+    // {
+    //   path: '/withdrawsuccess',
+    //   name: 'withdrawsuccess',
+    //   component: Withdrawsuccess,
+    //   meta: {goHome: true}
+    // },
+    // {
+    //   path: '/linkinvalid',
+    //   name: 'linkinvalid',
+    //   component: Linkinvalid,
+    //   meta: {goHome: true}
+    // },
+    // {
+    //   path: '/mycenter',
+    //   name: 'mycenter',
+    //   component: mycenter,
+    //   meta: {login: true}
+    // },
+    // {
+    //   path: '/mycenter/:menu',
+    //   name: 'mycenter_menu',
+    //   component: mycenter,
+    //   meta: {login: true}
+    // },
     {
-      path: '/withdrawsuccess',
-      name: 'withdrawsuccess',
-      component: Withdrawsuccess,
-      meta: {goHome: true}
-    },
-    {
-      path: '/linkinvalid',
-      name: 'linkinvalid',
-      component: Linkinvalid,
-      meta: {goHome: true}
-    },
-    {
-      path: '/mycenter',
-      name: 'mycenter',
-      component: mycenter,
+      path: '/invite',
+      name: 'invite',
+      component: invite,
       meta: {login: true}
     },
     {
-      path: '/mycenter/:menu',
-      name: 'mycenter_menu',
-      component: mycenter,
+      path: '/msg',
+      name: 'msg',
+      component: msg,
       meta: {login: true}
     },
-    {
-      path: '/account',
-      name: 'account',
-      component: account,
-      meta: {login: true}
-    },
-    {
-      path: '/account/:menu',
-      name: 'account_menu',
-      component: account,
-      meta: {login: true}
-    },
-    {
-      path: '/market',
-      name: 'market',
-      component: Market
-    },
+    // {
+    //   path: '/account',
+    //   name: 'account',
+    //   component: account,
+    //   meta: {login: true}
+    // },
+    // {
+    //   path: '/account/:menu',
+    //   name: 'account_menu',
+    //   component: account,
+    //   meta: {login: true}
+    // },
+    // {
+    //   path: '/market',
+    //   name: 'market',
+    //   component: Market
+    // },
     {
       path: '/error',
       name: 'error',

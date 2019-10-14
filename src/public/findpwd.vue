@@ -9,11 +9,14 @@
     </div>
     <div form autocomplete="off" onsubmit="return false">
       <div class="mt45 form-item">
-        <input type="text" name="email" :class="{efont:!formData.email}" v-model="formData.email" maxlength="60" v-validate="'required|email'" :placeholder="$t('otc_exchange.otc_exchange_Email')" v-focus> <!--email-->
+        <input type="text" name="email" :class="{efont:!formData.email}" v-model="formData.email" maxlength="60"
+               v-validate="'required|email'" :placeholder="$t('otc_exchange.otc_exchange_Email')" v-focus> <!--email-->
       </div>
       <div class="error-msg">{{ msgs['email'][errors.firstRule('email')]}}</div>
       <p class="mt10 f-c-green">{{$t('login_register.findPwdTip')}}<!-- 提交之后，您会收到一封关于如何重置密码的说明邮件 --></p>
-      <div class="text-right mt30"><button type="button" class="login_button mint-btn default round efont" style="width: 140px;" :disabled="errors.any()" @click="sendMail">{{$t('otc_legal.otc_legal_confirm')}}<!-- 确定 --></button></div>
+      <div class="text-right mt30">
+        <button type="button" class="login_button mint-btn default round efont" style="width: 140px;"
+                                           :disabled="errors.any()" @click="sendMail">{{$t('otc_legal.otc_legal_confirm')}}<!-- 确定 --></button></div>
     </div>
 
   </div>
@@ -132,7 +135,7 @@ export default {
       width: 100%;
       outline: none;
       background-color: transparent;
-      color: #fff;
+      /*color: #fff;*/
     }
   }
 }

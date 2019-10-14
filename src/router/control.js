@@ -8,26 +8,31 @@ export default [
   {
     path: '/overall',
     name: 'overall',
-    component: overall
+    component: overall,
+    meta: {login: true}
   },
   {
     path: '/control_deal',
     name: 'control_deal',
-    component: deal
+    component: deal,
+    meta: {login: true}
   },
   {
     path: '/control_wallet',
     name: 'control_wallet',
-    component: wallet
+    component: wallet,
+    meta: {login: true}
   },
   {
     path: '/control_kyc',
     name: 'control_kyc',
-    component: kyc
+    component: kyc,
+    meta: {login: true}
   },
   {
     path: '/control_pay',
     name: 'control_pay',
-    component: pay
+    component: pay,
+    meta: {login: true}
   }
 ]
