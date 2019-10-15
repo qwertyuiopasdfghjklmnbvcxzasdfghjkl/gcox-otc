@@ -63,7 +63,7 @@ export default {
         this.getBtcPrice()
       }
       try {
-        this.gws.changeLogin()
+        // this.gws.changeLogin()
       } catch (ex) {
         console.warn(ex)
       }
@@ -85,14 +85,14 @@ export default {
         }
         this.$router.push({name: tempName})
         try {
-          this.ws && this.ws.open()
+          // this.ws && this.ws.open()
         } catch (ex) {
           window.console.warn(ex)
         }
       } else {
         this.$route.meta.login ? this.$router.push({name: 'home'}) : void 0
         try {
-          this.ws && this.ws.close()
+          // this.ws && this.ws.close()
         } catch (ex) {
           window.console.warn(ex)
         }
@@ -109,33 +109,34 @@ export default {
     this.getBTCValuation()
     this.getUserInfoMethod()
     this.checkRouteChange(this.$route)
-    this.ws = new OtcWebSocket({
-      onMessage: (data) => {
-        let events = this.getOtcSocketEvents
-        for (let i = 0; i < events.length; i++) {
-          let ev = events[i]
-          ev(data)
-        }
-      }
-    })
-    this.gws = new GlobalWebSocket({
-      type: 'global',
-      checkNetWork: (signal) => {
-        this.setNetworkSignal(signal)
-      },
-      onClose: () => {
-        this.setNetworkSignal(3)
-      },
-      callback: (res) => {
-        if (res.dataType === 'LastValuation') {
-          this.setUSDCNY({
-            USD: numUtils.BN(res.USD).toFixed(2),
-            CNY: numUtils.BN(res.USDCNY).toFixed(2)
-          })
-          this.setBTCValuation(numUtils.BN(res.totalAmount).toFixed(8)) // 当前转换人民币
-        }
-      }
-    })
+    // this.ws = ''
+    //   new OtcWebSocket({
+    //   onMessage: (data) => {
+    //     let events = this.getOtcSocketEvents
+    //     for (let i = 0; i < events.length; i++) {
+    //       let ev = events[i]
+    //       ev(data)
+    //     }
+    //   }
+    // })
+    // this.gws = new GlobalWebSocket({
+    //   type: 'global',
+    //   checkNetWork: (signal) => {
+    //     this.setNetworkSignal(signal)
+    //   },
+    //   onClose: () => {
+    //     this.setNetworkSignal(3)
+    //   },
+    //   callback: (res) => {
+    //     if (res.dataType === 'LastValuation') {
+    //       this.setUSDCNY({
+    //         USD: numUtils.BN(res.USD).toFixed(2),
+    //         CNY: numUtils.BN(res.USDCNY).toFixed(2)
+    //       })
+    //       this.setBTCValuation(numUtils.BN(res.totalAmount).toFixed(8)) // 当前转换人民币
+    //     }
+    //   }
+    // })
     if (utils.isMobile) {
       var f = Math.min(window.screen.width, window.screen.height)
       document.documentElement.className = 'phone'
@@ -143,7 +144,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.ws && this.ws.close()
+    // this.ws && this.ws.close()
   },
   methods: {
     ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setUserInfo','setSysParams']),

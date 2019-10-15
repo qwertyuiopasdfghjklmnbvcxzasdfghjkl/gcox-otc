@@ -90,7 +90,7 @@
           {
             img: 'bch',
             name: 'Bitcoin Cash',
-            symbol: 'CASH'
+            symbol: 'BCH'
           },
           {
             img: 'ltc',
@@ -100,7 +100,7 @@
           {
             img: 'xrp',
             name: 'Ripple',
-            symbol: 'RIPPLE'
+            symbol: 'XRP'
           }
         ],
         curPrice: 0,
@@ -122,8 +122,9 @@
       change (data) {
         this.show = false
         this.t = data
+        this.t.currency = this.params.currency
         this.getInfo()
-        this.$emit('change',data)
+        this.$emit('change',this.t)
       },
       getInfo () {
         otcApi.getCoinMarket(this.paramsChange, res => {

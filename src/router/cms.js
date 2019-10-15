@@ -12,13 +12,9 @@ import clause from '../public/cms/footer/clause'
 const cms = [
   {
     path: '/cms',
-    name: 'cms',
+    // name: 'cms',
     component: Index,
     children: [
-      {
-        path: '',
-        redirect: 'new'
-      },
       {
         path: 'new',
         name: 'new',
@@ -33,12 +29,18 @@ const cms = [
         path: 'detail/:id',
         name: 'detail',
         component: detail
+      },
+      {
+        path: '',
+        redirect: {
+          name: 'new'
+        }
       }
     ]
   },
   {
     path: '/linkFoot',
-    name: 'linkFoot',
+    // name: 'linkFoot',
     component: foot,
     children: [
       {
