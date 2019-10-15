@@ -67,8 +67,28 @@
               <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
               <!--class="green">{{available}} {{symbol}}</small>-->
             <!--</span>-->
+            <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
           </div>
-          <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
+
+        </div>
+
+
+        <div class="filed">
+          <div class="filed-number">
+            <em>{{$t('account.user_center_SMS_code')}}<!--短信验证码-->  *</em>
+
+          </div>
+          <div class="number" :class="{error:errors.has('amount')}">
+            <numberbox data-vv-name="amount" class="numberAll"
+                       type="text" v-model="amount"/>
+            <a href="javascript:;" @click="allWithdraw" class="send_sms">{{$t('public0.public161')}}<!--全部提现--></a>
+            <!--<span>-->
+              <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
+              <!--class="green">{{available}} {{symbol}}</small>-->
+            <!--</span>-->
+            <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
+          </div>
+
         </div>
         <!--<div class="filed">-->
           <!--<div class="withdraw-info f-cb">-->
@@ -96,16 +116,17 @@
           <!--</div>-->
           <!--<em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>-->
         <!--</div>-->
-        <!--<div class="filed">-->
-          <!--<em>-->
-            <!--{{$t('usercontent.user61')}}&lt;!&ndash;谷歌验证码&ndash;&gt;-->
-          <!--</em>-->
-          <!--<div class="withAdress" style="position:relative;" :class="{error:errors.has('googleCode')}">-->
-            <!--<input type="text" maxlength="6" v-validate="'required'"-->
-                   <!--data-vv-name="googleCode" v-model="googleCode"/>-->
-          <!--</div>-->
-          <!--<em class="error" v-if="errors.has('googleCode')">{{getErrors('googleCode')}}</em>-->
-        <!--</div>-->
+        <div class="filed">
+          <em>
+            {{$t('usercontent.user61')}}<!--谷歌验证码--> *
+          </em>
+          <div class="withAdress" style="position:relative;" :class="{error:errors.has('googleCode')}">
+            <input type="text" maxlength="6" v-validate="'required'"
+                   data-vv-name="googleCode" v-model="googleCode"/>
+            <em class="error" v-if="errors.has('googleCode')">{{getErrors('googleCode')}}</em>
+          </div>
+
+        </div>
         <div class="filed">
           <input type="button" class="BNB-subbtn" :value="$t('account.user_submit')" @click="walletWithdraw"/><!--提交-->
         </div>
@@ -631,6 +652,11 @@
     line-height: 50px;
     font-size: 18px;
   }
+  .number a.send_sms{
+    background:#1BB3F6;
+    padding: 0 16px;
+    color: #ffffff !important;
+  }
 
   .number a:hover {
     color: #00B5FF;
@@ -720,11 +746,11 @@
     width: 100%;
   }
   .withdrawBox .filed>em:not(.error){
-    width: 80px;
+    width: 100px;
   }
   .filed{
     .filed-number{
-      width: 80px;
+      width: 100px;
       display: inline-block;
     }
     .number, .withAdress, .c-box{
@@ -772,7 +798,7 @@
 
   .input-box {
     padding-top: 30px;
-    width: 570px;
+    width: 580px;
     margin: 0 auto;
   }
 

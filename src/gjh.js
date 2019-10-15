@@ -130,6 +130,8 @@ export default {
     'user_minimum_number_of_cash': '最小提现数量为{0}。',
     'user_complete': '完成',
     'user_uncompleted': '未完成',
+
+    "user_center_SMS_code":"短信验证码",
   },
   'exchange': {
     'exchange_password': '密码',
@@ -200,6 +202,7 @@ export default {
 
     "public130":"请输入有效的数字",
     "public109":"请登录后再发布广告",
+    "public161":"发送",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
@@ -377,6 +380,19 @@ export default {
     'user92': '关于我们',
     'user79': '公告',
     'user55': '系统消息',
+
+
+    "user26":"在您的手机上安装 「Google Authenticator」二次身份验证软件 （各大应用市场搜索下载即可）iPhone手机：在App Store中搜索Google Authenticator Android手机：在安卓应用市场中搜索“谷歌身份验证器”，或搜索Google Authenticator Windows Phone：在WP应用商店中搜索Google Authenticator",
+    "user25":"步骤一：在手机上安装双重验证程序 GoogleAuthenticator",
+    "user24":"谷歌认证器绑定",
+    "user23":"下次设置",
+    "user29":"提示：启用2FA后，将不会显示令牌。如果您有多台设备，请将您的账户令牌添加到所有账户，然后再单击启用。",
+    "user28":"在“Google Authenticator (身份验证器)”应用程序中， 点击“添加新账户 (iOS 下是 + 号)”，然后选择“扫描条形码”，并将手机上的相机镜头对准左侧扫描该条形码。如果您无法扫描成功上图的条形码，您还可以手动添加账户，并输入<span style=\"color:#e74c3c\"><strong>左侧二维码下方的密钥</strong></span>。请勿删除此双重验证密码账户，否则会导致您无法进行账户操作；如果误删，您可通过重置密钥重新获取。",
+    "user27":"步骤二：扫描二维码",
+    "user32":"确定",
+    "user31":"取消",
+    "user30":"谷歌认证码",
+    "user61":"谷歌验证码",
   },
   'user': {
     'set': '设置',
