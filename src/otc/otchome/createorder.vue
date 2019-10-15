@@ -83,7 +83,8 @@
             </div>
             <p class="small">
               <span>{{$t('gcox_otc.redeme').format(formData.currency,formData.symbol)}}</span>
-              <span v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>
+              <span
+                v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>
             </p>
           </div>
           <div class="prompt">{{getErrorMsg('lowest_price')}}</div>
@@ -581,7 +582,7 @@
           this.locked = false
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           this.params.newAdCount++
-          this.$emit('removeDialog')
+          this.$router.push({name: 'home'})
         }, (msg) => {
           this.locked = false
           let errMsg = typeof msg === 'string' ? msg : msg[0]

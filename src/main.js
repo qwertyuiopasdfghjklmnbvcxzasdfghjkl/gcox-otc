@@ -62,7 +62,8 @@ let i18n = window.$i18n = new VueI18n({
   messages: {
     'zh-CN': null,
     'en': null
-  }
+  },
+  silentTranslationWarn: true
 })
 
 Vue.config.productionTip = false
@@ -79,6 +80,9 @@ if (lang === 'en') {
 } else {
   tar[0].innerText = 'GCOX-比特币以太坊专业数字货币交易网站'
 }
+
+window.console.log = () => {}
+window.console.error = () => {}
 
 // Object.assign(res, gjh)
 langApi.getLanguage(lang, (res) => {

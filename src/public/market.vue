@@ -62,7 +62,7 @@
             <tbody>
             <router-link v-for="item in curProducts"
                          :to="{name: 'exchange_index',params:{symbol:item.currencySymbol+'_'+item.baseSymbol}}"
-                         tag='tr'>
+                         tag='tr' :key="item.currencySymbol">
               <td class="icon">
                 <span @click.stop="addOrDelFavor(item)"><img src="../assets/img/star_blue.png"
                                                              v-if="item.collection || (!getApiToken && favorSymbol.includes(item.market))"><img
@@ -168,17 +168,17 @@
     },
     created () {
       this.queryMarketList()
-      this.socket = KLineWebSocket({
-        subscribe: ['market'],
-        callback: (res) => {
-          if (res.dataType === 'markets') {
-            this.setMarketList(this.mergeMarkets(res.data))
-          }
-        },
-        onClose: () => {
-          this.closeMainLoading = true
-        }
-      })
+      // this.socket = KLineWebSocket({
+      //   subscribe: ['market'],
+      //   callback: (res) => {
+      //     if (res.dataType === 'markets') {
+      //       this.setMarketList(this.mergeMarkets(res.data))
+      //     }
+      //   },
+      //   onClose: () => {
+      //     this.closeMainLoading = true
+      //   }
+      // })
     },
     methods: {
       ...mapActions(['setMarketList']),

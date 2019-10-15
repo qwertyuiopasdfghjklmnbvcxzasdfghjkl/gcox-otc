@@ -1,6 +1,8 @@
 <template>
   <ul class="w1200 mt20 recommend-markets ui-flex ui-flex-justify">
-    <router-link v-for="(item, index) in products" :to="{name: 'exchange_index',params:{symbol:item.currencySymbol+'_'+item.baseSymbol}}" tag='li'>
+    <router-link v-for="(item, index) in products"
+                 :to="{name: 'exchange_index',params:{symbol:item.currencySymbol+'_'+item.baseSymbol}}"
+                 :key="item.currencySymbol" tag='li'>
       <div class="ui-flex" tp>
         <img class="icon" :src="item.iconBase64?`data:image/png;base64,${item.iconBase64}`:`${origin}${item.iconUrl}`">
         <div class="ui-flex-1 name">{{item.currencySymbol}}/{{item.baseSymbol}}</div>

@@ -197,6 +197,8 @@ export default {
     'public186': '请输入好评率',
     'public113': '请输入单价',
     'public50': '暂无相关数据',
+
+    "public130":"请输入有效的数字",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
