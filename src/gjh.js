@@ -199,6 +199,7 @@ export default {
     'public50': '暂无相关数据',
 
     "public130":"请输入有效的数字",
+    "public109":"请登录后再发布广告",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',

@@ -39,7 +39,7 @@
         </router-link>
 
         <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}</router-link>
-        <router-link :to="{name:'invite'}" class="item" :activeClass="'active'">{{$t('gcox_otc.invite')}}</router-link>
+        <router-link :to="{name:'invite'}" class="item" :activeClass="'active'"  v-if="isLogin">{{$t('gcox_otc.invite')}}</router-link>
 
         <router-link to="" class="item" v-if="isLogin">
           <span style="color: #fff;" class="nav-title">
