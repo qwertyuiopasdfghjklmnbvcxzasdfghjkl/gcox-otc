@@ -61,7 +61,7 @@
                 <span>{{$t('exchange.exchange_wallet')}}<!-- 钱包 --></span>
               </router-link>
               <router-link :to="{name:'control_pay'}" class="sub-item" tag="div">
-                <i class="pay"></i>
+                <i class="pay icon-bank"></i>
                 <span>{{$t('gcox_otc.pay_way')}}<!-- 付款方式 --></span>
               </router-link>
               <router-link :to="{name:'control_kyc'}" class="sub-item" tag="div">
@@ -307,7 +307,10 @@
               background-image: url('../assets/img/icon_otc03.png');
             }
             .pay {
-              background-image: url('../assets/img/icon_otc03.png');
+              /*background-image: url('../assets/img/icon_otc03.png');*/
+              /*content: 'icon-bank';*/
+              color: #0C0D34;
+              line-height: 40px;
             }
             .kyc {
               background-image: url('../assets/img/icon_otc04.png');
