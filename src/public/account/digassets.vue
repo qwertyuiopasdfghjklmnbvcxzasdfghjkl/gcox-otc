@@ -363,9 +363,9 @@
             return true
           }
         })
-        ndatas = ndatas.filter(item => {
-          return item.type === this.accountType
-        })
+        // ndatas = ndatas.filter(item => {
+        //   return item.type === this.accountType
+        // })
         ndatas.sort((item1, item2) => {
           if (this.sortActive === 'symbol') {
             let m1 = item1.symbol
