@@ -79,7 +79,14 @@ export default {
     'bank_card_id': '银行账号',
     'bank_user': '银行户名',
     'redeme': '{0}中1 {1}的价格',
-    'radio_market': '这是目前Bitstamp {0}率的{1}价格（{2}）。 <br/>当Bitstamp {0}率变化时，价格将波动。'
+    'radio_market': '这是目前Bitstamp {0}率的{1}价格（{2}）。 <br/>当Bitstamp {0}率变化时，价格将波动。',
+
+    'add_phone': '添加手机号',
+    'unbind_phone': '手机解绑',
+    'next': '继续',
+    'input_sms': '验证码已发送至您的手机，请在下面输入您的验证码',
+    'back': '后退',
+    'no_bind_mobile': '未绑定手机'
   },
   'login_register': {
     'Next_step': '下一步',
@@ -203,6 +210,7 @@ export default {
     "public130":"请输入有效的数字",
     "public109":"请登录后再发布广告",
     "public161":"发送",
+    "public6":"请输入手机号",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',

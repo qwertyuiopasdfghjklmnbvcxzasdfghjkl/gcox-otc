@@ -8,25 +8,25 @@
         </small>
       </div>
       <!--<div>-->
-        <!--<p class="tbsm">-->
-          <!--<span>{{$t('usercontent.description')}} </span>-->
-          <!--<span style="padding-left:4px ">{{$t('usercontent.description-text')}}</span>-->
-        <!--</p>-->
+      <!--<p class="tbsm">-->
+      <!--<span>{{$t('usercontent.description')}} </span>-->
+      <!--<span style="padding-left:4px ">{{$t('usercontent.description-text')}}</span>-->
+      <!--</p>-->
       <!--</div>-->
       <div class="input-box">
         <!--<div class="filed symbol">-->
-          <!--<em>-->
-            <!--{{$t('usercontent.user86')}}-->
-          <!--</em>-->
-          <!--<div class="withAdress">-->
-            <!--<p class="drown" @click.stop="showSymbol=!showSymbol">{{symbol}}</p>-->
-            <!--<ul v-show="showSymbol">-->
-              <!--<li v-for="item in allData"-->
-                  <!--@click.prevent="changeW(item)"-->
-                  <!--:class="{active: item.symbol === symbol}">{{item.symbol}}-->
-              <!--</li>-->
-            <!--</ul>-->
-          <!--</div>-->
+        <!--<em>-->
+        <!--{{$t('usercontent.user86')}}-->
+        <!--</em>-->
+        <!--<div class="withAdress">-->
+        <!--<p class="drown" @click.stop="showSymbol=!showSymbol">{{symbol}}</p>-->
+        <!--<ul v-show="showSymbol">-->
+        <!--<li v-for="item in allData"-->
+        <!--@click.prevent="changeW(item)"-->
+        <!--:class="{active: item.symbol === symbol}">{{item.symbol}}-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
         <!--</div>-->
         <div class="filed">
           <em>{{$t('account.estimated_value_available')}}<!--可用余额--></em>
@@ -51,12 +51,12 @@
             </ul>
           </div>
           <!--<p @click="useNewAddress" class="add-address">-->
-            <!--{{$t('account.user_new_address')}}&lt;!&ndash;使用新地址&ndash;&gt;-->
+          <!--{{$t('account.user_new_address')}}&lt;!&ndash;使用新地址&ndash;&gt;-->
           <!--</p>-->
         </div>
         <div class="filed">
           <div class="filed-number">
-            <em>{{$t('account.user_Draw_the_number')}}<!--提现数量-->  *</em>
+            <em>{{$t('account.user_Draw_the_number')}}<!--提现数量--> *</em>
 
           </div>
           <div class="number" :class="{error:errors.has('amount')}">
@@ -64,8 +64,8 @@
                        type="text" v-model="amount"/>
             <a href="javascript:;" @click="allWithdraw">Max<!--全部提现--></a>
             <!--<span>-->
-              <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
-              <!--class="green">{{available}} {{symbol}}</small>-->
+            <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
+            <!--class="green">{{available}} {{symbol}}</small>-->
             <!--</span>-->
             <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
           </div>
@@ -75,46 +75,49 @@
 
         <div class="filed">
           <div class="filed-number">
-            <em>{{$t('account.user_center_SMS_code')}}<!--短信验证码-->  *</em>
+            <em>{{$t('account.user_center_SMS_code')}}<!--短信验证码--> *</em>
 
           </div>
-          <div class="number" :class="{error:errors.has('amount')}">
+          <div class="number" :class="{error:errors.has('smsCode')}">
             <numberbox data-vv-name="amount" class="numberAll"
-                       type="text" v-model="amount"/>
-            <a href="javascript:;" @click="allWithdraw" class="send_sms">{{$t('public0.public161')}}<!--全部提现--></a>
+                       type="text" v-model="smsCode"/>
+            <a href="javascript:;" @click="senSMS()" class="send_sms">{{disabled ? time+'s':$t('public0.public161')}}<!--发送--></a>
             <!--<span>-->
-              <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
-              <!--class="green">{{available}} {{symbol}}</small>-->
+            <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
+            <!--class="green">{{available}} {{symbol}}</small>-->
             <!--</span>-->
-            <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
+            <!--<em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>-->
+            <em class="error">
+              <template v-if="errors.firstRule('smsCode')==='required'">{{$t('login_register.verify_code')}}</template>
+            </em>
           </div>
 
         </div>
         <!--<div class="filed">-->
-          <!--<div class="withdraw-info f-cb">-->
-            <!--<div class="ng-binding">-->
-              <!--<p>{{$t('exchange.advanced_fee')}}&lt;!&ndash;手续费&ndash;&gt; </p>-->
-              <!--<span>{{procedureFee}} {{symbol}}</span>-->
-            <!--</div>-->
-            <!--<div class="ng-binding">-->
-              <!--<p>{{$t('account.user_Actual_arrival')}}&lt;!&ndash;实际到账&ndash;&gt; </p>-->
-              <!--<span>{{lastMount}} {{symbol}}</span>-->
-            <!--</div>-->
-          <!--</div>-->
+        <!--<div class="withdraw-info f-cb">-->
+        <!--<div class="ng-binding">-->
+        <!--<p>{{$t('exchange.advanced_fee')}}&lt;!&ndash;手续费&ndash;&gt; </p>-->
+        <!--<span>{{procedureFee}} {{symbol}}</span>-->
+        <!--</div>-->
+        <!--<div class="ng-binding">-->
+        <!--<p>{{$t('account.user_Actual_arrival')}}&lt;!&ndash;实际到账&ndash;&gt; </p>-->
+        <!--<span>{{lastMount}} {{symbol}}</span>-->
+        <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
         <!--<div class="filed">-->
-          <!--<em>-->
-            <!--{{$t('usercontent.user11')}}&lt;!&ndash;资金密码&ndash;&gt;-->
-          <!--</em>-->
-          <!--<div class="withAdress" style="position:relative;" :class="{error:errors.has('payPassword')}">-->
-            <!--<input :type="showPayPW?'text':'password'" maxlength="100" v-validate="'required'"-->
-                   <!--data-vv-name="payPassword" v-model="payPassword"/>-->
-            <!--<div class="pwd-isShow" @click="showPayPW=!showPayPW">-->
-              <!--<img src="../../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPayPW">-->
-              <!--<img src="../../assets/img/hide_password.png" alt="" style="opacity: 0.8;" v-else>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>-->
+        <!--<em>-->
+        <!--{{$t('usercontent.user11')}}&lt;!&ndash;资金密码&ndash;&gt;-->
+        <!--</em>-->
+        <!--<div class="withAdress" style="position:relative;" :class="{error:errors.has('payPassword')}">-->
+        <!--<input :type="showPayPW?'text':'password'" maxlength="100" v-validate="'required'"-->
+        <!--data-vv-name="payPassword" v-model="payPassword"/>-->
+        <!--<div class="pwd-isShow" @click="showPayPW=!showPayPW">-->
+        <!--<img src="../../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPayPW">-->
+        <!--<img src="../../assets/img/hide_password.png" alt="" style="opacity: 0.8;" v-else>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>-->
         <!--</div>-->
         <div class="filed">
           <em>
@@ -143,6 +146,7 @@
 </template>
 <script>
   import Vue from 'vue'
+  import {mapGetters} from 'vuex'
   import userUtils from '@/api/wallet'
   import userApi from '@/api/individual'
   import numUtils from '@/assets/js/numberUtils'
@@ -179,11 +183,14 @@
         toAddress: '', // 提现地址
         showPayPW: false,
         allData: [],
+        smsCode: null,
         msgs: {
           amount: {required: this.$t('public0.public46')}, // 请输入提现金额
           payPassword: {required: this.$t('usercontent.inp-pay-pw')}, // 请输入资金密码
           googleCode: {required: this.$t('usercontent.user33')}, // 请输入谷歌认证码
-        }
+        },
+        time: 60,
+        disabled: false
       }
     },
     watch: {
@@ -206,6 +213,7 @@
       }
     },
     computed: {
+      ...mapGetters(['getUserInfo']),
       procedureFee () { // 手续费 提现数量-固定手续费
         return utils.removeEndZero(numUtils.BN(this.procedure).toFixed(8))
       },
@@ -226,7 +234,7 @@
     created () {
       let item = this.item || this.$route.params.item
       this.allData = this.all_data || this.$route.params.allData
-      console.log(item,this.allData)
+      console.log(item, this.allData)
       if (!item || item === 'undefined') {
         //console.log('error')
         this.$router.push({
@@ -272,6 +280,34 @@
         }, (msg) => {
           console.error(msg)
         })
+      },
+      senSMS () {
+        if (this.getUserInfo.mobile) {
+          if (this.disabled) {
+            return
+          }
+          this.disabled = true
+          userApi.sendAuthSMSCode({
+            countryCode: this.getUserInfo.countryCode,
+            phoneNumber: this.getUserInfo.mobile
+          }, (msg) => {
+            let timeOut = () => {
+              this.time--
+              if (this.time === 0) {
+                this.disabled = false
+                this.time = 60
+                return
+              }
+              setTimeout(timeOut, 1000)
+            }
+            Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
+          }, (msg) => {
+            this.disabled = false
+            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+          })
+        } else {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.no_bind_mobile`)})
+        }
       },
       toFixed (value, fixed) {
         return numUtils.BN(value || 0).toFixed(fixed === undefined ? this.fixedNumber : fixed)
@@ -360,7 +396,7 @@
         this.minWithdraw = item.minWithdraw
         this.showSymbol = false
       },
-      close(){
+      close () {
         this.$emit('removeDialog')
       }
     }
@@ -388,7 +424,7 @@
     overflow: hidden;
     position: relative;
     width: 900px;
-    border-radius:8px;
+    border-radius: 8px;
   }
 
   .tbsm {
@@ -464,10 +500,10 @@
   }
 
   .withdrawBox .filed .BNB-subbtn {
-    width:130px;
-    height:50px;
-    background:rgba(240,185,54,1);
-    border-radius:3px;
+    width: 130px;
+    height: 50px;
+    background: rgba(240, 185, 54, 1);
+    border-radius: 3px;
     color: #ffffff;
     margin: 5px auto;
     display: block;
@@ -643,17 +679,18 @@
   }
 
   .number a {
-    width:58px;
-    height:50px;
-    background:#13143A;
-    border-radius:3px;
+    width: 58px;
+    height: 50px;
+    background: #13143A;
+    border-radius: 3px;
     text-align: center;
     color: #ffffff;
     line-height: 50px;
     font-size: 18px;
   }
-  .number a.send_sms{
-    background:#1BB3F6;
+
+  .number a.send_sms {
+    background: #1BB3F6;
     padding: 0 16px;
     color: #ffffff !important;
   }
@@ -745,24 +782,28 @@
     display: block;
     width: 100%;
   }
-  .withdrawBox .filed>em:not(.error){
+
+  .withdrawBox .filed > em:not(.error) {
     width: 100px;
   }
-  .filed{
-    .filed-number{
+
+  .filed {
+    .filed-number {
       width: 100px;
       display: inline-block;
     }
-    .number, .withAdress, .c-box{
-      width:470px;
-      height:50px;
+
+    .number, .withAdress, .c-box {
+      width: 470px;
+      height: 50px;
       padding: 0;
-      background:#eeeeee;
-      border-radius:3px;
+      background: #eeeeee;
+      border-radius: 3px;
       display: inline-flex;
       justify-content: space-between;
       align-items: center;
-      small{
+
+      small {
         height: 20px;
         padding: 15px;
         font-size: 18px;

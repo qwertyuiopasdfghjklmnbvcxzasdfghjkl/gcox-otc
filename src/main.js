@@ -18,6 +18,7 @@ import 'vtip/lib/index.min.css'
 import '@/assets/css/style.css'
 import '@/assets/css/mian.css'
 import '@/assets/css/swiper.min.css'
+import '@/assets/css/country.css'
 import langApi from '@/api/language'
 
 import ECharts from 'vue-echarts/components/ECharts.vue'
@@ -81,8 +82,8 @@ if (lang === 'en') {
   tar[0].innerText = 'GCOX-比特币以太坊专业数字货币交易网站'
 }
 
-window.console.log = () => {}
-window.console.error = () => {}
+// window.console.log = () => {}
+// window.console.error = () => {}
 
 // Object.assign(res, gjh)
 langApi.getLanguage(lang, (res) => {

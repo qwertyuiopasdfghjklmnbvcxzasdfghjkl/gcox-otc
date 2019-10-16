@@ -1,5 +1,5 @@
 <template>
-  <div class="createorder" :class="[{'sell-pend': formData.ad_type === 2}, {'englishsize': getLang === 'en'}]">
+  <div class="createorder" :class="{'sell-pend': formData.ad_type === 2}">
     <div class="title">{{$t(ad_id ? 'otc_ad.otc_edit_title' : 'otc_ad.otc_post_title').format(tradeParams.title1,
       formData.symbol)}}<!--发布广告||修改广告--></div>
     <div class="cont">
