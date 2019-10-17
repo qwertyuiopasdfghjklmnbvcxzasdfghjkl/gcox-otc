@@ -82,8 +82,10 @@ if (lang === 'en') {
   tar[0].innerText = 'GCOX-比特币以太坊专业数字货币交易网站'
 }
 
-// window.console.log = () => {}
-// window.console.error = () => {}
+if (process.env.NODE_ENV !== 'development') {
+  window.console.log = () => {}
+  window.console.error = () => {}
+}
 
 // Object.assign(res, gjh)
 langApi.getLanguage(lang, (res) => {

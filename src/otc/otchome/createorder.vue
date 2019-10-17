@@ -3,83 +3,56 @@
     <div class="title">{{$t(ad_id ? 'otc_ad.otc_edit_title' : 'otc_ad.otc_post_title').format(tradeParams.title1,
       formData.symbol)}}<!--发布广告||修改广告--></div>
     <div class="cont">
-      <!--<div class="cont-item currency">-->
-      <!--<div class="row">-->
-      <!--<label>{{$t('otc_ad.otc_current_currency')}}：&lt;!&ndash;当前法币&ndash;&gt;</label>-->
-      <!--<div class="value">-->
-      <!--<select v-model="formData.currency">-->
-      <!--<option v-for="item in currencyList" :key="item.id" :value="item.currency">-->
-      <!--{{$t(`otc_exchange.otc_exchange_${item.currency}`)}}-->
-      <!--</option>-->
-      <!--</select>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="prompt"></div>-->
-      <!--</div>-->
-      <div class="cont-item exchange">
-        <div class="column">
-          <label>{{$t('otc_exchange.otc_exchange_Bid')}}：<!--对标交易所--></label>
+      <div class="cont-item currency">
+        <div class="row">
+          <label>{{$t('otc_ad.otc_current_currency')}}：<!--当前法币--></label>
           <div class="value">
-            <select v-model="formData.bench_marking_id">
-              <option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">
-                {{item.marking_name}}
+            <select class="w250" v-model="formData.currency">
+              <option v-for="item in currencyList" :key="item.id" :value="item.currency">
+                {{$t(`otc_exchange.otc_exchange_${item.currency}`)}}
               </option>
             </select>
           </div>
         </div>
         <div class="prompt"></div>
       </div>
+      <!--<div class="cont-item exchange">-->
+      <!--<div class="column">-->
+      <!--<label>{{$t('otc_exchange.otc_exchange_Bid')}}：&lt;!&ndash;对标交易所&ndash;&gt;</label>-->
+      <!--<div class="value">-->
+      <!--<select v-model="formData.bench_marking_id">-->
+      <!--<option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">-->
+      <!--{{item.marking_name}}-->
+      <!--</option>-->
+      <!--</select>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="prompt"></div>-->
+      <!--</div>-->
 
       <!--<div class="cont-item currentprice">-->
-      <!--<div class="row">-->
-      <!--<label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：&lt;!&ndash;交易所价格&ndash;&gt;</label>-->
-      <!--<div class="value">-->
-      <!--<span>{{benchItem.lowestPrice}}</span>-->
+        <!--<div class="row">-->
+          <!--<label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：&lt;!&ndash;交易所价格&ndash;&gt;</label>-->
+          <!--<div class="value">-->
+            <!--<span>{{benchItem.lowestPrice}}</span>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="prompt"></div>-->
       <!--</div>-->
-      <!--</div>-->
-      <!--<div class="prompt"></div>-->
-      <!--</div>-->
-      <!--<div class="cont-item premium" v-if="!isATN">-->
-      <!--<div class="row">-->
-      <!--<label class="label-tips">-->
-      <!--<span>{{$t('otc_ad.otc_ad_Premium')}}：&lt;!&ndash;溢价&ndash;&gt;</span>-->
-      <!--<div class="tips">-->
-      <!--<span class="tips-container">-->
-      <!--<i class="tips-icon" v-tip.top="tip1">?</i>-->
-      <!--&lt;!&ndash;对交易所价格的浮动比例&ndash;&gt;-->
-      <!--&lt;!&ndash;-->
-      <!--<em class="tips-text">{{$t('otc_exchange.otc_exchange_price_float_rate')}}</em>-->
-      <!--&ndash;&gt;-->
-      <!--</span>-->
-      <!--</div>-->
-      <!--</label>-->
-      <!--<div class="value">-->
-      <!--<numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6" :accuracy="2"-->
-      <!--v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>-->
-      <!--<em>%</em>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="prompt">{{getErrorMsg('price_rate')}}</div>-->
-      <!--</div>-->
-      <!--<div class="cont-item price" v-if="!isATN">-->
-      <!--<div class="row">-->
-      <!--<label>{{$t('otc_exchange.otc_exchange_price')}}&lt;!&ndash;溢价后单价&ndash;&gt; ({{formData.currency}})：</label>-->
-      <!--<div class="value">-->
-      <!--<span>{{curPrice}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="prompt"></div>-->
-      <!--</div>-->
+
+
       <div class="box">
         <p class="title_p">{{$t('exchange.exchange_price')}}</p>
-        <div class="cont-item acceptable" v-if="!isATN">
+        <div class="cont-item">
           <div class="row">
-            <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> </label>
-            <span class="wn">{{benchItem.lowestPrice}} {{formData.currency}}/{{formData.symbol}}</span>
-            <div class="value w250">
-              <numberbox :class="{error: errors.has('lowest_price')}" v-model="formData.lowest_price" :size="13"
-                         :accuracy="2" v-validate="'intOrDecimal|maxInputValue:9999999999'"
-                         data-vv-name="lowest_price"/>
+            <label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})<!---交易所价格--></label>
+            <div class="value">
+              <select class="w250" v-model="formData.bench_marking_id">
+                <option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">
+                  {{item.marking_name}}
+                </option>
+              </select>
+              <span>{{benchItem.lowestPrice}}</span>
             </div>
             <p class="small">
               <span>{{$t('gcox_otc.redeme').format(formData.currency,formData.symbol)}}</span>
@@ -87,8 +60,59 @@
                 v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>
             </p>
           </div>
+          <div class="prompt"></div>
+        </div>
+
+        <div class="cont-item premium" v-if="!isATN">
+          <div class="row">
+            <label class="label-tips">
+              <span>{{$t('otc_ad.otc_ad_Premium')}}<!--溢价--></span>
+              <div class="tips">
+                <span class="tips-container">
+                <i class="tips-icon" v-tip.top="tip1">?</i>
+                  <!--对交易所价格的浮动比例-->
+                  <!--
+                  <em class="tips-text">{{$t('otc_exchange.otc_exchange_price_float_rate')}}</em>
+                  -->
+                </span>
+              </div>
+            </label>
+            <div class="value">
+              <numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6" :accuracy="2"
+                         v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>
+              <em>%</em>
+            </div>
+          </div>
+          <div class="prompt">{{getErrorMsg('price_rate')}}</div>
+        </div>
+
+        <div class="cont-item price" v-if="!isATN">
+          <div class="row">
+            <label>{{$t('otc_exchange.otc_exchange_price')}}<!--溢价后单价--> ({{formData.currency}})：</label>
+            <div class="value">
+              <span>{{curPrice}}</span>
+            </div>
+          </div>
+          <div class="prompt"></div>
+        </div>
+
+        <div class="cont-item acceptable" v-if="!isATN">
+          <div class="row">
+            <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> </label>
+            <!--<span class="wn">{{benchItem.lowestPrice}} {{formData.currency}}/{{formData.symbol}}</span>-->
+            <div class="value">
+              <numberbox :class="{error: errors.has('lowest_price')}" v-model="formData.lowest_price" :size="13"
+                         :accuracy="2" v-validate="'intOrDecimal|maxInputValue:9999999999'"
+                         data-vv-name="lowest_price"/>
+            </div>
+
+          </div>
           <div class="prompt">{{getErrorMsg('lowest_price')}}</div>
         </div>
+      </div>
+
+      <div class="box">
+        <p class="title_p">{{$t('exchange.exchange_amount')}}</p>
         <div class="cont-item quantity">
           <div class="row">
             <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少--> </label>
@@ -158,6 +182,9 @@
           </div>
           <div class="prompt"></div>
         </div>
+      </div>
+      <div class="box">
+        <p class="title_p">{{$t('gcox_otc.others')}} <!--其他要求--></p>
         <div class="cont-item dispose">
           <div class="row">
             <label class="label-tips">
@@ -740,8 +767,11 @@
     font-weight: 600;
   }
 
-  .cont-item.currency .value select {
-    width: 280px;
+  .currency{
+    border-bottom: 1px solid #eeeeee;
+  }
+  .currency label {
+    padding-right: 15px;
   }
 
   .exchange {
@@ -761,6 +791,8 @@
   .cont-item .value span {
     font-size: 16px;
     color: #999;
+    flex: 1;
+    text-align: right;
   }
 
   .cont-item.tradetype .value span {
@@ -925,6 +957,8 @@
   .box .cont-item .value {
     width: 470px;
     height: 50px;
+    display: flex;
+    align-items: center;
   }
 
   .box .title_p {
@@ -941,6 +975,7 @@
     line-height: 20px;
     padding: 14px 0;
     border-bottom: 1px solid #eeeeee;
+    flex: 1;
   }
 
   .small {
