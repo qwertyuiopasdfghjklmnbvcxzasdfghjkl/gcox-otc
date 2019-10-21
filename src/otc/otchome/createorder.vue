@@ -88,7 +88,7 @@
 
         <div class="cont-item price" v-if="!isATN">
           <div class="row">
-            <label>{{$t('otc_exchange.otc_exchange_price')}}<!--溢价后单价--> ({{formData.currency}})：</label>
+            <label>{{$t('otc_exchange.otc_exchange_price')}}<!--溢价后单价--> ({{formData.currency}})</label>
             <div class="value">
               <span>{{curPrice}}</span>
             </div>
@@ -98,7 +98,7 @@
 
         <div class="cont-item acceptable" v-if="!isATN">
           <div class="row">
-            <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> </label>
+            <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> ({{formData.currency}})</label>
             <!--<span class="wn">{{benchItem.lowestPrice}} {{formData.currency}}/{{formData.symbol}}</span>-->
             <div class="value">
               <numberbox :class="{error: errors.has('lowest_price')}" v-model="formData.lowest_price" :size="13"
@@ -115,7 +115,10 @@
         <p class="title_p">{{$t('exchange.exchange_amount')}}</p>
         <div class="cont-item quantity">
           <div class="row">
-            <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少--> </label>
+            <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少-->
+              ({{formData.ad_type === 1 ?
+              formData.symbol :
+              formData.currency}}) </label>
             <div class="value">
               <numberbox :class="{error: errors.has('symbol_count')}" v-model="formData.symbol_count" :size="15"
                          :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|maxInputValue:9999999999'"
@@ -373,13 +376,13 @@
           return {
             title1: this.$t('otc_exchange.otc_exchange_sell'), // 出售
             title2: this.$t('public0.public137'), // 可接受的最低单价
-            title3: this.$t('gcox_otc.buy_number') // 购买数量
+            title3: this.$t('gcox_otc.sell_number') // 出售数量
           }
         } else if (this.formData.ad_type === 1) {
           return {
             title1: this.$t('otc_exchange.otc_exchange_buy'), // 购买
             title2: this.$t('public0.public136'), // 可接受的最高单价
-            title3: this.$t('gcox_otc.sell_number') // 出售数量
+            title3: this.$t('gcox_otc.buy_number') // 购买数量
           }
         }
       },

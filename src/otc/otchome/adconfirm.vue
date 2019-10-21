@@ -2,13 +2,13 @@
   <div class="ad-confirm">
       <div class="title">{{$t(item.ad_type === 1 ? 'otc_exchange.otc_exchange_buy' : 'otc_exchange.otc_exchange_sell')}} {{item.symbol}}</div>
       <ul class="ad-detail">
-          <li class="ad-row ad-row-header">
+          <li class="ad-row-header">
               <span class="ad-price" :class="{isATN: item.isATN}">{{$t('public0.public256')}}<!--当前价格--></span>
               <span class="ad-amount" v-if="!item.isATN">{{$t('otc_ad.otc_ad_Premium')}}<!--溢价--></span>
               <span class="ad-money" v-if="!item.isATN">{{tradeParams.title}}<!--可接受的最高单价||可接受的最低单价--></span>
-              <span class="ad-pay" :class="{isATN: item.isATN}">{{$t('otc_ad.otc_ad_Payment_method')}}<!--支付方式--></span>
+              <span class="ad-pay" :class="{isATN: item.isATN}">{{$t('shop.payment')}}<!--支付方式--></span>
           </li>
-          <li class="ad-row">
+          <li class="">
               <span class="ad-price" :class="{isATN: item.isATN}">{{item.isATN ? item.lowest_price : item.lowestPrice}} {{item.currency}}</span>
               <span class="ad-amount" v-if="!item.isATN">{{item.price_rate || '--'}}%</span>
               <span class="ad-money" v-if="!item.isATN">{{item.lowest_price || '--'}} {{item.currency}}</span>
@@ -64,4 +64,11 @@ export default {
 .ad-price.isATN,
 .ad-pay.isATN{width: 275px;}
 .ad-pay /deep/ em{margin-left: 4px;}
+  .ad-detail li{
+    display: flex;
+  }
+.ad-detail li span{
+     padding: 6px 2px;
+    flex: 1;
+}
 </style>

@@ -212,6 +212,7 @@ export default {
     "public109":"请登录后再发布广告",
     "public161":"发送",
     "public6":"请输入手机号",
+    "public256":"当前价格",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
