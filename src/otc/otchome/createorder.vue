@@ -329,7 +329,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getLang']),
+      ...mapGetters(['getLang','getCurrency']),
       tip1 () {
         return {
           container: document.body,
@@ -421,6 +421,7 @@
       }
     },
     created () {
+      console.log(this.params)
       this.getBank()
       this.isATN = additional.includes(this.params.symbol)
       Validator.extend('minAmountValid', {

@@ -4,15 +4,15 @@
 
       <div class="select">
         <p @click.stop="show=!show">
-          <cryptoicon :symbol="t.img" size="40"/>
-          <span>{{t.name}}</span>
+          <cryptoicon :symbol="t.symbol" size="40"/>
+          <span>{{t.caption}}</span>
           <i></i>
         </p>
         <ul v-if="show">
           <li v-for="item in ts" @click="change(item)">
             <p>
-              <cryptoicon :symbol="item.img" size="40"/>
-              <span>{{item.name}}</span>
+              <cryptoicon :symbol="item.symbol" size="40"/>
+              <span>{{item.caption}}</span>
             </p>
           </li>
         </ul>
@@ -33,7 +33,7 @@
 
       <div class="buy_box" v-if="state === 1">
         <button class="yellow_button" @click="buy()">Create offer</button>
-        <p @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}Etheaeum ?</p>
+        <p @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}{{t.symbol}} ?</p>
       </div>
 
       <div class="buy_box" v-if="state === 2">
@@ -49,7 +49,7 @@
           </span>
         </div>
         <button class="red_button" @click="sell()">Create offer</button>
-        <p @click="state=1">{{$t('gcox_otc.want').format($t('gcox_otc.buy'))}}Etheaeum ?</p>
+        <p @click="state=1">{{$t('gcox_otc.want').format($t('gcox_otc.buy'))}}{{t.symbol}} ?</p>
       </div>
 
     </div>
@@ -71,38 +71,7 @@
         show: false,
         state: 0,
         t: this.params,
-        ts: [
-          {
-            img: 'btc',
-            name: 'Bitcoin',
-            symbol: 'BTC'
-          },
-          {
-            img: 'eth',
-            name: 'Ethereum',
-            symbol: 'ETH'
-          },
-          {
-            img: 'usdt',
-            name: 'Tether USDT',
-            symbol: 'USDT'
-          },
-          {
-            img: 'bch',
-            name: 'Bitcoin Cash',
-            symbol: 'BCH'
-          },
-          {
-            img: 'ltc',
-            name: 'Litecoin',
-            symbol: 'LTC'
-          },
-          {
-            img: 'xrp',
-            name: 'Ripple',
-            symbol: 'XRP'
-          }
-        ],
+        ts: [],
         curPrice: 0,
       }
     },
@@ -110,12 +79,13 @@
       paramsChange () {
         return {
           bench_marking_id: 1,
-          currency: 'CNY',
+          currency: this.params.currency,
           symbol: this.t.symbol
         }
       }
     },
     created () {
+      this.getList()
       this.getInfo()
     },
     methods: {
@@ -124,7 +94,12 @@
         this.t = data
         this.t.currency = this.params.currency
         this.getInfo()
-        this.$emit('change',this.t)
+        this.$emit('change', this.t)
+      },
+      getList () {
+        otcApi.getCoinsList(res => {
+          this.ts = res
+        })
       },
       getInfo () {
         otcApi.getCoinMarket(this.paramsChange, res => {

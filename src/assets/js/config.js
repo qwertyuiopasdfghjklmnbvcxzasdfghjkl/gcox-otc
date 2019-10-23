@@ -6,7 +6,7 @@ const config = {
   domain: domain,
   origin: `${window.location.protocol}//${domain}`,
   imageType: /\.(jpg|png|jpeg|bmp)/i,
-  protocol: window.location.protocol === 'https:' ? 'wss://': 'ws://'
+  protocol: window.location.protocol === 'https:' ? 'wss://' : 'ws://'
 }
 
 export default config

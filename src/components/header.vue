@@ -3,8 +3,9 @@
     <div class="header-bg"></div>
     <div class="w1200 header-top">
       <p>
-        <switch-vi/>
-        余额 USDT：0.00
+        <switch-vi @change="change" :value="showBalance"/>
+        {{$t('account.estimated_value_available')}} {{symbolInfo.symbol || 'BTC'}}：
+        {{showBalance ? symbolInfo.totalBalance || 0.0 : '--'}}
       </p>
     </div>
     <div class="header w1200 ui-flex ui-flex-justify">
@@ -39,7 +40,9 @@
         </router-link>
 
         <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}</router-link>
-        <router-link :to="{name:'invite'}" class="item" :activeClass="'active'"  v-if="isLogin">{{$t('gcox_otc.invite')}}</router-link>
+        <router-link :to="{name:'invite'}" class="item" :activeClass="'active'" v-if="isLogin">
+          {{$t('gcox_otc.invite')}}
+        </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
           <span style="color: #fff;" class="nav-title">
@@ -73,7 +76,8 @@
         </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
-          <span style="color: #fff;" class="nav-title">{{displayUsername}}<img v-if="displayUsername" src="../assets/img/icon-otc10.png"/></span>
+          <span style="color: #fff;" class="nav-title">{{displayUsername}}<img v-if="displayUsername"
+                                                                               src="../assets/img/icon-otc10.png"/></span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
             <div class="popover-menu">
               <router-link :to="{name:'usercenter_abstract'}" class="sub-item" tag="div">
@@ -84,14 +88,6 @@
                 <i class="set"></i>
                 <span>{{$t('user.set')}}<!-- 设置 --></span>
               </router-link>
-              <!--<router-link :to="{name:'mycenter_menu', params:{menu:'authentication'}}" class="sub-item" tag="div">-->
-                <!--<i class="verification"></i>-->
-                <!--<span>{{$t('usercontent.user38')}}&lt;!&ndash; KYC认证 &ndash;&gt;</span>-->
-              <!--</router-link>-->
-              <!--<router-link :to="{name:'mycenter_menu', params:{menu:'message'}}" class="sub-item" tag="div">-->
-                <!--<i class="message"></i>-->
-                <!--<span>{{$t('usercontent.user41')}}&lt;!&ndash; 系统消息 &ndash;&gt;</span>-->
-              <!--</router-link>-->
               <div class="sub-item" @click="logout">
                 <i class="logout"></i>
                 <span>{{$t('public.navigation_logout')}}<!-- 退出 --></span>
@@ -99,10 +95,20 @@
             </div>
           </div>
         </router-link>
-        <router-link v-show="!isLogin" class="item pointer"  :to="{name:'login'}">{{$t('login_register.login')}}
+        <router-link v-show="!isLogin" class="item pointer" :to="{name:'login'}">{{$t('login_register.login')}}
           <!-- 登录 --></router-link>
         <router-link v-show="!isLogin" :to="{name:'register'}" class="item f-c-blue">{{$t('login_register.register')}}
           <!-- 注册 --></router-link>
+
+        <router-link to="" class="item" v-if="isLogin">
+          <span style="color: #fff;" class="nav-title">{{currency}}<img src="../assets/img/icon-otc10.png"/></span>
+          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
+            <div class="popover-menu currency">
+              <span v-for="data in curList" @click="currencyFun(data.currency)">{{data.currency}}</span>
+            </div>
+          </div>
+        </router-link>
+
         <!--<a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>-->
         <!--<a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>-->
       </div>
@@ -116,14 +122,20 @@
   import utils from '@/assets/js/utils'
   import quickLogin from '@/components/quickLogin'
   import switchVi from './switch-vi'
+  import userUtils from '@/api/wallet'
+  import otcApi from '@/api/otc'
 
   export default {
     components: {switchVi},
     data () {
-      return {}
+      return {
+        allSymbol: [],
+        showBalance: true,
+        curList: []
+      }
     },
     computed: {
-      ...mapGetters(['isLogin', 'getUserInfo', 'getLang']),
+      ...mapGetters(['isLogin', 'getUserInfo', 'getLang', 'getSymbol', 'getCurrency']),
       displayUsername () {
         if (this.getUserInfo.username) {
           let temp = this.getUserInfo.username.split('@')
@@ -131,20 +143,54 @@
         } else {
           return ''
         }
+      },
+      symbolInfo () {
+        let data = {}
+        if (this.allSymbol) {
+          this.allSymbol.filter(res => {
+            if (res.caption === this.getSymbol.caption) {
+              data = res
+            }
+          })
+          return data
+        } else {
+          this.getBalance()
+        }
+      },
+      currency () {
+        return this.getCurrency
       }
     },
-    watch: {},
-    created () {
+    watch: {
 
+    },
+    created () {
+      this.getBalance()
+      this.getCurList()
     },
     beforeDestroy () {
 
     },
     methods: {
-      ...mapActions(['setLang', 'setApiToken']),
+      ...mapActions(['setLang', 'setApiToken', 'setCurrency']),
       showQuickLogin () {
         utils.setDialog(quickLogin, {
           backClose: true
+        })
+      },
+      currencyFun (id) {
+        this.setCurrency(id)
+      },
+      getBalance () {
+        if (this.isLogin) {
+          userUtils.myAssets({}, res => {
+            this.allSymbol = res
+          })
+        }
+      },
+      getCurList () {
+        otcApi.getCurrencys(res => {
+          this.curList = res
         })
       },
       setLanguage (lang) {
@@ -153,7 +199,6 @@
           this.$i18n.locale = lang
           return
         }
-        //console.log('change langugae')
         langApi.getLanguage(lang, (res) => {
           this.$i18n.locale = lang
           this.$i18n.setLocaleMessage(lang, res)
@@ -169,6 +214,9 @@
             this.$refs[target].removeAttribute('style')
           }, 1000)
         }
+      },
+      change (e) {
+        this.showBalance = e
       }
     }
   }
@@ -300,24 +348,30 @@
             .overall {
               background-image: url('../assets/img/icon_otc01.png');
             }
+
             .deal {
               background-image: url('../assets/img/icon_otc02.png');
             }
+
             .wallet {
               background-image: url('../assets/img/icon_otc03.png');
             }
+
             .pay {
               /*background-image: url('../assets/img/icon_otc03.png');*/
               /*content: 'icon-bank';*/
               color: #0C0D34;
               line-height: 40px;
             }
+
             .kyc {
               background-image: url('../assets/img/icon_otc04.png');
             }
+
             .abstract {
               background-image: url('../assets/img/icon_otc05.png');
             }
+
             .set {
               background-image: url('../assets/img/icon_otc06.png');
             }
@@ -416,18 +470,27 @@
       }
     }
   }
-  .nav-title{
+
+  .nav-title {
     display: flex;
     align-items: center;
-    img{
+
+    img {
       width: 12px;
       height: 7px;
       margin-left: 4px;
     }
   }
-.msg{
-  img{
-    vertical-align: middle;
+
+  .msg {
+    img {
+      vertical-align: middle;
+    }
   }
-}
+
+  .currency {
+    span {
+      padding: 10px;
+    }
+  }
 </style>
