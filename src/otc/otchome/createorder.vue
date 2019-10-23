@@ -116,9 +116,7 @@
         <div class="cont-item quantity">
           <div class="row">
             <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少-->
-              ({{formData.ad_type === 1 ?
-              formData.symbol :
-              formData.currency}}) </label>
+              ({{formData.symbol}}) </label>
             <div class="value">
               <numberbox :class="{error: errors.has('symbol_count')}" v-model="formData.symbol_count" :size="15"
                          :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|maxInputValue:9999999999'"
@@ -130,9 +128,8 @@
         </div>
         <div class="cont-item tradelimit">
           <div class="row">
-            <label class="move">{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额--> ({{formData.ad_type === 1 ?
-              formData.symbol :
-              formData.currency}})</label>
+            <label class="move">{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额-->
+              ({{formData.symbol}})</label>
             <div class="">
               <div class="value">
                 <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"

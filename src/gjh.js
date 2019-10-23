@@ -87,7 +87,8 @@ export default {
     'input_sms': '验证码已发送至您的手机，请在下面输入您的验证码',
     'back': '后退',
     'no_bind_mobile': '未绑定手机',
-    'others': '其他要求'
+    'others': '其他要求',
+    'total': '总金额'
   },
   'login_register': {
     'Next_step': '下一步',

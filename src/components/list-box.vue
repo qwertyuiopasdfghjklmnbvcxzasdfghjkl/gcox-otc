@@ -72,6 +72,15 @@
     align-items: center;
     font-size: 16px;
     margin-bottom: 20px;
+    &>div:nth-child(1){
+      width: 220px;
+    }
+    &>div:nth-child(2){
+      width: 320px;
+    }
+    &>div:nth-child(3){
+      width: 320px;
+    }
 
     & > button {
       width: 200px;

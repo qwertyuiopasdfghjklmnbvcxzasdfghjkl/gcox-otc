@@ -4,7 +4,7 @@
       <h4><img src="../../assets/img/flag.png">
         <span v-html="$t('gcox_otc.you_want').format('green',$t('gcox_otc.buy'),params.name)"></span>
       </h4>
-      <list-box :datas="buyDatas" :type="'buy'">
+      <list-box :datas="buyDatas" :type="'buy'" @submit="sell">
         <li>
           <button class="green_button" @click="createorder(2)">{{$t('gcox_otc.build').format($t('gcox_otc.buy'))}}
           </button>

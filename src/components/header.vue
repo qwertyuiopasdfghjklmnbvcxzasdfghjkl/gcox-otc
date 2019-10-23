@@ -4,7 +4,7 @@
     <div class="w1200 header-top">
       <p>
         <switch-vi @change="change" :value="showBalance"/>
-        {{$t('account.estimated_value_available')}} {{symbolInfo.symbol || 'BTC'}}：
+        {{$t('gcox_otc.total')}} {{symbolInfo.symbol || 'BTC'}}：
         {{showBalance ? symbolInfo.totalBalance || 0.0 : '--'}}
       </p>
     </div>
@@ -101,10 +101,13 @@
           <!-- 注册 --></router-link>
 
         <router-link to="" class="item" v-if="isLogin">
-          <span style="color: #fff;" class="nav-title">{{currency}}<img src="../assets/img/icon-otc10.png"/></span>
+          <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag" :class="'country-'+currency"></small>
+            {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
             <div class="popover-menu currency">
-              <span v-for="data in curList" @click="currencyFun(data.currency)">{{data.currency}}</span>
+              <span v-for="data in curList" @click="currencyFun(data.currency)">
+                <small class="country-icon currency_flag" :class="'country-'+currency"></small>
+                {{data.currency}}</span>
             </div>
           </div>
         </router-link>
@@ -491,6 +494,15 @@
   .currency {
     span {
       padding: 10px;
+      display: inline-flex;
+      align-items: center;
+      small{
+        zoom: 0.8;
+      }
     }
+  }
+  .currency_flag{
+    border-radius: 50%;
+    margin-right: 4px;
   }
 </style>
