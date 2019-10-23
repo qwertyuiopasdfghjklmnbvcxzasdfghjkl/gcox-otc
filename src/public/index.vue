@@ -66,29 +66,31 @@
       regbox
     },
     data () {
-      return {
-        params: {
-          img: 'btc',
-          name: 'Bitcoin',
-          symbol: 'BTC',
-          currency: 'CNY'
-        }
-      }
+      return {}
     },
     computed: {
-      ...mapGetters(['getApiToken', 'getLang']),
+      ...mapGetters(['getApiToken', 'getLang', 'getSymbol', 'getCurrency']),
+      params () {
+        let data = this.getSymbol
+        data.currency = this.getCurrency
+        return data
+      },
     },
     watch: {
       getApiToken () {
         this.socket && this.socket.changeLogin()
+      },
+      params(e){
+        console.log(e)
       }
     },
     created () {
     },
     methods: {
-      change(e){
+      ...mapActions(['setSymbol']),
+      change (e) {
         console.log(e)
-        this.params = e
+        this.setSymbol(e)
       }
     },
   }

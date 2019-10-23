@@ -14,6 +14,7 @@ try {
 
 const last24h = {open: '0', high: '0', bottom: '0', close: '0', vol: '0', rfvol: '0', percent: '0'}
 const fixed = 8
+const symbol = {currency: 'CNY', caption: 'Bitcoin', caption_cn: '比特币', symbol: 'BTC', symbolType: 1, symbol_id: '1'}
 
 export default new Vuex.Store({
   state: {
@@ -32,7 +33,9 @@ export default new Vuex.Store({
     networkSignal: 0,
     events: {},
     btcValues: {},
-    sysParams: {} // System params
+    sysParams: {}, // System params
+    symbol: symbol,
+    currency: localStorage.currency || 'CNY'
   },
   getters: {
     getSysParams (state) {
@@ -96,6 +99,12 @@ export default new Vuex.Store({
     },
     getBtcValues (state) {
       return state.btcValues
+    },
+    getSymbol (state) {
+      return state.symbol
+    },
+    getCurrency (state) {
+      return state.currency
     }
   },
   mutations: {
@@ -167,6 +176,12 @@ export default new Vuex.Store({
     },
     updateBtcValues (state, btcValues) {
       state.btcValues = btcValues
+    },
+    updateSymbol (state, symbol) {
+      state.symbol = symbol
+    },
+    updateCurrency (state, currency) {
+      state.currency = currency
     }
   },
   actions: {
@@ -276,6 +291,13 @@ export default new Vuex.Store({
     },
     setNetworkSignal (context, signal) {
       context.commit('updateNetworkSignal', signal)
+    },
+    setSymbol (context, symbol) {
+      context.commit('updateSymbol', symbol)
+    },
+    setCurrency (context, currency) {
+      context.commit('updateCurrency', currency)
+      localStorage.currency = currency
     },
     setBtcValues (context, data) {
       let btcValues = {}

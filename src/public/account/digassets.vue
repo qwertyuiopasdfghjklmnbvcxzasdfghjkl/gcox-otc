@@ -1,92 +1,25 @@
 <template>
   <div class="digassets">
-    <h3>
-      <!--{{$t('usercontent.user58')}}&lt;!&ndash;我的数字资产&ndash;&gt;-->
-      <template v-if="pandectShow">
-        <span class="ml80 pointer" :class="{'f-c-main':accountType===1}" @click="accountType=1">{{$t('account.trading_wallet')}}
-          <!-- 交易钱包 --></span>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-        <span class="pointer" :class="{'f-c-main':accountType===2}" @click="accountType=2">{{$t('account.staking_wallet')}}
-          <!-- 锁仓钱包 --></span>
-      </template>
-    </h3>
     <div class="hcontainer">
       <div class="chargeWithdraw" v-if="!showLoaing">
         <div class="total">
           <h2>{{$t('gcox_otc.appraisement')}}：<!--估计资产价值：--><span>{{String(getBTCValuation).toMoney()}} BTC</span>
           </h2>
           <h4>≈ {{getCoinSign}} {{USDCNY}}</h4>
-          <!--<progress-bar></progress-bar>-->
         </div>
         <div class="balance_search">
 
           <div class="f-fr">
-            <!--<p>{{$t('usercontent.user68')}}</p>-->
-            <!--<div>-->
-            <!--<button @click="address()">{{$t('usercontent.user69')}} &lt;!&ndash;地址管理&ndash;&gt;</button>-->
-            <!--</div>-->
             <div class="icon-checkbox f-fl" @click.stop="hideZero=!hideZero">
               <em :class="[hideZero?'icon-checkbox-unchecked':'icon-checkbox-checked']"></em>
               <label class="ng-binding">
                 {{$t('gcox_otc.show_all_symbol')}}<!--显示所有货币-->
               </label>
             </div>
-
-            <!--<div class="search_input">-->
-            <!--<i class="icon-search"></i>-->
-            <!--<input type="text" v-model="filterTitle" placeholder="BTC"/>-->
-            <!--</div>-->
           </div>
         </div>
-        <!--<div class="acount_tab">-->
-        <!--<div :class="{'active': active === 'main'}" @click="switchHeadTab('main')">{{$t('public.main_account')}}</div>-->
-        <!--<div :class="{'active': active === 'vote'}" @click="switchHeadTab('vote')">-->
-        <!--{{$t('public.vote_miner_account')}}-->
-        <!--</div>-->
-        <!--<span @click="tansferDialog">{{$t('vote_mining.funds_transfer')}}</span>-->
-        <!--</div>-->
-        <div v-show="accountType===1" class="tab_cont">
+        <div class="tab_cont">
           <p>{{$t('exchange.exchange_wallet')}}</p>
-          <!--<ul class="accountInfo-lists header" :class="{pandect:pandectShow}">-->
-          <!--<li class="th">-->
-          <!--<div class="items">-->
-          <!--<div class="coin ng-binding" @click="sortAssets('symbol')">-->
-          <!--{{$t('account.estimated_value_coin')}}&lt;!&ndash;币种&ndash;&gt;-->
-          <!--<em v-if="sortActive==='symbol'">-->
-          <!--<i class="icon-arrow-up" :class="{active:sort==='asc'}"></i>-->
-          <!--<i class="icon-arrow-down" :class="{active:sort==='desc'}"></i>-->
-          <!--</em>-->
-          <!--</div>-->
-          <!--<div class="f-right ng-binding" @click="sortAssets('total')">-->
-          <!--{{$t('account.estimated_value_total')}}&lt;!&ndash;总金额&ndash;&gt;-->
-          <!--<em v-if="sortActive==='total'">-->
-          <!--<i class="icon-arrow-up" :class="{active:sort==='desc'}"></i>-->
-          <!--<i class="icon-arrow-down" :class="{active:sort==='asc'}"></i>-->
-          <!--</em>-->
-          <!--</div>-->
-          <!--<div class="f-right ng-binding" @click="sortAssets('available')">-->
-          <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;-->
-          <!--<em v-if="sortActive==='available'">-->
-          <!--<i class="icon-arrow-up" :class="{active:sort==='desc'}"></i>-->
-          <!--<i class="icon-arrow-down" :class="{active:sort==='asc'}"></i>-->
-          <!--</em>-->
-          <!--</div>-->
-          <!--<div class="useable f-right " @click="sortAssets('frozen')">-->
-          <!--{{$t('public0.public34')}}&lt;!&ndash;冻结金额&ndash;&gt;-->
-          <!--<em v-if="sortActive==='frozen'">-->
-          <!--<i class="icon-arrow-up" :class="{active:sort==='desc'}"></i>-->
-          <!--<i class="icon-arrow-down" :class="{active:sort==='asc'}"></i>-->
-          <!--</em>-->
-          <!--</div>-->
-          <!--<div class="useable f-right " v-if="!pandectShow">-->
-          <!--{{$t('account.staked_balanc')}}&lt;!&ndash;当前锁仓&ndash;&gt;-->
-          <!--</div>-->
-          <!--<div class="opreat f-right ng-binding" v-if="accountType===1">-->
-          <!--{{$t('otc_exchange.otc_exchange_operating')}}&lt;!&ndash;操作&ndash;&gt;-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</li>-->
-          <!--</ul>-->
           <div class="flex">
             <ul class="accountInfo-lists" :class="{pandect:pandectShow}">
               <li v-for="(data, index) in filterDatas()" :key="data.accountId">
@@ -99,20 +32,9 @@
                     {{toFixed(data.totalBalance)|removeEndZero}}
                   </div>
                   <div class="f-right "
-                       :title="toFixed(numUtils.add(data.totalBalance, getStakeBalance(data.accountName)))|removeEndZero"
-                       v-else>{{toFixed(numUtils.add(data.totalBalance,
-                    getStakeBalance(data.accountName)))|removeEndZero}}
+                       :title="data.totalBalance"
+                       v-else>{{data.totalBalance}}
                   </div>
-                  <!--<div class="f-right " :title="toFixed(data.availableBalance)|removeEndZero">-->
-                  <!--{{toFixed(data.availableBalance)|removeEndZero}}-->
-                  <!--</div>-->
-                  <!--<div class="useable f-right " :title="toFixed(data.frozenBalance)|removeEndZero">-->
-                  <!--{{toFixed(data.frozenBalance)|removeEndZero}}-->
-                  <!--</div>-->
-                  <!--<div class="useable f-right " v-if="!pandectShow"-->
-                  <!--:title="toFixed(getStakeBalance(data.accountName))|removeEndZero">-->
-                  <!--{{toFixed(getStakeBalance(data.accountName))|removeEndZero}}-->
-                  <!--</div>-->
                   <moreinfo class="action"
                             :googleState="getUserInfo.googleAuthEnable"
                             :verifyState="getUserInfo.kycState"
@@ -122,78 +44,8 @@
                 </div>
               </li>
             </ul>
-
-            <div class="echart" v-if="false">
-              <div>
-                <v-chart :options="polar"/>
-              </div>
-            </div>
           </div>
         </div>
-        <div v-show="accountType===2">
-          <ul class="accountInfo-lists header" v-if="pandectShow" :class="{pandect:pandectShow}">
-            <li class="th">
-              <div class="items">
-                <div class="coin " @click="sortAssets('symbol')">
-                  {{$t('account.estimated_value_coin')}}<!--币种-->
-                  <em v-if="sortActive==='symbol'">
-                    <i class="icon-arrow-up" :class="{active:sort==='asc'}"></i>
-                    <i class="icon-arrow-down" :class="{active:sort==='desc'}"></i>
-                  </em>
-                </div>
-                <!--<div class="fullName " @click="sortAssets('fullName')">-->
-                <!--{{$t('account.estimated_value_name')}}&lt;!&ndash;全称&ndash;&gt;-->
-                <!--<em v-if="sortActive==='fullName'">-->
-                <!--<i class="icon-arrow-up" :class="{active:sort==='asc'}"></i>-->
-                <!--<i class="icon-arrow-down" :class="{active:sort==='desc'}"></i>-->
-                <!--</em>-->
-                <!--</div>-->
-                <div class="f-right " @click="sortAssets('total')">
-                  {{$t('account.total_staked')}}<!--总锁仓-->
-                  <em v-if="sortActive==='total'">
-                    <i class="icon-arrow-up" :class="{active:sort==='desc'}"></i>
-                    <i class="icon-arrow-down" :class="{active:sort==='asc'}"></i>
-                  </em>
-                </div>
-                <div class="useable f-right " @click="sortAssets('frozen')">
-                  {{$t('account.staked_balanc')}}<!--当前锁仓-->
-                  <em v-if="sortActive==='available'">
-                    <i class="icon-arrow-up" :class="{active:sort==='desc'}"></i>
-                    <i class="icon-arrow-down" :class="{active:sort==='asc'}"></i>
-                  </em>
-                </div>
-                <div class="useable f-right " @click="sortAssets('available')">
-                  {{$t('account.released_to_date')}}<!--已解锁-->
-                  <em v-if="sortActive==='available'">
-                    <i class="icon-arrow-up" :class="{active:sort==='desc'}"></i>
-                    <i class="icon-arrow-down" :class="{active:sort==='asc'}"></i>
-                  </em>
-                </div>
-                <div class="opreat f-right ">
-                  {{$t('otc_exchange.otc_exchange_operating')}}<!--操作-->
-                </div>
-              </div>
-            </li>
-          </ul>
-          <div class="flex">
-            <ul class="accountInfo-lists" :class="{pandect:pandectShow}">
-              <li v-for="(data, index) in filterDatas()" :key="data.accountId">
-                <div class="items">
-                  <div class="coin ">{{data.symbol}}</div>
-                  <div class="f-right ">{{toFixed(data.totalBalance)|removeEndZero}}</div>
-                  <div class="useable f-right ">{{toFixed(data.frozenBalance)|removeEndZero}}</div>
-                  <div class="useable f-right ">{{toFixed(data.availableBalance)|removeEndZero}}</div>
-                  <div class="ui-flex-1 text-center">
-                    <button type="button" class="mint-btn action" :disabled="!data.openStaking"
-                            @click="showStake(data.accountName)">{{$t('account.stake')}}<!-- Stake --></button>
-                  </div>
-                </div>
-
-              </li>
-            </ul>
-          </div>
-        </div>
-
       </div>
       <loading v-if="showLoaing"/>
     </div>
@@ -230,57 +82,7 @@
         accountType: 1,
         pandectShow: true,
         echart: null,
-        polar: {
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-          },
-          legend: {
-            show: true,
-            data: [],
-            width: '190px',
-            top: '200px',
-            left: 0,
-            textStyle: {
-              color: '#ffffff'
-            }
-          },
-          series: [
-            {
-              name: '数字资产',
-              type: 'pie',
-              radius: ['65px', '85px'],
-              avoidLabelOverlap: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '24',
-                    fontWeight: 'bold'
-                  }
-                }
-              },
-              labelLine: {
-                normal: {
-                  show: false
-                }
-              },
-              center: ['100px', '85px'],
-              data: [],
-              itemStyle: {
-                emphasis: {
-                  shadowBlur: 10,
-                  shadowOffsetX: 0,
-                  shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-              }
-            }
-          ]
-        }
+        polar: {}
       }
     },
     components: {
@@ -343,22 +145,19 @@
           }
         })
       },
-      getStakeBalance (accountName) {
-        let data = this.myAssets.filter(item => {
-          return item.accountName === accountName && item.type === 2
-        })
-        return data[0].frozenBalance
-      },
       filterDatas () {
         let ndatas = this.myAssets.filter((item) => {
           if (this.hideZero) {
             if (this.filterTitle) {
-              return (item.caption.toUpperCase().indexOf(this.filterTitle.toUpperCase()) !== -1 || item.symbol.indexOf(this.filterTitle.toUpperCase()) !== -1) && numUtils.BN(item.availableBalance).toString() !== numUtils.BN(0).toString()
+              return (item.caption.toUpperCase().indexOf(this.filterTitle.toUpperCase()) !== -1 ||
+                item.symbol.indexOf(this.filterTitle.toUpperCase()) !== -1) &&
+                numUtils.BN(item.availableBalance).toString() !== numUtils.BN(0).toString()
             }
             return numUtils.BN(item.availableBalance).toString() !== numUtils.BN(0).toString()
           } else {
             if (this.filterTitle) {
-              return item.caption.toUpperCase().indexOf(this.filterTitle.toUpperCase()) !== -1 || item.symbol.indexOf(this.filterTitle.toUpperCase()) !== -1
+              return item.caption.toUpperCase().indexOf(this.filterTitle.toUpperCase()) !== -1 ||
+                item.symbol.indexOf(this.filterTitle.toUpperCase()) !== -1
             }
             return true
           }
@@ -366,41 +165,41 @@
         // ndatas = ndatas.filter(item => {
         //   return item.type === this.accountType
         // })
-        ndatas.sort((item1, item2) => {
-          if (this.sortActive === 'symbol') {
-            let m1 = item1.symbol
-            let m2 = item2.symbol
-            return this.sort === 'asc' ? (m1 < m2 ? -1 : 1) : (m1 > m2 ? -1 : 1)
-          } else if (this.sortActive === 'fullName') {
-            let m1 = this.$t(`symbol.${item1.symbol}`)
-            let m2 = this.$t(`symbol.${item2.symbol}`)
-            return this.sort === 'desc' ? (m1 < m2 ? -1 : 1) : (m1 > m2 ? -1 : 1)
-          } else if (this.sortActive === 'available') {
-            let m1 = numUtils.BN(item1.availableBalance)
-            let m2 = numUtils.BN(item2.availableBalance)
-            if (m1.equals(m2)) {
-              return item1.idx < item2.idx ? -1 : 1
-            } else {
-              return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-            }
-          } else if (this.sortActive === 'frozen') {
-            let m1 = numUtils.BN(item1.frozenBalance)
-            let m2 = numUtils.BN(item2.frozenBalance)
-            if (m1.equals(m2)) {
-              return item1.idx < item2.idx ? -1 : 1
-            } else {
-              return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-            }
-          } else {
-            let m1 = numUtils.BN(item1.totalBalance)
-            let m2 = numUtils.BN(item2.totalBalance)
-            if (m1.equals(m2)) {
-              return item1.idx < item2.idx ? -1 : 1
-            } else {
-              return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-            }
-          }
-        })
+        // ndatas.sort((item1, item2) => {
+        //   if (this.sortActive === 'symbol') {
+        //     let m1 = item1.symbol
+        //     let m2 = item2.symbol
+        //     return this.sort === 'asc' ? (m1 < m2 ? -1 : 1) : (m1 > m2 ? -1 : 1)
+        //   } else if (this.sortActive === 'fullName') {
+        //     let m1 = this.$t(`symbol.${item1.symbol}`)
+        //     let m2 = this.$t(`symbol.${item2.symbol}`)
+        //     return this.sort === 'desc' ? (m1 < m2 ? -1 : 1) : (m1 > m2 ? -1 : 1)
+        //   } else if (this.sortActive === 'available') {
+        //     let m1 = numUtils.BN(item1.availableBalance)
+        //     let m2 = numUtils.BN(item2.availableBalance)
+        //     if (m1.equals(m2)) {
+        //       return item1.idx < item2.idx ? -1 : 1
+        //     } else {
+        //       return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
+        //     }
+        //   } else if (this.sortActive === 'frozen') {
+        //     let m1 = numUtils.BN(item1.frozenBalance)
+        //     let m2 = numUtils.BN(item2.frozenBalance)
+        //     if (m1.equals(m2)) {
+        //       return item1.idx < item2.idx ? -1 : 1
+        //     } else {
+        //       return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
+        //     }
+        //   } else {
+        //     let m1 = numUtils.BN(item1.totalBalance)
+        //     let m2 = numUtils.BN(item2.totalBalance)
+        //     if (m1.equals(m2)) {
+        //       return item1.idx < item2.idx ? -1 : 1
+        //     } else {
+        //       return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
+        //     }
+        //   }
+        // })
         this.echart = ndatas
         return ndatas
       },
@@ -489,17 +288,19 @@
     display: flex;
     align-items: flex-start;
     flex-flow: column;
-    background:#13143A;
+    background: #13143A;
     padding: 20px;
     position: relative;
-    border-radius:3px;
+    border-radius: 3px;
     color: #ffffff;
-    h2{
+
+    h2 {
       font-size: 24px;
       font-weight: 400;
       margin: 20px 0;
     }
-    h4{
+
+    h4 {
       font-size: 18px;
       font-weight: 400;
     }
