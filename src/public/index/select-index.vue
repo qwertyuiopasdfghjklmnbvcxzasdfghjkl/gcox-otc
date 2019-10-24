@@ -21,22 +21,22 @@
       <div class="box" v-if="state === 0">
         <div class="left-box">
           <p><img src="../../assets/img/buy.png"><span>{{$t('gcox_otc.sell_price')}}</span></p>
-          <h4><span class="green">{{curPrice}}</span> CNY</h4>
+          <h4><span class="green">{{curPrice}}</span> {{params.currency}}</h4>
           <button @click="state=1">{{$t('gcox_otc.now_buy')}}</button>
         </div>
         <div class="right-box">
           <p><img src="../../assets/img/sell.png"><span>{{$t('gcox_otc.buy_price')}}</span></p>
-          <h4><span class="red">{{curPrice}}</span> CNY</h4>
+          <h4><span class="red">{{curPrice}}</span> {{params.currency}}</h4>
           <button @click="state=2">{{$t('gcox_otc.now_sell')}}</button>
         </div>
       </div>
 
-      <div class="buy_box" v-if="state === 1">
-        <button class="yellow_button" @click="buy()">Create offer</button>
-        <p @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}{{t.symbol}} ?</p>
-      </div>
+      <!--<div class="buy_box" v-if="state === 1">-->
+        <!--<button class="yellow_button" @click="buy()">Create offer</button>-->
+        <!--<p @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}{{t.symbol}} ?</p>-->
+      <!--</div>-->
 
-      <div class="buy_box" v-if="state === 2">
+      <div class="buy_box" v-if="state !== 0">
         <div class="input_box">
           <span>
             <numberbox :accuracy="8"></numberbox>
@@ -48,8 +48,9 @@
             </select>
           </span>
         </div>
-        <button class="red_button" @click="sell()">Create offer</button>
-        <p @click="state=1">{{$t('gcox_otc.want').format($t('gcox_otc.buy'))}}{{t.symbol}} ?</p>
+        <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sell()">Create offer</button>
+        <p v-if="state === 1" @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}{{t.symbol}} ?</p>
+        <p v-if="state === 2" @click="state=1">{{$t('gcox_otc.want').format($t('gcox_otc.buy'))}}{{t.symbol}} ?</p>
       </div>
 
     </div>

@@ -88,7 +88,8 @@ export default {
     'back': '后退',
     'no_bind_mobile': '未绑定手机',
     'others': '其他要求',
-    'total': '总金额'
+    'total': '总金额',
+    'add_bankcard': '新增银行卡'
   },
   'login_register': {
     'Next_step': '下一步',
@@ -214,6 +215,7 @@ export default {
     "public161":"发送",
     "public6":"请输入手机号",
     "public256":"当前价格",
+    "public255":"下单确认信息",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
@@ -364,6 +366,7 @@ export default {
     'otc_ad_minimum_amount': '请输入最小限额',
     'otc_ad_payment_period': '请输入付款期限',
     'otc_ad_max_uncompleted_orders': '单个广告可同时存在的未完成订单最大数量',
+    "otc_ad_Payment_method":"支付方式",
   },
   'usercontent': {
     'user71': '充币',

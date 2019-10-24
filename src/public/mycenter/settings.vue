@@ -50,160 +50,7 @@
                 </ul>
               </form>
           </li>
-
-          <!-- 微信 -->
-          <!--<li class="form-item">-->
-              <!--<h3>{{$t('otc_legal.otc_legal_WeChat_receivables')}}&lt;!&ndash;微信收款&ndash;&gt;</h3>-->
-              <!--<div class="form-flex" v-if="wechatReadOnly"  :class="{active:!infoLoaded}">-->
-                <!--<div class="form-flex-left">-->
-                  <!--<i class="icon-wechat"></i>-->
-                  <!--<em>{{$t('public0.public198')}}&lt;!&ndash;微信&ndash;&gt;</em>-->
-                <!--</div>-->
-                <!--<div class="form-flex-center">-->
-                  <!--<div class="not-set" v-if="!wechatData.wechat_number">-->
-                    <!--<p>{{$t('public0.public197')}}&lt;!&ndash;请设置微信账号及收款码，收付款更便捷&ndash;&gt;</p>-->
-                  <!--</div>-->
-                  <!--<div class="have-set" v-if="wechatData.wechat_number">-->
-                    <!--<p class="wechat_name">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;：{{wechatData.wechat_name}}</p>-->
-                    <!--<p class="wechat_number">{{$t('otc_legal.otc_legal_Wechat_number')}}&lt;!&ndash;微信账号&ndash;&gt;：{{wechatData.wechat_number}}</p>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-flex-right">-->
-                  <!--<span @click="checkVerifyState('wechat_scope')">{{$t('otc_legal.otc_legal_Set')}}&lt;!&ndash;设置&ndash;&gt;</span>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<form class="form-col" ref="wechatForm" v-if="!wechatReadOnly" data-vv-scope="wechat_scope">-->
-                <!--<ul class="form-table">-->
-                    <!--<li class="form-row form-row-top">-->
-                      <!--<i class="form-icon icon-wechat"></i>-->
-                      <!--<label class="form-label">{{$t('public0.public198')}}&lt;!&ndash;微信&ndash;&gt;</label>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                      <!--<label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                      <!--<input class="form-input" type="text" name="wechat_name" :value="wechatData.wechat_name" autocomplete="off"/>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                      <!--<label class="form-label">{{$t('otc_legal.otc_legal_Wechat_number')}}&lt;!&ndash;微信账号&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                      <!--<input class="form-input" :class="{error: errors.has('wechat_scope.wechat_number')}" type="text" name="wechat_number" v-model="wechatData.wechat_number" v-validate="'required'" maxlength="32" autocomplete="off"/>-->
-                      <!--<span class="form-error" v-if="errors.has('wechat_scope.wechat_number')">{{msgs.wechat_number[errors.firstRule('wechat_number')]}}</span>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                        <!--<label class="form-label">{{$t('otc_legal.otc_legal_WeChat_code')}}&lt;!&ndash;微信收款码&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                        <!--<div class="form-upload" :class="{error: errors.has('wechat_scope.wechat_QRcode')}">-->
-                            <!--<img class="form-upload-img" v-if="wechatData.wechat_QRcode" :src="wechatData.wechat_QRcode"/>-->
-                            <!--<span class="form-upload-span" v-if="!wechatData.wechat_QRcode">{{$t('otc_legal.otc_legal_Upload_payment')}}&lt;!&ndash;点击上传收款码&ndash;&gt;</span>-->
-                            <!--<input type="hidden" v-model="wechatData.wechat_QRcode" data-vv-name="wechat_QRcode" v-validate="'required'"/>-->
-                            <!--<input class="form-upload-file" type="file" title=" " data-key="1" v-show="isShowUpload.wechat_QRcode" @change="uploadImage($event, 3)"/>-->
-                            <!--<input class="form-upload-file" type="file" name="source" title=" " data-key="2" v-show="!isShowUpload.wechat_QRcode" @change="uploadImage($event, 3)"/>-->
-                        <!--</div>-->
-                        <!--<span class="form-error" v-if="errors.has('wechat_scope.wechat_QRcode')">{{msgs.wechat_QRcode[errors.firstRule('wechat_QRcode')]}}</span>-->
-                    <!--</li>-->
-                    <!--<li class="form-row form-row-bottom">-->
-                        <!--<input class="form-cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="wechatReadOnly=true"/>&lt;!&ndash;取消&ndash;&gt;-->
-                        <!--<input class="form-save" type="button" :value="$t('otc_legal.otc_legal_save')" @click="saveSettings(3)"/>&lt;!&ndash;保存&ndash;&gt;-->
-                    <!--</li>-->
-                <!--</ul>-->
-              <!--</form>-->
-          <!--</li>-->
-
-          <!--&lt;!&ndash; 支付宝 &ndash;&gt;-->
-          <!--<li class="form-item">-->
-              <!--<h3>{{$t('otc_legal.otc_legal_Alipay_receivables')}}&lt;!&ndash;支付宝收款&ndash;&gt;</h3>-->
-              <!--<div class="form-flex" v-if="alipayReadOnly"  :class="{active:!infoLoaded}">-->
-                <!--<div class="form-flex-left">-->
-                  <!--<i class="icon-alipay"></i>-->
-                  <!--<em>{{$t('public0.public199')}}&lt;!&ndash;支付宝&ndash;&gt;</em>-->
-                <!--</div>-->
-                <!--<div class="form-flex-center">-->
-                  <!--<div class="not-set" v-if="!alipayData.alipay_number">-->
-                    <!--<p>{{$t('public0.public261')}}&lt;!&ndash;请设置支付宝账号及收款码，收付款更便捷&ndash;&gt;</p>-->
-                  <!--</div>-->
-                  <!--<div class="have-set" v-if="alipayData.alipay_number">-->
-                    <!--<p class="alipay_name">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;：{{alipayData.alipay_name}}</p>-->
-                    <!--<p class="alipay_number">{{$t('otc_legal.otc_legal_Alipay_number')}} &lt;!&ndash;支付宝账号&ndash;&gt;：{{alipayData.alipay_number}}</p>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-flex-right">-->
-                  <!--<span @click="checkVerifyState('alipay_scope')">{{$t('otc_legal.otc_legal_Set')}}&lt;!&ndash;设置&ndash;&gt;</span>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<form class="form-col" ref="alipayForm" v-if="!alipayReadOnly" data-vv-scope="alipay_scope">-->
-                <!--<ul class="form-table">-->
-                    <!--<li class="form-row form-row-top">-->
-                        <!--<i class="form-icon icon-alipay"></i>-->
-                        <!--<label class="form-label">{{$t('public0.public199')}}&lt;!&ndash;支付宝&ndash;&gt;</label>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                        <!--<label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                        <!--<input class="form-input" type="text" name="alipay_name" :value="alipayData.alipay_name" autocomplete="off" readonly/>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                        <!--<label class="form-label">{{$t('otc_legal.otc_legal_Alipay_number')}}&lt;!&ndash;支付宝账号&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                        <!--<input class="form-input" :class="{error: errors.has('alipay_scope.alipay_number')}" type="text" name="alipay_number" v-model="alipayData.alipay_number" v-validate="'required'" maxlength="32" autocomplete="off"/>-->
-                        <!--<span class="form-error" v-if="errors.has('alipay_scope.alipay_number')">{{msgs.alipay_number[errors.firstRule('alipay_number')]}}</span>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                        <!--<label class="form-label">{{$t('otc_legal.otc_legal_Aipay_code')}}&lt;!&ndash;支付宝收款码&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                        <!--<div class="form-upload" :class="{error: errors.has('alipay_scope.alipay_QRcode')}">-->
-                            <!--<img class="form-upload-img" v-if="alipayData.alipay_QRcode" :src="alipayData.alipay_QRcode"/>-->
-                            <!--<span class="form-upload-span" v-if="!alipayData.alipay_QRcode">{{$t('otc_legal.otc_legal_Upload_payment')}}&lt;!&ndash;点击上传收款码&ndash;&gt;</span>-->
-                            <!--<input type="hidden" v-model="alipayData.alipay_QRcode" data-vv-name="alipay_QRcode" v-validate="'required'"/>-->
-                            <!--<input class="form-upload-file" type="file" title=" " data-key="1" v-show="isShowUpload.alipay_QRcode" @change="uploadImage($event, 2)"/>-->
-                            <!--<input class="form-upload-file" type="file" name="source" title=" " data-key="2" v-show="!isShowUpload.alipay_QRcode" @change="uploadImage($event, 2)"/>-->
-                        <!--</div>-->
-                        <!--<span class="form-error" v-if="errors.has('alipay_scope.alipay_QRcode')">{{msgs.alipay_QRcode[errors.firstRule('alipay_QRcode')]}}</span>-->
-                    <!--</li>-->
-                    <!--<li class="form-row form-row-bottom">-->
-                        <!--<input class="form-cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="alipayReadOnly=true"/>&lt;!&ndash;取消&ndash;&gt;-->
-                        <!--<input class="form-save" type="button" :value="$t('otc_legal.otc_legal_save')" @click="saveSettings(2)"/>&lt;!&ndash;保存&ndash;&gt;-->
-                    <!--</li>-->
-                <!--</ul>-->
-              <!--</form>-->
-          <!--</li>-->
-
-          <!-- PayPal -->
-          <!--<li class="form-item">-->
-              <!--<h3>{{$t('public0.public218')}}&lt;!&ndash;PayPal收款&ndash;&gt;</h3>-->
-              <!--<div class="form-flex" v-if="paypalReadOnly"  :class="{active:!infoLoaded}">-->
-                <!--<div class="form-flex-left">-->
-                  <!--<i class="icon-paypal"></i>-->
-                  <!--<em>{{$t('public0.public219')}}&lt;!&ndash;PayPal&ndash;&gt;</em>-->
-                <!--</div>-->
-                <!--<div class="form-flex-center">-->
-                  <!--<div class="not-set" v-if="!paypalData.paypal_number">-->
-                    <!--<p>{{$t('public0.public220')}}&lt;!&ndash;请设置PayPal信息&ndash;&gt;</p>-->
-                  <!--</div>-->
-                  <!--<div class="have-set" v-if="paypalData.paypal_number">-->
-                    <!--<p class="wechat_name">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;：{{paypalData.paypal_name}}</p>-->
-                    <!--<p class="wechat_number">{{$t('public0.public221')}}&lt;!&ndash;PayPal账号&ndash;&gt;：{{paypalData.paypal_number}}</p>-->
-                  <!--</div>-->
-                <!--</div>-->
-                <!--<div class="form-flex-right">-->
-                  <!--<span @click="checkVerifyState('paypal_scope')">{{$t('otc_legal.otc_legal_Set')}}&lt;!&ndash;设置&ndash;&gt;</span>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<form class="form-col" ref="paypalForm" v-if="!paypalReadOnly" data-vv-scope="paypal_scope">-->
-                <!--<ul class="form-table">-->
-                    <!--<li class="form-row form-row-top">-->
-                      <!--<i class="form-icon icon-paypal"></i>-->
-                      <!--<label class="form-label">{{$t('public0.public219')}}&lt;!&ndash;PayPal&ndash;&gt;</label>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                      <!--<label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                      <!--<input class="form-input" type="text" name="paypal_name" :value="paypalData.paypal_name" autocomplete="off" readonly/>-->
-                    <!--</li>-->
-                    <!--<li class="form-row">-->
-                      <!--<label class="form-label">{{$t('public0.public221')}}&lt;!&ndash;PayPal账号&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
-                      <!--<input class="form-input" :class="{error: errors.has('paypal_scope.paypal_number')}" type="text" name="paypal_number" v-model="paypalData.paypal_number" v-validate="'required'" maxlength="32" autocomplete="off"/>-->
-                      <!--<span class="form-error" v-if="errors.has('paypal_scope.paypal_number')">{{msgs.paypal_number[errors.firstRule('paypal_number')]}}</span>-->
-                    <!--</li>-->
-                    <!--<li class="form-row form-row-bottom">-->
-                        <!--<input class="form-cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="paypalReadOnly=true"/>&lt;!&ndash;取消&ndash;&gt;-->
-                        <!--<input class="form-save" type="button" :value="$t('otc_legal.otc_legal_save')" @click="saveSettings(4)"/>&lt;!&ndash;保存&ndash;&gt;-->
-                    <!--</li>-->
-                <!--</ul>-->
-              <!--</form>-->
-          <!--</li>-->
+        <li class="add_li"><img src="../../assets/img/add.png"/>{{$t('gcox_otc.add_bankcard')}}</li>
       </ul>
     </div>
 </template>
@@ -558,4 +405,168 @@ export default {
 .form-cancel:hover{color:#261003;border-color:#bbb;}
 .form-save{min-width: 100px;height: 30px;padding-left: 24px;padding-right: 24px;color:#fff;background-color:#0D66EF;border-radius: 4px;cursor: pointer;}
 .form-save:hover{background-color: #094fbb;}
+  .add_li{
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    border: 1px solid #eeeeee;
+  }
 </style>
+
+
+
+<!-- 微信 -->
+<!--<li class="form-item">-->
+<!--<h3>{{$t('otc_legal.otc_legal_WeChat_receivables')}}&lt;!&ndash;微信收款&ndash;&gt;</h3>-->
+<!--<div class="form-flex" v-if="wechatReadOnly"  :class="{active:!infoLoaded}">-->
+<!--<div class="form-flex-left">-->
+<!--<i class="icon-wechat"></i>-->
+<!--<em>{{$t('public0.public198')}}&lt;!&ndash;微信&ndash;&gt;</em>-->
+<!--</div>-->
+<!--<div class="form-flex-center">-->
+<!--<div class="not-set" v-if="!wechatData.wechat_number">-->
+<!--<p>{{$t('public0.public197')}}&lt;!&ndash;请设置微信账号及收款码，收付款更便捷&ndash;&gt;</p>-->
+<!--</div>-->
+<!--<div class="have-set" v-if="wechatData.wechat_number">-->
+<!--<p class="wechat_name">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;：{{wechatData.wechat_name}}</p>-->
+<!--<p class="wechat_number">{{$t('otc_legal.otc_legal_Wechat_number')}}&lt;!&ndash;微信账号&ndash;&gt;：{{wechatData.wechat_number}}</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-flex-right">-->
+<!--<span @click="checkVerifyState('wechat_scope')">{{$t('otc_legal.otc_legal_Set')}}&lt;!&ndash;设置&ndash;&gt;</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<form class="form-col" ref="wechatForm" v-if="!wechatReadOnly" data-vv-scope="wechat_scope">-->
+<!--<ul class="form-table">-->
+<!--<li class="form-row form-row-top">-->
+<!--<i class="form-icon icon-wechat"></i>-->
+<!--<label class="form-label">{{$t('public0.public198')}}&lt;!&ndash;微信&ndash;&gt;</label>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<input class="form-input" type="text" name="wechat_name" :value="wechatData.wechat_name" autocomplete="off"/>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_Wechat_number')}}&lt;!&ndash;微信账号&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<input class="form-input" :class="{error: errors.has('wechat_scope.wechat_number')}" type="text" name="wechat_number" v-model="wechatData.wechat_number" v-validate="'required'" maxlength="32" autocomplete="off"/>-->
+<!--<span class="form-error" v-if="errors.has('wechat_scope.wechat_number')">{{msgs.wechat_number[errors.firstRule('wechat_number')]}}</span>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_WeChat_code')}}&lt;!&ndash;微信收款码&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<div class="form-upload" :class="{error: errors.has('wechat_scope.wechat_QRcode')}">-->
+<!--<img class="form-upload-img" v-if="wechatData.wechat_QRcode" :src="wechatData.wechat_QRcode"/>-->
+<!--<span class="form-upload-span" v-if="!wechatData.wechat_QRcode">{{$t('otc_legal.otc_legal_Upload_payment')}}&lt;!&ndash;点击上传收款码&ndash;&gt;</span>-->
+<!--<input type="hidden" v-model="wechatData.wechat_QRcode" data-vv-name="wechat_QRcode" v-validate="'required'"/>-->
+<!--<input class="form-upload-file" type="file" title=" " data-key="1" v-show="isShowUpload.wechat_QRcode" @change="uploadImage($event, 3)"/>-->
+<!--<input class="form-upload-file" type="file" name="source" title=" " data-key="2" v-show="!isShowUpload.wechat_QRcode" @change="uploadImage($event, 3)"/>-->
+<!--</div>-->
+<!--<span class="form-error" v-if="errors.has('wechat_scope.wechat_QRcode')">{{msgs.wechat_QRcode[errors.firstRule('wechat_QRcode')]}}</span>-->
+<!--</li>-->
+<!--<li class="form-row form-row-bottom">-->
+<!--<input class="form-cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="wechatReadOnly=true"/>&lt;!&ndash;取消&ndash;&gt;-->
+<!--<input class="form-save" type="button" :value="$t('otc_legal.otc_legal_save')" @click="saveSettings(3)"/>&lt;!&ndash;保存&ndash;&gt;-->
+<!--</li>-->
+<!--</ul>-->
+<!--</form>-->
+<!--</li>-->
+
+<!--&lt;!&ndash; 支付宝 &ndash;&gt;-->
+<!--<li class="form-item">-->
+<!--<h3>{{$t('otc_legal.otc_legal_Alipay_receivables')}}&lt;!&ndash;支付宝收款&ndash;&gt;</h3>-->
+<!--<div class="form-flex" v-if="alipayReadOnly"  :class="{active:!infoLoaded}">-->
+<!--<div class="form-flex-left">-->
+<!--<i class="icon-alipay"></i>-->
+<!--<em>{{$t('public0.public199')}}&lt;!&ndash;支付宝&ndash;&gt;</em>-->
+<!--</div>-->
+<!--<div class="form-flex-center">-->
+<!--<div class="not-set" v-if="!alipayData.alipay_number">-->
+<!--<p>{{$t('public0.public261')}}&lt;!&ndash;请设置支付宝账号及收款码，收付款更便捷&ndash;&gt;</p>-->
+<!--</div>-->
+<!--<div class="have-set" v-if="alipayData.alipay_number">-->
+<!--<p class="alipay_name">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;：{{alipayData.alipay_name}}</p>-->
+<!--<p class="alipay_number">{{$t('otc_legal.otc_legal_Alipay_number')}} &lt;!&ndash;支付宝账号&ndash;&gt;：{{alipayData.alipay_number}}</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-flex-right">-->
+<!--<span @click="checkVerifyState('alipay_scope')">{{$t('otc_legal.otc_legal_Set')}}&lt;!&ndash;设置&ndash;&gt;</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<form class="form-col" ref="alipayForm" v-if="!alipayReadOnly" data-vv-scope="alipay_scope">-->
+<!--<ul class="form-table">-->
+<!--<li class="form-row form-row-top">-->
+<!--<i class="form-icon icon-alipay"></i>-->
+<!--<label class="form-label">{{$t('public0.public199')}}&lt;!&ndash;支付宝&ndash;&gt;</label>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<input class="form-input" type="text" name="alipay_name" :value="alipayData.alipay_name" autocomplete="off" readonly/>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_Alipay_number')}}&lt;!&ndash;支付宝账号&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<input class="form-input" :class="{error: errors.has('alipay_scope.alipay_number')}" type="text" name="alipay_number" v-model="alipayData.alipay_number" v-validate="'required'" maxlength="32" autocomplete="off"/>-->
+<!--<span class="form-error" v-if="errors.has('alipay_scope.alipay_number')">{{msgs.alipay_number[errors.firstRule('alipay_number')]}}</span>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_Aipay_code')}}&lt;!&ndash;支付宝收款码&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<div class="form-upload" :class="{error: errors.has('alipay_scope.alipay_QRcode')}">-->
+<!--<img class="form-upload-img" v-if="alipayData.alipay_QRcode" :src="alipayData.alipay_QRcode"/>-->
+<!--<span class="form-upload-span" v-if="!alipayData.alipay_QRcode">{{$t('otc_legal.otc_legal_Upload_payment')}}&lt;!&ndash;点击上传收款码&ndash;&gt;</span>-->
+<!--<input type="hidden" v-model="alipayData.alipay_QRcode" data-vv-name="alipay_QRcode" v-validate="'required'"/>-->
+<!--<input class="form-upload-file" type="file" title=" " data-key="1" v-show="isShowUpload.alipay_QRcode" @change="uploadImage($event, 2)"/>-->
+<!--<input class="form-upload-file" type="file" name="source" title=" " data-key="2" v-show="!isShowUpload.alipay_QRcode" @change="uploadImage($event, 2)"/>-->
+<!--</div>-->
+<!--<span class="form-error" v-if="errors.has('alipay_scope.alipay_QRcode')">{{msgs.alipay_QRcode[errors.firstRule('alipay_QRcode')]}}</span>-->
+<!--</li>-->
+<!--<li class="form-row form-row-bottom">-->
+<!--<input class="form-cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="alipayReadOnly=true"/>&lt;!&ndash;取消&ndash;&gt;-->
+<!--<input class="form-save" type="button" :value="$t('otc_legal.otc_legal_save')" @click="saveSettings(2)"/>&lt;!&ndash;保存&ndash;&gt;-->
+<!--</li>-->
+<!--</ul>-->
+<!--</form>-->
+<!--</li>-->
+
+<!-- PayPal -->
+<!--<li class="form-item">-->
+<!--<h3>{{$t('public0.public218')}}&lt;!&ndash;PayPal收款&ndash;&gt;</h3>-->
+<!--<div class="form-flex" v-if="paypalReadOnly"  :class="{active:!infoLoaded}">-->
+<!--<div class="form-flex-left">-->
+<!--<i class="icon-paypal"></i>-->
+<!--<em>{{$t('public0.public219')}}&lt;!&ndash;PayPal&ndash;&gt;</em>-->
+<!--</div>-->
+<!--<div class="form-flex-center">-->
+<!--<div class="not-set" v-if="!paypalData.paypal_number">-->
+<!--<p>{{$t('public0.public220')}}&lt;!&ndash;请设置PayPal信息&ndash;&gt;</p>-->
+<!--</div>-->
+<!--<div class="have-set" v-if="paypalData.paypal_number">-->
+<!--<p class="wechat_name">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;：{{paypalData.paypal_name}}</p>-->
+<!--<p class="wechat_number">{{$t('public0.public221')}}&lt;!&ndash;PayPal账号&ndash;&gt;：{{paypalData.paypal_number}}</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-flex-right">-->
+<!--<span @click="checkVerifyState('paypal_scope')">{{$t('otc_legal.otc_legal_Set')}}&lt;!&ndash;设置&ndash;&gt;</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<form class="form-col" ref="paypalForm" v-if="!paypalReadOnly" data-vv-scope="paypal_scope">-->
+<!--<ul class="form-table">-->
+<!--<li class="form-row form-row-top">-->
+<!--<i class="form-icon icon-paypal"></i>-->
+<!--<label class="form-label">{{$t('public0.public219')}}&lt;!&ndash;PayPal&ndash;&gt;</label>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('otc_legal.otc_legal_Payee_Name')}}&lt;!&ndash;收款人姓名&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<input class="form-input" type="text" name="paypal_name" :value="paypalData.paypal_name" autocomplete="off" readonly/>-->
+<!--</li>-->
+<!--<li class="form-row">-->
+<!--<label class="form-label">{{$t('public0.public221')}}&lt;!&ndash;PayPal账号&ndash;&gt;<em class="asterisk">&nbsp;*</em></label>-->
+<!--<input class="form-input" :class="{error: errors.has('paypal_scope.paypal_number')}" type="text" name="paypal_number" v-model="paypalData.paypal_number" v-validate="'required'" maxlength="32" autocomplete="off"/>-->
+<!--<span class="form-error" v-if="errors.has('paypal_scope.paypal_number')">{{msgs.paypal_number[errors.firstRule('paypal_number')]}}</span>-->
+<!--</li>-->
+<!--<li class="form-row form-row-bottom">-->
+<!--<input class="form-cancel" type="button" :value="$t('otc_legal.otc_legal_cancel')" @click="paypalReadOnly=true"/>&lt;!&ndash;取消&ndash;&gt;-->
+<!--<input class="form-save" type="button" :value="$t('otc_legal.otc_legal_save')" @click="saveSettings(4)"/>&lt;!&ndash;保存&ndash;&gt;-->
+<!--</li>-->
+<!--</ul>-->
+<!--</form>-->
+<!--</li>-->
