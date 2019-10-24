@@ -22,10 +22,10 @@
     </div>
 
     <div class="ref-profit mt50 ui-flex">
-      <div class="ui-flex-1">
-        <p class="fs20">{{$t('referral.refunded')}} (ACM) <!-- Refunded --></p>
-        <p class="f-c-main fs32 mt10"><strong>{{invitedInfo.rewardCount | numbean}}</strong></p>
-      </div>
+      <!--<div class="ui-flex-1">-->
+        <!--<p class="fs20">{{$t('referral.refunded')}} (ACM) &lt;!&ndash; Refunded &ndash;&gt;</p>-->
+        <!--<p class="f-c-main fs32 mt10"><strong>{{invitedInfo.rewardCount | numbean}}</strong></p>-->
+      <!--</div>-->
       <div class="ml15 ui-flex-1">
         <p class="fs20">{{$t('referral.invitees_num')}}<!-- Number of Invitees --></p>
         <p class="f-c-main fs32 mt10"><strong>{{invitedInfo.invitedCount}} {{$t('referral.invitees_num')}}<!-- Invitees --></strong></p>
@@ -34,33 +34,34 @@
 
     <div class="ref-history mt50">
       <ul class="tabs ui-flex">
-        <li class="ui-flex-1" :class="{active:active}" @click="active=true">{{$t('referral.invitation_history')}}<!-- Invitation History --></li>
-        <li class="ui-flex-1" :class="{active:!active}" @click="active=false">{{$t('referral.program_rules')}}<!-- Program Rules --></li>
+        <li class="ui-flex-1" >{{$t('referral.invitation_history')}}<!-- Invitation History --></li>
+        <li class="ui-flex-1"></li>
+        <!--<li class="ui-flex-1" :class="{active:!active}" @click="active=false">{{$t('referral.program_rules')}}&lt;!&ndash; Program Rules &ndash;&gt;</li>-->
       </ul>
       <div class="mt40 detail" v-show="active">
-        <ul class="selector ui-flex">
-          <li>
-            <p>{{$t('referral.date')}}<!-- Date --></p>
-            <div><button type="button" class="mint-btn default" @click="setTime('day')">{{$t('referral.today')}}<!-- Today --></button></div>
-          </li>
-          <li>
-            <p>{{$t('referral.start_date')}}<!-- Start Date --></p>
-            <div><button type="button" class="mint-btn default" @click="setTime('month')">{{$t('referral.last_one_month')}}<!-- Last one month --></button></div>
-          </li>
-          <li>
-            <p>{{$t('referral.end_date')}}<!-- End Date --></p>
-            <div><button type="button" class="mint-btn default" @click="setTime('year')">{{$t('referral.last_one_year')}}<!-- Last one year --></button></div>
-          </li>
-          <li>
-            <p>{{$t('referral.invitation_status')}}<!-- Invitation Status --></p>
-            <div class="rp">
-              <button type="button" class="mint-btn default status" @click="showStatus=!showStatus">{{getStatus(params.status)}} <i :class="[showStatus?'icon-arrow-up2':'icon-arrow-down3']"></i></button>
-              <div class="status-list" v-show="showStatus">
-                <div v-for="item in statusList" @click="params.status=item,showStatus=false">{{getStatus(item)}}</div>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <!--<ul class="selector ui-flex">-->
+          <!--<li>-->
+            <!--<p>{{$t('referral.date')}}&lt;!&ndash; Date &ndash;&gt;</p>-->
+            <!--<div><button type="button" class="mint-btn default" @click="setTime('day')">{{$t('referral.today')}}&lt;!&ndash; Today &ndash;&gt;</button></div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<p>{{$t('referral.start_date')}}&lt;!&ndash; Start Date &ndash;&gt;</p>-->
+            <!--<div><button type="button" class="mint-btn default" @click="setTime('month')">{{$t('referral.last_one_month')}}&lt;!&ndash; Last one month &ndash;&gt;</button></div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<p>{{$t('referral.end_date')}}&lt;!&ndash; End Date &ndash;&gt;</p>-->
+            <!--<div><button type="button" class="mint-btn default" @click="setTime('year')">{{$t('referral.last_one_year')}}&lt;!&ndash; Last one year &ndash;&gt;</button></div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<p>{{$t('referral.invitation_status')}}&lt;!&ndash; Invitation Status &ndash;&gt;</p>-->
+            <!--<div class="rp">-->
+              <!--<button type="button" class="mint-btn default status" @click="showStatus=!showStatus">{{getStatus(params.status)}} <i :class="[showStatus?'icon-arrow-up2':'icon-arrow-down3']"></i></button>-->
+              <!--<div class="status-list" v-show="showStatus">-->
+                <!--<div v-for="item in statusList" @click="params.status=item,showStatus=false">{{getStatus(item)}}</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+        <!--</ul>-->
         <div class="ref-history-list mt60">
           <ul>
             <li class="header ui-flex">
@@ -85,43 +86,43 @@
           <loading v-if="showLoading"/>
         </div>
       </div>
-      <div class="mt40 detail lh17" v-show="!active">
-        <template v-if="getLang==='en'">
-          <h3 class="text-center">--Register on GCOX Exchange and invite your friends to earn attractive bonuses--</h3>
-          <p class="mt20">Eligibility Criteria:</p>
-          <p>• Register on GCOX Exchange after 19th August, 1pm(GMT+8) </p>
-          <p>• Complete the KYC Process</p>
-          <p class="mt20">Rewards:</p>
-          <p>One-time reward of 100 ACM tokens to your Staking Wallet*. </p>
-          <p class="mt20">Also, we are pleased to introduce our referral scheme where you can earn attractive bonuses by simply sharing your referral code with your friends and inviting them to sign up on GCOX Exchange! </p>
-          <p class="mt20">Eligibility Criteria:</p>
-          <p>• Invite your friends to sign up on GCOX Exchange using your referral code after 19th August, 1 pm(GMT+8)</p>
-          <p>• Your friend completes the KYC Process</p>
-          <p class="mt20">Rewards:</p>
-          <p>50 ACM tokens reward to your Staking Wallet* for every successful referral**, NO CAP! The more you invite, the more you earn!</p>
-          <p class="mt20">Notes:</p>
-          <p>* Trading Wallet – ACM balance held in the Trading Wallet can be used for trading</p>
-          <p>* Staking Wallet – ACM balance held in the Staking Wallet is locked and 1% of the staked amount will be release on a weekly basis</p>
-          <p>* Referrals are deemed successful once the referred user has completed their KYC process. </p>
-        </template>
-        <template v-else>
-          <h3 class="text-center">--- “注册奖励计划” ---</h3>
-          <p class="text-center mt10">在GCOX交易所注册并邀请您的朋友赚取丰厚奖励！</p>
-          <p class="mt20">新用户注册奖励：</p>
-          <p>• 一次性100个ACM代币空投至用户的质押钱包* </p>
-          <p class="mt20">奖励标准：</p>
-          <p>• 8月19日下午1:00后在GCOX交易所注册(GMT+8)</p>
-          <p>• 完成KYC流程</p>
-          <p class="mt20">邀请注册奖励：</p>
-          <p>此外，我们很高兴向您介绍我们的“推荐奖励计划”。每成功推荐一位身边的朋友在GCOX注册并完成KYC，即可获得50个ACM代币奖励，无上限！邀请的越多，赚的越多！</p>
-          <p class="mt20">奖励标准：</p>
-          <p>• 被邀请人于8月19日下午1:00后通过邀请人发送的邀请码在GCOX交易所注册(GMT+8)</p>
-          <p>• 被邀请人完成KYC流程</p>
-          <p class="mt20">注释*</p>
-          <p>ACM交易钱包——可买卖ACM代币与其他数字货币</p>
-          <p>ACM质押钱包——质押钱包中的ACM将被锁定，每周释放1%的金额到您的交易钱包</p>
-        </template>
-      </div>
+      <!--<div class="mt40 detail lh17" v-show="!active">-->
+        <!--<template v-if="getLang==='en'">-->
+          <!--<h3 class="text-center">&#45;&#45;Register on GCOX Exchange and invite your friends to earn attractive bonuses&#45;&#45;</h3>-->
+          <!--<p class="mt20">Eligibility Criteria:</p>-->
+          <!--<p>• Register on GCOX Exchange after 19th August, 1pm(GMT+8) </p>-->
+          <!--<p>• Complete the KYC Process</p>-->
+          <!--<p class="mt20">Rewards:</p>-->
+          <!--<p>One-time reward of 100 ACM tokens to your Staking Wallet*. </p>-->
+          <!--<p class="mt20">Also, we are pleased to introduce our referral scheme where you can earn attractive bonuses by simply sharing your referral code with your friends and inviting them to sign up on GCOX Exchange! </p>-->
+          <!--<p class="mt20">Eligibility Criteria:</p>-->
+          <!--<p>• Invite your friends to sign up on GCOX Exchange using your referral code after 19th August, 1 pm(GMT+8)</p>-->
+          <!--<p>• Your friend completes the KYC Process</p>-->
+          <!--<p class="mt20">Rewards:</p>-->
+          <!--<p>50 ACM tokens reward to your Staking Wallet* for every successful referral**, NO CAP! The more you invite, the more you earn!</p>-->
+          <!--<p class="mt20">Notes:</p>-->
+          <!--<p>* Trading Wallet – ACM balance held in the Trading Wallet can be used for trading</p>-->
+          <!--<p>* Staking Wallet – ACM balance held in the Staking Wallet is locked and 1% of the staked amount will be release on a weekly basis</p>-->
+          <!--<p>* Referrals are deemed successful once the referred user has completed their KYC process. </p>-->
+        <!--</template>-->
+        <!--<template v-else>-->
+          <!--<h3 class="text-center">-&#45;&#45; “注册奖励计划” -&#45;&#45;</h3>-->
+          <!--<p class="text-center mt10">在GCOX交易所注册并邀请您的朋友赚取丰厚奖励！</p>-->
+          <!--<p class="mt20">新用户注册奖励：</p>-->
+          <!--<p>• 一次性100个ACM代币空投至用户的质押钱包* </p>-->
+          <!--<p class="mt20">奖励标准：</p>-->
+          <!--<p>• 8月19日下午1:00后在GCOX交易所注册(GMT+8)</p>-->
+          <!--<p>• 完成KYC流程</p>-->
+          <!--<p class="mt20">邀请注册奖励：</p>-->
+          <!--<p>此外，我们很高兴向您介绍我们的“推荐奖励计划”。每成功推荐一位身边的朋友在GCOX注册并完成KYC，即可获得50个ACM代币奖励，无上限！邀请的越多，赚的越多！</p>-->
+          <!--<p class="mt20">奖励标准：</p>-->
+          <!--<p>• 被邀请人于8月19日下午1:00后通过邀请人发送的邀请码在GCOX交易所注册(GMT+8)</p>-->
+          <!--<p>• 被邀请人完成KYC流程</p>-->
+          <!--<p class="mt20">注释*</p>-->
+          <!--<p>ACM交易钱包——可买卖ACM代币与其他数字货币</p>-->
+          <!--<p>ACM质押钱包——质押钱包中的ACM将被锁定，每周释放1%的金额到您的交易钱包</p>-->
+        <!--</template>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
