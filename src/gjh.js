@@ -89,7 +89,9 @@ export default {
     'no_bind_mobile': '未绑定手机',
     'others': '其他要求',
     'total': '总金额',
-    'add_bankcard': '新增银行卡'
+    'add_bankcard': '新增银行卡',
+    'update': '修改',
+    'delete': '删除'
   },
   'login_register': {
     'Next_step': '下一步',
