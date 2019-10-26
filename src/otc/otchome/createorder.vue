@@ -268,6 +268,7 @@
           <!--确认--></button>
       </div>
     </div>
+    <loading v-if="locked"/>
   </div>
 </template>
 
@@ -297,6 +298,7 @@
         currencyMinLimit: 0,
         maxOrderProcessing: 0,
         locked: false,
+        loading: false,
         payments: JSON.parse(JSON.stringify(otcConfig.payments)),
         isClickPayments: false,
         formData: {

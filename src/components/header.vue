@@ -3,7 +3,7 @@
     <div class="header-bg"></div>
     <div class="w1200 header-top">
       <p>
-        <switch-vi @change="change" :value="showBalance"/>
+        <switch-vi v-model="showBalance"/>
         {{$t('gcox_otc.total')}} {{symbolInfo.symbol || 'BTC'}}：
         {{showBalance ? symbolInfo.totalBalance || 0.0 : '--'}}
       </p>
@@ -104,7 +104,7 @@
           <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag"
                                                               :class="'country-'+currency"></small>
             {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
-          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
+          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav3" @click="hidePopoverNav('nav3')">
             <div class="popover-menu currency">
               <span v-for="data in curList" @click="currencyFun(data.currency)">
                 <small class="country-icon currency_flag" :class="'country-'+data.currency"></small>
@@ -161,12 +161,15 @@
       },
       symbolInfo () {
         let data = {}
+        let s = this.getSymbol;
         if (this.allSymbol) {
           this.allSymbol.filter(res => {
             if (res.caption === this.getSymbol.caption) {
               data = res
             }
           })
+          s.totalBalance = data.totalBalance
+          this.setSymbol(s)
           return data
         } else {
           this.getBalance()
@@ -193,7 +196,7 @@
 
     },
     methods: {
-      ...mapActions(['setLang', 'setApiToken', 'setCurrency']),
+      ...mapActions(['setLang', 'setApiToken', 'setCurrency','setSymbol']),
       showQuickLogin () {
         utils.setDialog(quickLogin, {
           backClose: true
@@ -212,6 +215,7 @@
       getCurList () {
         otcApi.getCurrencys(res => {
           this.curList = res
+          window.localStorage.currencyList = res
         })
       },
       setLanguage (lang) {
@@ -236,9 +240,9 @@
           }, 1000)
         }
       },
-      change (e) {
-        this.showBalance = e
-      }
+      // change (e) {
+      //   this.showBalance = e
+      // }
     }
   }
 </script>

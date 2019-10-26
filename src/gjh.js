@@ -91,7 +91,8 @@ export default {
     'total': '总金额',
     'add_bankcard': '新增银行卡',
     'update': '修改',
-    'delete': '删除'
+    'delete': '删除',
+    'amount_emit': '数量不能为空或0'
   },
   'login_register': {
     'Next_step': '下一步',
@@ -218,6 +219,7 @@ export default {
     "public6":"请输入手机号",
     "public256":"当前价格",
     "public255":"下单确认信息",
+    "public135":"请输入有效的银行卡号",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
@@ -409,6 +411,9 @@ export default {
     "user31":"取消",
     "user30":"谷歌认证码",
     "user61":"谷歌验证码",
+    "foot-policy":"隐私政策",
+    "wallet-rule":"钱包使用条款",
+    "use-rule":"使用条款",
   },
   'user': {
     'set': '设置',

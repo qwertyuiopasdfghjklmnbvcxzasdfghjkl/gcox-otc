@@ -499,6 +499,18 @@ const getVerifyState = function (success, error) {
 }
 otc.getVerifyState = getVerifyState
 
+// 快速买卖
+const match = function (data, success, error) {
+  api.get(`${domain}api/v2/otc/orders/match`, data, (res) => {
+    if (res.rst === 1) {
+      success && success(res.msg)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+otc.match = match
+
 // OTC交易记录 - 导出报表 formData:{startDate:开始时间, endDate:结束时间, lang:语言}
 const exportOTCTradeRecord = function (formData, success, error) {
   api.post(`${domain}api/v2/otc/export/excel`, formData, (res) => {

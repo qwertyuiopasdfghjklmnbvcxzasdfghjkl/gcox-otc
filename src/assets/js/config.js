@@ -1,6 +1,6 @@
 // let domain = process.env.NODE_ENV === 'development' ? 'gcox.dev.koall.io' : location.host.split(':')[0]
-let domain = process.env.NODE_ENV === 'development' ? 'dev.koall.io' : location.host.split(':')[0]
-// let domain = process.env.NODE_ENV === 'development' ? 'otc.gcox.dev.koall.io' : location.host.split(':')[0]
+// let domain = process.env.NODE_ENV === 'development' ? 'dev.koall.io' : location.host.split(':')[0]
+let domain = process.env.NODE_ENV === 'development' ? 'otc.gcox.dev.koall.io' : location.host.split(':')[0]
 // let domain = process.env.NODE_ENV === 'development' ? 'acm-otc.tinkey.io' : location.host.split(':')[0]
 const config = {
   domain: domain,

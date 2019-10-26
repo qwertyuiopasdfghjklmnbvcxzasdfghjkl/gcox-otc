@@ -115,194 +115,194 @@
       //     }
       //   }
       // },
-      wechatReadOnly (newVal) {
-        if (newVal) {
-          if (this.isSaveSettings) {
-            this.oldWechatData = JSON.parse(JSON.stringify(this.wechatData))
-            this.isSaveSettings = false
-          } else {
-            this.wechatData = JSON.parse(JSON.stringify(this.oldWechatData))
-            this.$refs.wechatForm.querySelector('input[name="source"]').value = null
-          }
-        }
-      },
-      alipayReadOnly (newVal) {
-        if (newVal) {
-          if (this.isSaveSettings) {
-            this.oldAlipayData = JSON.parse(JSON.stringify(this.alipayData))
-            this.isSaveSettings = false
-          } else {
-            this.alipayData = JSON.parse(JSON.stringify(this.oldAlipayData))
-            this.$refs.alipayForm.querySelector('input[name="source"]').value = null
-          }
-        }
-      },
-      paypalReadOnly (newVal) { // PayPal
-        if (newVal) {
-          if (this.isSaveSettings) {
-            this.oldPayPalData = JSON.parse(JSON.stringify(this.paypalData))
-            this.isSaveSettings = false
-          } else {
-            this.paypalData = JSON.parse(JSON.stringify(this.oldPayPalData))
-          }
-        }
-      }
+      // wechatReadOnly (newVal) {
+      //   if (newVal) {
+      //     if (this.isSaveSettings) {
+      //       this.oldWechatData = JSON.parse(JSON.stringify(this.wechatData))
+      //       this.isSaveSettings = false
+      //     } else {
+      //       this.wechatData = JSON.parse(JSON.stringify(this.oldWechatData))
+      //       this.$refs.wechatForm.querySelector('input[name="source"]').value = null
+      //     }
+      //   }
+      // },
+      // alipayReadOnly (newVal) {
+      //   if (newVal) {
+      //     if (this.isSaveSettings) {
+      //       this.oldAlipayData = JSON.parse(JSON.stringify(this.alipayData))
+      //       this.isSaveSettings = false
+      //     } else {
+      //       this.alipayData = JSON.parse(JSON.stringify(this.oldAlipayData))
+      //       this.$refs.alipayForm.querySelector('input[name="source"]').value = null
+      //     }
+      //   }
+      // },
+      // paypalReadOnly (newVal) { // PayPal
+      //   if (newVal) {
+      //     if (this.isSaveSettings) {
+      //       this.oldPayPalData = JSON.parse(JSON.stringify(this.paypalData))
+      //       this.isSaveSettings = false
+      //     } else {
+      //       this.paypalData = JSON.parse(JSON.stringify(this.oldPayPalData))
+      //     }
+      //   }
+      // }
     },
     created () {
       this.getList()
     },
     methods: {
-      loadData () {
-        otcApi.getPaySettings((res) => {
-          // 银行卡
-          this.bankData = {
-            card_name: res.data.card_name,
-            card_bank: res.data.card_bank,
-            card_number: res.data.card_number
-          }
-          this.oldBankData = {
-            card_name: res.data.card_name,
-            card_bank: res.data.card_bank,
-            card_number: res.data.card_number
-          }
-          // 支付宝
-          this.alipayData = {
-            alipay_name: res.real_name,
-            alipay_number: res.data.alipay_number,
-            alipay_QRcode: res.data.alipay_image_path
-          }
-          this.oldAlipayData = {
-            alipay_name: res.real_name,
-            alipay_number: res.data.alipay_number,
-            alipay_QRcode: res.data.alipay_image_path
-          }
-          // 微信
-          this.wechatData = {
-            wechat_name: res.real_name,
-            wechat_number: res.data.wechat_number,
-            wechat_QRcode: res.data.wechat_image_path
-          }
-          this.oldWechatData = {
-            wechat_name: res.real_name,
-            wechat_number: res.data.wechat_number,
-            wechat_QRcode: res.data.wechat_image_path
-          }
-          // PayPal
-          this.paypalData = {
-            paypal_name: res.real_name,
-            paypal_number: res.data.paypal_number
-          }
-          this.oldPayPalData = {
-            paypal_name: res.real_name,
-            paypal_number: res.data.paypal_number
-          }
-          this.infoLoaded = true
-        }, (res) => {
-          if (res.msg === 'NO_PAY_TYPE') {
-            // 银行卡
-            this.bankData.card_name = res.real_name
-            this.oldBankData.card_name = res.real_name
-            // 支付宝
-            this.alipayData.alipay_name = res.real_name
-            this.oldAlipayData.alipay_name = res.real_name
-            // 微信
-            this.wechatData.wechat_name = res.real_name
-            this.oldWechatData.wechat_name = res.real_name
-            // PayPal
-            this.paypalData.paypal_name = res.real_name
-            this.oldPayPalData.paypal_name = res.real_name
-          } else {
-            console.error(res.msg)
-          }
-          this.infoLoaded = true
-        })
-      },
-      saveSettings (type) {
-        let scope = null
-        let formData = null
-        switch (type) {
-          case 1:
-            scope = 'bank_scope'
-            formData = new FormData(this.$refs.bankForm)
-            break
-          case 2:
-            scope = 'alipay_scope'
-            formData = new FormData(this.$refs.alipayForm)
-            break
-          case 3:
-            scope = 'wechat_scope'
-            formData = new FormData(this.$refs.wechatForm)
-            break
-          case 4:
-            scope = 'paypal_scope'
-            formData = new FormData(this.$refs.paypalForm)
-            break
-        }
-        this.$validator.validateAll(scope).then((validResult) => {
-          if (!validResult) {
-            return
-          }
-          otcApi.savePaySettings(type, formData, (msg) => {
-            this.isSaveSettings = true
-            switch (type) {
-              case 1:
-                this.bankReadOnly = true
-                break
-              case 2:
-                this.alipayReadOnly = true
-                break
-              case 3:
-                this.wechatReadOnly = true
-                break
-              case 4:
-                this.paypalReadOnly = true
-                break
-            }
-            Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
-          }, (msg) => {
-            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
-          })
-        })
-      },
-      uploadImage (event, type) {
-        let objectName = null
-        let propertyName = null
-        if (type === 2) {
-          objectName = 'alipayData'
-          propertyName = 'alipay_QRcode'
-        } else if (type === 3) {
-          objectName = 'wechatData'
-          propertyName = 'wechat_QRcode'
-        } else {
-          return
-        }
-
-        let isTrue = false
-        if (config.imageType.test(event.target.value)) {
-          isTrue = utils.limitUploadImage(event.target, (msg) => {
-            Vue.$koallTipBox({icon: 'notification', message: this.$t(msg)}) // 图片不能超过1M
-          }, 1)
-        } else {
-          isTrue = false
-          Vue.$koallTipBox({icon: 'notification', message: this.$t('public0.public43')}) // 请上传JPG、PNG、JPEG、BMP格式的图片
-        }
-
-        if (isTrue) {
-          this[objectName][propertyName] = window.URL.createObjectURL(event.target.files[0])
-          event.target.name = 'source'
-          if (parseInt(event.target.getAttribute('data-key')) === 1) {
-            event.target.nextElementSibling.name = ''
-            event.target.nextElementSibling.value = null
-            this.isShowUpload[propertyName] = false
-          } else {
-            event.target.previousElementSibling.name = ''
-            event.target.previousElementSibling.value = null
-            this.isShowUpload[propertyName] = true
-          }
-        } else {
-          event.target.value = null
-        }
-      },
+      // loadData () {
+      //   otcApi.getPaySettings((res) => {
+      //     // 银行卡
+      //     this.bankData = {
+      //       card_name: res.data.card_name,
+      //       card_bank: res.data.card_bank,
+      //       card_number: res.data.card_number
+      //     }
+      //     this.oldBankData = {
+      //       card_name: res.data.card_name,
+      //       card_bank: res.data.card_bank,
+      //       card_number: res.data.card_number
+      //     }
+      //     // 支付宝
+      //     this.alipayData = {
+      //       alipay_name: res.real_name,
+      //       alipay_number: res.data.alipay_number,
+      //       alipay_QRcode: res.data.alipay_image_path
+      //     }
+      //     this.oldAlipayData = {
+      //       alipay_name: res.real_name,
+      //       alipay_number: res.data.alipay_number,
+      //       alipay_QRcode: res.data.alipay_image_path
+      //     }
+      //     // 微信
+      //     this.wechatData = {
+      //       wechat_name: res.real_name,
+      //       wechat_number: res.data.wechat_number,
+      //       wechat_QRcode: res.data.wechat_image_path
+      //     }
+      //     this.oldWechatData = {
+      //       wechat_name: res.real_name,
+      //       wechat_number: res.data.wechat_number,
+      //       wechat_QRcode: res.data.wechat_image_path
+      //     }
+      //     // PayPal
+      //     this.paypalData = {
+      //       paypal_name: res.real_name,
+      //       paypal_number: res.data.paypal_number
+      //     }
+      //     this.oldPayPalData = {
+      //       paypal_name: res.real_name,
+      //       paypal_number: res.data.paypal_number
+      //     }
+      //     this.infoLoaded = true
+      //   }, (res) => {
+      //     if (res.msg === 'NO_PAY_TYPE') {
+      //       // 银行卡
+      //       this.bankData.card_name = res.real_name
+      //       this.oldBankData.card_name = res.real_name
+      //       // 支付宝
+      //       this.alipayData.alipay_name = res.real_name
+      //       this.oldAlipayData.alipay_name = res.real_name
+      //       // 微信
+      //       this.wechatData.wechat_name = res.real_name
+      //       this.oldWechatData.wechat_name = res.real_name
+      //       // PayPal
+      //       this.paypalData.paypal_name = res.real_name
+      //       this.oldPayPalData.paypal_name = res.real_name
+      //     } else {
+      //       console.error(res.msg)
+      //     }
+      //     this.infoLoaded = true
+      //   })
+      // },
+      // saveSettings (type) {
+      //   let scope = null
+      //   let formData = null
+      //   switch (type) {
+      //     case 1:
+      //       scope = 'bank_scope'
+      //       formData = new FormData(this.$refs.bankForm)
+      //       break
+      //     case 2:
+      //       scope = 'alipay_scope'
+      //       formData = new FormData(this.$refs.alipayForm)
+      //       break
+      //     case 3:
+      //       scope = 'wechat_scope'
+      //       formData = new FormData(this.$refs.wechatForm)
+      //       break
+      //     case 4:
+      //       scope = 'paypal_scope'
+      //       formData = new FormData(this.$refs.paypalForm)
+      //       break
+      //   }
+      //   this.$validator.validateAll(scope).then((validResult) => {
+      //     if (!validResult) {
+      //       return
+      //     }
+      //     otcApi.savePaySettings(type, formData, (msg) => {
+      //       this.isSaveSettings = true
+      //       switch (type) {
+      //         case 1:
+      //           this.bankReadOnly = true
+      //           break
+      //         case 2:
+      //           this.alipayReadOnly = true
+      //           break
+      //         case 3:
+      //           this.wechatReadOnly = true
+      //           break
+      //         case 4:
+      //           this.paypalReadOnly = true
+      //           break
+      //       }
+      //       Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
+      //     }, (msg) => {
+      //       Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+      //     })
+      //   })
+      // },
+      // uploadImage (event, type) {
+      //   let objectName = null
+      //   let propertyName = null
+      //   if (type === 2) {
+      //     objectName = 'alipayData'
+      //     propertyName = 'alipay_QRcode'
+      //   } else if (type === 3) {
+      //     objectName = 'wechatData'
+      //     propertyName = 'wechat_QRcode'
+      //   } else {
+      //     return
+      //   }
+      //
+      //   let isTrue = false
+      //   if (config.imageType.test(event.target.value)) {
+      //     isTrue = utils.limitUploadImage(event.target, (msg) => {
+      //       Vue.$koallTipBox({icon: 'notification', message: this.$t(msg)}) // 图片不能超过1M
+      //     }, 1)
+      //   } else {
+      //     isTrue = false
+      //     Vue.$koallTipBox({icon: 'notification', message: this.$t('public0.public43')}) // 请上传JPG、PNG、JPEG、BMP格式的图片
+      //   }
+      //
+      //   if (isTrue) {
+      //     this[objectName][propertyName] = window.URL.createObjectURL(event.target.files[0])
+      //     event.target.name = 'source'
+      //     if (parseInt(event.target.getAttribute('data-key')) === 1) {
+      //       event.target.nextElementSibling.name = ''
+      //       event.target.nextElementSibling.value = null
+      //       this.isShowUpload[propertyName] = false
+      //     } else {
+      //       event.target.previousElementSibling.name = ''
+      //       event.target.previousElementSibling.value = null
+      //       this.isShowUpload[propertyName] = true
+      //     }
+      //   } else {
+      //     event.target.value = null
+      //   }
+      // },
       checkVerifyState (scope) {
         // 检查是否完成实名验证
         otcApi.getVerifyState((msg) => {

@@ -46,7 +46,7 @@
     methods: {
       chang () {
         this.switch_value = !this.switch_value
-        this.$emit('change', this.switch_value)
+        this.$emit('input', this.switch_value)
       }
     }
 

@@ -9,14 +9,14 @@
         <li class="form-row">
           <label class="form-label">{{vm.$t('otc_legal.otc_legal_Name')}}<!--姓名--><em
             class="asterisk">&nbsp;*</em></label>
-          <input class="form-input" type="text" name="card_name" :value="bankData.card_name" autocomplete="off"/>
+          <input class="form-input" type="text" name="card_name" v-model="bankData.card_name"/>
         </li>
         <li class="form-row">
           <label class="form-label">{{vm.$t('otc_legal.otc_legal_Bank')}}<!--开户行--><em
             class="asterisk">&nbsp;*</em></label>
           <div class="input_div">
             <input class="form-input" :class="{error: errors.has('bank_scope.card_bank')}" type="text" name="card_bank"
-                   v-model="bankData.card_bank" v-validate="'required'" maxlength="32" autocomplete="off"/>
+                   v-model="bankData.card_bank" v-validate="'required'" maxlength="32"/>
             <span class="form-error" v-if="errors.has('bank_scope.card_bank')">{{msgs.card_bank[errors.firstRule('card_bank')]}}</span>
           </div>
 
@@ -26,8 +26,8 @@
             class="asterisk">&nbsp;*</em></label>
           <div class="input_div">
             <input class="form-input" :class="{error: errors.has('bank_scope.card_number')}" type="text"
-                   name="card_number" v-model="bankData.card_number" v-validate="'required|bankCardValid'" maxlength="32"
-                   autocomplete="off"/>
+                   name="card_number" v-model="bankData.card_number" v-validate="'required|bankCardValid'"
+                   maxlength="32"/>
             <span class="form-error" v-if="errors.has('bank_scope.card_number')">{{msgs.card_number[errors.firstRule('card_number')]}}</span>
           </div>
 
@@ -42,7 +42,9 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import Card from '../../../components/card'
+  import otcApi from '@/api/otc'
 
   export default {
     name: 'dilog',
@@ -51,7 +53,7 @@
       const vm = window.vm
       return {
         vm: vm,
-        bankData:{}
+        bankData: {}
       }
     },
     computed: {
@@ -77,43 +79,54 @@
       closeDialog () {
         this.$emit('removeDialog')
       },
-      saveSettings(){
+      saveSettings () {
         let formData = new FormData(this.$refs.bankForm)
+        otcApi.savePaySettings(1, formData, res => {
+          Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
+        }, msg => {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+        })
       }
     }
   }
 </script>
 
 <style scoped lang="less">
-.form-table{
-  li{
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    label{
-      width: 100px;
-    }
-    .input_div{
-      flex: 1;
-      input{
-        display: block;
-        width: calc(~'100% - 20px');
+  .form-table {
+    li {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+
+      label {
+        width: 100px;
+      }
+
+      .input_div {
+        flex: 1;
+
+        input {
+          display: block;
+          width: calc(~'100% - 20px');
+        }
+      }
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #eeeeee;
+      }
+
+      .form-error {
+        color: #e74c3c;
+      }
+
+      .form-save {
+        padding: 10px 20px;
+        color: #ffffff;
+        margin: 10px auto;
+        width: 120px;
       }
     }
-    input{
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #eeeeee;
-    }
-    .form-error{
-      color: #e74c3c;
-    }
-    .form-save{
-      padding: 10px 20px;
-      color: #ffffff;
-      margin: 10px auto;
-      width: 120px;
-    }
   }
-}
 </style>

@@ -148,8 +148,8 @@
                       id: 'PAY_TYPE_UNMATCH',
                       content: this.$t('error_code.PAY_TYPE_UNMATCH'), // 支付方式不匹配，请设置对应的支付方式
                       okCallback: () => {
-                        this.$emit('goToSettings')
-                        this.$emit('removeDialog')
+                        // this.$emit('goToSettings')
+                        // this.$emit('removeDialog')
                       }
                     })
                   } else {
@@ -176,8 +176,7 @@
                   id: 'NO_PAY_TYPE',
                   content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
                   okCallback: () => {
-                    this.$emit('goToSettings')
-                    this.$emit('removeDialog')
+                    this.$router.push({name: 'control_pay'})
                   }
                 })
               } else {
@@ -193,8 +192,7 @@
               id: 'KYC_AUTH_FIRST',
               content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
               okCallback: () => {
-                this.$emit('goToMyCenter')
-                this.$emit('removeDialog')
+                this.$router.push({name: 'control_kyc'})
               }
             })
           } else {

@@ -31,24 +31,21 @@
         </div>
       </div>
 
-      <!--<div class="buy_box" v-if="state === 1">-->
-        <!--<button class="yellow_button" @click="buy()">Create offer</button>-->
-        <!--<p @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}{{t.symbol}} ?</p>-->
-      <!--</div>-->
-
       <div class="buy_box" v-if="state !== 0">
         <div class="input_box">
           <span>
-            <numberbox :accuracy="8"></numberbox>
-            <button>Max</button>
+            <numberbox :accuracy="8" v-model="amount"></numberbox>
+            <button v-if="state === 2" @click="getMax()">Max</button>
           </span>
           <span>
-            <select>
-              <option>-- --</option>
-            </select>
+            <select class="w250" v-model="form.bench_marking_id">
+                <option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">
+                  {{item.marking_name}}
+                </option>
+              </select>
           </span>
         </div>
-        <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sell()">Create offer</button>
+        <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">Create offer</button>
         <p v-if="state === 1" @click="state=2">{{$t('gcox_otc.want').format($t('gcox_otc.sell'))}}{{t.symbol}} ?</p>
         <p v-if="state === 2" @click="state=1">{{$t('gcox_otc.want').format($t('gcox_otc.buy'))}}{{t.symbol}} ?</p>
       </div>
@@ -58,10 +55,12 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import Inputbox from '../../components/formel/inputbox'
   import Numberbox from '../../components/formel/numberbox'
   import otcApi from '@/api/otc'
   import numUtils from '@/assets/js/numberUtils'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     name: 'select-index',
@@ -74,20 +73,35 @@
         t: this.params,
         ts: [],
         curPrice: 0,
+        curList: window.localStorage.currencyList,
+        amount: null
       }
     },
     computed: {
+      ...mapGetters(['getLang', 'getSymbol', 'getCurrency']),
       paramsChange () {
         return {
           bench_marking_id: 1,
           currency: this.params.currency,
           symbol: this.t.symbol
         }
-      }
+      },
+      form () {
+        return {
+          bench_marking_id: 1,
+          amount: this.amount,
+          currency: this.params.currency,
+          symbol: this.params.symbol,
+          direction: this.state
+        }
+      },
     },
     created () {
       this.getList()
       this.getInfo()
+      this.$nextTick(() => {
+        this.fnGetBenchExchange()
+      })
     },
     methods: {
       change (data) {
@@ -108,9 +122,24 @@
           console.log(res)
         })
       },
-      buy () {
+      sub () {
+        if (this.form.amount) {
+          otcApi.match(this.form, res => {
+            Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
+          }, msg => {
+            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+          })
+        } else {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.amount_emit`)})
+        }
       },
-      sell () {
+      getMax () {
+        this.amount = this.getSymbol.totalBalance || 0
+      },
+      fnGetBenchExchange () { // 获取对标交易所
+        otcApi.getBenchExchange((res) => {
+          this.benchDatas = res
+        })
       },
     }
 
