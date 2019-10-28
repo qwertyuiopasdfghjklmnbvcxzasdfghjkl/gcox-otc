@@ -22,7 +22,7 @@
 .country-MY{background-position:-90px -30px}
 .country-MV{background-position:-120px -30px}
 .country-MN{background-position:-150px -30px}
-.country-MM{background-position:-180px -30px}
+.country-TW{background-position:-180px -30px}
 .country-NP{background-position:-210px -30px}
 .country-KP{background-position:-240px -30px}
 .country-OM{background-position:-270px -30px}
@@ -166,4 +166,16 @@
 .country-TJ{background-position:-90px -330px}
 .country-FM{background-position:-120px -330px}
 .country-AI{background-position:-150px -330px}
+.country-MO{background-position:-180px -330px}
 .country-__{background-position:30px 30px}
+
+.country-VND{background-position:-210px -60px}
+.country-SGD{background-position:-450px -30px}
+.country-MYR{background-position:-90px -30px}
+.country-THB{background-position:-90px -60px}
+.country-IDR{background-position:-270px 0}
+.country-KHR{background-position:-180px 0}
+.country-PHP{background-position:-360px -30px}
+.country-HKD{background-position:-390px -300px}
+.country-TWD{background-position:-180px -30px}
+.country-MOP{background-position:-180px -330px}

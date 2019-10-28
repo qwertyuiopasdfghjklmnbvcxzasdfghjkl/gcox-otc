@@ -3,7 +3,7 @@
     <div class="header-bg"></div>
     <div class="w1200 header-top">
       <p>
-        <switch-vi @change="change" :value="showBalance"/>
+        <switch-vi v-model="showBalance"/>
         {{$t('gcox_otc.total')}} {{symbolInfo.symbol || 'BTC'}}：
         {{showBalance ? symbolInfo.totalBalance || 0.0 : '--'}}
       </p>
@@ -101,19 +101,31 @@
           <!-- 注册 --></router-link>
 
         <router-link to="" class="item" v-if="isLogin">
-          <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag" :class="'country-'+currency"></small>
+          <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag"
+                                                              :class="'country-'+currency"></small>
             {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
-          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
+          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav3" @click="hidePopoverNav('nav3')">
             <div class="popover-menu currency">
               <span v-for="data in curList" @click="currencyFun(data.currency)">
-                <small class="country-icon currency_flag" :class="'country-'+currency"></small>
+                <small class="country-icon currency_flag" :class="'country-'+data.currency"></small>
                 {{data.currency}}</span>
             </div>
           </div>
         </router-link>
 
-        <!--<a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>-->
-        <!--<a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>-->
+        <router-link to="" class="item" v-if="isLogin">
+          <span style="color: #fff;" class="nav-title">
+            {{lang}}<img src="../assets/img/icon-otc10.png"/>
+          </span>
+          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
+            <div class="popover-menu">
+              <p class="lang" @click="setLanguage('en')">ENGLISH</p>
+              <p class="lang" @click="setLanguage('zh-CN')">简体中文</p>
+            </div>
+          </div>
+        </router-link>
+
+
       </div>
     </div>
   </div>
@@ -134,7 +146,7 @@
       return {
         allSymbol: [],
         showBalance: true,
-        curList: []
+        curList: [],
       }
     },
     computed: {
@@ -149,12 +161,15 @@
       },
       symbolInfo () {
         let data = {}
+        let s = this.getSymbol;
         if (this.allSymbol) {
           this.allSymbol.filter(res => {
             if (res.caption === this.getSymbol.caption) {
               data = res
             }
           })
+          s.totalBalance = data.totalBalance
+          this.setSymbol(s)
           return data
         } else {
           this.getBalance()
@@ -162,11 +177,17 @@
       },
       currency () {
         return this.getCurrency
+      },
+      lang () {
+        switch (this.getLang) {
+          case 'en':
+            return 'ENGLISH'
+          case 'zh-CN':
+            return '简体中文'
+        }
       }
     },
-    watch: {
-
-    },
+    watch: {},
     created () {
       this.getBalance()
       this.getCurList()
@@ -175,7 +196,7 @@
 
     },
     methods: {
-      ...mapActions(['setLang', 'setApiToken', 'setCurrency']),
+      ...mapActions(['setLang', 'setApiToken', 'setCurrency','setSymbol']),
       showQuickLogin () {
         utils.setDialog(quickLogin, {
           backClose: true
@@ -194,6 +215,7 @@
       getCurList () {
         otcApi.getCurrencys(res => {
           this.curList = res
+          window.localStorage.currencyList = res
         })
       },
       setLanguage (lang) {
@@ -218,9 +240,9 @@
           }, 1000)
         }
       },
-      change (e) {
-        this.showBalance = e
-      }
+      // change (e) {
+      //   this.showBalance = e
+      // }
     }
   }
 </script>
@@ -492,17 +514,34 @@
   }
 
   .currency {
+    display: flex;
+    flex-wrap: wrap;
     span {
-      padding: 10px;
+      flex: 1;
+      padding: 6px 18px;
       display: inline-flex;
       align-items: center;
-      small{
+      transition: 0.3s;
+      white-space: nowrap;
+      &:hover{
+        background: #eeeeee;
+      }
+
+      small {
         zoom: 0.8;
       }
     }
   }
-  .currency_flag{
+
+  .currency_flag {
     border-radius: 50%;
     margin-right: 4px;
+  }
+  .lang{
+    padding: 0 20px;
+    transition: 0.3s;
+    &:hover{
+      background: #eeeeee;
+    }
   }
 </style>

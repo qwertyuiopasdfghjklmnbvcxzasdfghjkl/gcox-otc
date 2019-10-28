@@ -117,8 +117,8 @@
           obj.value = res.availableBalance
           arr.push(obj)
         })
-        this.polar.legend.data = name
-        this.polar.series[0].data = arr
+        // this.polar.legend.data = name
+        // this.polar.series[0].data = arr
       }
     },
     created () {

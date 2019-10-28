@@ -60,10 +60,10 @@
         </div>
       </div>
     </div>
-    <div class="lang">
-      <a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>
-      <a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>
-    </div>
+    <!--<div class="lang">-->
+      <!--<a class="item" href="javascript:;" @click="setLanguage('en')" v-if="getLang==='zh-CN'">ENGLISH</a>-->
+      <!--<a class="item" href="javascript:;" @click="setLanguage('zh-CN')" v-if="getLang==='en'">简体中文</a>-->
+    <!--</div>-->
   </div>
 </template>
 

@@ -95,7 +95,7 @@
 
 <script>
   import Vue from 'vue'
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import Collapse from './set/collapse'
   import userUtils from '@/api/individual'
   import utils from '@/assets/js/utils'
@@ -118,6 +118,7 @@
       this.userInfo = this.getUserInfo
     },
     methods: {
+      ...mapActions(['setUserInfo']),
       banding () {
         if (this.userInfo.googleAuthEnable === 0) {
           this.googleVerify(1)

@@ -11,7 +11,7 @@
       <!--<span>{{$t('usercontent.recharge')}}&lt;!&ndash;数字货币充值&ndash;&gt;</span>-->
     </div>
     <div class="copy">
-      <p>{{$t('gcox_otc.symbol_address')}}</p>
+      <p>{{symbol}}{{$t('referral.address')}} <!--充币地址--></p>
       <p class="address">{{addr}}</p>
       <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
     </div>

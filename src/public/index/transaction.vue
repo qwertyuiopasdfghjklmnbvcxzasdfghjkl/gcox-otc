@@ -168,9 +168,10 @@
       }
     },
     created () {
-      this.params = this.$route.query.params
-      this.ad_id = this.$route.query.ad_id
-      this.matchPayType = this.$route.query.matchPayType
+      let ordDet = JSON.parse(window.localStorage.ordDet)
+      this.params = ordDet.params
+      this.ad_id = ordDet.ad_id
+      this.matchPayType = ordDet.matchPayType
 
       console.log(this.params, this.ad_id, this.matchPayType)
 
@@ -259,9 +260,10 @@
               }, (id, msg) => {
                 this.locked = false
                 this.params.newOrderCount++
-                this.$emit('okCallback', id)
+                // this.$emit('okCallback', id)
+                this.$router.push({name: 'home'})
                 Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
-                this.$emit('removeDialog')
+                // this.$emit('removeDialog')
               }, (msg) => {
                 this.locked = false
                 let errMsg = typeof msg === 'string' ? msg : msg[0]

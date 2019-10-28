@@ -88,7 +88,12 @@ export default {
     'back': '后退',
     'no_bind_mobile': '未绑定手机',
     'others': '其他要求',
-    'total': '总金额'
+    'total': '总金额',
+    'add_bankcard': '新增银行卡',
+    'update': '修改',
+    'delete': '删除',
+    'amount_emit': '数量不能为空或0',
+    'not_buy_myself': '不可以买卖自己发布的广告'
   },
   'login_register': {
     'Next_step': '下一步',
@@ -214,6 +219,8 @@ export default {
     "public161":"发送",
     "public6":"请输入手机号",
     "public256":"当前价格",
+    "public255":"下单确认信息",
+    "public135":"请输入有效的银行卡号",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
@@ -364,6 +371,7 @@ export default {
     'otc_ad_minimum_amount': '请输入最小限额',
     'otc_ad_payment_period': '请输入付款期限',
     'otc_ad_max_uncompleted_orders': '单个广告可同时存在的未完成订单最大数量',
+    "otc_ad_Payment_method":"支付方式",
   },
   'usercontent': {
     'user71': '充币',
@@ -404,6 +412,9 @@ export default {
     "user31":"取消",
     "user30":"谷歌认证码",
     "user61":"谷歌验证码",
+    "foot-policy":"隐私政策",
+    "wallet-rule":"钱包使用条款",
+    "use-rule":"使用条款",
   },
   'user': {
     'set': '设置',
