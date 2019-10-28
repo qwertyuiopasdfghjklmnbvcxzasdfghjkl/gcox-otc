@@ -501,7 +501,7 @@ otc.getVerifyState = getVerifyState
 
 // 快速买卖
 const match = function (data, success, error) {
-  api.get(`${domain}api/v2/otc/orders/match`, data, (res) => {
+  api.post(`${domain}api/v2/otc/orders/match`, data, (res) => {
     if (res.rst === 1) {
       success && success(res.msg)
     } else {
