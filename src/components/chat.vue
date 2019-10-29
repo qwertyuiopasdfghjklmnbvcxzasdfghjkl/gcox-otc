@@ -32,7 +32,8 @@
         </div>
         <div class="chat-body-right-send">
           <div class="send-container">
-            <input type="text" v-model="message" :readonly="isReadOnly" class="send-input" maxlength="100" :placeholder="$t('public0.public250')" @keyup.enter="sendMessage"/>
+            <input type="text" v-model="message" :readonly="isReadOnly" class="send-input" maxlength="100"
+                   :placeholder="$t('public0.public250')" @keyup.enter="sendMessage"/>
             <span type="button" class="send-btn icon-send" :class="{disabled:isReadOnly}" @click="sendMessage"></span>
           </div>
         </div>
