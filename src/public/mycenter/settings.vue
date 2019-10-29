@@ -17,8 +17,8 @@
             </div>
           </div>
           <div class="form-flex-right">
-            <span class="yellow_button" @click="update()">{{$t('gcox_otc.update')}}<!--修改--></span>
-            <span class="red_button" @click="del()">{{$t('gcox_otc.delete')}}<!--删除--></span>
+            <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
+            <span class="red_button" @click="del(item)">{{$t('gcox_otc.delete')}}<!--删除--></span>
           </div>
         </div>
       </li>
@@ -29,6 +29,7 @@
 
 <script>
   import Vue from 'vue'
+  import {mapGetters} from 'vuex'
   import otcApi from '@/api/otc'
   import utils from '@/assets/js/utils'
   import config from '@/assets/js/config'
@@ -89,6 +90,7 @@
       }
     },
     computed: {
+      ...mapGetters(['getUserInfo']),
       msgs () {
         return {
           card_bank: {required: this.$t('otc_legal.otc_legal_input_bank')}, // 请输入开户行
@@ -340,17 +342,33 @@
           this.bankList = res.bankList
         })
       },
-      update () {
+      update (data) {
+        utils.setDialog(dialog, {
+          item: data,
+          okCallback: () => {
+            this.getList()
+          }
+        })
       },
       del () {
       },
       add () {
         // 先判断是否实名
-        utils.setDialog(dialog, {
-          okCallback: () => {
-            this.getList()
-          }
-        })
+        if (this.getUserInfo.kycState === 1) {
+          utils.setDialog(dialog, {
+            okCallback: () => {
+              this.getList()
+            }
+          })
+        }else {
+          Vue.$confirmDialog({
+            id: 'KYC_AUTH_FIRST',
+            content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
+            okCallback: () => {
+              this.$router.push({name: 'control_kyc'})
+            }
+          })
+        }
       }
     }
   }

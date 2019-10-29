@@ -49,6 +49,7 @@
   export default {
     name: 'dilog',
     components: {Card},
+    props: ['item'],
     data () {
       const vm = window.vm
       return {
@@ -73,7 +74,9 @@
       }
     },
     created () {
-
+      if (this.item) {
+        this.bankData = this.item
+      }
     },
     methods: {
       closeDialog () {
