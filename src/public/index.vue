@@ -35,6 +35,13 @@
     <!--<download/>-->
 
     <!--<regbox/>-->
+
+    <chat ref="chat" v-if="getApiToken"
+          v-show="showChat" v-model="showChat"
+          :orderNumber="orderNumber"
+          :switchNew="switchNew"
+          :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
+    <em class="chat-icon" :class="{'new':newMsg}" v-if="getApiToken" @click="openChat"></em>
   </div>
 </template>
 
@@ -50,6 +57,8 @@
   import regbox from '@/public/index/regbox'
   import SelectIndex from './index/select-index'
   import ListIndex from './index/list-index'
+  import chat from '@/components/chat'
+  import otcApi from '@/api/otc'
 
   export default {
     name: 'app',
@@ -63,10 +72,17 @@
       tipbox,
       news,
       download,
-      regbox
+      regbox,
+      chat
     },
     data () {
-      return {}
+      return {
+        showChat: false,
+        orderNumber: null,
+        newMsg: false,
+        firstEnter: 0,
+        switchNew: 0,
+      }
     },
     computed: {
       ...mapGetters(['getApiToken', 'getLang', 'getSymbol', 'getCurrency']),
@@ -80,8 +96,13 @@
       getApiToken () {
         this.socket && this.socket.changeLogin()
       },
-      params(e){
-        console.log(e)
+      'params.newOrderCount' () {
+        this.showChat = true
+      },
+      showChat (val) {
+        if (val) {
+          this.firstEnter++
+        }
       }
     },
     created () {
@@ -91,6 +112,33 @@
       change (e) {
         console.log(e)
         this.setSymbol(e)
+      },
+      createNewOrder (id) {
+        if (this.$refs.orderlist.params.state === 1) {
+          this.$refs.orderlist.params.page = 1
+        }
+        otcApi.ordersDetail(id, (res) => {
+          this.orderNumber = res.orderInfo.order_number
+        })
+      },
+      openChat () {
+        this.showChat = !this.showChat
+        this.newMsg = false
+      },
+      markNewMsg (bool) {
+        if (bool) {
+          this.showChat = true
+        }
+        this.newMsg = bool
+      },
+      switchOldMessage (orderNumber) {
+        this.showChat = true
+        this.switchNew++
+        this.orderNumber = orderNumber
+      },
+      addSystemMessage (orderNumber, message) { // 添加系统消息
+        this.showChat = true
+        this.$refs.chat.addSystemMessage(orderNumber, message)
       }
     },
   }
@@ -124,5 +172,8 @@
       }
     }
   }
+  .chat-icon{position:fixed;z-index:999;left:4px;bottom:4px;width:70px;height:70px;cursor:pointer;background:url(../assets/images/chat.png) no-repeat center;}
+  .chat-icon:hover{background-image:url(../assets/images/chat_hover.png);}
+  .new::after{content:" ";width:12px;height:12px;background:#ff0000;position:absolute;right:-1px;top:-1px;border-radius:50%;}
 </style>
 

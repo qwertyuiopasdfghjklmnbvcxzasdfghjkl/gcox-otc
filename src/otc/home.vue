@@ -13,7 +13,11 @@
       </div>
       <orderlist ref="orderlist" :hparams="params" @switchOldMessage="switchOldMessage" @addSystemMessage="addSystemMessage"/>
       <adlist ref="adlist" :params="params" @goToMyCenter="goToMyCenter" @goToSettings="goToSettings"/>
-      <chat ref="chat" v-if="getApiToken" v-show="showChat" v-model="showChat" :orderNumber="orderNumber" :switchNew="switchNew" :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
+      <chat ref="chat" v-if="getApiToken"
+            v-show="showChat" v-model="showChat"
+            :orderNumber="orderNumber"
+            :switchNew="switchNew"
+            :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
       <em class="chat-icon" :class="{'new':newMsg}" v-if="getApiToken" @click="openChat"></em>
     </div>
   </div>

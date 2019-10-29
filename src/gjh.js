@@ -221,6 +221,8 @@ export default {
     "public256":"当前价格",
     "public255":"下单确认信息",
     "public135":"请输入有效的银行卡号",
+    "public249":"交易订单",
+    "public250":"请输入内容",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',

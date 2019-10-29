@@ -94,7 +94,7 @@
         } else {
           this.$route.meta.login ? this.$router.push({name: 'home'}) : void 0
           try {
-            // this.ws && this.ws.close()
+            this.ws && this.ws.close()
           } catch (ex) {
             window.console.warn(ex)
           }
@@ -111,16 +111,15 @@
       // this.getBTCValuation()
       this.getUserInfoMethod()
       this.checkRouteChange(this.$route)
-      // this.ws = ''
-      //   new OtcWebSocket({
-      //   onMessage: (data) => {
-      //     let events = this.getOtcSocketEvents
-      //     for (let i = 0; i < events.length; i++) {
-      //       let ev = events[i]
-      //       ev(data)
-      //     }
-      //   }
-      // })
+      this.ws = new OtcWebSocket({
+        onMessage: (data) => {
+          let events = this.getOtcSocketEvents
+          for (let i = 0; i < events.length; i++) {
+            let ev = events[i]
+            ev(data)
+          }
+        }
+      })
       // this.gws = new GlobalWebSocket({
       //   type: 'global',
       //   checkNetWork: (signal) => {
@@ -146,7 +145,7 @@
       }
     },
     beforeDestroy () {
-      // this.ws && this.ws.close()
+      this.ws && this.ws.close()
     },
     methods: {
       ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setUserInfo', 'setSysParams']),
