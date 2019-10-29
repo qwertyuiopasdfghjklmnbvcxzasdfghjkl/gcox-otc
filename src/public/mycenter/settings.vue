@@ -339,7 +339,8 @@
       },
       getList () {
         otcApi.getPaySettings((res) => {
-          this.bankList = res.bankList
+          this.bankList = res.data.bankList
+          console.log(this.bankList)
         })
       },
       update (data) {

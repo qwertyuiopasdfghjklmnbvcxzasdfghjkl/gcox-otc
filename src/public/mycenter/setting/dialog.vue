@@ -86,6 +86,8 @@
         let formData = new FormData(this.$refs.bankForm)
         otcApi.savePaySettings(1, formData, res => {
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
+          this.$emit('okCallback')
+          this.$emit('removeDialog')
         }, msg => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
