@@ -73,7 +73,7 @@
         </div>
 
 
-        <div class="filed">
+        <div class="filed" v-if="showSMS">
           <div class="filed-number">
             <em>{{$t('account.user_center_SMS_code')}}<!--短信验证码--> *</em>
 
@@ -81,7 +81,8 @@
           <div class="number" :class="{error:errors.has('smsCode')}">
             <numberbox data-vv-name="amount" class="numberAll"
                        type="text" v-model="smsCode"/>
-            <a href="javascript:;" @click="senSMS()" class="send_sms">{{disabled ? time+'s':$t('public0.public161')}}<!--发送--></a>
+            <a href="javascript:;" @click="senSMS()" class="send_sms">{{disabled ? time+'s':$t('public0.public161')}}
+              <!--发送--></a>
             <!--<span>-->
             <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
             <!--class="green">{{available}} {{symbol}}</small>-->
@@ -91,7 +92,6 @@
               <template v-if="errors.firstRule('smsCode')==='required'">{{$t('login_register.verify_code')}}</template>
             </em>
           </div>
-
         </div>
         <!--<div class="filed">-->
         <!--<div class="withdraw-info f-cb">-->
@@ -119,7 +119,7 @@
         <!--</div>-->
         <!--<em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>-->
         <!--</div>-->
-        <div class="filed">
+        <div class="filed" v-if="showGoolge">
           <em>
             {{$t('usercontent.user61')}}<!--谷歌验证码--> *
           </em>
@@ -190,7 +190,9 @@
           googleCode: {required: this.$t('usercontent.user33')}, // 请输入谷歌认证码
         },
         time: 60,
-        disabled: false
+        disabled: false,
+        showSMS: false,
+        showGoolge: false,
       }
     },
     watch: {
@@ -213,7 +215,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getUserInfo']),
+      ...mapGetters(['getUserInfo', 'getSysParams']),
       procedureFee () { // 手续费 提现数量-固定手续费
         return utils.removeEndZero(numUtils.BN(this.procedure).toFixed(8))
       },
@@ -232,6 +234,9 @@
       }
     },
     created () {
+      console.log(this.getSysParams)
+      this.showSMS = this.getSysParams.withdrawSmsVerify.value == 2
+      this.showGoolge = this.getSysParams.withdrawGoogleAuth.value == 2
       let item = this.item || this.$route.params.item
       this.allData = this.all_data || this.$route.params.allData
       console.log(item, this.allData)
@@ -354,8 +359,12 @@
           alias: this.alias,
           toAddress: this.toAddress,
           amount: this.amount,
-          // payPassword: this.payPassword,
-          // googleCode: this.googleCode
+        }
+        if (this.showGoolge) {
+          validData.googleCode = this.googleCode
+        }
+        if (this.showSMS) {
+          validData.smsCode = this.smsCode
         }
         this.$validator.validateAll(validData).then((validResult) => {
           if (!validResult) {
@@ -365,17 +374,13 @@
           let formData = { // 提现
             symbol: this.symbol,
             symbolType: this.symbolType,
-            amount: this.amount,
             fromAccount: this.fromAccount, // 用户id
-            toAddress: this.toAddress,
-            alias: this.alias,
             memo: this.memo,
-            password: this.payPassword,
-            googleCode: this.googleCode,
             lang: window.localStorage.getItem('lang') === 'zh-CN' ? 'cn' : 'en',
-            withdrawFast: true,
             type: 0
           }
+          Object.assign(formData, validData)
+          console.log(formData)
           userUtils.walletWithdraw(formData, (res) => {
             Vue.$koallTipBox({icon: 'success', message: res})
             this.$emit('okCallback')

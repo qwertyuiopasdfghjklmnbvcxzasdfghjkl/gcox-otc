@@ -332,7 +332,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getLang','getCurrency']),
+      ...mapGetters(['getLang','getCurrency', 'getSysParams']),
       tip1 () {
         return {
           container: document.body,
@@ -462,6 +462,7 @@
         this.fnGetAdvertisementDetail()
         this.fnGetBaseInfo()
       })
+
     },
     methods: {
       getBank () {
