@@ -3,7 +3,7 @@
     <h3> {{$t('otc_legal.otc_legal_Bank_Transfer')}}<!--银行转账--></h3>
     <ul class="list">
       <!-- 银行卡 -->
-      <li class="form-item" v-if="bankList.length">
+      <li class="form-item" v-if="bankList.length" v-for="item in bankList">
         <div class="form-flex">
           <div class="form-flex-left">
             <i class="icon-bank"></i>
@@ -11,9 +11,9 @@
           </div>
           <div class="form-flex-center">
             <div class="have-set">
-              <p class="card_name">{{$t('otc_legal.otc_legal_Name')}}：<!--姓名--> {{bankData.card_name}}</p>
-              <p class="card_bank">{{$t('otc_legal.otc_legal_Bank')}}：<!--开户行--> {{bankData.card_bank}}</p>
-              <p class="card_number">{{$t('otc_legal.otc_legal_Bank_number')}}：<!--银行卡号--> {{bankData.card_number}}</p>
+              <p class="card_name">{{$t('otc_legal.otc_legal_Name')}}：<!--姓名--> {{item.card_name}}</p>
+              <p class="card_bank">{{$t('otc_legal.otc_legal_Bank')}}：<!--开户行--> {{item.card_bank}}</p>
+              <p class="card_number">{{$t('otc_legal.otc_legal_Bank_number')}}：<!--银行卡号--> {{item.card_number}}</p>
             </div>
           </div>
           <div class="form-flex-right">
@@ -337,7 +337,7 @@
       },
       getList () {
         otcApi.getPaySettings((res) => {
-          this.bankList = res
+          this.bankList = res.bankList
         })
       },
       update () {
