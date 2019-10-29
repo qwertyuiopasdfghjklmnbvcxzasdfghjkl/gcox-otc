@@ -157,9 +157,12 @@
         <div class="cont-item">
           <div class="row">
             <label>{{$t('gcox_otc.pay_way')}}</label>
-            <p class="value flex">
+            <p class="value flex bank_box">
               <b>{{$t('gcox_otc.bank_transfer')}}</b>
               <router-link :to="{name: 'control_pay'}">{{$t('gcox_otc.add')}}</router-link>
+              <ul class="bank_list">
+                <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
+              </ul>
             </p>
           </div>
         </div>
@@ -324,7 +327,8 @@
         },
         benchDatas: [], // 对标交易所
         isATN: false,
-        bankData: {}
+        bankData: {},
+        bankList: []
       }
     },
     computed: {
@@ -462,12 +466,8 @@
     methods: {
       getBank () {
         otcApi.getPaySettings((res) => {
-          // 银行卡
-          this.bankData = {
-            card_name: res.data.card_name,
-            card_bank: res.data.card_bank,
-            card_number: res.data.card_number
-          }
+          this.bankList = res.data.bankList
+          this.bankData = this.bankList[0]
         })
       },
       fnGetBenchExchange () { // 获取对标交易所
@@ -962,6 +962,35 @@
     height: 50px;
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .bank_box:hover .bank_list{
+    display: block;
+  }
+  .bank_box >b:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #333333;
+    position: absolute;
+    top: 23px;
+    left: 80px;
+  }
+  .bank_list{
+    position: absolute;
+    left: 0;
+    top:50px;
+    background: #ffffff;
+    box-shadow: 0 0 10px #eeeeee;
+    width: 100%;
+    display: none;
+  }
+
+  .bank_list li{
+    padding: 10px;
+    cursor: pointer;
   }
 
   .box .title_p {
