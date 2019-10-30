@@ -18,7 +18,7 @@
           </div>
           <div class="form-flex-right">
             <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
-            <span class="red_button" @click="del(item)">{{$t('gcox_otc.delete')}}<!--删除--></span>
+            <span class="red_button" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
           </div>
         </div>
       </li>
@@ -40,6 +40,7 @@
       return {
         infoLoaded: false,
         bankReadOnly: true,
+        delStatus: true,
         bankData: {
           card_name: '',
           card_bank: '',
@@ -351,7 +352,23 @@
           }
         })
       },
-      del () {
+      del (id) {
+        if (this.delStatus) {
+          Vue.$confirmDialog({
+            content: this.$t('gcox_otc.delete_bank_card'), // 是否删除该银行卡？
+            okCallback: () => {
+              this.delStatus = false
+              otcApi.delPay(id, res => {
+                Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${res.msg}`)})
+                this.delStatus = true
+                this.getList()
+              }, msg => {
+                this.delStatus = true
+                Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+              })
+            }
+          })
+        }
       },
       add () {
         // 先判断是否实名
@@ -361,7 +378,7 @@
               this.getList()
             }
           })
-        }else {
+        } else {
           Vue.$confirmDialog({
             id: 'KYC_AUTH_FIRST',
             content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
