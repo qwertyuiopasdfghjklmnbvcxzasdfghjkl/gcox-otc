@@ -225,6 +225,8 @@ export default {
     "public135":"请输入有效的银行卡号",
     "public249":"交易订单",
     "public250":"请输入内容",
+    "public25":"已取消",
+    "public24":"等待卖家放币",
   },
   'otc_exchange': {
     'otc_exchange_USD': '美元',
@@ -376,6 +378,7 @@ export default {
     'otc_ad_payment_period': '请输入付款期限',
     'otc_ad_max_uncompleted_orders': '单个广告可同时存在的未完成订单最大数量',
     "otc_ad_Payment_method":"支付方式",
+    "otc_ad_cacel_time":"取消时间",
   },
   'usercontent': {
     'user71': '充币',
