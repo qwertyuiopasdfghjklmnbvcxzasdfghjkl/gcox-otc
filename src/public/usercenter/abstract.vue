@@ -19,7 +19,7 @@
             <span>
                 {{this.getUserInfo.mobileAuthEnable === 1?this.getUserInfo.mobile : $t('gcox_otc.no_submit')}}
                 <br/><a href="javascript:;" @click="bind()" class="blue">{{this.getUserInfo.mobileAuthEnable === 1?
-                $t('gcox_otc.unbind_phone'):$t('gcox_otc.add_phone')}}</a>
+                $t('gcox_otc.update_phone'):$t('gcox_otc.add_phone')}}</a>
               </span>
           </p>
           <p class="tow_button">
@@ -75,6 +75,7 @@
       ...mapActions(['setUserInfo']),
       bind () {
         utils.setDialog(bind, {
+          phone: this.getUserInfo.mobile,
           okCallback: () => {
             this.getInfo()
           }

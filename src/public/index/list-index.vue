@@ -49,7 +49,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getApiToken', 'getUserInfo', 'getLang']),
+      ...mapGetters(['getApiToken', 'getUserInfo', 'getLang', 'getCurrency']),
     },
     watch: {
       params () {
@@ -57,6 +57,10 @@
         this.getBuyList()
         this.getSellList()
         this.createParams = this.params
+      },
+      getCurrency(){
+        this.getBuyList()
+        this.getSellList()
       }
     },
     created () {
@@ -69,7 +73,7 @@
         otcApi.getAdvertisementList({
           ad_type: i,
           symbol: this.params.symbol,
-          currency: 'CNY',
+          currency: this.getCurrency,
         }, (res) => {
           res.data.forEach((item) => { // 广告列表数据格式化处理
             item.cur_price = item.cur_price ? utils.removeEndZero(parseFloat(item.cur_price).toFixed(2)) : 0
@@ -103,10 +107,8 @@
         }, 'public0.public109', true, false)
       },
       sell (data) {
-
         let isCheckPaySet = parseInt(data.ad_type) === 1
         this.matchPayType = parseInt(data.ad_type) === 1 ? void 0 : data.pay_type
-
         console.log(data.from_user_id, this.getUserInfo.userId)
         this.checkSetState(() => {
           if (this.getUserInfo.userId === data.from_user_id) {
@@ -115,23 +117,10 @@
             return
           }
           let query = {ad_id: data.ad_id, params: data, matchPayType: this.matchPayType}
-          window.localStorage.ordDet = JSON.stringify(query);
+          window.localStorage.ordDet = JSON.stringify(query)
           this.$router.push({
             name: 'transaction',
-            // query: {ad_id: data.ad_id, params: data, matchPayType: this.matchPayType}
           })
-          // utils.setDialog(buy, {
-          //   id: 'create_order_dialog',
-          //   params: this.params,
-          //   ad_id: data.ad_id,
-          //   matchPayType: this.matchPayType,
-          //   okCallback: (id) => {
-          //     this.getList()
-          //     this.$emit('createNewOrder', id)
-          //   },
-          //   errCallback: () => {
-          //   }
-          // })
         }, 'public0.public15', isCheckPaySet, true, data.ad_id)
       },
 
@@ -153,8 +142,6 @@
                       id: 'PAY_TYPE_UNMATCH',
                       content: this.$t('error_code.PAY_TYPE_UNMATCH'), // 支付方式不匹配，请设置对应的支付方式
                       okCallback: () => {
-                        // this.$emit('goToSettings')
-                        // this.$emit('removeDialog')
                       }
                     })
                   } else {
@@ -162,18 +149,7 @@
                   }
                 })
               } else {
-                // if (this.isShop) {
                 successCallback && successCallback(res.data.pay_type)
-                // } else {
-                //   let lang = this.getLang === 'zh-CN' ? '非商家无法发布广告，是否立即申请？' : (this.getLang === 'cht' ? '非商戶無法發布廣告，是否立即申請？' : 'Non-merchase can\'t post ads, do you apply now?')
-                //   Vue.$confirmDialog({
-                //     id: 'goShopsApply',
-                //     content: lang,
-                //     okCallback: () => {
-                //       this.$router.push({path: '/mycenter/agencyApply'})
-                //     }
-                //   })
-                // }
               }
             }, (res) => {
               if (res.msg === 'NO_PAY_TYPE') {

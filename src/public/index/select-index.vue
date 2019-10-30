@@ -38,11 +38,11 @@
             <button v-if="state === 2" @click="getMax()">Max</button>
           </span>
           <span>
-            <select class="w250" v-model="form.bench_marking_id">
-                <option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">
-                  {{item.marking_name}}
-                </option>
-              </select>
+            <select class="w250" v-model="price">
+              <option :key="listAdv.cur_price" :value="listAdv.cur_price">
+              {{listAdv.cur_price}}
+              </option>
+            </select>
           </span>
         </div>
         <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">Create offer</button>
@@ -61,6 +61,7 @@
   import otcApi from '@/api/otc'
   import numUtils from '@/assets/js/numberUtils'
   import {mapGetters, mapActions} from 'vuex'
+  import numberUtils from '../../assets/js/numberUtils'
 
   export default {
     name: 'select-index',
@@ -74,27 +75,34 @@
         ts: [],
         curPrice: 0,
         curList: window.localStorage.currencyList,
-        amount: null
+        amount: null,
+        listAdv: {}
       }
     },
     computed: {
-      ...mapGetters(['getLang', 'getSymbol', 'getCurrency']),
+      ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo']),
       paramsChange () {
         return {
-          bench_marking_id: 1,
           currency: this.params.currency,
           symbol: this.t.symbol
         }
       },
       form () {
         return {
-          bench_marking_id: 1,
           amount: this.amount,
           currency: this.params.currency,
           symbol: this.params.symbol,
           direction: this.state
         }
       },
+      price () {
+        return this.listAdv.cur_price
+      }
+    },
+    watch: {
+      amount () {
+        this.getAdv()
+      }
     },
     created () {
       this.getList()
@@ -124,14 +132,27 @@
       },
       sub () {
         if (this.form.amount) {
-          otcApi.match(this.form, res => {
-            Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
-          }, msg => {
-            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
-          })
-        } else {
-          Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.amount_emit`)})
+          let isCheckPaySet = parseInt(this.state) === 1
+          this.matchPayType = parseInt(this.state) === 1 ? void 0 : this.listAdv.pay_type
+          console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
+          this.checkSetState(() => {
+            if (this.getUserInfo.userId === this.listAdv.from_user_id) {
+              // 不可以买卖自己发布的广告
+              Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
+              return
+            }
+            let query = {ad_id: this.state, params: this.listAdv, matchPayType: this.matchPayType}
+            window.localStorage.ordDet = JSON.stringify(query)
+            this.$router.push({
+              name: 'transaction',
+            })
+          }, 'public0.public15', isCheckPaySet, true, this.listAdv.ad_id)
         }
+      },
+      getAdv () {
+        otcApi.match(this.form, res => {
+          this.listAdv = res
+        })
       },
       getMax () {
         this.amount = this.getSymbol.totalBalance || 0
@@ -141,6 +162,64 @@
           this.benchDatas = res
         })
       },
+
+      checkSetState (successCallback, message, isCheckPaySet, isCheckPayType, id) {
+        if (!this.getApiToken) {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(message)}) // 请登录后再发布广告||请登录后再交易
+          return
+        }
+        otcApi.getVerifyState((msg) => {
+          if (isCheckPaySet) {
+            otcApi.getPaySettings((res) => {
+              if (isCheckPayType) {
+                otcApi.matchPayTypes(id, (data2) => {
+                  this.matchPayType = data2
+                  successCallback && successCallback()
+                }, (msg3) => {
+                  if (msg3 === 'PAY_TYPE_UNMATCH') {
+                    Vue.$confirmDialog({
+                      id: 'PAY_TYPE_UNMATCH',
+                      content: this.$t('error_code.PAY_TYPE_UNMATCH'), // 支付方式不匹配，请设置对应的支付方式
+                      okCallback: () => {
+                      }
+                    })
+                  } else {
+                    Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg3}`)})
+                  }
+                })
+              } else {
+                successCallback && successCallback(res.data.pay_type)
+              }
+            }, (res) => {
+              if (res.msg === 'NO_PAY_TYPE') {
+                Vue.$confirmDialog({
+                  id: 'NO_PAY_TYPE',
+                  content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
+                  okCallback: () => {
+                    this.$router.push({name: 'control_pay'})
+                  }
+                })
+              } else {
+                Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+              }
+            })
+          } else {
+            successCallback && successCallback()
+          }
+        }, (msg) => {
+          if (msg === 'KYC_AUTH_FIRST') {
+            Vue.$confirmDialog({
+              id: 'KYC_AUTH_FIRST',
+              content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
+              okCallback: () => {
+                this.$router.push({name: 'control_kyc'})
+              }
+            })
+          } else {
+            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+          }
+        })
+      }
     }
 
   }

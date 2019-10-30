@@ -55,6 +55,7 @@
   export default {
     name: 'bind-phone',
     components: {Card},
+    props: ['phone'],
     data () {
       return {
         mobileFormData: commonConfig.default,
@@ -71,7 +72,9 @@
       }
     },
     created () {
-
+      if (this.phone){
+        this.mobileFormData.phoneNumber = this.phone
+      }
     },
     methods: {
       change (item) {
