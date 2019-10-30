@@ -80,7 +80,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo']),
+      ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
       paramsChange () {
         return {
           currency: this.params.currency,
@@ -141,7 +141,7 @@
               Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
               return
             }
-            let query = {ad_id: this.state, params: this.listAdv, matchPayType: this.matchPayType}
+            let query = {ad_id: this.listAdv.ad_id, params: this.listAdv, matchPayType: this.matchPayType}
             window.localStorage.ordDet = JSON.stringify(query)
             this.$router.push({
               name: 'transaction',
