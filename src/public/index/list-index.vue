@@ -109,7 +109,7 @@
       sell (data) {
         let isCheckPaySet = parseInt(data.ad_type) === 1
         this.matchPayType = parseInt(data.ad_type) === 1 ? void 0 : data.pay_type
-        console.log(data.from_user_id, this.getUserInfo.userId)
+        console.log(data)
         this.checkSetState(() => {
           if (this.getUserInfo.userId === data.from_user_id) {
             // 不可以买卖自己发布的广告

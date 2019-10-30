@@ -579,14 +579,13 @@
     height: 40px;
     line-height: 40px;
     color: #333;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #eeeeee;
     cursor: pointer;
   }
 
   .completed-item span,
   .cancelled-item span {
-    font-size: 12px;
-    color: #ffffff;
+    font-size: 14px;
   }
 
   .completed-item:first-of-type span,
@@ -632,7 +631,7 @@
 
   .completed-item span.time,
   .cancelled-item span.time {
-    width: 130px;
+    width: 160px;
   }
 
   .completed-item span.action {
