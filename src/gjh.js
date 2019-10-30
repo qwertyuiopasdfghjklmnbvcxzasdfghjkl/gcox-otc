@@ -94,7 +94,8 @@ export default {
     'delete': '删除',
     'amount_emit': '数量不能为空或0',
     'not_buy_myself': '不可以买卖自己发布的广告',
-    'delete_bank_card': '是否删除该银行卡？'
+    'delete_bank_card': '是否删除该银行卡？',
+    'update_phone': '修改电话号码'
   },
   'login_register': {
     'Next_step': '下一步',
