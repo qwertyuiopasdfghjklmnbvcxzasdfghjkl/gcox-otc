@@ -61,7 +61,8 @@
         areaCodeList: commonConfig.areaCodeList,
         showFlag: false,
         step: 1,
-        showerror: false
+        showerror: false,
+        disabled: true,
       }
     },
     watch: {
@@ -73,10 +74,10 @@
 
     },
     methods: {
-      change(item){
-        this.mobileFormData.code = item.code;
-        this.mobileFormData.key = item.key;
-        this.showFlag=false
+      change (item) {
+        this.mobileFormData.code = item.code
+        this.mobileFormData.key = item.key
+        this.showFlag = false
       },
       close () {
         this.$emit('removeDialog')
@@ -117,14 +118,18 @@
             phoneNumber: this.mobileFormData.phoneNumber,
             smsCode: this.mobileFormData.smsCode
           }
-          userApi.bindMobile(formData, (msg) => {
-            this.showBindMobile = false
+          if (this.disabled) {
             this.disabled = false
-            Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
-            this.$emit('okCallback')
-          }, (msg) => {
-            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
-          })
+            userApi.bindMobile(formData, (msg) => {
+              this.showBindMobile = false
+              Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
+              this.$emit('okCallback')
+            }, (msg) => {
+              this.disabled = true
+              Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+            })
+          }
+
         }
       }
     }

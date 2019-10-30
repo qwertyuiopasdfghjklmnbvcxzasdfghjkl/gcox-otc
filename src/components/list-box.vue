@@ -21,8 +21,8 @@
         <p></p>
       </div>
       <div>
-        <p :title="data.nickname||data.username">
-          <img :src="data.header_image||avatarUrl" width="20"/>{{data.nickname||data.username}}
+        <p :title="data.connect_fd ? $t('error_code.ONLINE'): $t('error_code.OFFLINE')">
+          <i class="status" :class="{'active': data.connect_fd}"></i>{{data.nickname||data.username}}
         </p>
         <p>
           <img v-for="item in Math.floor(data.user_level/20||0)" src="../assets/img/star.png">
@@ -112,6 +112,17 @@
         border-radius: 4px;
         color: #ffffff;
       }
+    }
+  }
+  .status{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #9d9fa7;
+    border-radius:50%;
+    margin-right: 6px;
+    &.active{
+      background: #00aeef;
     }
   }
 </style>

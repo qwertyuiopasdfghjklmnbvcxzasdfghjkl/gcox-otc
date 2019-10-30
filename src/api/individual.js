@@ -265,9 +265,21 @@ const downloadHeaderOther = function (id, success, error) {
 }
 individual.downloadHeaderOther = downloadHeaderOther
 
+// // 绑定手机号
+// const bindMobile = function (data, success, error) {
+//   api.post(`${domain}api/v2/individual/bindMobile`, data, (res) => {
+//     if (res.rst === 1) {
+//       success && success(res.msg)
+//     } else {
+//       error && error(res.msg)
+//     }
+//   }, error)
+// }
+// individual.bindMobile = bindMobile
+
 // 绑定手机号
 const bindMobile = function (data, success, error) {
-  api.post(`${domain}api/v2/individual/bindMobile`, data, (res) => {
+  api.post(`${domain}api/v1/gcox/user/bindMobile`, data, (res) => {
     if (res.rst === 1) {
       success && success(res.msg)
     } else {

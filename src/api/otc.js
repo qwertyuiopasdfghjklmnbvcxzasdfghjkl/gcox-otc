@@ -141,6 +141,18 @@ const savePaySettings = function (type, formData, success, error) {
 }
 otc.savePaySettings = savePaySettings
 
+// 删除支付方式
+const delPay = function (id, success, error) {
+  api.delete(`${domain}api/v2/otc/setting/paytype/1?card_number=${id}`, (res) => {
+    if (res.rst === 1) {
+      success && success(res.msg)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+otc.delPay = delPay
+
 // 获取支付方式，需要apiToken
 const getPaySettings = function (success, error) {
   api.get(`${domain}api/v2/otc/paytypes`, (res) => {
