@@ -468,6 +468,7 @@
     margin-top: 8px;
     border-radius:6px;
     overflow: hidden;
+    box-shadow: 0 0 6px #dedede;
   }
 
   .uncompleted-item:first-of-type {
@@ -491,14 +492,14 @@
     line-height: 30px;
     padding-left: 16px;
     padding-right: 16px;
-    background-color: #31313a;
+    background-color: #fff;
   }
 
   .uncompleted-title span {
     display: flex;
     align-items: center;
     font-size: 12px;
-    color: #ffffff;
+    color: #636363;
   }
 
   .uncompleted-title span.numer {
@@ -546,12 +547,12 @@
   .uncompleted-title span.second em.username {
     max-width: 170px;
     padding-left: 0;
-    color: #fff;
+    color: #333;
   }
 
   .uncompleted-title span.second em.realname {
     max-width: 216px;
-    color: #fff;
+    color: #333;
   }
 
   .uncompleted-title span.second em.icon-chat {
@@ -591,7 +592,7 @@
   .completed-item:first-of-type span,
   .cancelled-item:first-of-type span {
     font-size: 12px;
-    color: #999;
+    color: #666;
   }
 
   .completed-item span.ordernumber,

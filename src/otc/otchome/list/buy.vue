@@ -270,7 +270,7 @@
     display: flex;
     justify-content: space-between;
     padding: 16px;
-    background-color: #252529;
+    background-color: #ffffff;
     position: relative;
   }
 
