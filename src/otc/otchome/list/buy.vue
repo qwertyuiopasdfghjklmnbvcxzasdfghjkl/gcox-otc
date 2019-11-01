@@ -80,6 +80,7 @@
       <a href="javascript:;" v-if="item.state === 2" :class="{disabled: item.from_user_comment}" @click="evaluation">{{$t('otc_ad.otc_ad_confirm')}}
         <!--确认--></a>
     </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -155,7 +156,7 @@
         switch (this.formData.pay_type) {
           case 1:
             return { // 银行卡
-              name: this.payTypes.real_name,
+              name: this.payTypes.data.card_name,
               bank: this.payTypes.data.card_bank,
               number: this.payTypes.data.card_number
             }
@@ -270,7 +271,6 @@
     display: flex;
     justify-content: space-between;
     padding: 16px;
-    background-color: #ffffff;
     position: relative;
   }
 
@@ -324,11 +324,11 @@
   }
 
   .undone-left span.active {
-    color: #00a0e9;
+    color: #EFBC3F;
   }
 
   .undone-left span.active::after, .undone-left span.active::before {
-    background-color: #00a0e9;
+    background-color: #EFBC3F;
   }
 
   .undone-center-buys {

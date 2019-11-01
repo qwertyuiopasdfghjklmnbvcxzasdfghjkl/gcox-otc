@@ -50,7 +50,8 @@
       </div>
       <div class="btn">
         <!--<span class="cancel" @click="cancel">{{$t('otc_legal.otc_legal_cancel')}}&lt;!&ndash;取消&ndash;&gt;</span>-->
-        <button @click="createOrder" :class="buyType? 'green_button': 'red_button'">{{tradeParams.tradeTxt}}{{params.symbol}}
+        <button @click="createOrder" :class="buyType? 'green_button': 'red_button'">
+          {{tradeParams.tradeTxt}}{{params.symbol}}
           <!--确认--></button>
       </div>
     </div>
@@ -261,7 +262,7 @@
                 this.locked = false
                 this.params.newOrderCount++
                 // this.$emit('okCallback', id)
-                this.$router.push({name: 'home'})
+                this.$router.push({name: 'otc_detail', query: {id: id}})
                 Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
                 // this.$emit('removeDialog')
               }, (msg) => {
@@ -384,22 +385,26 @@
     padding: 20px;
     margin: 20px auto;
     border-bottom: 1px solid #eeeeee;
-    .buy-cont{
+
+    .buy-cont {
       display: flex;
       justify-content: space-around;
       align-items: flex-start;
-      div{
+
+      div {
         width: 220px;
         font-size: 16px;
-        p{
+
+        p {
           margin: 10px 0;
           position: relative;
-          small{
+
+          small {
             position: absolute;
-            width:50px;
-            height:44px;
-            background:rgba(19,20,58,1);
-            border-radius:2px;
+            width: 50px;
+            height: 44px;
+            background: rgba(19, 20, 58, 1);
+            border-radius: 2px;
             color: #ffffff;
             font-size: 16px;
             display: inline-block;
@@ -410,24 +415,27 @@
             cursor: pointer;
           }
         }
-        input{
+
+        input {
           padding: 15px;
           height: 20px;
-          border:1px solid #eeeeee;
+          border: 1px solid #eeeeee;
         }
       }
     }
   }
-  .btn{
+
+  .btn {
     text-align: right;
     padding-right: 40px;
     margin-top: 40px;
-    button{
-      width:190px;
-      height:50px;
+
+    button {
+      width: 190px;
+      height: 50px;
       color: #ffffff;
       font-size: 16px;
-      border-radius:3px;
+      border-radius: 3px;
     }
   }
 </style>

@@ -48,7 +48,9 @@
             <label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})<!---交易所价格--></label>
             <div class="value">
               <select class="w250" v-model="formData.bench_marking_id">
-                <option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">
+                <option v-for="item in benchDatas" :key="item.bench_marking_id"
+                        :value="item.bench_marking_id"
+                        :disabled="formData.symbol === 'USDT'&&item.marking_name === 'Coinbase'">
                   {{item.marking_name}}
                 </option>
               </select>
