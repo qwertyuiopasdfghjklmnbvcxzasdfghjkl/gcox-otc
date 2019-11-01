@@ -35,8 +35,8 @@
                 <!--订单编号-->{{item.order_number}}</span>
               <span class="second">
                         <em class="username">{{getBuyOrSellUser(item)}}</em>
-                        <em class="realname">{{$t('otc_legal.otc_legal_Name')}}：{{item.from_user_name === getUserInfo.username ? item.to_real_name : item.from_real_name}}</em>
-                        <em class="icon-chat" @click="switchOldMessage(item.order_number)"></em>
+                <!--<em class="realname">{{$t('otc_legal.otc_legal_Name')}}：{{item.from_user_name === getUserInfo.username ? item.to_real_name : item.from_real_name}}</em>-->
+                <!--<em class="icon-chat" @click="switchOldMessage(item.order_number)"></em>-->
                       </span>
               <span class="last">
                         <template v-if="item.state === 1">
@@ -56,7 +56,11 @@
                         </template>
                       </span>
             </div>
-            <mycomponent :item="item" :is="getRight(item)" @cancelOrder="cancelOrder"/>
+            <mycomponent :item="item" :is="getRight(item)" @cancelOrder="cancelOrder">
+              <div class="r_btn">
+                <button @click="getDetail(item.order_number)">{{$t('otc_ad.otc_ad_view_details')}}</button>
+              </div>
+            </mycomponent>
           </li>
         </ul>
         <page v-if="!loading1 && data1.length > 0" :pageIndex="params.page" :pageSize="params.show"
@@ -339,7 +343,7 @@
         })
       },
       getRight (item) { // 获取购买/出售模板
-        return item.from_user_name === this.getUserInfo.username ? sellitem : buyitem
+        return item.from_user_id === this.getUserInfo.userId ? sellitem : buyitem
       },
       getTradeType (data) { // 交易类型
         if (data.to_user_name === this.getUserInfo.username) {
@@ -411,6 +415,10 @@
       },
       pageChange (currentIndex) {
         this.params.page = currentIndex
+      },
+      getDetail (id) {
+        let i = id.substring(3)
+        this.$router.push({name: 'otc_detail', query: {id: i}})
       }
     }
   }
@@ -418,10 +426,10 @@
 
 <style scoped>
   .order-list {
-    min-height:272px;
-    background:rgba(251,251,251,1);
-    border:1px solid rgba(238,238,238,1);
-    box-shadow:0px 6px 6px 0px rgba(0, 0, 0, 0.05);
+    min-height: 272px;
+    background: rgba(251, 251, 251, 1);
+    border: 1px solid rgba(238, 238, 238, 1);
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.05);
     margin: 40px auto;
   }
 
@@ -444,7 +452,7 @@
     align-items: center;
   }
 
-  .order-list-title li img{
+  .order-list-title li img {
     width: 16px;
     margin-right: 5px;
   }
@@ -465,10 +473,14 @@
 
   .uncompleted-item {
     position: relative;
-    margin-top: 8px;
-    border-radius:6px;
+    margin-top: 20px;
     overflow: hidden;
-    box-shadow: 0 0 6px #dedede;
+    border: 1px solid #eeeeee;
+    transition: 0.3s;
+  }
+
+  .uncompleted-item:hover {
+    box-shadow: 0 0 6px #eeeeee;
   }
 
   .uncompleted-item:first-of-type {
@@ -482,7 +494,7 @@
     z-index: 1;
     width: 8px;
     height: 100%;
-    background-color: #00a0e9;
+    /*background-color: #00a0e9;*/
   }
 
   .uncompleted-title {
@@ -492,7 +504,7 @@
     line-height: 30px;
     padding-left: 16px;
     padding-right: 16px;
-    background-color: #fff;
+    border-bottom: 1px solid #eeeeee;
   }
 
   .uncompleted-title span {
@@ -681,5 +693,17 @@
     height: 40px;
     line-height: 20px;
     color: #8b94a9;
+  }
+
+  .r_btn {
+    display: flex;
+    align-items: center;
+  }
+
+  .r_btn button {
+    padding: 10px 20px;
+    background: rgba(239, 188, 63, 1);
+    border-radius: 3px;
+    color: #ffffff;
   }
 </style>

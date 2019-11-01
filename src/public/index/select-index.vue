@@ -131,7 +131,7 @@
         })
       },
       sub () {
-        if (this.form.amount) {
+        if (this.form.amount && this.price) {
           let isCheckPaySet = parseInt(this.state) === 1
           this.matchPayType = parseInt(this.state) === 1 ? void 0 : this.listAdv.pay_type
           console.log(this.listAdv.from_user_id, this.getUserInfo.userId)

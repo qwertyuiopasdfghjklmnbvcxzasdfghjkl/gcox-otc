@@ -228,11 +228,11 @@
       updateAd (obj) { // 修改广告
         otcApi.getVerifyState((msg) => {
           otcApi.getPaySettings((res) => {
-            this.params.symbol = obj.symbol
+            // this.params.symbol = obj.symbol
             utils.setDialog(createorder, {
               id: 'dialog_createorder',
               myPayType: res.data.pay_type,
-              params: this.params,
+              // params: this.params,
               ad_id: obj.ad_id,
               okCallback: () => {
                 this.$emit('goToSettings')

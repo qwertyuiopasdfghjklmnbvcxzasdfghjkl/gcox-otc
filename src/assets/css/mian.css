@@ -8,7 +8,7 @@ em,i{ font-style:normal;}
 ul,ol{ list-style:none;}
 table { border-collapse:collapse; border-spacing:0;}
 a{ text-decoration:none;}
-a:link{ text-decoration:none !important;color: #00a0e9 !important;}
+a:link{ text-decoration:none !important;}
 a:visited{ text-decoration:none;}
 input,button,select,textarea{outline:none; border:none;box-shadow:none;}
 input[type='number']::-webkit-outer-spin-button,input[type='number']::-webkit-inner-spin-button {appearance:none!important;margin: 0;}
@@ -304,4 +304,11 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
 .yellow_button{
   background: #F0B936;
   color: #ffffff;
+}
+.green_bg{
+  background: #299D82;
+  padding: 2px 8px;
+  border-radius:20px;
+  color: #ffffff;
+  margin: 0 6px;
 }
