@@ -232,7 +232,7 @@
             utils.setDialog(createorder, {
               id: 'dialog_createorder',
               myPayType: res.data.pay_type,
-              // params: this.params,
+              params: obj,
               ad_id: obj.ad_id,
               okCallback: () => {
                 this.$emit('goToSettings')
