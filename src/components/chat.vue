@@ -1,42 +1,20 @@
 <template>
   <div ref="chat" class="chat" :style="cursorStyle" @click="markRead">
-    <div class="chat-head" @mousedown="mouseDown">
-      <div class="chat-head-left">
-        {{$t('public0.public249')}}<!--交易订单-->
-      </div>
-      <div class="chat-head-center">
-        <span class="chat-head-right-nickname">{{curOrder && curOrder.opposite_real_name || '--' }}</span>
-        <span class="chat-head-right-ordernumber">{{$t('otc_exchange.otc_exchange_order_number')}}<!--订单编号-->：{{curOrder && curOrder.order_number || '--'}}</span>
-      </div>
-      <div class="chat-head-right">
-        <em class="chat-icon chat-min-icon" v-if="fullScreen" @click="fullScreen=false"></em>
-        <em class="chat-icon chat-max-icon" v-if="!fullScreen" @click="fullScreen=true"></em>
-        <em class="chat-icon chat-close-icon" @click="closeChat"></em>
-      </div>
-    </div>
+    <p class="mt30">{{$t('otc_ad.send_msg_to')}} {{curOrder && curOrder.opposite_real_name || '--'}}</p>
     <div class="chat-body">
-      <div class="chat-body-left" @mousewheel="mouseWheel($event, 1)" ref="orders">
-        <div class="chat-body-left-order" v-for="data in orderDatas" :key="data.order_number" :class="{current: data.selected}" @click="switchOrder(data.order_number)">
-          <div class="order-left" :class="{'new-info':data.hasNewMessage}">●</div>
-          <div class="order-right">
-            <span class="order-right-title">{{$t('otc_exchange.otc_exchange_order_number')}}<!--订单编号-->：</span>
-            <span class="order-right-number">{{data.order_number.substring(3, 5)}}***{{data.order_number.substring(data.order_number.length - 3)}}</span>
-          </div>
-        </div>
-      </div>
       <div class="chat-body-right">
         <div class="chat-body-right-content" ref="content" @mousewheel="mouseWheel($event, 2)">
           <ul class="chat-msgs-list" v-if="curOrder">
             <mycomponent v-for="(data, index) in messages" :is="getTemplate(data)" :data="data" :fromImage="curOrder.opposite_user_header || avatarUrl" :selfImage="curOrder.user_header || avatarUrl" :key="index" :formatSystemMessage="formatSystemMessage"></mycomponent>
           </ul>
         </div>
-        <div class="chat-body-right-send">
-          <div class="send-container">
-            <input type="text" v-model="message" :readonly="isReadOnly" class="send-input" maxlength="100"
-                   :placeholder="$t('public0.public250')" @keyup.enter="sendMessage"/>
-            <span type="button" class="send-btn icon-send" :class="{disabled:isReadOnly}" @click="sendMessage"></span>
-          </div>
-        </div>
+      </div>
+    </div>
+    <div class="chat-body-right-send">
+      <div class="send-container">
+        <input type="text" v-model="message" :readonly="isReadOnly" class="send-input" maxlength="100"
+               :placeholder="$t('public0.public250')" @keyup.enter="sendMessage"/>
+        <span type="button" class="send-btn icon-send" :class="{disabled:isReadOnly}" @click="sendMessage"> {{$t('public0.public161')}}</span>
       </div>
     </div>
   </div>
@@ -510,9 +488,9 @@ export default {
     },
     mouseWheel (e, type) {
       if (type === 1) {
-        this.$refs.orders.scrollTop += e.wheelDelta > 0 ? -60 : 60
+        this.$refs.orders.scrollTop += e.wheelDelta > 0 ? -75 : 75
       } else {
-        this.$refs.content.scrollTop += e.wheelDelta > 0 ? -60 : 60
+        this.$refs.content.scrollTop += e.wheelDelta > 0 ? -75 : 75
       }
       e.preventDefault()
     },
@@ -546,47 +524,44 @@ export default {
 </script>
 
 <style scoped>
-.chat{width:355px;height:546px;background-color:#fff;position:fixed;z-index:2000;top:100px;left:500px;display:flex;flex-flow:column;border:1px solid #69A4FF; border-radius: 4px; overflow: hidden;}
-.chat-head{height:50px;display:flex;border-bottom:1px solid #69A4FF;cursor:move;}
-.chat-head-left{width:90px;color:#666;font-size:14px;display:flex;justify-content:center;align-items:center;border-right:1px solid #69A4FF;}
-.chat-head-center{display:flex;flex:1;flex-flow:column;padding:0 8px 0 14px;overflow:hidden;white-space:nowrap;}
-.chat-head-right-nickname{font-size:18px;color:#666;font-weight:bold;margin-top:6px;text-overflow:ellipsis;overflow:hidden;}
-.chat-head-right-ordernumber{font-size:12px;color:#666;text-overflow:ellipsis;overflow:hidden;}
-.chat-head-right{display:flex;justify-content:center;align-items:center;color:#666;}
-.chat-icon{display:flex;width:20px;height:20px;margin-right:5px;background-repeat:no-repeat;background-position:center;cursor:pointer;}
-.chat-min-icon{background-image:url(../assets/images/chat_min_icon.png);}
-.chat-min-icon:hover{background-image:url(../assets/images/chat_min_icon_hover.png);}
-.chat-max-icon{background-image:url(../assets/images/chat_max_icon.png);}
-.chat-max-icon:hover{background-image:url(../assets/images/chat_max_icon_hover.png);}
-.chat-close-icon{background-image:url(../assets/images/chat_close_icon.png);}
-.chat-close-icon:hover{background-image:url(../assets/images/chat_close_icon_hover.png);}
+.chat{display:flex;flex-flow:column;margin-top: 30px; padding-bottom: 150px;}
 
-.chat-body{display:flex;flex:1;overflow:hidden;}
-.chat-body-left{width:90px;margin-bottom:-1px;border-right:1px solid #69A4FF;overflow:auto;}
-.chat-body-left-order{display:flex;flex:1;min-height:50px;font-size:12px;color:#333;border-bottom:2px solid #ccc;cursor:pointer;}
-.chat-body-left-order:hover,.current{background-color:#348efb; color:#fff; border-color: #2565c5;}
-.order-left{display:flex;color:#fff;padding:0 3px;line-height:25px;font-weight:bold;font-size:20px;}
-.new-info{color:#fdb902;}
-.order-right{line-height:25px;}
+.chat-title {}
+.chat-body{display:flex;flex:1; margin-top: 15px; min-height: 300px; max-height: 500px; overflow: hidden; background-color:#F6F6F6; border-radius: 4px;}
+
 
 .chat-body-right{display:flex;flex:1;flex-flow:column;}
 .chat-body-right-content{display:flex;flex:1;padding:15px 14px;overflow:auto;}
+.chat-body-right-content::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.chat-body-right-content::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 3px;
+     -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    background: #f0f0f0;
+}
+.chat-body-right-content::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0);
+    border-radius: 3px;
+    background: #F6F6F6;
+}
 .chat-msgs-list{width:100%;}
 .chat-msgs-item{display:flex;flex-flow:column;height:auto;margin-bottom:10px;word-break:break-all;}
-.chat-msgs-item /deep/ .chat-msgs-item-time{color:#999;font-size:12px;line-height:16px;text-align:center;margin-bottom:4px;}
+.chat-msgs-item /deep/ .chat-msgs-item-time{color:#999;font-size:14px;line-height:20px;text-align:center;margin-bottom:4px;}
 .chat-msgs-item /deep/ .chat-msgs-item-content{display:flex;flex:1;}
 .chat-msgs-item /deep/ .chat-msgs-item-content.right{justify-content:flex-end;}
-.chat-msgs-item /deep/ .chat-msgs-item-image{width:28px;height:28px;border:1px solid #ccc;border-radius:50%;overflow:hidden;}
-.chat-msgs-item /deep/ .chat-msgs-item-message{max-width:160px;padding:6px;background-color:#00a0e9;color:#fff;font-size:12px;border-radius:4px;margin:0 8px;word-break:break-word;align-self:center;display:flex;flex-flow:column;}
-.chat-msgs-item /deep/ .self{background-color:#00a0e9;}
-.chat-msgs-item /deep/ .system{color:#13AEF7;justify-content:center;align-items:center;padding:0 10px;font-size:12px;}
+.chat-msgs-item /deep/ .chat-msgs-item-image{width:32px;height:32px;border:1px solid #eee; background-color: #eee; border-radius:50%;overflow:hidden;}
+.chat-msgs-item /deep/ .chat-msgs-item-message{max-width:66.6%;padding:10px 15px;background-color:#fff;color:#333;font-size:16px;border-radius:4px;margin:0 8px;word-break:break-word;align-self:center;display:flex;flex-flow:column;}
+.chat-msgs-item /deep/ .self{background-color:#fff;}
+.chat-msgs-item /deep/ .system{color:#F0B936;justify-content:center;align-items:center;padding:5px 10px;font-size:16px;}
 .chat-msgs-item /deep/ img{width:100%;height:100%;}
-.chat-body-right-send{display:flex;height:44px;background-color:#EDF1FD;justify-content:center;align-items:center;}
-.send-container{display:flex;width:calc(100% - 10px);height:30px;}
-.send-input{width:calc(100% - 12px);padding:0 6px; color: #666;}
-.send-input::-webkit-input-placeholder{color:#7E7E7E;font-size:10px;}
+.chat-body-right-send{margin-top: 10px; border-radius: 4px; display:flex;height:50px;background-color:#F6F6F6;justify-content:center;align-items:center;}
+.send-container{display:flex;width:calc(100% - 14px);height:36px;}
+.send-input{width:calc(100% - 12px);padding:0 10px; color: #666; font-size: 16px;}
+.send-input::-webkit-input-placeholder{color:#7E7E7E;font-size:16px;}
 .send-input[readonly='readonly']{cursor:not-allowed;}
-.send-btn{width:50px;background-color:#00a0e9;color:#fff;font-size:18px;text-align:center;line-height:30px;cursor:pointer;}
-.send-btn:hover{background-color: #2565c5;}
+.send-btn{width:120px;background-color:#F0B936;color:#fff;font-size:18px;text-align:center;line-height:36px;cursor:pointer;}
+.send-btn:hover{background-color: #e8a400;}
 .send-btn.disabled{background-color:#999;cursor:not-allowed;}
 </style>

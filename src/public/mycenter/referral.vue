@@ -1,68 +1,77 @@
 <template>
   <div class="referral">
     <div class="ref-info ui-flex">
+      <div class="ui-flex-1">
+        <div class="item">
+          <span>{{$t('referral.invitation_code')}}<!-- Invitation Code -->:</span> {{invitedInfo.myInvitationCode}}
+          <button type="button" class="mint-btn default copy" v-clipboard:copy="invitedInfo.myInvitationCode"
+                  v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('referral.copy')}}<!-- 复制 --></button>
+        </div>
+        <div class="item">
+          <span>{{$t('referral.invitation_link')}}<!-- Invitation Link -->:</span> {{myInvitationUrl}}
+          <button type="button" class="mint-btn default copy" v-clipboard:copy="myInvitationUrl"
+                  v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('referral.copy')}}<!-- 复制 --></button>
+        </div>
+        <div class="item">
+          <span>{{$t('referral.share_to')}}<!-- Share to -->:</span>
+          <div class="media">
+            <a class="icon-twitter" :href="`https://twitter.com/share?text=${shareTitle}&url=${myInvitationUrl}`"
+               target="_blank"></a>
+            <a class="icon-facebook1"
+               :href="`https://www.facebook.com/sharer.php?title=${shareTitle}&u=${myInvitationUrl}`"
+               target="_blank"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-profit mt50">
+      <!--<div class="ui-flex-1">-->
+      <!--<p class="fs20">{{$t('referral.refunded')}} (ACM) &lt;!&ndash; Refunded &ndash;&gt;</p>-->
+      <!--<p class="f-c-main fs32 mt10"><strong>{{invitedInfo.rewardCount | numbean}}</strong></p>-->
+      <!--</div>-->
+      <!--<div class="ml15 ui-flex-1">-->
+      <!--<p class="fs20">{{$t('referral.invitees_num')}}&lt;!&ndash; Number of Invitees &ndash;&gt;</p>-->
+      <!--<p class="f-c-main fs32 mt10"><strong>{{invitedInfo.invitedCount}} {{$t('referral.invitees_num')}}&lt;!&ndash; Invitees &ndash;&gt;</strong></p>-->
+      <!--</div>-->
+
       <div class="ref-qr">
         <div ref="inviteQR" class="inviteQR"></div>
         <p class="mt10">{{$t('referral.referral_title')}}<!-- Invite friend to scan QR code to register --></p>
       </div>
-      <div class="ui-flex-1 ml20">
-        <div class="item">
-          <span>{{$t('referral.invitation_code')}}<!-- Invitation Code -->:</span> {{invitedInfo.myInvitationCode}}
-          <button type="button" class="mint-btn default copy" v-clipboard:copy="invitedInfo.myInvitationCode" v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('referral.copy')}}<!-- 复制 --></button>
-        </div>
-        <div class="item">
-          <span>{{$t('referral.invitation_link')}}<!-- Invitation Link -->:</span> {{myInvitationUrl}}
-          <button type="button" class="mint-btn default copy" v-clipboard:copy="myInvitationUrl" v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('referral.copy')}}<!-- 复制 --></button>
-        </div>
-        <div class="item">
-          <span>{{$t('referral.share_to')}}<!-- Share to -->:</span>
-          <div class="media"><a class="icon-twitter f-c-white" :href="`https://twitter.com/share?text=${shareTitle}&url=${myInvitationUrl}`"  target="_blank"></a> <a class="icon-facebook1 f-c-white" :href="`https://www.facebook.com/sharer.php?title=${shareTitle}&u=${myInvitationUrl}`" target="_blank"></a></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ref-profit mt50 ui-flex">
-      <!--<div class="ui-flex-1">-->
-        <!--<p class="fs20">{{$t('referral.refunded')}} (ACM) &lt;!&ndash; Refunded &ndash;&gt;</p>-->
-        <!--<p class="f-c-main fs32 mt10"><strong>{{invitedInfo.rewardCount | numbean}}</strong></p>-->
-      <!--</div>-->
-      <div class="ml15 ui-flex-1">
-        <p class="fs20">{{$t('referral.invitees_num')}}<!-- Number of Invitees --></p>
-        <p class="f-c-main fs32 mt10"><strong>{{invitedInfo.invitedCount}} {{$t('referral.invitees_num')}}<!-- Invitees --></strong></p>
-      </div>
     </div>
 
     <div class="ref-history mt50">
-      <ul class="tabs ui-flex">
-        <li class="ui-flex-1" >{{$t('referral.invitation_history')}}<!-- Invitation History --></li>
-        <li class="ui-flex-1"></li>
+      <ul class="tabs">
+        <li class="">{{$t('referral.invitation_history')}}<!-- Invitation History --></li>
+        <!--<li class="ui-flex-1"></li>-->
         <!--<li class="ui-flex-1" :class="{active:!active}" @click="active=false">{{$t('referral.program_rules')}}&lt;!&ndash; Program Rules &ndash;&gt;</li>-->
       </ul>
-      <div class="mt40 detail" v-show="active">
+      <div class="detail" v-show="active">
         <!--<ul class="selector ui-flex">-->
-          <!--<li>-->
-            <!--<p>{{$t('referral.date')}}&lt;!&ndash; Date &ndash;&gt;</p>-->
-            <!--<div><button type="button" class="mint-btn default" @click="setTime('day')">{{$t('referral.today')}}&lt;!&ndash; Today &ndash;&gt;</button></div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<p>{{$t('referral.start_date')}}&lt;!&ndash; Start Date &ndash;&gt;</p>-->
-            <!--<div><button type="button" class="mint-btn default" @click="setTime('month')">{{$t('referral.last_one_month')}}&lt;!&ndash; Last one month &ndash;&gt;</button></div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<p>{{$t('referral.end_date')}}&lt;!&ndash; End Date &ndash;&gt;</p>-->
-            <!--<div><button type="button" class="mint-btn default" @click="setTime('year')">{{$t('referral.last_one_year')}}&lt;!&ndash; Last one year &ndash;&gt;</button></div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<p>{{$t('referral.invitation_status')}}&lt;!&ndash; Invitation Status &ndash;&gt;</p>-->
-            <!--<div class="rp">-->
-              <!--<button type="button" class="mint-btn default status" @click="showStatus=!showStatus">{{getStatus(params.status)}} <i :class="[showStatus?'icon-arrow-up2':'icon-arrow-down3']"></i></button>-->
-              <!--<div class="status-list" v-show="showStatus">-->
-                <!--<div v-for="item in statusList" @click="params.status=item,showStatus=false">{{getStatus(item)}}</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</li>-->
+        <!--<li>-->
+        <!--<p>{{$t('referral.date')}}&lt;!&ndash; Date &ndash;&gt;</p>-->
+        <!--<div><button type="button" class="mint-btn default" @click="setTime('day')">{{$t('referral.today')}}&lt;!&ndash; Today &ndash;&gt;</button></div>-->
+        <!--</li>-->
+        <!--<li>-->
+        <!--<p>{{$t('referral.start_date')}}&lt;!&ndash; Start Date &ndash;&gt;</p>-->
+        <!--<div><button type="button" class="mint-btn default" @click="setTime('month')">{{$t('referral.last_one_month')}}&lt;!&ndash; Last one month &ndash;&gt;</button></div>-->
+        <!--</li>-->
+        <!--<li>-->
+        <!--<p>{{$t('referral.end_date')}}&lt;!&ndash; End Date &ndash;&gt;</p>-->
+        <!--<div><button type="button" class="mint-btn default" @click="setTime('year')">{{$t('referral.last_one_year')}}&lt;!&ndash; Last one year &ndash;&gt;</button></div>-->
+        <!--</li>-->
+        <!--<li>-->
+        <!--<p>{{$t('referral.invitation_status')}}&lt;!&ndash; Invitation Status &ndash;&gt;</p>-->
+        <!--<div class="rp">-->
+        <!--<button type="button" class="mint-btn default status" @click="showStatus=!showStatus">{{getStatus(params.status)}} <i :class="[showStatus?'icon-arrow-up2':'icon-arrow-down3']"></i></button>-->
+        <!--<div class="status-list" v-show="showStatus">-->
+        <!--<div v-for="item in statusList" @click="params.status=item,showStatus=false">{{getStatus(item)}}</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</li>-->
         <!--</ul>-->
-        <div class="ref-history-list mt60">
+        <div class="ref-history-list">
           <ul>
             <li class="header ui-flex">
               <span class="ui-flex-1">{{$t('account.user_center_account')}}<!-- Account --></span>
@@ -87,41 +96,41 @@
         </div>
       </div>
       <!--<div class="mt40 detail lh17" v-show="!active">-->
-        <!--<template v-if="getLang==='en'">-->
-          <!--<h3 class="text-center">&#45;&#45;Register on GCOX Exchange and invite your friends to earn attractive bonuses&#45;&#45;</h3>-->
-          <!--<p class="mt20">Eligibility Criteria:</p>-->
-          <!--<p>• Register on GCOX Exchange after 19th August, 1pm(GMT+8) </p>-->
-          <!--<p>• Complete the KYC Process</p>-->
-          <!--<p class="mt20">Rewards:</p>-->
-          <!--<p>One-time reward of 100 ACM tokens to your Staking Wallet*. </p>-->
-          <!--<p class="mt20">Also, we are pleased to introduce our referral scheme where you can earn attractive bonuses by simply sharing your referral code with your friends and inviting them to sign up on GCOX Exchange! </p>-->
-          <!--<p class="mt20">Eligibility Criteria:</p>-->
-          <!--<p>• Invite your friends to sign up on GCOX Exchange using your referral code after 19th August, 1 pm(GMT+8)</p>-->
-          <!--<p>• Your friend completes the KYC Process</p>-->
-          <!--<p class="mt20">Rewards:</p>-->
-          <!--<p>50 ACM tokens reward to your Staking Wallet* for every successful referral**, NO CAP! The more you invite, the more you earn!</p>-->
-          <!--<p class="mt20">Notes:</p>-->
-          <!--<p>* Trading Wallet – ACM balance held in the Trading Wallet can be used for trading</p>-->
-          <!--<p>* Staking Wallet – ACM balance held in the Staking Wallet is locked and 1% of the staked amount will be release on a weekly basis</p>-->
-          <!--<p>* Referrals are deemed successful once the referred user has completed their KYC process. </p>-->
-        <!--</template>-->
-        <!--<template v-else>-->
-          <!--<h3 class="text-center">-&#45;&#45; “注册奖励计划” -&#45;&#45;</h3>-->
-          <!--<p class="text-center mt10">在GCOX交易所注册并邀请您的朋友赚取丰厚奖励！</p>-->
-          <!--<p class="mt20">新用户注册奖励：</p>-->
-          <!--<p>• 一次性100个ACM代币空投至用户的质押钱包* </p>-->
-          <!--<p class="mt20">奖励标准：</p>-->
-          <!--<p>• 8月19日下午1:00后在GCOX交易所注册(GMT+8)</p>-->
-          <!--<p>• 完成KYC流程</p>-->
-          <!--<p class="mt20">邀请注册奖励：</p>-->
-          <!--<p>此外，我们很高兴向您介绍我们的“推荐奖励计划”。每成功推荐一位身边的朋友在GCOX注册并完成KYC，即可获得50个ACM代币奖励，无上限！邀请的越多，赚的越多！</p>-->
-          <!--<p class="mt20">奖励标准：</p>-->
-          <!--<p>• 被邀请人于8月19日下午1:00后通过邀请人发送的邀请码在GCOX交易所注册(GMT+8)</p>-->
-          <!--<p>• 被邀请人完成KYC流程</p>-->
-          <!--<p class="mt20">注释*</p>-->
-          <!--<p>ACM交易钱包——可买卖ACM代币与其他数字货币</p>-->
-          <!--<p>ACM质押钱包——质押钱包中的ACM将被锁定，每周释放1%的金额到您的交易钱包</p>-->
-        <!--</template>-->
+      <!--<template v-if="getLang==='en'">-->
+      <!--<h3 class="text-center">&#45;&#45;Register on GCOX Exchange and invite your friends to earn attractive bonuses&#45;&#45;</h3>-->
+      <!--<p class="mt20">Eligibility Criteria:</p>-->
+      <!--<p>• Register on GCOX Exchange after 19th August, 1pm(GMT+8) </p>-->
+      <!--<p>• Complete the KYC Process</p>-->
+      <!--<p class="mt20">Rewards:</p>-->
+      <!--<p>One-time reward of 100 ACM tokens to your Staking Wallet*. </p>-->
+      <!--<p class="mt20">Also, we are pleased to introduce our referral scheme where you can earn attractive bonuses by simply sharing your referral code with your friends and inviting them to sign up on GCOX Exchange! </p>-->
+      <!--<p class="mt20">Eligibility Criteria:</p>-->
+      <!--<p>• Invite your friends to sign up on GCOX Exchange using your referral code after 19th August, 1 pm(GMT+8)</p>-->
+      <!--<p>• Your friend completes the KYC Process</p>-->
+      <!--<p class="mt20">Rewards:</p>-->
+      <!--<p>50 ACM tokens reward to your Staking Wallet* for every successful referral**, NO CAP! The more you invite, the more you earn!</p>-->
+      <!--<p class="mt20">Notes:</p>-->
+      <!--<p>* Trading Wallet – ACM balance held in the Trading Wallet can be used for trading</p>-->
+      <!--<p>* Staking Wallet – ACM balance held in the Staking Wallet is locked and 1% of the staked amount will be release on a weekly basis</p>-->
+      <!--<p>* Referrals are deemed successful once the referred user has completed their KYC process. </p>-->
+      <!--</template>-->
+      <!--<template v-else>-->
+      <!--<h3 class="text-center">-&#45;&#45; “注册奖励计划” -&#45;&#45;</h3>-->
+      <!--<p class="text-center mt10">在GCOX交易所注册并邀请您的朋友赚取丰厚奖励！</p>-->
+      <!--<p class="mt20">新用户注册奖励：</p>-->
+      <!--<p>• 一次性100个ACM代币空投至用户的质押钱包* </p>-->
+      <!--<p class="mt20">奖励标准：</p>-->
+      <!--<p>• 8月19日下午1:00后在GCOX交易所注册(GMT+8)</p>-->
+      <!--<p>• 完成KYC流程</p>-->
+      <!--<p class="mt20">邀请注册奖励：</p>-->
+      <!--<p>此外，我们很高兴向您介绍我们的“推荐奖励计划”。每成功推荐一位身边的朋友在GCOX注册并完成KYC，即可获得50个ACM代币奖励，无上限！邀请的越多，赚的越多！</p>-->
+      <!--<p class="mt20">奖励标准：</p>-->
+      <!--<p>• 被邀请人于8月19日下午1:00后通过邀请人发送的邀请码在GCOX交易所注册(GMT+8)</p>-->
+      <!--<p>• 被邀请人完成KYC流程</p>-->
+      <!--<p class="mt20">注释*</p>-->
+      <!--<p>ACM交易钱包——可买卖ACM代币与其他数字货币</p>-->
+      <!--<p>ACM质押钱包——质押钱包中的ACM将被锁定，每周释放1%的金额到您的交易钱包</p>-->
+      <!--</template>-->
       <!--</div>-->
     </div>
   </div>
@@ -145,42 +154,43 @@
       return {
         showLoading: false,
         showStatus: false,
-        active:true,
-        invitedInfo:{},
-        statusList:['',1,-1],
-        historyList:[],
-        params:{
-          status:'',
-          page:1,
-          size:10,
-          startTime:''
+        active: true,
+        invitedInfo: {},
+        statusList: ['', 1, -1],
+        historyList: [],
+        params: {
+          status: '',
+          page: 1,
+          size: 10,
+          startTime: ''
         },
-        total:0,
+        total: 0,
 
       }
     },
     computed: {
-      ...mapGetters(['getUserInfo','getLang']),
-      myInvitationUrl(){
+      ...mapGetters(['getUserInfo', 'getLang']),
+      myInvitationUrl () {
         return `${Config.origin}/register?ref=${this.invitedInfo.myInvitationCode}`
       },
-      shareTitle(){
-        if(this.getLang==='en')
-          return `GCOX invitation from ${this.getUserInfo.nickname||this.getUserInfo.username}`
-        else
-          return `来自${this.getUserInfo.nickname||this.getUserInfo.username}的GCOX邀请`
+      shareTitle () {
+        if (this.getLang === 'en') {
+          return `GCOX invitation from ${this.getUserInfo.nickname || this.getUserInfo.username}`
+        } else {
+          return `来自${this.getUserInfo.nickname || this.getUserInfo.username}的GCOX邀请`
+        }
       },
-      paramsChange(){
+      paramsChange () {
         return {
-          status:this.params.status,
-          page:this.params.page,
-          size:this.params.size,
-          startTime:this.params.startTime
+          status: this.params.status,
+          page: this.params.page,
+          size: this.params.size,
+          startTime: this.params.startTime
         }
       }
     },
     watch: {
-      paramsChange(){
+      paramsChange () {
         this.getInvitedRecord()
       }
     },
@@ -188,7 +198,7 @@
       this.getInvitedInfo()
       this.getInvitedRecord()
     },
-    mounted(){
+    mounted () {
 
     },
     methods: {
@@ -199,37 +209,37 @@
       onError () {
         Vue.$koallTipBox({icon: 'notification', message: this.$t(`usercontent.copy-error`)})
       },
-      setTime(key){
+      setTime (key) {
         let nowdate = new Date()
-        switch (key){
+        switch (key) {
           case 'day':
             nowdate = new Date(nowdate.setHours(0, 0, 0, 0)).getTime()
             break
           case 'month':
             nowdate = new Date(nowdate.setHours(0, 0, 0, 0))
-            nowdate = new Date(nowdate.setMonth(nowdate.getMonth()-1)).getTime()
+            nowdate = new Date(nowdate.setMonth(nowdate.getMonth() - 1)).getTime()
             break
           default:
             nowdate = new Date(nowdate.setHours(0, 0, 0, 0))
-            nowdate = new Date(nowdate.setFullYear(nowdate.getFullYear()-1)).getTime()
+            nowdate = new Date(nowdate.setFullYear(nowdate.getFullYear() - 1)).getTime()
         }
         this.params.startTime = nowdate
       },
-      getInvitedInfo(){
-        userApi.getInvitedInfo(res=>{
+      getInvitedInfo () {
+        userApi.getInvitedInfo(res => {
           this.invitedInfo = res
           this.initQRCode()
-        },msg=>{
+        }, msg => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
       },
-      getInvitedRecord(){
+      getInvitedRecord () {
         this.showLoading = true
-        userApi.getInvitedRecord(this.params,(total,res)=>{
+        userApi.getInvitedRecord(this.params, (total, res) => {
           this.historyList = res
           this.total = total
           this.showLoading = false
-        },msg=>{
+        }, msg => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
           this.showLoading = false
         })
@@ -237,23 +247,29 @@
       pageChange (currentIndex) {
         this.params.page = currentIndex
       },
-      getStatus(status){
+      getStatus (status) {
         let rst = ''
-        switch(status){
-          case '': rst = this.$t('trade_record.trade_record_all'); break;
+        switch (status) {
+          case '':
+            rst = this.$t('trade_record.trade_record_all')
+            break
           case 0:
-          case 1: rst = this.$t('account.user_complete'); break;
-          case -1: rst = this.$t('account.user_uncompleted'); break;
+          case 1:
+            rst = this.$t('account.user_complete')
+            break
+          case -1:
+            rst = this.$t('account.user_uncompleted')
+            break
         }
         return rst
       },
-      initQRCode(){
+      initQRCode () {
         //初始化二维码
         utils.qrcode(this.$refs.inviteQR, {
           text: this.myInvitationUrl,
-          colorDark:'#00a0e9',
-          width: 116,
-          height: 116,
+          colorDark: '#000000',
+          width: 320,
+          height: 320,
         })
       },
 
@@ -262,101 +278,206 @@
 </script>
 
 <style scoped lang="less">
-.referral {
-  color: #333333;
-  padding: 20px;
-  min-height: 200px;
-  border:1px solid #eeeeee;
-}
-.ref-info {
-  .ref-qr {width: 136px;}
-  .inviteQR {
-    width: 116px; height: 116px; background-color: #fff; padding: 10px;
-    /deep/ img, canvas {width: 100%;}
-  }
-  .item {
-    line-height: 40px; border-bottom: 1px solid #eee;
-    position: relative;
-    span {display: inline-block; min-width: 130px; vertical-align: middle;}
-    .copy {position: absolute; right: 0; width: 100px; height: 26px; background-color: #0C0D34; border:none; color: #fff; cursor: pointer; margin-top: 7px; font-size: 14px;}
-    .media {
-      font-size: 20px;
-      display: inline-block;
-      vertical-align: middle;
-      a {cursor: pointer;}
-      a + a {margin-left: 20px;}
-    }
-
-  }
-}
-.ref-profit {
-  > div { padding:18px 0;  text-align: center;}
-}
-.ref-history {
-  .tabs {
-    border-bottom: 1px solid #eee;
-    li {color: #444140; text-align: center; font-size: 16px; cursor: pointer; font-weight: 600; line-height:40px; position: relative;}
-    li.active {color: #00a0e9;}
-    li:after {
-      content: '';
-      position: absolute;
-      width: 110px;
-      height: 5px;
-      left: 50%;
-      margin-left: -55px;
-      bottom: -3px;
-      background-color: transparent;
-    }
-    li.active:after {
-      background-color: #00a0e9;
-    }
-  }
-  .detail {
+  .referral {
+    color: #333333;
     min-height: 200px;
   }
-  .selector {
-    li {
-      min-width: 80px; text-align: center; &+li {margin-left: 35px;}
-      p {padding-bottom: 10px;}
-      button {
-        background-color: #615F5F; color: #fff; font-size: 14px; position: relative;
-        i {position: absolute; right: 10px; top: 11px;}
+
+  .ref-info {
+    border: 1px solid #eeeeee;
+    padding: 0 10px;
+
+    .item {
+      line-height: 40px;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding: 10px 0;
+      font-size: 18px;
+
+      span {
+        display: inline-block;
+        min-width: 100px;
+        vertical-align: middle;
+        text-align: right;
+        margin-right: 20px;
       }
-      .status {width: 140px;}
+
+      .copy {
+        position: absolute;
+        right: 0;
+        width: 100px;
+        background-color: #F0B936;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 2px;
+        font-size: 14px;
+      }
+
+      .media {
+        font-size: 20px;
+        display: inline-block;
+        vertical-align: middle;
+
+        a {
+          cursor: pointer;
+        }
+
+        a + a {
+          margin-left: 20px;
+        }
+      }
+
     }
   }
-}
-.status-list {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-top: 1px;
-  border-radius: 4px;
-  background-color:#615f5f;
-  line-height: 35px;
-  z-index: 1;
-  > div {border-bottom: 1px solid #545454; cursor:pointer; &:last-of-type{border-bottom: none;} &:hover {background-color: #545454;}}
-}
-.ref-history-list ul li {line-height: 35px; padding-left: 15px; padding-right: 15px;}
-.ref-history-list ul li:not(.header){
-  border-bottom: 1px solid #423E3D;
-  &:hover {background-color: #3F3B3A;}
-}
-.nodata .nodata-icon {
+
+  .ref-profit {
+    > div {
+      padding: 18px 0;
+      text-align: center;
+    }
+  }
+
+  .ref-history {
+    border: 1px solid #eeeeee;
+    .tabs {
+
+      li {
+        color: #444140;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 20px;
+        position: relative;
+      }
+
+      li.active {
+        color: #00a0e9;
+      }
+
+      li:after {
+        content: '';
+        position: absolute;
+        width: 110px;
+        height: 5px;
+        left: 50%;
+        margin-left: -55px;
+        bottom: -3px;
+        background-color: transparent;
+      }
+
+      li.active:after {
+        background-color: #00a0e9;
+      }
+    }
+
+    .detail {
+      min-height: 200px;
+    }
+
+    .selector {
+      li {
+        min-width: 80px;
+        text-align: center;
+
+        & + li {
+          margin-left: 35px;
+        }
+
+        p {
+          padding-bottom: 10px;
+        }
+
+        button {
+          background-color: #615F5F;
+          color: #fff;
+          font-size: 14px;
+          position: relative;
+
+          i {
+            position: absolute;
+            right: 10px;
+            top: 11px;
+          }
+        }
+
+        .status {
+          width: 140px;
+        }
+      }
+    }
+  }
+
+  .status-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 1px;
+    border-radius: 4px;
+    background-color: #615f5f;
+    line-height: 35px;
+    z-index: 1;
+
+    > div {
+      border-bottom: 1px solid #545454;
+      cursor: pointer;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #545454;
+      }
+    }
+  }
+
+  .ref-history-list ul li {
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .ref-history-list ul li:not(.header) {
+    border-bottom: 1px solid #eeeeee;
+
+    &:hover {
+      background-color: #3F3B3A;
+    }
+  }
+
+  .nodata .nodata-icon {
     height: 80px;
     line-height: 80px;
     font-size: 40px;
     color: #A1A1A1;
   }
 
-.nodata .nodata-text {
+  .nodata .nodata-text {
     height: 40px;
     line-height: 20px;
     color: #A1A1A1;
   }
-  .ref-history-list{
-    border: 1px solid #eeeeee;
-    padding: 10px;
+
+  .ref-history-list {
+    .header{
+      background: #F3F3F3;
+    }
   }
+  .ref-qr {
+    width: 350px;
+    margin: 0 auto;
+    font-size: 18px;
+  }
+
+  .inviteQR {
+    width: 320px;
+    height: 320px;
+    background-color: #fff;
+    padding: 10px;
+
+    /deep/ img, canvas {
+      width: 100%;
+    }
+  }
+
 </style>
 

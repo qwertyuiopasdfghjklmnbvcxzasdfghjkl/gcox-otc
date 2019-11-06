@@ -22,6 +22,11 @@
         <img v-else src="../../assets/img/icon-deal07.png"/>
         <span>{{$t('gcox_otc.you_advertising')}}<!--你的广告--></span>
       </li>
+      <li :class="{active: params.state === 5}" @click="params.state = 5">
+        <img v-if="params.state === 5" src="../../assets/img/icon-deal10.png"/>
+        <img v-else src="../../assets/img/icon-deal09.png"/>
+        <span>{{$t('gcox_otc.complaint_list')}}<!--申诉记录--></span>
+      </li>
 
 
     </ul>
@@ -58,7 +63,7 @@
             </div>
             <mycomponent :item="item" :is="getRight(item)" @cancelOrder="cancelOrder">
               <div class="r_btn">
-                <button @click="getDetail(item.order_number)">{{$t('otc_ad.otc_ad_view_details')}}</button>
+                <button @click="getDetail(item.order_id)">{{$t('otc_ad.otc_ad_view_details')}}</button>
               </div>
             </mycomponent>
           </li>
@@ -145,7 +150,10 @@
       </div>
 
       <div v-if="params.state === 4">
-        <adlist></adlist>
+        <adlist/>
+      </div>
+      <div v-if="params.state === 5">
+        <complaint-list/>
       </div>
     </div>
   </div>
@@ -163,10 +171,12 @@
   import loading from '@/components/loading'
   import page from '@/components/page'
   import Adlist from './adlist'
+  import ComplaintList from './complaintList'
 
   export default {
-    props: ['hparams'],
+    props: ['hparams', 'ip'],
     components: {
+      ComplaintList,
       Adlist,
       loading,
       page
@@ -181,7 +191,7 @@
         loading2: true,
         intervals: [],
         params: {
-          state: 1,
+          state: this.ip || 1,
           page: 1,
           total: 0
         }
@@ -417,8 +427,7 @@
         this.params.page = currentIndex
       },
       getDetail (id) {
-        let i = id.substring(3)
-        this.$router.push({name: 'otc_detail', query: {id: i}})
+        this.$router.push({name: 'otc_detail', query: {id: id}})
       }
     }
   }

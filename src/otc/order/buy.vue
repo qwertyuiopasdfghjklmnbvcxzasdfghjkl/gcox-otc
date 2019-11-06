@@ -5,24 +5,24 @@
       <p><span class="numer">{{$t('otc_exchange.otc_exchange_order_number')}}：
         <!--订单编号-->{{data1.order_number}}</span></p>
       <ul class="step">
-        <li :class="{active: step >= 0}">
+        <li :class="{active: step >= 0, current:step===0}">
           1.{{$t('public0.public143')}}
           <!--新建交易-->
         </li>
-        <li :class="{active: step >= 1}">
+        <li :class="{active: step >= 1, current:step===1}">
           2.{{$t('public0.public144')}}
           <!--请先付款-->
         </li>
-        <li :class="{active: step >= 2}">
+        <li :class="{active: step >= 2, current:step===2}">
           3.{{$t('public0.public145')}}
           <!--等待放币-->
         </li>
-        <li :class="{active: step >= 3}">
+        <li :class="{active: step >= 3, current:step===3}">
           4.{{$t('public0.public146')}}
           <!--完成交易-->
         </li>
       </ul>
-      <div v-html="$t('gcox_otc.order_text').format(data1.symbol_count, data1.symbol, data1.to_user_name)"></div>
+      <div v-html="$t('gcox_otc.order_text').format(data1.symbol_count, data1.symbol, data1.from_user_name)"></div>
       <div class="tab">
         <table width="100%">
           <tr bgcolor="#eeeeee">
@@ -50,7 +50,7 @@
           </tr>
         </table>
       </div>
-      <div class="tab">
+      <div class="tab" v-if="cancelStatus !== 1">
         <table width="100%">
           <tr bgcolor="#eeeeee">
             <td colspan="2" align="center">{{$t('gcox_otc.pay_info')}}</td>
@@ -73,15 +73,18 @@
           </tr>
         </table>
       </div>
-      <div class="timer" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username">
+      <div class="timer" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
         <span>{{$t('public0.public62')}}</span>
         <b>{{surplus_Time}}</b>
       </div>
-      <p class="time_text">
+      <p class="time_text" v-if="cancelStatus !== 1">
         {{$t('gcox_otc.time_out')}}
       </p>
+      <div class="red_note" v-if="cancelStatus === 1">
+        {{$t('gcox_otc.cancel_not_pay')}}
+      </div>
       <div class="btn_box">
-        <p>
+        <p v-if="cancelStatus !== 1">
           <a href="javascript:;" v-if="data1.state === 1" :class="{disabled: data1.pay_state !== 0}" @click="confirm">{{$t('public0.public154')}}
             <!--已支付--></a>
           <a href="javascript:;" v-if="data1.state === 2" :class="{disabled: data1.from_user_comment}"
@@ -89,13 +92,16 @@
             <!--确认--></a>
         </p>
         <template v-if="data1.pay_state === 1">
-          <em @click="apeal(data1)" v-if="data1.appeal_state !== 0">{{$t('otc_exchange.otc_exchange_complaint')}}
+          <em @click="apeal(data1)" v-if="data1.appeal_state !== 0">
+            {{$t('otc_exchange.otc_exchange_complaint')}}
             <!--发起申诉--></em>
-          <em @click="cancelApeal(data1)" v-if="data1.appeal_state === 0">{{$t('public0.public208')}}
+          <em @click="cancelApeal(data1)" v-if="data1.appeal_state === 0">
+            {{$t('public0.public208')}}
             <!--取消申诉--></em>
         </template>
         <template v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username">
-          <em @click="cancelOrderByConfirm(data1)">{{$t('otc_ad.otc_ad_cancel_order')}}
+          <em @click="cancelOrderByConfirm(data1)" :class="{disabled: cancelStatus === 1}">
+            {{$t('otc_ad.otc_ad_cancel_order')}}
             <!--取消订单--></em>
         </template>
       </div>
@@ -131,7 +137,8 @@
           total: 0
         },
         surplus_Time: null,
-        payInfo: {}
+        payInfo: {},
+        cancelStatus: null,
       }
     },
     computed: {
@@ -154,6 +161,8 @@
           return this.$t('public0.public152')
         } else if (this.data1.pay_state === 1) {
           return this.$t('public0.public145')
+        } else if (this.cancelStatus === 1) {
+          return this.$t('public0.public25')
         } else {
           return null
         }
@@ -320,20 +329,23 @@
               orderNumber: item.order_number
             }
           })
-          this.getOrderList()
+          this.cancelStatus = 1
+          // this.getOrderList()
           !noMsg && Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
         }, (msg) => {
           !noMsg && Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
       },
       cancelOrderByConfirm (item) { // 取消订单 - 确认提示
-        Vue.$confirmDialog({
-          content: this.$t('error_code.CANCEL_ORDER_CONFIRM'),
-          autoClose: true,
-          okCallback: () => {
-            this.cancelOrder(item)
-          }
-        })
+        if (this.cancelStatus !== 1) {
+          Vue.$confirmDialog({
+            content: this.$t('error_code.CANCEL_ORDER_CONFIRM'),
+            autoClose: true,
+            okCallback: () => {
+              this.cancelOrder(item)
+            }
+          })
+        }
       },
       apeal (item) { // 发起申诉
         utils.setDialog(appeal, {
@@ -392,17 +404,33 @@
   .step {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 10px 0;
 
     li {
       flex: 1;
       background: #eeeeee;
-      padding: 20px;
-      color: #666c7d;
+      height: 50px;
+      line-height: 50px;
+      color: #999;
       font-size: 18px;
       position: relative;
-      margin: 10px;
-      text-indent: 20px;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      &:first-of-type {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+
+      &:last-of-type {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+
+        &:after {
+          display: none;
+        }
+      }
 
       &.active {
         background: #299D82;
@@ -411,18 +439,26 @@
         &:after {
           background: #299D82;
         }
+
+        &.current {
+          background: #F0B936;
+
+          &:after {
+            background: #F0B936;
+          }
+        }
       }
 
       &:after {
         content: '';
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
         display: block;
         position: absolute;
-        right: -23px;
-        top: 10px;
+        right: -19px;
+        top: 7px;
         background: #eeeeee;
-        border: 8px solid #ffffff;
+        border: 6px solid #ffffff;
         border-top-color: transparent;
         border-left-color: transparent;
         transform: rotate(-45deg);
@@ -451,59 +487,112 @@
     }
   }
 
-  .timer {
-    border-left: 4px #E65656 solid;
-    padding: 20px;
-    position: relative;
-    background: #F6F6F6;
-    text-align: center;
-
-    b {
-      font-size: 48px;
-    }
-
-    span {
-      position: absolute;
-      left: 20px;
-      top: 40px;
-    }
-  }
-
-  .time_text {
-    padding: 15px;
-  }
 
   .order-list {
     font-size: 16px;
   }
 
   .btn_box {
-    margin: 20px auto;
+    margin: 30px auto;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    & > p > a, & > em {
+    & > p a, & > em {
       width: 150px;
       height: 50px;
       display: block;
       text-align: center;
       line-height: 50px;
-      margin: 10px;
-      border-radius: 3px;
+      margin: 0 15px;
+      border-radius: 4px;
       border: 1px solid #eeeeee;
-    }
+      background: #F0B936;
+      color: #ffffff !important;
+      cursor: pointer;
 
-    & > p {
-      a {
-        background: #F0B936;
-        color: #ffffff !important;
+      &.default {
+        border-color: #666;
+        background-color: #fff;
+        color: #333 !important;
       }
 
-      a.disabled {
+      &.disabled {
         background: #c7c7c7;
         cursor: no-drop;
       }
     }
+  }
+
+  .undone-center-adress {
+    background: #eeeeee;
+    padding: 20px;
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .undone-center-type {
+    margin: 10px 0;
+  }
+
+  .evaluate {
+    ul {
+      display: flex;
+
+      li {
+        margin: 0 20px;
+        text-align: center;
+        cursor: pointer;
+
+        .active {
+          color: #e74c3c;
+        }
+      }
+    }
+  }
+
+  .countdown {
+    height: 88px;
+    line-height: 88px;
+    padding-left: 16px;
+    background-color: #eee;
+    border-left: 4px solid #E65656;
+    font-size: 18px;
+    margin-top: 20px;
+    position: relative;
+    text-align: center;
+
+    .timer {
+      font-size: 48px;
+    }
+
+    .title {
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  .chat-container {
+    margin-top: 30px;
+    padding-bottom: 150px;
+
+    .dialogs {
+      margin-top: 15px;
+      min-height: 300px;
+      max-height: 800px;
+      overflow-y: auto;
+      background-color: #eee;
+      border-radius: 4px;
+
+    }
+  }
+  .red_note{
+    border-left: 4px solid #e74c3c;
+    padding: 20px;
+    background: #eeeeee;
+    color: #e74c3c;
+    margin-top: 20px;
   }
 </style>

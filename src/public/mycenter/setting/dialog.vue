@@ -33,7 +33,7 @@
 
         </li>
         <li class="form-row form-row-bottom">
-          <button class="form-save green_button" @click="saveSettings()">{{vm.$t('otc_legal.otc_legal_save')}}</button>
+          <button class="form-save green_button" @click="saveSettings">{{vm.$t('otc_legal.otc_legal_save')}}</button>
           <!--保存-->
         </li>
       </ul>
@@ -82,7 +82,8 @@
       closeDialog () {
         this.$emit('removeDialog')
       },
-      saveSettings () {
+      saveSettings (event) {
+        event.preventDefault()||(event.returnValue=false);
         let formData = new FormData(this.$refs.bankForm)
         otcApi.savePaySettings(1, formData, res => {
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})

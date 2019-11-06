@@ -118,6 +118,10 @@
     }
     ul{
       margin-top: 20px;
+      .message-item{
+        border-top: 1px solid #eeeeee;
+        cursor: pointer;
+      }
     }
     .message-item-title{
       height: 40px;

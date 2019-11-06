@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w1200">
+    <div class="w800">
       <sell v-if="m === 1"
             :timer="time"
             :item="data"/>
@@ -46,9 +46,6 @@
     },
     computed: {
       ...mapGetters(['getApiToken', 'getUserInfo']),
-      getRight () { // 获取购买/出售模板
-        return this.from_user_id === this.getUserInfo.userId ? 1 : 0
-      },
     },
     created () {
       console.log(this.$route.query.id)
@@ -73,9 +70,11 @@
       },
       getData () {
         otcApi.ordersDetail(this.order_id, (item, serverTime) => {
+
           this.data = item
           this.m = this.getUserInfo.userId === item.from_user_id ? 1 : 2
           this.time = serverTime
+          this.orderNumber = item.order_number
         })
       }
     }

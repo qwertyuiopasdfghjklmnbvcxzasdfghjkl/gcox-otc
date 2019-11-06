@@ -61,6 +61,7 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
 @media screen and (max-width: 1659px){
 	.w1200 {width: 1200px; margin-left: auto; margin-right: auto;}
 }
+.w800 {width: 800px; margin-left: auto; margin-right: auto;}
 .container {
 	background: url(../img/bg_common.png) no-repeat 50%;
 	color: #f1f1f2;
@@ -208,6 +209,7 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
 .mb120 {margin-bottom:120px;}
 
 .pr50 {padding-right: 50px;}
+.pl20 {padding-left: 20px;}
 
 
 .mint-btn {
@@ -294,16 +296,32 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   color: #299D82;
 }
 .red_button{
+  border-radius: 4px;
+  padding: 10px 24px;
+  display: inline-block;
   background: #E65656;
   color: #ffffff;
 }
 .green_button{
+  border-radius: 4px;
+  padding: 10px 24px;
+  display: inline-block;
   background: #299D82;
   color: #ffffff;
 }
 .yellow_button{
+  border-radius: 4px;
+  padding: 10px 24px;
+  display: inline-block;
   background: #F0B936;
   color: #ffffff;
+}
+.gray_button{
+  border-radius: 4px;
+  padding: 10px 24px;
+  display: inline-block;
+  background: #eeeeee;
+  color: #999;
 }
 .green_bg{
   background: #299D82;

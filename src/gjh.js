@@ -99,7 +99,15 @@ export default {
     'update_phone': '修改电话号码',
     'order_text': '你正在 <span class="f-c-green">购买</span><span class="green_bg">{0} {1} </span>  从 {2} 卖家的代币已被锁定，此交易已担保，请把款项支付给卖家，并在下面确认。',
     'time_out': '当付款时间过期是交易会被取消，我们将把资金退还给卖家',
-    'order_sell': '你正在 <span class="red">卖出</span> <span class="green_bg">{0} {1}</span>， 代币已被平台锁定，此交易已担保，请耐心等待买家付款。'
+    'order_sell': '你正在 <span class="red">卖出</span> <span class="green_bg">{0} {1}</span>， 代币已被平台锁定，此交易已担保，请耐心等待买家付款。',
+    'complaint_list': '申诉记录',
+    'complaint_id': '申诉编号',
+    'complaint_type': '申诉类型',
+    'complaint_cont': '申诉内容',
+    'complaint_status': '申诉状态',
+    'complaint_results': '申诉结果',
+    'cancel_not_pay': '您已经取消了该笔交易，请勿付款！'
+
   },
   'login_register': {
     'Next_step': '下一步',

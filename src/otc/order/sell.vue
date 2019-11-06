@@ -4,19 +4,19 @@
       <p><span class="numer">{{$t('otc_exchange.otc_exchange_order_number')}}：
         <!--订单编号-->{{item.order_number}}</span></p>
       <ul class="step">
-        <li :class="{active:step>=0}">
+        <li :class="{active:step>=0, current:step===0}">
           1.{{$t('public0.public143')}}
           <!--新建交易-->
         </li>
-        <li :class="{active:step>=1}">
+        <li :class="{active:step>=1, current:step===1}">
           2.{{$t('public0.public150')}}
           <!--等待付款-->
         </li>
-        <li :class="{active:step>=2}">
+        <li :class="{active:step>=2, current:step===2}">
           3.{{$t('otc_ad.otc_ad_prompt8')}}
           <!--释放货币-->
         </li>
-        <li :class="{active:step>=3}">
+        <li :class="{active:step>=3, current:step===3}">
           4.{{$t('public0.public146')}}
           <!--完成交易-->
         </li>
@@ -42,22 +42,42 @@
             </tr>
             <tr>
               <td>{{$t('gcox_otc.total')}}</td>
-              <td><span class="red">{{item.total_price}}</span> <b>{{item.currency}}</b></td>
+              <td><span class="red">{{item.currency_count}}</span> <b>{{item.currency}}</b></td>
             </tr>
             <tr>
               <td>{{$t('otc_ad.otc_ad_status')}}</td>
-              <td><span class="green_button" style="padding: 3px 6px">{{stateTitle}}</span></td>
+              <td><span class="gray_button mr20" v-if="step>=2">{{$t('public0.public154')}}</span> <span class="green_button" >{{stateTitle}}</span></td>
             </tr>
           </table>
         </div>
-        <div class="undone-center-adress" v-if="item.state === 1">
-          <p>{{$t('public0.public28')}}<!--耐心等待买家付款--></p>
-          <p>{{$t('public0.public29')}}<!--确认付款后，请尽快放币--></p>
+        <div class="tab" v-if="step!==3">
+          <table width="100%">
+            <tr bgcolor="#eeeeee">
+              <td colspan="2" align="center">{{$t('otc_ad.otc_pay_details')}}</td>
+            </tr>
+            <tr>
+              <td width="30%">{{$t('otc_ad.pay_method')}}</td>
+              <td>{{$t(payInfo.method)}}</td>
+            </tr>
+            <tr>
+              <td>{{$t('otc_ad.payer')}}</td>
+              <td>{{payInfo.name||'--'}}</td>
+            </tr>
+            <tr v-if="this.item.pay_type==='1'">
+              <td>{{$t('otc_legal.otc_legal_Bank')}}</td>
+              <td>{{payInfo.bank}}</td>
+            </tr>
+            <tr>
+              <td>{{$t(payInfo.accountName)}}</td>
+              <td>{{payInfo.number}}</td>
+            </tr>
+          </table>
         </div>
-        <div class="timer" v-if="item.pay_state === 0">
-          <span>{{$t('public0.public62')}}</span>
-          <b>{{surplus_Time}}</b>
+        <div class="countdown"  v-if="step!==3">
+          <span class="title">剩余支付时间</span>
+          <span class="timer">{{surplus_Time}}</span>
         </div>
+        <p class="mt20 pl20"  v-if="step!==3">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
       </div>
 
     </div>
@@ -86,22 +106,23 @@
         <!--<p>{{item.symbol}}</p>-->
       <!--</div>-->
       <div class="undone-center-type" v-if="!item.to_user_comment">
-        {{$t('otc_ad.otc_ad_prompt9')}}
+        
       </div>
-      <div class="undone-center-adress">
-        <div class="evaluate">
+      <div class="undone-center-adress ui-flex">
+        <span class="">{{$t('otc_ad.otc_ad_prompt9')}}</span>
+        <div class="evaluate ui-flex-1 ml60">
           <ul>
             <li @click="commentType=1" v-if="!item.to_user_comment || item.to_user_comment === 1">
-              <em class="icon-praise" :class="{active:commentType===1}"></em>
-              <p>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></p>
+              <em class="myicon-praise" :class="{active:commentType===1}"></em>
+              <span>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></span>
             </li>
             <li @click="commentType=2" v-if="!item.to_user_comment ||item.to_user_comment === 2">
-              <em class="icon-average" :class="{active:commentType===2}"></em>
-              <p>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></p>
+              <em class="myicon-average" :class="{active:commentType===2}"></em>
+              <span>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></span>
             </li>
             <li @click="commentType=3" v-if="!item.to_user_comment || item.to_user_comment === 3">
-              <em class="icon-bad-review" :class="{active:commentType===3}"></em>
-              <p>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></p>
+              <em class="myicon-bad-review" :class="{active:commentType===3}"></em>
+              <span>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></span>
             </li>
           </ul>
         </div>
@@ -113,6 +134,8 @@
          @click="confirm">{{$t('otc_ad.otc_ad_prompt8')}}<!--释放货币--></a>
       <a href="javascript:;" v-if="item.state === 2"
          :class="{disabled:item.to_user_comment}" @click="evaluation">{{$t('otc_ad.otc_ad_confirm')}}<!--确认--></a>
+      <a href="javascript:;" class="default" v-if="item.appeal_state !== 0" @click="apeal(item)">{{$t('otc_exchange.otc_exchange_complaint')}}<!--发起申诉--></a>
+      <a href="javascript:;" class="default" @click="cancelApeal(item)" v-else>{{$t('public0.public208')}}<!--发起申诉--></a>
     </div>
   </div>
 </template>
@@ -122,6 +145,7 @@
   import {mapGetters, mapActions} from 'vuex'
   import otcApi from '@/api/otc'
   import utils from '@/assets/js/utils'
+  import appeal from '@/otc/otchome/appeal'
 
   export default {
     props: ['item', 'timer'],
@@ -135,8 +159,11 @@
           total: 0
         },
         intervals: [],
-        payInfo: {},
         surplus_Time: null,
+        payTypes: {
+          real_name: '',
+          data: {}
+        },
       }
     },
     computed: {
@@ -175,17 +202,80 @@
         } else if (this.item.pay_state === 0) {
           return this.$t('public0.public150')
         } else if (this.item.pay_state === 1) {
-          return this.$t('otc_ad.otc_ad_prompt8')
+          return this.$t('public0.public145')
         } else {
           return null
         }
-      }
+      },
+      payInfo () {
+        let key = Number(this.item.pay_type)===0 ? 1 : Number(this.item.pay_type)
+        switch (key) {
+          case 1:
+            return { // 银行卡
+              method: 'otc_ad.otc_ad_BankPay',
+              accountName: 'otc_legal.otc_legal_Bank_number',
+              name: this.payTypes.data.card_name,
+              bank: this.payTypes.data.card_bank,
+              number: this.payTypes.data.card_number
+            }
+          case 2:
+            return { // 支付宝
+              method: 'otc_ad.otc_ad_Alipay_pay',
+              accountName: 'otc_legal.otc_legal_Alipay_number',
+              name: this.payTypes.real_name,
+              number: this.payTypes.data.alipay_number,
+            }
+          case 3:
+            return { // 微信
+              method: 'otc_ad.otc_ad_WeChatPay',
+              accountName: 'otc_legal.otc_legal_Wechat_number',
+              name: this.payTypes.real_name,
+              number: this.payTypes.data.wechat_number,
+            }
+          case 4:
+            return { // PayPal
+              method: 'otc_ad.otc_ad_PayPal',
+              accountName: 'public0.public221',
+              name: this.payTypes.real_name,
+              number: this.payTypes.data.paypal_number
+            }
+          default:
+            return {}
+        }
+      },
     },
     created () {
       this.time()
+      this.getPays()
     },
     methods: {
       ...mapActions(['tiggerEvents']),
+      apeal (item) { // 发起申诉
+        utils.setDialog(appeal, {
+          orderNumber: item.order_number,
+          okCallback: () => {
+            this.$parent.getData()
+          }
+        })
+      },
+      cancelApeal (item) { // 取消申诉
+        otcApi.cancelAppeal(item.appeal_manage_id, (msg) => {
+          this.$parent.getData()
+          Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
+        }, (msg) => {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+        })
+      },
+      getPays () {
+        otcApi.getPaySettingsNoToken({
+          user_id: this.item.to_user_id
+        }, (res) => {
+          this.payTypes = {
+            real_name: res.real_name,
+            data: res.data
+          }
+        })
+      },
       time () {
         this.intervals.forEach((interval) => {
           clearInterval(interval)
@@ -212,13 +302,6 @@
         })
 
         this.intervals.push(interval)
-      },
-      getPays () {
-        otcApi.getPaySettingsNoToken({
-          user_id: this.item.from_user_id
-        }, (res) => {
-          this.payInfo = res.data
-        })
       },
       confirm () {
         if (this.item.state === 1 && this.item.pay_state === 0) {
@@ -281,17 +364,27 @@
   .step {
     display: flex;
     align-items: center;
-    margin: 20px 0;
-
+    margin: 10px 0;
     li {
       flex: 1;
       background: #eeeeee;
-      padding: 20px;
-      color: #666c7d;
+      height: 50px;
+      line-height: 50px;
+      color: #999;
       font-size: 18px;
       position: relative;
-      margin: 10px;
-      text-indent: 20px;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      &:first-of-type {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      } 
+      &:last-of-type {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        &:after {display: none;}
+      } 
 
       &.active {
         background: #299D82;
@@ -300,18 +393,24 @@
         &:after {
           background: #299D82;
         }
+        &.current {
+          background: #F0B936;
+          &:after {
+            background: #F0B936;
+          }
+        }
       }
 
       &:after {
         content: '';
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
         display: block;
         position: absolute;
-        right: -23px;
-        top: 10px;
+        right: -19px;
+        top: 7px;
         background: #eeeeee;
-        border: 8px solid #ffffff;
+        border: 6px solid #ffffff;
         border-top-color: transparent;
         border-left-color: transparent;
         transform: rotate(-45deg);
@@ -340,35 +439,13 @@
     }
   }
 
-  .timer {
-    border-left: 4px #E65656 solid;
-    padding: 20px;
-    position: relative;
-    background: #F6F6F6;
-    text-align: center;
-    margin: 20px 0;
-
-    b {
-      font-size: 48px;
-    }
-
-    span {
-      position: absolute;
-      left: 20px;
-      top: 40px;
-    }
-  }
-
-  .time_text {
-    padding: 15px;
-  }
 
   .order-list {
     font-size: 16px;
   }
 
   .btn_box {
-    margin: 20px auto;
+    margin: 30px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -379,11 +456,16 @@
       display: block;
       text-align: center;
       line-height: 50px;
-      margin: 10px;
-      border-radius: 3px;
+      margin: 0 15px;
+      border-radius: 4px;
       border: 1px solid #eeeeee;
       background: #F0B936;
       color: #ffffff !important;
+      &.default {
+        border-color:#666;
+        background-color: #fff;
+        color:#333 !important;
+      }
 
       &.disabled {
         background: #c7c7c7;
@@ -393,14 +475,12 @@
   }
 
   .undone-center-adress {
-    background: #eeeeee;
-    padding: 20px;
-    font-size: 18px;
-    line-height: 32px;
-  }
-
-  .undone-center-type{
-    margin: 10px 0;
+    height: 60px;
+    line-height: 60px;
+    padding-left: 16px;
+    background-color: #eee;
+    border-left: 4px solid #E65656;
+    margin-top: 20px;
   }
   .evaluate{
     ul{
@@ -412,7 +492,41 @@
         .active{
           color: #e74c3c;
         }
+        [class*=myicon-] {
+          display: inline-block;
+          height: 26px;
+          width: 26px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+        .myicon-praise {background-image: url('../../assets/img/icon_praise_a.png');}
+        .myicon-praise.active {background-image: url('../../assets/img/icon_praise_b.png');}
+        .myicon-average {background-image: url('../../assets/img/icon_average_a.png');}
+        .myicon-average.active {background-image: url('../../assets/img/icon_average_b.png');}
+        .myicon-bad-review {background-image: url('../../assets/img/icon_bad_a.png');}
+        .myicon-bad-review.active {background-image: url('../../assets/img/icon_bad_b.png');}
       }
+    }
+  }
+  .countdown {
+    height: 88px;
+    line-height: 88px;
+    padding-left: 16px;
+    background-color: #eee;
+    border-left: 4px solid #E65656;
+    font-size: 18px;
+    margin-top: 20px;
+    position: relative;
+    text-align: center;
+    .timer {font-size: 48px;}
+    .title {
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom:0;
     }
   }
 </style>

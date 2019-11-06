@@ -107,7 +107,6 @@
       }
 
       button {
-        width: 48px;
         height: 40px;
         border-radius: 4px;
         color: #ffffff;

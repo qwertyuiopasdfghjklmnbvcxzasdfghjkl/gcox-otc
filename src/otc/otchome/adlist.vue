@@ -81,6 +81,7 @@
   import loading from '@/components/loading'
   import page from '@/components/page'
   import createorder from '@/otc/otchome/createorder'
+  import dialogUpdate from './dialog/updateAd'
 
   export default {
     props: ['params'],
@@ -229,13 +230,14 @@
         otcApi.getVerifyState((msg) => {
           otcApi.getPaySettings((res) => {
             // this.params.symbol = obj.symbol
-            utils.setDialog(createorder, {
+            utils.setDialog(dialogUpdate, {
               id: 'dialog_createorder',
               myPayType: res.data.pay_type,
               params: obj,
               ad_id: obj.ad_id,
               okCallback: () => {
-                this.$emit('goToSettings')
+                // this.$emit('goToSettings')
+                this.getCurAdList()
               }
             })
           }, (res) => {
