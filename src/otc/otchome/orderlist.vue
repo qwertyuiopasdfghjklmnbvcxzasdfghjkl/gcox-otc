@@ -58,7 +58,7 @@
             </div>
             <mycomponent :item="item" :is="getRight(item)" @cancelOrder="cancelOrder">
               <div class="r_btn">
-                <button @click="getDetail(item.order_number)">{{$t('otc_ad.otc_ad_view_details')}}</button>
+                <button @click="getDetail(item.order_id)">{{$t('otc_ad.otc_ad_view_details')}}</button>
               </div>
             </mycomponent>
           </li>
@@ -417,8 +417,7 @@
         this.params.page = currentIndex
       },
       getDetail (id) {
-        let i = id.substring(3)
-        this.$router.push({name: 'otc_detail', query: {id: i}})
+        this.$router.push({name: 'otc_detail', query: {id: id}})
       }
     }
   }
