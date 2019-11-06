@@ -438,4 +438,7 @@
       border-radius: 3px;
     }
   }
+  .msg{
+    color: #e74c3c;
+  }
 </style>

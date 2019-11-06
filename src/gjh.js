@@ -106,6 +106,7 @@ export default {
     'complaint_cont': '申诉内容',
     'complaint_status': '申诉状态',
     'complaint_results': '申诉结果',
+    'cancel_not_pay': '您已经取消了该笔交易，请勿付款！'
 
   },
   'login_register': {

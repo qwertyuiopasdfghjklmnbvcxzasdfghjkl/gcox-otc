@@ -994,6 +994,7 @@
     box-shadow: 0 0 10px #eeeeee;
     width: 100%;
     display: none;
+    z-index: 999;
   }
 
   .bank_list li {
