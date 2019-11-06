@@ -74,6 +74,7 @@
           this.data = item
           this.m = this.getUserInfo.userId === item.from_user_id ? 1 : 2
           this.time = serverTime
+          this.orderNumber = item.order_number
         })
       }
     }

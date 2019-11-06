@@ -50,7 +50,7 @@
             </tr>
           </table>
         </div>
-        <div class="tab">
+        <div class="tab" v-if="step!==3">
           <table width="100%">
             <tr bgcolor="#eeeeee">
               <td colspan="2" align="center">{{$t('otc_ad.otc_pay_details')}}</td>
@@ -68,16 +68,16 @@
               <td>{{payInfo.bank}}</td>
             </tr>
             <tr>
-              <td>{{item.pay_type==='1'?$t('otc_legal.otc_legal_Bank_number'):(item.pay_type==='2'?$t('otc_legal.otc_legal_Alipay_number'):(item.pay_type==='3'?$t('otc_legal.otc_legal_Wechat_number'):$t('public0.public221')))}}</td>
+              <td>{{$t(payInfo.accountName)}}</td>
               <td>{{payInfo.number}}</td>
             </tr>
           </table>
         </div>
-        <div class="countdown">
+        <div class="countdown"  v-if="step!==3">
           <span class="title">剩余支付时间</span>
           <span class="timer">{{surplus_Time}}</span>
         </div>
-        <p class="mt20 pl20">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
+        <p class="mt20 pl20"  v-if="step!==3">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
       </div>
 
     </div>
@@ -106,22 +106,23 @@
         <!--<p>{{item.symbol}}</p>-->
       <!--</div>-->
       <div class="undone-center-type" v-if="!item.to_user_comment">
-        {{$t('otc_ad.otc_ad_prompt9')}}
+        
       </div>
-      <div class="undone-center-adress">
-        <div class="evaluate">
+      <div class="undone-center-adress ui-flex">
+        <span class="">{{$t('otc_ad.otc_ad_prompt9')}}</span>
+        <div class="evaluate ui-flex-1 ml60">
           <ul>
             <li @click="commentType=1" v-if="!item.to_user_comment || item.to_user_comment === 1">
-              <em class="icon-praise" :class="{active:commentType===1}"></em>
-              <p>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></p>
+              <em class="myicon-praise" :class="{active:commentType===1}"></em>
+              <span>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></span>
             </li>
             <li @click="commentType=2" v-if="!item.to_user_comment ||item.to_user_comment === 2">
-              <em class="icon-average" :class="{active:commentType===2}"></em>
-              <p>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></p>
+              <em class="myicon-average" :class="{active:commentType===2}"></em>
+              <span>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></span>
             </li>
             <li @click="commentType=3" v-if="!item.to_user_comment || item.to_user_comment === 3">
-              <em class="icon-bad-review" :class="{active:commentType===3}"></em>
-              <p>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></p>
+              <em class="myicon-bad-review" :class="{active:commentType===3}"></em>
+              <span>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></span>
             </li>
           </ul>
         </div>
@@ -207,10 +208,12 @@
         }
       },
       payInfo () {
-        switch (Number(this.item.pay_type)) {
+        let key = Number(this.item.pay_type)===0 ? 1 : Number(this.item.pay_type)
+        switch (key) {
           case 1:
             return { // 银行卡
               method: 'otc_ad.otc_ad_BankPay',
+              accountName: 'otc_legal.otc_legal_Bank_number',
               name: this.payTypes.data.card_name,
               bank: this.payTypes.data.card_bank,
               number: this.payTypes.data.card_number
@@ -218,18 +221,21 @@
           case 2:
             return { // 支付宝
               method: 'otc_ad.otc_ad_Alipay_pay',
+              accountName: 'otc_legal.otc_legal_Alipay_number',
               name: this.payTypes.real_name,
               number: this.payTypes.data.alipay_number,
             }
           case 3:
             return { // 微信
               method: 'otc_ad.otc_ad_WeChatPay',
+              accountName: 'otc_legal.otc_legal_Wechat_number',
               name: this.payTypes.real_name,
               number: this.payTypes.data.wechat_number,
             }
           case 4:
             return { // PayPal
               method: 'otc_ad.otc_ad_PayPal',
+              accountName: 'public0.public221',
               name: this.payTypes.real_name,
               number: this.payTypes.data.paypal_number
             }
@@ -469,14 +475,12 @@
   }
 
   .undone-center-adress {
-    background: #eeeeee;
-    padding: 20px;
-    font-size: 18px;
-    line-height: 32px;
-  }
-
-  .undone-center-type{
-    margin: 10px 0;
+    height: 60px;
+    line-height: 60px;
+    padding-left: 16px;
+    background-color: #eee;
+    border-left: 4px solid #E65656;
+    margin-top: 20px;
   }
   .evaluate{
     ul{
@@ -488,6 +492,22 @@
         .active{
           color: #e74c3c;
         }
+        [class*=myicon-] {
+          display: inline-block;
+          height: 26px;
+          width: 26px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+        .myicon-praise {background-image: url('../../assets/img/icon_praise_a.png');}
+        .myicon-praise.active {background-image: url('../../assets/img/icon_praise_b.png');}
+        .myicon-average {background-image: url('../../assets/img/icon_average_a.png');}
+        .myicon-average.active {background-image: url('../../assets/img/icon_average_b.png');}
+        .myicon-bad-review {background-image: url('../../assets/img/icon_bad_a.png');}
+        .myicon-bad-review.active {background-image: url('../../assets/img/icon_bad_b.png');}
       }
     }
   }
@@ -507,19 +527,6 @@
       left: 16px;
       top: 0;
       bottom:0;
-    }
-  }
-  .chat-container {
-    margin-top: 30px;
-    padding-bottom: 150px;
-    .dialogs {
-      margin-top: 15px;
-      min-height: 300px;
-      max-height: 800px;
-      overflow-y: auto;
-      background-color:#eee;
-      border-radius: 4px;
-
     }
   }
 </style>
