@@ -5,19 +5,19 @@
       <p><span class="numer">{{$t('otc_exchange.otc_exchange_order_number')}}：
         <!--订单编号-->{{data1.order_number}}</span></p>
       <ul class="step">
-        <li :class="{active: step >= 0}">
+        <li :class="{active: step >= 0, current:step===0}">
           1.{{$t('public0.public143')}}
           <!--新建交易-->
         </li>
-        <li :class="{active: step >= 1}">
+        <li :class="{active: step >= 1, current:step===1}">
           2.{{$t('public0.public144')}}
           <!--请先付款-->
         </li>
-        <li :class="{active: step >= 2}">
+        <li :class="{active: step >= 2, current:step===2}">
           3.{{$t('public0.public145')}}
           <!--等待放币-->
         </li>
-        <li :class="{active: step >= 3}">
+        <li :class="{active: step >= 3, current:step===3}">
           4.{{$t('public0.public146')}}
           <!--完成交易-->
         </li>
@@ -392,17 +392,27 @@
   .step {
     display: flex;
     align-items: center;
-    margin: 20px 0;
-
+    margin: 10px 0;
     li {
       flex: 1;
       background: #eeeeee;
-      padding: 20px;
-      color: #666c7d;
+      height: 50px;
+      line-height: 50px;
+      color: #999;
       font-size: 18px;
       position: relative;
-      margin: 10px;
-      text-indent: 20px;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      &:first-of-type {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+      &:last-of-type {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        &:after {display: none;}
+      }
 
       &.active {
         background: #299D82;
@@ -411,18 +421,24 @@
         &:after {
           background: #299D82;
         }
+        &.current {
+          background: #F0B936;
+          &:after {
+            background: #F0B936;
+          }
+        }
       }
 
       &:after {
         content: '';
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
         display: block;
         position: absolute;
-        right: -23px;
-        top: 10px;
+        right: -19px;
+        top: 7px;
         background: #eeeeee;
-        border: 8px solid #ffffff;
+        border: 6px solid #ffffff;
         border-top-color: transparent;
         border-left-color: transparent;
         transform: rotate(-45deg);
@@ -451,59 +467,94 @@
     }
   }
 
-  .timer {
-    border-left: 4px #E65656 solid;
-    padding: 20px;
-    position: relative;
-    background: #F6F6F6;
-    text-align: center;
-
-    b {
-      font-size: 48px;
-    }
-
-    span {
-      position: absolute;
-      left: 20px;
-      top: 40px;
-    }
-  }
-
-  .time_text {
-    padding: 15px;
-  }
 
   .order-list {
     font-size: 16px;
   }
 
   .btn_box {
-    margin: 20px auto;
+    margin: 30px auto;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    & > p > a, & > em {
+    & >p a, &>em {
       width: 150px;
       height: 50px;
       display: block;
       text-align: center;
       line-height: 50px;
-      margin: 10px;
-      border-radius: 3px;
+      margin: 0 15px;
+      border-radius: 4px;
       border: 1px solid #eeeeee;
-    }
-
-    & > p {
-      a {
-        background: #F0B936;
-        color: #ffffff !important;
+      background: #F0B936;
+      color: #ffffff !important;
+      cursor: pointer;
+      &.default {
+        border-color:#666;
+        background-color: #fff;
+        color:#333 !important;
       }
 
-      a.disabled {
+      &.disabled {
         background: #c7c7c7;
         cursor: no-drop;
       }
+    }
+  }
+
+  .undone-center-adress {
+    background: #eeeeee;
+    padding: 20px;
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .undone-center-type{
+    margin: 10px 0;
+  }
+  .evaluate{
+    ul{
+      display: flex;
+      li{
+        margin: 0 20px;
+        text-align: center;
+        cursor: pointer;
+        .active{
+          color: #e74c3c;
+        }
+      }
+    }
+  }
+  .countdown {
+    height: 88px;
+    line-height: 88px;
+    padding-left: 16px;
+    background-color: #eee;
+    border-left: 4px solid #E65656;
+    font-size: 18px;
+    margin-top: 20px;
+    position: relative;
+    text-align: center;
+    .timer {font-size: 48px;}
+    .title {
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom:0;
+    }
+  }
+  .chat-container {
+    margin-top: 30px;
+    padding-bottom: 150px;
+    .dialogs {
+      margin-top: 15px;
+      min-height: 300px;
+      max-height: 800px;
+      overflow-y: auto;
+      background-color:#eee;
+      border-radius: 4px;
+
     }
   }
 </style>

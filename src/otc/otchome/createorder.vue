@@ -31,13 +31,13 @@
       <!--</div>-->
 
       <!--<div class="cont-item currentprice">-->
-        <!--<div class="row">-->
-          <!--<label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：&lt;!&ndash;交易所价格&ndash;&gt;</label>-->
-          <!--<div class="value">-->
-            <!--<span>{{benchItem.lowestPrice}}</span>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="prompt"></div>-->
+      <!--<div class="row">-->
+      <!--<label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：&lt;!&ndash;交易所价格&ndash;&gt;</label>-->
+      <!--<div class="value">-->
+      <!--<span>{{benchItem.lowestPrice}}</span>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="prompt"></div>-->
       <!--</div>-->
 
 
@@ -80,7 +80,8 @@
               </div>
             </label>
             <div class="value">
-              <numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6" :accuracy="2"
+              <numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6"
+                         :accuracy="2"
                          v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>
               <em>%</em>
             </div>
@@ -162,9 +163,9 @@
             <p class="value flex bank_box">
               <b>{{$t('gcox_otc.bank_transfer')}}</b>
               <router-link :to="{name: 'control_pay'}">{{$t('gcox_otc.add')}}</router-link>
-              <ul class="bank_list">
-                <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
-              </ul>
+            <ul class="bank_list">
+              <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
+            </ul>
             </p>
           </div>
         </div>
@@ -334,7 +335,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getLang','getCurrency', 'getSysParams']),
+      ...mapGetters(['getLang', 'getCurrency', 'getSysParams']),
       tip1 () {
         return {
           container: document.body,
@@ -615,7 +616,7 @@
           this.locked = false
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           this.params.newAdCount++
-          this.$router.push({name: 'home'})
+          this.$router.push({name: 'control_deal', params: {'ip': 4}})
         }, (msg) => {
           this.locked = false
           let errMsg = typeof msg === 'string' ? msg : msg[0]
@@ -635,7 +636,7 @@
           this.locked = false
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           this.params.newAdCount++
-          this.$emit('removeDialog')
+          this.$router.push({name: 'control_deal', params: {'ip': 4}})
         }, (msg) => {
           this.locked = false
           let errMsg = typeof msg === 'string' ? msg : msg[0]
@@ -773,9 +774,10 @@
     font-weight: 600;
   }
 
-  .currency{
+  .currency {
     border-bottom: 1px solid #eeeeee;
   }
+
   .currency label {
     padding-right: 15px;
   }
@@ -967,10 +969,12 @@
     align-items: center;
     position: relative;
   }
-  .bank_box:hover .bank_list{
+
+  .bank_box:hover .bank_list {
     display: block;
   }
-  .bank_box >b:after{
+
+  .bank_box > b:after {
     content: '';
     display: block;
     width: 0;
@@ -981,17 +985,18 @@
     top: 23px;
     left: 80px;
   }
-  .bank_list{
+
+  .bank_list {
     position: absolute;
     left: 0;
-    top:50px;
+    top: 50px;
     background: #ffffff;
     box-shadow: 0 0 10px #eeeeee;
     width: 100%;
     display: none;
   }
 
-  .bank_list li{
+  .bank_list li {
     padding: 10px;
     cursor: pointer;
   }

@@ -66,13 +66,14 @@
         </div>
         <div class="undone-right">
             <p>{{stateTitle}}</p>
-            <a href="javascript:;" v-if="item.state === 1"
-               :class="{disabled:item.state === 1 && item.pay_state === 0}"
-               @click="confirm">{{$t('otc_ad.otc_ad_prompt8')}}<!--释放货币--></a>
-            <a href="javascript:;" v-if="item.state === 2"
-               :class="{disabled:item.to_user_comment}" @click="evaluation">{{$t('otc_ad.otc_ad_confirm')}}<!--确认--></a>
+          <slot></slot>
+            <!--<a href="javascript:;" v-if="item.state === 1"-->
+               <!--:class="{disabled:item.state === 1 && item.pay_state === 0}"-->
+               <!--@click="confirm">{{$t('otc_ad.otc_ad_prompt8')}}&lt;!&ndash;释放货币&ndash;&gt;</a>-->
+            <!--<a href="javascript:;" v-if="item.state === 2"-->
+               <!--:class="{disabled:item.to_user_comment}" @click="evaluation">{{$t('otc_ad.otc_ad_confirm')}}&lt;!&ndash;确认&ndash;&gt;</a>-->
         </div>
-      <slot></slot>
+
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="w1200 warp">
-      <orderlist></orderlist>
+      <orderlist :ip="ip"></orderlist>
     </div>
 </template>
 
@@ -10,10 +10,12 @@
     name: 'deal',
     components: {Orderlist},
     data () {
-      return {}
+      return {
+        ip: null
+      }
     },
     created () {
-
+      this.ip = this.$route.params.ip
     },
     methods: {}
 
