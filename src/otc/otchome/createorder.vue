@@ -636,7 +636,7 @@
           this.locked = false
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           this.params.newAdCount++
-          this.$router.push({name: 'control_deal', params: {'ip': 4}})
+          this.$emit('back')
         }, (msg) => {
           this.locked = false
           let errMsg = typeof msg === 'string' ? msg : msg[0]

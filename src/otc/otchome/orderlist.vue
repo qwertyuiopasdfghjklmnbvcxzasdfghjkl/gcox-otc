@@ -150,7 +150,7 @@
       </div>
 
       <div v-if="params.state === 4">
-        <adlist></adlist>
+        <adlist/>
       </div>
       <div v-if="params.state === 5">
         <complaint-list/>
