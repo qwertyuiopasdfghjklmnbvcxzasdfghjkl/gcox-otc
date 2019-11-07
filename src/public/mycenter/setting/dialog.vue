@@ -49,12 +49,13 @@
   export default {
     name: 'dilog',
     components: {Card},
-    props: ['item'],
+    props: ['item', 'list'],
     data () {
       const vm = window.vm
       return {
         vm: vm,
-        bankData: {}
+        bankData: {},
+        status: true
       }
     },
     computed: {
@@ -83,15 +84,26 @@
         this.$emit('removeDialog')
       },
       saveSettings (event) {
-        event.preventDefault()||(event.returnValue=false);
-        let formData = new FormData(this.$refs.bankForm)
-        otcApi.savePaySettings(1, formData, res => {
-          Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
-          this.$emit('okCallback')
-          this.$emit('removeDialog')
-        }, msg => {
-          Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+        event.preventDefault() || (event.returnValue = false)
+        this.list.filter(res => {
+          if (res.card_number === this.bankData.card_number) {
+            Vue.$koallTipBox({icon: 'notification', message: this.$t('gcox_otc.card_repetition')})
+            this.status = false
+          }
         })
+        if (this.status) {
+          let formData = new FormData(this.$refs.bankForm)
+          this.status = false
+          otcApi.savePaySettings(1, formData, res => {
+            this.status = true
+            Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
+            this.$emit('okCallback')
+            this.$emit('removeDialog')
+          }, msg => {
+            this.status = true
+            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+          })
+        }
       }
     }
   }

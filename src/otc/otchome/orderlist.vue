@@ -356,13 +356,13 @@
         return item.from_user_id === this.getUserInfo.userId ? sellitem : buyitem
       },
       getTradeType (data) { // 交易类型
-        if (data.to_user_name === this.getUserInfo.username) {
+        if (data.to_user_id === this.getUserInfo.userId) {
           return this.$t('otc_exchange.otc_exchange_buy')
         }
         return this.$t('otc_exchange.otc_exchange_sell')
       },
       getBuyOrSellUser (data) {
-        if (data.from_user_name === this.getUserInfo.username) {
+        if (data.to_user_id === this.getUserInfo.userId) {
           return `${this.$t('public0.public148')}：${data.to_user_name}`
         }
         return `${this.$t('public0.public149')}：${data.from_user_name}`

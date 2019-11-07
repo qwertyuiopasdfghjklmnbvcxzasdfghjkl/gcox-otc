@@ -1,10 +1,10 @@
 <template>
   <ul>
-    <li v-for="data in datas" :key="data.ad_id">
+    <li v-for="data in datas">
       <div>
         <h6><span :class="type === 'sell'? 'red': 'green'">{{data.cur_price}}</span> {{data.currency}}/{{data.symbol}}
         </h6>
-        <p>{{$t('gcox_otc.max')}}： {{data.max_amount}} {{data.symbol}}</p>
+        <p>{{$t('gcox_otc.max')}}： {{data.max_amount}} {{data.currency}}</p>
       </div>
       <div>
         <!--<p>招商银行-China merchants</p>-->

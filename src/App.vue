@@ -17,6 +17,7 @@
     <bottom v-show="!$route.meta.noBottom"/>
 
     <div class="cat" v-show="showChat">
+      <em class="close" @click="openChat()"><img width="20" src="./assets/img/close.png"/></em>
       <chat ref="chat" v-if="getApiToken"
             v-show="showChat" v-model="showChat"
             :orderNumber="orderNumber"
@@ -265,6 +266,9 @@
       addSystemMessage (orderNumber, message) { // 添加系统消息
         this.showChat = true
         this.$refs.chat.addSystemMessage(orderNumber, message)
+      },
+      close () {
+        this.showChat = false
       }
     }
   }
@@ -380,15 +384,31 @@
     min-height: -webkit-calc(100vh - 365px);
     min-height: calc(100vh - 365px)
   }
-  .cat{
+
+  .cat {
     position: fixed;
     left: 10px;
     bottom: 20px;
-    width: 714px;
+    width: 450px;
     height: 450px;
     z-index: 999;
     background: #ffffff;
     border-radius: 4px;
+    box-shadow: 0 0 10px #dadbdc;
+  }
+
+  .close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
   }
 </style>
 

@@ -347,6 +347,7 @@
       update (data) {
         utils.setDialog(dialog, {
           item: data,
+          list: this.bankList,
           okCallback: () => {
             this.getList()
           }
@@ -374,6 +375,7 @@
         // 先判断是否实名
         if (this.getUserInfo.kycState === 1) {
           utils.setDialog(dialog, {
+            list: this.bankList,
             okCallback: () => {
               this.getList()
             }

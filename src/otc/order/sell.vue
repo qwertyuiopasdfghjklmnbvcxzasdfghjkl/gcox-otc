@@ -46,7 +46,10 @@
             </tr>
             <tr>
               <td>{{$t('otc_ad.otc_ad_status')}}</td>
-              <td><span class="gray_button mr20" v-if="step>=2">{{$t('public0.public154')}}</span> <span class="green_button" >{{stateTitle}}</span></td>
+              <td>
+                <span class="gray_button mr20" v-if="step>=2">{{$t('otc_ad.otc_ad_completed')}}</span>
+                <span class="green_button" v-if="step < 2">{{stateTitle}}</span>
+              </td>
             </tr>
           </table>
         </div>
@@ -106,7 +109,7 @@
         <!--<p>{{item.symbol}}</p>-->
       <!--</div>-->
       <div class="undone-center-type" v-if="!item.to_user_comment">
-        
+
       </div>
       <div class="undone-center-adress ui-flex">
         <span class="">{{$t('otc_ad.otc_ad_prompt9')}}</span>
@@ -244,6 +247,18 @@
         }
       },
     },
+    watch:{
+      getApiToken () {
+        this.getOrderList()
+      },
+      'params.state' () {
+        // 监听顺序：params.state > paramsChange可避免代码重复执行
+        this.params.page = 1
+      },
+      'hparams.newOrderCount' () {
+        this.getOrderList()
+      }
+    },
     created () {
       this.time()
       this.getPays()
@@ -379,12 +394,12 @@
       &:first-of-type {
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
-      } 
+      }
       &:last-of-type {
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
         &:after {display: none;}
-      } 
+      }
 
       &.active {
         background: #299D82;
