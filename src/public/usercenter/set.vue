@@ -19,7 +19,7 @@
         </collapse>
       </div>
 
-      <div class="box">
+      <div class="box" v-if="false">
         <collapse :title="$t('gcox_otc.vote')">
           <div class="set_msg">
             <div>
@@ -65,26 +65,26 @@
             </label>
             <label>
               <span>{{$t('otc_exchange.otc_exchange_username')}}</span>
-              <input>
+              <input :value="userInfo.email" disabled>
             </label>
             <label>
               <span>{{$t('public0.public78')}}</span>
-              <input>
+              <input :value="userInfo.userRealName" disabled>
             </label>
-            <label>
-              <span>{{$t('gcox_otc.daily_rate')}}</span>
-              <span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>
-            </label>
+            <!--<label>-->
+              <!--<span>{{$t('gcox_otc.daily_rate')}}</span>-->
+              <!--<span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>-->
+            <!--</label>-->
             <label>
               <span>{{$t('shop.phone')}}</span>
-              <span class="red w2">{{$t('user.verify')}}</span>
-              <span><button>{{$t('gcox_otc.change_tell')}}</button></span>
+              <span class="red w2">{{userInfo.mobile || $t('user.verify')}}</span>
+              <span v-if="userInfo.mobile"><button @click="bind">{{$t('gcox_otc.change_tell')}}</button></span>
             </label>
-            <label>
-              <span>{{$t('gcox_otc.user_state')}}</span>
-              <span class="green w3">{{$t('gcox_otc.no_submit')}}</span>
-              <span><button>{{$t('gcox_otc.update_file')}}</button></span>
-            </label>
+            <!--<label>-->
+              <!--<span>{{$t('gcox_otc.user_state')}}</span>-->
+              <!--<span class="green w3">{{$t('gcox_otc.no_submit')}}</span>-->
+              <!--<span><button>{{$t('gcox_otc.update_file')}}</button></span>-->
+            <!--</label>-->
           </div>
         </collapse>
       </div>
@@ -102,6 +102,7 @@
   import googleVerify from '../mycenter/mycenter/google-verify'
   import userApi from '@/api/user'
   import SwitchVi from '../../components/switch-vi'
+  import bind from './abstract/bind-phone'
 
   export default {
     name: 'set',
@@ -161,7 +162,15 @@
             }
           }
         })
-      }
+      },
+      bind () {
+        utils.setDialog(bind, {
+          phone: this.getUserInfo.mobile,
+          okCallback: () => {
+            this.getInfo()
+          }
+        })
+      },
     }
 
   }

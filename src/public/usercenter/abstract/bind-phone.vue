@@ -127,6 +127,7 @@
               this.showBindMobile = false
               Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
               this.$emit('okCallback')
+              this.close()
             }, (msg) => {
               this.disabled = true
               Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})

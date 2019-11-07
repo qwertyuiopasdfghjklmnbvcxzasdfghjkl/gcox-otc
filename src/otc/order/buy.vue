@@ -50,7 +50,7 @@
           </tr>
         </table>
       </div>
-      <div class="tab" v-if="cancelStatus !== 1">
+      <div class="tab" v-if="cancelStatus !== 1 && data1.state === 1">
         <table width="100%">
           <tr bgcolor="#eeeeee">
             <td colspan="2" align="center">{{$t('gcox_otc.pay_info')}}</td>
@@ -83,6 +83,36 @@
       <div class="red_note" v-if="cancelStatus === 1">
         {{$t('gcox_otc.cancel_not_pay')}}
       </div>
+
+      <div class="undone-center" v-if="data1.state === 2">
+        <!--<div class="undone-center-buys">-->
+          <!--<p>{{$t('otc_exchange.otc_exchange_buy')}}&lt;!&ndash;购买&ndash;&gt;</p>-->
+          <!--<p>{{item.symbol}}</p>-->
+        <!--</div>-->
+        <div class="undone-center-type" v-if="!data1.from_user_comment">
+          <!--{{$t('otc_ad.otc_ad_prompt9')}}&lt;!&ndash;交易成功！请评价对方&ndash;&gt;-->
+        </div>
+        <div class="undone-center-adress ui-flex">
+          <span class="">{{$t('otc_ad.otc_ad_prompt9')}}</span>
+          <div class="evaluate ui-flex-1 ml60">
+            <ul>
+              <li @click="commentType = 1" v-if="!data1.from_user_comment || data1.from_user_comment === 1">
+                <em class="myicon-praise" :class="{active: commentType === 1}"></em>
+                <p>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></p>
+              </li>
+              <li @click="commentType = 2" v-if="!data1.from_user_comment || data1.from_user_comment === 2">
+                <em class="myicon-average" :class="{active: commentType === 2}"></em>
+                <p>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></p>
+              </li>
+              <li @click="commentType = 3" v-if="!data1.from_user_comment || data1.from_user_comment === 3">
+                <em class="myicon-bad-review" :class="{active: commentType === 3}"></em>
+                <p>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div class="btn_box">
         <p v-if="cancelStatus !== 1">
           <a href="javascript:;" v-if="data1.state === 1" :class="{disabled: data1.pay_state !== 0}" @click="confirm">{{$t('public0.public154')}}
@@ -547,6 +577,22 @@
         .active {
           color: #e74c3c;
         }
+        [class*=myicon-] {
+          display: inline-block;
+          height: 26px;
+          width: 26px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+        .myicon-praise {background-image: url('../../assets/img/icon_praise_a.png');}
+        .myicon-praise.active {background-image: url('../../assets/img/icon_praise_b.png');}
+        .myicon-average {background-image: url('../../assets/img/icon_average_a.png');}
+        .myicon-average.active {background-image: url('../../assets/img/icon_average_b.png');}
+        .myicon-bad-review {background-image: url('../../assets/img/icon_bad_a.png');}
+        .myicon-bad-review.active {background-image: url('../../assets/img/icon_bad_b.png');}
       }
     }
   }

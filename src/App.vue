@@ -13,7 +13,16 @@
     <div class="minHeight rp">
       <router-view/>
     </div>
+
     <bottom v-show="!$route.meta.noBottom"/>
+
+    <div class="cat" v-show="showChat">
+      <chat ref="chat" v-if="getApiToken"
+            v-show="showChat" v-model="showChat"
+            :orderNumber="orderNumber"
+            :switchNew="switchNew"
+            :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
+    </div>
   </div>
 </template>
 
@@ -27,27 +36,40 @@
   import bottom from '@/components/bottom'
   import userApi from '@/api/user'
   import marketApi from '@/api/market'
+  import chat from '@/components/chat'
+  import otcApi from '@/api/otc'
 
   export default {
     name: 'app',
     components: {
       bheader,
-      bottom
+      bottom,
+      chat
     },
     data () {
       return {
         ws: null,
         gws: null,
         browser: true,
-        fromRoute: null
+        fromRoute: null,
+        showChat: false,
+        orderNumber: null,
+        newMsg: false,
+        firstEnter: 0,
+        switchNew: 0,
       }
     },
     computed: {
-      ...mapGetters(['getApiToken', 'getOtcSocketEvents', 'getLang']),
+      ...mapGetters(['getApiToken', 'getOtcSocketEvents', 'getLang', 'getSymbol', 'getCurrency']),
       isIE () {
         // (true = IE9) || true >= IE10
         return (document.all && document.addEventListener && !window.atob) || (document.body.style.msTouchAction !== undefined)
-      }
+      },
+      params () {
+        let data = this.getSymbol
+        data.currency = this.getCurrency
+        return data
+      },
     },
     watch: {
       getLang (_n) {
@@ -87,7 +109,7 @@
           }
           this.$router.push({name: tempName})
           try {
-            // this.ws && this.ws.open()
+            this.ws && this.ws.open()
           } catch (ex) {
             window.console.warn(ex)
           }
@@ -98,6 +120,15 @@
           } catch (ex) {
             window.console.warn(ex)
           }
+        }
+        this.socket && this.socket.changeLogin()
+      },
+      'params.newOrderCount' () {
+        this.showChat = true
+      },
+      showChat (val) {
+        if (val) {
+          this.firstEnter++
         }
       },
       '$route' (to, from) {
@@ -148,7 +179,7 @@
       this.ws && this.ws.close()
     },
     methods: {
-      ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setUserInfo', 'setSysParams']),
+      ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setUserInfo', 'setSysParams', 'setSymbol']),
       getBtcPrice () {
         if (!this.getApiToken) {
           return
@@ -203,6 +234,37 @@
             this.getUserInfoMethod()
           }, 1000)
         })
+      },
+      change (e) {
+        console.log(e)
+        this.setSymbol(e)
+      },
+      createNewOrder (id) {
+        if (this.$refs.orderlist.params.state === 1) {
+          this.$refs.orderlist.params.page = 1
+        }
+        otcApi.ordersDetail(id, (res) => {
+          this.orderNumber = res.orderInfo.order_number
+        })
+      },
+      openChat () {
+        this.showChat = !this.showChat
+        this.newMsg = false
+      },
+      markNewMsg (bool) {
+        if (bool) {
+          this.showChat = true
+        }
+        this.newMsg = bool
+      },
+      switchOldMessage (orderNumber) {
+        this.showChat = true
+        this.switchNew++
+        this.orderNumber = orderNumber
+      },
+      addSystemMessage (orderNumber, message) { // 添加系统消息
+        this.showChat = true
+        this.$refs.chat.addSystemMessage(orderNumber, message)
       }
     }
   }
@@ -317,6 +379,16 @@
   .minHeight {
     min-height: -webkit-calc(100vh - 365px);
     min-height: calc(100vh - 365px)
+  }
+  .cat{
+    position: fixed;
+    left: 10px;
+    bottom: 20px;
+    width: 714px;
+    height: 450px;
+    z-index: 999;
+    background: #ffffff;
+    border-radius: 4px;
   }
 </style>
 
