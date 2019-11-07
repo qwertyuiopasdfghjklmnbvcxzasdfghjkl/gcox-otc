@@ -60,7 +60,8 @@
             <span class="ad-list-item-status">{{$t('otc_ad.otc_ad_completed')}}</span>
           </li>
         </ul>
-        <page v-if="!historyLoading && hDatas.length > 0" :pageIndex="formData.page" :pageSize="formData.show"
+        <page v-if="!historyLoading && hDatas.length > 0"
+              :pageIndex="formData.page" :pageSize="formData.show"
               :total="formData.total" @changePageIndex="pageChange"/>
         <div class="ad-nodata" v-if="!historyLoading && hDatas.length === 0">
           <div class="ad-nodata-icon icon-no-order"></div>
@@ -165,7 +166,7 @@
         this.currentLoading = true
         otcApi.getMyAdvertisementList({
           ad_type: 0,
-          symbol: null
+          symbol: null,
         }, (res) => {
           res.forEach((item) => {
             // 类型转换
