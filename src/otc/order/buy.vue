@@ -97,15 +97,15 @@
           <div class="evaluate ui-flex-1 ml60">
             <ul>
               <li @click="commentType = 1" v-if="!data1.from_user_comment || data1.from_user_comment === 1">
-                <em class="icon-praise" :class="{active: commentType === 1}"></em>
+                <em class="myicon-praise" :class="{active: commentType === 1}"></em>
                 <p>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></p>
               </li>
               <li @click="commentType = 2" v-if="!data1.from_user_comment || data1.from_user_comment === 2">
-                <em class="icon-average" :class="{active: commentType === 2}"></em>
+                <em class="myicon-average" :class="{active: commentType === 2}"></em>
                 <p>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></p>
               </li>
               <li @click="commentType = 3" v-if="!data1.from_user_comment || data1.from_user_comment === 3">
-                <em class="icon-bad-review" :class="{active: commentType === 3}"></em>
+                <em class="myicon-bad-review" :class="{active: commentType === 3}"></em>
                 <p>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></p>
               </li>
             </ul>
@@ -577,6 +577,22 @@
         .active {
           color: #e74c3c;
         }
+        [class*=myicon-] {
+          display: inline-block;
+          height: 26px;
+          width: 26px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          vertical-align: middle;
+          margin-right: 10px;
+        }
+        .myicon-praise {background-image: url('../../assets/img/icon_praise_a.png');}
+        .myicon-praise.active {background-image: url('../../assets/img/icon_praise_b.png');}
+        .myicon-average {background-image: url('../../assets/img/icon_average_a.png');}
+        .myicon-average.active {background-image: url('../../assets/img/icon_average_b.png');}
+        .myicon-bad-review {background-image: url('../../assets/img/icon_bad_a.png');}
+        .myicon-bad-review.active {background-image: url('../../assets/img/icon_bad_b.png');}
       }
     }
   }

@@ -10,7 +10,7 @@
            :time="time"
            @switchOldMessage="switchOldMessage"
            @addSystemMessage="addSystemMessage"/>
-      <div>
+      <div class="h500">
         <chat ref="chat"
               v-show="showChat" v-model="showChat"
               :orderNumber="orderNumber"
@@ -82,5 +82,8 @@
 </script>
 
 <style scoped>
-
+.h500{
+  height: 500px;
+  margin: 30px 0;
+}
 </style>

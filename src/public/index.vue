@@ -36,12 +36,15 @@
 
     <!--<regbox/>-->
 
-    <chat ref="chat" v-if="getApiToken"
-          v-show="showChat" v-model="showChat"
-          :orderNumber="orderNumber"
-          :switchNew="switchNew"
-          :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
-    <em class="chat-icon" :class="{'new':newMsg}" v-if="getApiToken" @click="openChat"></em>
+    <!--<div class="cat" v-show="showChat">-->
+      <!--<chat ref="chat" v-if="getApiToken"-->
+            <!--v-show="showChat" v-model="showChat"-->
+            <!--:orderNumber="orderNumber"-->
+            <!--:switchNew="switchNew"-->
+            <!--:firstEnter="firstEnter" @markNewMsg="markNewMsg"/>-->
+    <!--</div>-->
+
+    <!--<em class="chat-icon" :class="{'new':newMsg}" v-if="getApiToken" @click="openChat"></em>-->
   </div>
 </template>
 
@@ -171,6 +174,16 @@
         }
       }
     }
+  }
+  .cat{
+    position: fixed;
+    left: 10px;
+    bottom: 20px;
+    width: 600px;
+    height: 400px;
+    z-index: 999;
+    background: #ffffff;
+    border-radius: 4px;
   }
   .chat-icon{position:fixed;z-index:999;left:4px;bottom:4px;width:70px;height:70px;cursor:pointer;background:url(../assets/images/chat.png) no-repeat center;}
   .chat-icon:hover{background-image:url(../assets/images/chat_hover.png);}

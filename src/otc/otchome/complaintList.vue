@@ -11,12 +11,12 @@
 
       </li>
       <li class="item" v-for="item in data" :key="item.order_id">
-        <span class="item1">{{item.order_number}}</span>
-        <span class="item2">{{(item)}}</span>
-        <span class="item3">{{(item.state)}}</span>
-        <span class="item4">{{item.symbol}}</span>
-        <span class="item5">{{item.cur_price}} {{item.currency}}</span>
-        <span class="item6">{{item.symbol_count}} {{item.symbol}}</span>
+        <span class="item1">{{item.appealManageId}}</span>
+        <span class="item2">{{item.orderNumber}}</span>
+        <span class="item3">{{(item.typeName)}}</span>
+        <span class="item4">{{item.description}}</span>
+        <span class="item5">{{item.state}}</span>
+        <span class="item6">{{item.punishType}}</span>
       </li>
     </ul>
     <page v-if="!loading && data.length > 0" :pageIndex="params.page" :pageSize="params.show"
@@ -31,6 +31,7 @@
 
 <script>
   import Page from '../../components/page'
+  import otc from '../../api/otc'
 
   export default {
     name: 'complaintList',
@@ -55,7 +56,20 @@
         this.getList()
       },
       getList () {
-
+        let data = {
+          'page': this.params.page,
+          'pageSize': this.params.show
+        }
+        this.loading = true
+        otc.appeals(data, (res, total) => {
+          this.data = res
+          console.log(this.data)
+          // this.params.total = total
+          this.loading = false
+        }, msg => {
+          console.log(msg)
+          this.loading = false
+        })
       }
     }
   }

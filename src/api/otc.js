@@ -535,4 +535,13 @@ const exportOTCTradeRecord = function (formData, success, error) {
 }
 otc.exportOTCTradeRecord = exportOTCTradeRecord
 
+// appeals
+const appeals = function (formData, success, error) {
+  api.post(`${domain}api/v2/otc/appeals`, formData, (res) => {
+    success && success(res.data, res.total)
+    error && error(res.msg)
+  }, error)
+}
+otc.appeals = appeals
+
 export default otc
