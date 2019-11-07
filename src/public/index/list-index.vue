@@ -58,7 +58,7 @@
         this.getSellList()
         this.createParams = this.params
       },
-      getCurrency(){
+      getCurrency () {
         this.getBuyList()
         this.getSellList()
       }
@@ -92,11 +92,21 @@
       getBuyList () { // 获取广告列表
         this.getList(2, (res) => {
           this.buyDatas = res
+          this.buyDatas.sort((item1, item2) => {
+            let m1 = numUtils.BN(item1.cur_price)
+            let m2 = numUtils.BN(item2.cur_price)
+            return m1.lt(m2) ? -1 : 1
+          })
         })
       },
       getSellList () {
         this.getList(1, (res) => {
           this.sellDatas = res
+          this.sellDatas.sort((item1, item2) => {
+            let m1 = numUtils.BN(item1.cur_price)
+            let m2 = numUtils.BN(item2.cur_price)
+            return m1.lt(m2) ? 1 : -1
+          })
         })
       },
 

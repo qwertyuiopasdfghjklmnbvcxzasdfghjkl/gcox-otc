@@ -77,13 +77,13 @@
               <span class="ui-flex-1">{{$t('account.user_center_account')}}<!-- Account --></span>
               <span class="ui-flex-1">{{$t('referral.registeration_time')}}<!-- Registeration Time --></span>
               <span class="ui-flex-1">{{$t('referral.invitation_status')}}<!-- Invitation Status --></span>
-              <span class="ui-flex-1">{{$t('referral.refunded')}}<!-- Refunded --> (ACM)</span>
+              <!--<span class="ui-flex-1">{{$t('referral.refunded')}}&lt;!&ndash; Refunded &ndash;&gt; (ACM)</span>-->
             </li>
             <li class="ui-flex" v-for="item in historyList">
               <span class="ui-flex-1">{{item.username}}</span>
               <span class="ui-flex-1">{{item.registerTime}}</span>
               <span class="ui-flex-1">{{getStatus(item.status)}}</span>
-              <span class="ui-flex-1">{{item.status!==-1?item.amount:0}}</span>
+              <!--<span class="ui-flex-1">{{item.status!==-1?item.amount:0}}</span>-->
             </li>
           </ul>
           <page v-if="!showLoading && historyList.length > 0" :pageIndex="params.page" :pageSize="params.size"
