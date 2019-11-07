@@ -100,11 +100,11 @@
         <router-link v-show="!isLogin" :to="{name:'register'}" class="item f-c-blue">{{$t('login_register.register')}}
           <!-- 注册 --></router-link>
 
-        <router-link to="" class="item" v-if="isLogin">
+        <router-link to="" class="item">
           <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag"
                                                               :class="'country-'+currency"></small>
             {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
-          <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav3" @click="hidePopoverNav('nav3')">
+          <div class="popover-nav" style="width: 200px" :class="{en:getLang==='en'}" ref="nav3" @click="hidePopoverNav('nav3')">
             <div class="popover-menu currency">
               <span v-for="data in curList" @click="currencyFun(data.currency)">
                 <small class="country-icon currency_flag" :class="'country-'+data.currency"></small>
@@ -113,7 +113,7 @@
           </div>
         </router-link>
 
-        <router-link to="" class="item" v-if="isLogin">
+        <router-link to="" class="item">
           <span style="color: #fff;" class="nav-title">
             {{lang}}<img src="../assets/img/icon-otc10.png"/>
           </span>

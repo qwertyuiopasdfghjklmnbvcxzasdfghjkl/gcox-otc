@@ -22,6 +22,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import buy from './order/buy'
   import sell from './order/sell'
   import chat from '@/components/chat'
@@ -47,12 +48,77 @@
     computed: {
       ...mapGetters(['getApiToken', 'getUserInfo']),
     },
+    watch: {
+      getApiToken () {
+        this.getData()
+      },
+      // 'params.state' () {
+      //   // 监听顺序：params.state > paramsChange可避免代码重复执行
+      //   this.params.page = 1
+      // },
+    },
     created () {
       console.log(this.$route.query.id)
       this.order_id = this.$route.query.id
       this.getData()
+      this.$nextTick(() => {
+        this.addEvents({
+          name: 'updateOrderList',
+          fun: this.getData
+        })
+      })
+      this.addOtcSocketEvent(this.getData)
+    },
+    beforeDestroy () {
+      // this.intervals.forEach((interval) => {
+      //   clearInterval(interval)
+      // })
+      this.removeEvents('updateOrderList')
+      this.removeOtcSocketEvent(this.systemEvent)
     },
     methods: {
+      ...mapActions(['addOtcSocketEvent', 'removeOtcSocketEvent', 'addEvents', 'removeEvents', 'tiggerEvents']),
+
+      systemEvent (data) {
+        let optType = parseInt(data.operate_type)
+        let childType = parseInt(data.child_type)
+        if (optType === 1) { // 系统消息
+          switch (childType) {
+            case 31: // 新建订单消息
+            case 32: // 取消订单消息
+            case 33: // 系统自动取消订单消息
+            case 34: // 买家付款消息
+            case 35: // 正常放币消息
+            case 36: // 强制放币买家消息
+            case 37: // 强制放币卖家消息
+            case 38: // 解除锁币消息
+              let orderNumber = JSON.parse(data.link).order_number
+              if (childType === 34) {
+                Vue.$confirmDialog({
+                  id: 'pay_success_tip',
+                  showCancel: false,
+                  content: this.$t('error_code.CONFIRM_PAYMENT') // 买方已经标记确认付款，请查收！
+                })
+                if (orderNumber === this.data1.order_number) {
+                  this.data1.pay_state = 1
+                }
+              } else if (childType === 35) {
+                Vue.$confirmDialog({
+                  id: 'put_coin_success_tip',
+                  showCancel: false,
+                  content: this.$t('error_code.CONFIRM_PAYMENT_RECEIPT') // 卖方确认收款，已放币！请进行评价！
+                })
+                if (orderNumber === this.data1.order_number) {
+                  this.data1.state = 2
+                }
+              } else {
+                this.getOrderList()
+              }
+              break
+          }
+        }
+      },
+
       markNewMsg (bool) {
         if (bool) {
           this.showChat = true

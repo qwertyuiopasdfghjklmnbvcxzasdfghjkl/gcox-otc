@@ -73,9 +73,9 @@
           </tr>
         </table>
       </div>
-      <div class="timer" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
+      <div class="countdown" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
         <span>{{$t('public0.public62')}}</span>
-        <b>{{surplus_Time}}</b>
+        <b class="timer">{{surplus_Time}}</b>
       </div>
       <p class="time_text" v-if="cancelStatus !== 1">
         {{$t('gcox_otc.time_out')}}
@@ -161,6 +161,7 @@
       return {
         data1: {}, // 未完成订单
         intervals: [],
+        commentType: 1,
         params: {
           state: 1,
           page: 1,
@@ -600,16 +601,19 @@
   .countdown {
     height: 88px;
     line-height: 88px;
-    padding-left: 16px;
     background-color: #eee;
     border-left: 4px solid #E65656;
     font-size: 18px;
     margin-top: 20px;
     position: relative;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .timer {
       font-size: 48px;
+      padding-left: 10px;
     }
 
     .title {
