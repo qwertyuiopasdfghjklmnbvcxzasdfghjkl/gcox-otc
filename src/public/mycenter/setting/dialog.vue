@@ -74,6 +74,11 @@
         }
       }
     },
+    watch: {
+      'bankData.card_number' () {
+        this.status = true
+      }
+    },
     created () {
       if (this.item) {
         this.bankData = this.item
