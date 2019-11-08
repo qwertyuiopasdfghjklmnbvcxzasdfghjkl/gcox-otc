@@ -57,14 +57,13 @@
       },
       getList () {
         let data = {
-          'page': this.params.page,
-          'pageSize': this.params.show
+          page: this.params.page,
+          pageSize: this.params.show
         }
         this.loading = true
         otc.appeals(data, (res, total) => {
           this.data = res
-          console.log(this.data)
-          // this.params.total = total
+          this.params.total = total
           this.loading = false
         }, msg => {
           console.log(msg)
@@ -101,7 +100,7 @@
       display: flex;
       align-items: center;
       border-bottom: 1px solid #eeeeee;
-      height: 40px;
+      padding: 10px 0;
 
       span {
         padding: 8px;

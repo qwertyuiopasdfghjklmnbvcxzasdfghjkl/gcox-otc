@@ -177,7 +177,7 @@
   }
 
   .appeal-cont {
-    padding: 10px 10px 20px 10px;
+    padding: 10px 10px 30px 10px;
   }
 
   .explain {
@@ -198,7 +198,7 @@
   }
 
   .question {
-    padding-top: 10px;
+    /*padding-top: 10px;*/
   }
   .question-select{
     display: flex;
@@ -206,7 +206,7 @@
   }
   .question-row{
     padding: 0 20px;
-    margin-top:10px;
+    margin-top:30px;
   }
 
   .question-row label {
