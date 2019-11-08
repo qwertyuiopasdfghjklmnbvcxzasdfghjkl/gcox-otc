@@ -137,8 +137,8 @@
          @click="confirm">{{$t('otc_ad.otc_ad_prompt8')}}<!--释放货币--></a>
       <a href="javascript:;" v-if="item.state === 2"
          :class="{disabled:item.to_user_comment}" @click="evaluation">{{$t('otc_ad.otc_ad_confirm')}}<!--确认--></a>
-      <a href="javascript:;" class="default" v-if="item.appeal_state !== 0" @click="apeal(item)">{{$t('otc_exchange.otc_exchange_complaint')}}<!--发起申诉--></a>
-      <a href="javascript:;" class="default" @click="cancelApeal(item)" v-else>{{$t('public0.public208')}}<!--发起申诉--></a>
+      <a href="javascript:;" v-if="item.appeal_state !== 0" @click="apeal(item)">{{$t('otc_exchange.otc_exchange_complaint')}}<!--发起申诉--></a>
+      <a href="javascript:;" @click="cancelApeal(item)" v-else>{{$t('public0.public208')}}<!--取消申诉--></a>
     </div>
   </div>
 </template>
