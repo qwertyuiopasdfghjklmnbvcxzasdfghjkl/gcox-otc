@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <!--下拉-->
-    <select-index :params="params" @change="change"/>
+    <select-index :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>
     <!-- 通知 -->
     <!--<notice/>-->
     <!--推荐市场-->
@@ -10,7 +10,7 @@
     <!--<indexdatatable/>-->
 
     <!--列表-->
-    <list-index :params="params"/>
+    <list-index :params="params" @buyCur="getBuyCur" @sellCur="getSellCur"/>
 
     <div class="law" v-if="false">
       <div class="w1200 cont">
@@ -37,11 +37,11 @@
     <!--<regbox/>-->
 
     <!--<div class="cat" v-show="showChat">-->
-      <!--<chat ref="chat" v-if="getApiToken"-->
-            <!--v-show="showChat" v-model="showChat"-->
-            <!--:orderNumber="orderNumber"-->
-            <!--:switchNew="switchNew"-->
-            <!--:firstEnter="firstEnter" @markNewMsg="markNewMsg"/>-->
+    <!--<chat ref="chat" v-if="getApiToken"-->
+    <!--v-show="showChat" v-model="showChat"-->
+    <!--:orderNumber="orderNumber"-->
+    <!--:switchNew="switchNew"-->
+    <!--:firstEnter="firstEnter" @markNewMsg="markNewMsg"/>-->
     <!--</div>-->
 
     <!--<em class="chat-icon" :class="{'new':newMsg}" v-if="getApiToken" @click="openChat"></em>-->
@@ -85,6 +85,8 @@
         newMsg: false,
         firstEnter: 0,
         switchNew: 0,
+        buyCur: 0,
+        sellCur: 0,
       }
     },
     computed: {
@@ -142,6 +144,13 @@
       addSystemMessage (orderNumber, message) { // 添加系统消息
         this.showChat = true
         this.$refs.chat.addSystemMessage(orderNumber, message)
+      },
+      getBuyCur (e) {
+        this.buyCur = e
+        console.log(e)
+      },
+      getSellCur (e) {
+        this.sellCur = e
       }
     },
   }
@@ -175,7 +184,8 @@
       }
     }
   }
-  .cat{
+
+  .cat {
     position: fixed;
     left: 10px;
     bottom: 20px;
@@ -185,8 +195,31 @@
     background: #ffffff;
     border-radius: 4px;
   }
-  .chat-icon{position:fixed;z-index:999;left:4px;bottom:4px;width:70px;height:70px;cursor:pointer;background:url(../assets/images/chat.png) no-repeat center;}
-  .chat-icon:hover{background-image:url(../assets/images/chat_hover.png);}
-  .new::after{content:" ";width:12px;height:12px;background:#ff0000;position:absolute;right:-1px;top:-1px;border-radius:50%;}
+
+  .chat-icon {
+    position: fixed;
+    z-index: 999;
+    left: 4px;
+    bottom: 4px;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    background: url(../assets/images/chat.png) no-repeat center;
+  }
+
+  .chat-icon:hover {
+    background-image: url(../assets/images/chat_hover.png);
+  }
+
+  .new::after {
+    content: " ";
+    width: 12px;
+    height: 12px;
+    background: #ff0000;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    border-radius: 50%;
+  }
 </style>
 

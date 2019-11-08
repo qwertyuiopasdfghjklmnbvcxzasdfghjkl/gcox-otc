@@ -21,12 +21,12 @@
       <div class="box" v-if="state === 0">
         <div class="left-box">
           <p><img src="../../assets/img/buy.png"><span>{{$t('gcox_otc.sell_price')}}</span></p>
-          <h4><span class="green">{{curPrice}}</span> {{params.currency}}</h4>
+          <h4><span class="green">{{buyCur}}</span> {{params.currency}}</h4>
           <button @click="state=1">{{$t('gcox_otc.now_buy')}}</button>
         </div>
         <div class="right-box">
           <p><img src="../../assets/img/sell.png"><span>{{$t('gcox_otc.buy_price')}}</span></p>
-          <h4><span class="red">{{curPrice}}</span> {{params.currency}}</h4>
+          <h4><span class="red">{{sellCur}}</span> {{params.currency}}</h4>
           <button @click="state=2">{{$t('gcox_otc.now_sell')}}</button>
         </div>
       </div>
@@ -66,7 +66,7 @@
   export default {
     name: 'select-index',
     components: {Numberbox, Inputbox},
-    props: ['params'],
+    props: ['params', 'buyCur', 'sellCur'],
     data () {
       return {
         show: false,

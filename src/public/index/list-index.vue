@@ -74,6 +74,8 @@
           ad_type: i,
           symbol: this.params.symbol,
           currency: this.getCurrency,
+          page: 1,
+          show: 10
         }, (res) => {
           res.data.forEach((item) => { // 广告列表数据格式化处理
             item.cur_price = item.cur_price ? utils.removeEndZero(parseFloat(item.cur_price).toFixed(2)) : 0
@@ -97,6 +99,8 @@
             let m2 = numUtils.BN(item2.cur_price)
             return m1.lt(m2) ? -1 : 1
           })
+          let buyCur = this.buyDatas[0] ? this.buyDatas[0].cur_price : 0
+          this.$emit('buyCur', buyCur)
         })
       },
       getSellList () {
@@ -107,6 +111,8 @@
             let m2 = numUtils.BN(item2.cur_price)
             return m1.lt(m2) ? 1 : -1
           })
+          let sellCur = this.sellDatas[0] ? this.sellDatas[0].cur_price : 0
+          this.$emit('sellCur', sellCur)
         })
       },
 

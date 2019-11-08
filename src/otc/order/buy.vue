@@ -48,7 +48,7 @@
             <td>{{$t('otc_ad.otc_ad_status')}}</td>
             <td>
               <span class="gray_button " v-if="data1.pay_state === 1|| data1.pay_state === 2">{{$t('public0.public154')}}</span>
-              <span class="green_button">{{stateTitle}}</span>
+              <span class="green_button" v-if="data1.state !== 2">{{stateTitle}}</span>
             </td>
           </tr>
         </table>
