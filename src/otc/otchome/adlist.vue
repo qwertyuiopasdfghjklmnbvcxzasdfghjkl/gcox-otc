@@ -220,9 +220,9 @@
       },
       deleteAd (id) { // 下架广告
         otcApi.deleteAdvertisement(id, (msg) => {
-          this.params.newAdCount--
+          // this.params.newAdCount--
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
-          this.getList()
+          this.getCurAdList()
         }, (msg) => {
           Vue.$confirmDialog({showCancel: false, content: this.$t(`error_code.${msg}`)})
         })
