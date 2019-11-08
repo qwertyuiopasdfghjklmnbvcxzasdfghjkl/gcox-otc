@@ -132,7 +132,7 @@
         <div class="cont-item tradelimit">
           <div class="row">
             <label class="move">{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额-->
-              ({{formData.currency}})</label>
+              ({{this.formData.ad_type === 1 ?formData.currency : formData.symbol }})</label>
             <div class="">
               <div class="value">
                 <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"
