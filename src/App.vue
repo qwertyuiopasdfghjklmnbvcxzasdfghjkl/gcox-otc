@@ -16,14 +16,14 @@
 
     <bottom v-show="!$route.meta.noBottom"/>
 
-    <div class="cat" v-show="showChat">
-      <em class="close" @click="openChat()"><img width="20" src="./assets/img/close.png"/></em>
-      <chat ref="chat" v-if="getApiToken"
-            v-show="showChat" v-model="showChat"
-            :orderNumber="orderNumber"
-            :switchNew="switchNew"
-            :firstEnter="firstEnter" @markNewMsg="markNewMsg"/>
-    </div>
+    <!--<div class="cat" v-show="showChat">-->
+      <!--<em class="close" @click="openChat()"><img width="20" src="./assets/img/close.png"/></em>-->
+      <!--<chat ref="chat" v-if="getApiToken"-->
+            <!--v-show="showChat" v-model="showChat"-->
+            <!--:orderNumber="orderNumber"-->
+            <!--:switchNew="switchNew"-->
+            <!--:firstEnter="firstEnter" @markNewMsg="markNewMsg"/>-->
+    <!--</div>-->
   </div>
 </template>
 
