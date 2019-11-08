@@ -47,8 +47,8 @@
             <tr>
               <td>{{$t('otc_ad.otc_ad_status')}}</td>
               <td>
-                <span class="gray_button mr20" v-if="step>=2">{{$t('otc_ad.otc_ad_completed')}}</span>
-                <span class="green_button" v-if="step < 2">{{stateTitle}}</span>
+                <span class="gray_button mr20" v-if="step>2">{{$t('otc_ad.otc_ad_completed')}}</span>
+                <span class="green_button" v-if="step <= 2">{{stateTitle}}</span>
               </td>
             </tr>
           </table>

@@ -22,7 +22,7 @@ otc.getAdvertisementList = getAdvertisementList
 const getMyAdvertisementList = function (formData, success, error) {
   api.post(`${domain}api/v2/otc/ads/mylist`, formData, (res) => {
     if (res.rst === 1) {
-      success && success(res.data)
+      success && success(res.data, res.total)
     } else {
       error && error(res.msg)
     }
