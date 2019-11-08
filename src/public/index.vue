@@ -12,7 +12,7 @@
     <!--列表-->
     <list-index :params="params"/>
 
-    <div class="law">
+    <div class="law" v-if="false">
       <div class="w1200 cont">
         <div>
           <h2>$500M+</h2>
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <tipbox/>
+    <tipbox v-if="false"/>
     <!--<news/>-->
 
     <!--<download/>-->
