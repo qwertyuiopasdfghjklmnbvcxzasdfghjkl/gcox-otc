@@ -101,7 +101,7 @@
       display: flex;
       align-items: center;
       border-bottom: 1px solid #eeeeee;
-      height: 40px;
+      padding: 10px 0;
 
       span {
         padding: 8px;
