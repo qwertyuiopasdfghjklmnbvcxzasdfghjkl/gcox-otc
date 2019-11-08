@@ -66,7 +66,7 @@
               <td>{{$t('otc_ad.payer')}}</td>
               <td>{{payInfo.name||'--'}}</td>
             </tr>
-            <tr v-if="this.item.pay_type==='1'">
+            <tr v-if="item.pay_type=='1'">
               <td>{{$t('otc_legal.otc_legal_Bank')}}</td>
               <td>{{payInfo.bank}}</td>
             </tr>

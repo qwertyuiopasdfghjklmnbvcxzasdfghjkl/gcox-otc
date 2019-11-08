@@ -105,7 +105,7 @@
                   <a class="action-botton" @click="cancelApeal(item)" v-if="item.appeal_state === 0">
                     {{$t('public0.public208')}}<!--取消申诉-->
                   </a>
-                  <em class="icon-chat" @click="switchOldMessage(item.order_number)"></em>
+                  <!--<em class="icon-chat" @click="switchOldMessage(item.order_number)"></em>-->
                 </span>
           </li>
         </ul>
@@ -618,7 +618,7 @@
 
   .completed-item span.ordernumber,
   .cancelled-item span.ordernumber {
-    width: 160px
+    width: 180px
   }
 
   .completed-item span.type,
