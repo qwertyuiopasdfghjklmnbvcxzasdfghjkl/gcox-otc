@@ -105,7 +105,7 @@
                   <a class="action-botton" @click="cancelApeal(item)" v-if="item.appeal_state === 0">
                     {{$t('public0.public208')}}<!--取消申诉-->
                   </a>
-                  <!--<em class="icon-chat" @click="switchOldMessage(item.order_number)"></em>-->
+              <!--<em class="icon-chat" @click="switchOldMessage(item.order_number)"></em>-->
                 </span>
           </li>
         </ul>
@@ -193,17 +193,21 @@
         params: {
           state: this.ip || 1,
           page: 1,
-          total: 0
+          total: 0,
+          show: 6,
         }
       }
     },
     computed: {
       ...mapGetters(['getApiToken', 'getUserInfo']),
+      // 'params.show' () {
+      //   return this.params.state === 1 ? 2 : 10
+      // },
       paramsChange () {
         return {
           state: this.params.state,
           page: this.params.page,
-          show: this.params.state === 1 ? 6 : 10
+          show: this.params.show
         }
       }
     },
@@ -211,9 +215,14 @@
       getApiToken () {
         this.getOrderList()
       },
-      'params.state' () {
+      'params.state' (e) {
         // 监听顺序：params.state > paramsChange可避免代码重复执行
         this.params.page = 1
+        if (e === 1) {
+          this.params.show = 6
+        } else {
+          this.params.show = 10
+        }
       },
       paramsChange () {
         this.getOrderList()
@@ -231,6 +240,7 @@
         })
       })
       this.addOtcSocketEvent(this.systemEvent)
+
     },
     beforeDestroy () {
       this.intervals.forEach((interval) => {

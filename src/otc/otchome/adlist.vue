@@ -35,6 +35,9 @@
                 </span>
           </li>
         </ul>
+        <page v-if="!currentLoading && cDatas.length > 0"
+              :pageIndex="form.page" :pageSize="form.show"
+              :total="total" @changePageIndex="pageChange1"/>
         <div class="ad-nodata" v-if="!currentLoading && cDatas.length === 0">
           <div class="ad-nodata-icon icon-no-order"></div>
           <div class="ad-nodata-text">{{$t('public0.public147')}}<!--暂无广告--></div>
@@ -100,6 +103,13 @@
           show: 6,
           total: 0
         },
+        form: {
+          // page: 1,
+          // show: 6,
+          ad_type: 0,
+          symbol: null,
+        },
+        total: 0,
         currentLoading: true,
         historyLoading: true
       }
@@ -164,10 +174,7 @@
         }
         this.cDatas = []
         this.currentLoading = true
-        otcApi.getMyAdvertisementList({
-          ad_type: 0,
-          symbol: null,
-        }, (res) => {
+        otcApi.getMyAdvertisementList(this.form, (res, total) => {
           res.forEach((item) => {
             // 类型转换
             item.status = parseInt(item.status)
@@ -182,6 +189,7 @@
             }
             item.remain_count = utils.removeEndZero(numUtils.BN(item.remain_count).toFixed(8))
           })
+          this.total = total
           this.cDatas = res
           this.currentLoading = false
         }, (msg) => {
@@ -270,6 +278,11 @@
       },
       pageChange (currentIndex) {
         this.formData.page = currentIndex
+        this.getHistoryList()
+      },
+      pageChange1 (e) {
+        this.form.page = e
+        this.getCurAdList()
       }
     }
   }
