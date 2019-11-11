@@ -78,8 +78,8 @@
         </table>
       </div>
       <div class="countdown" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
-        <span>{{$t('public0.public62')}}</span>
-        <b class="timer">{{surplus_Time}}</b>
+        <span class="title">{{$t('public0.public62')}}</span>
+        <span class="timer">{{surplus_Time}}</span>
       </div>
       <p class="time_text" v-if="cancelStatus !== 1">
         {{$t('gcox_otc.time_out')}}
@@ -612,28 +612,22 @@
   .countdown {
     height: 88px;
     line-height: 88px;
+    padding-left: 16px;
     background-color: #eee;
     border-left: 4px solid #E65656;
     font-size: 18px;
     margin-top: 20px;
     position: relative;
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .timer {
-      font-size: 48px;
-      padding-left: 10px;
-    }
-
+    .timer {font-size: 48px;}
     .title {
       position: absolute;
       left: 16px;
       top: 0;
-      bottom: 0;
+      bottom:0;
     }
   }
+
 
   .chat-container {
     margin-top: 30px;

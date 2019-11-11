@@ -104,8 +104,8 @@
           total: 0
         },
         form: {
-          // page: 1,
-          // show: 6,
+          page: 1,
+          show: 6,
           ad_type: 0,
           symbol: null,
         },

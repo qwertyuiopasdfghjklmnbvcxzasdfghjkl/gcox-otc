@@ -107,8 +107,9 @@ export default {
     'complaint_status': '申诉状态',
     'complaint_results': '申诉结果',
     'cancel_not_pay': '您已经取消了该笔交易，请勿付款！',
-    'card_repetition': '银行卡重复'
 
+    'card_repetition': '银行卡重复',
+    'residue_pay_time': '剩余支付时间'
   },
   'login_register': {
     'Next_step': '下一步',
