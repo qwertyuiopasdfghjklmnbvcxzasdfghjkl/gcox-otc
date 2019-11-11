@@ -77,11 +77,11 @@
             </tr>
           </table>
         </div>
-        <div class="countdown"  v-if="step!==3">
+        <div class="countdown"  v-if="step ===1">
           <span class="title">{{$t('gcox_otc.residue_pay_time')}}<!--剩余支付时间--></span>
           <span class="timer">{{surplus_Time}}</span>
         </div>
-        <p class="mt20 pl20"  v-if="step!==3">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
+        <p class="mt20 pl20"  v-if="step===1">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
       </div>
 
     </div>

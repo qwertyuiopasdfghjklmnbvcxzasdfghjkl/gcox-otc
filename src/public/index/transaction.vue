@@ -20,8 +20,9 @@
         <!--</p>-->
         <div>
           <p>
-            <span class="label-left">{{$t('exchange.exchange_amount')}}<!--数量--><em class="asterisk">&nbsp;*</em></span>
+            <span class="label-left">{{$t('exchange.exchange_amount')}}<!--数量--></span>
             <span><em class="unit">&nbsp;{{params.symbol}}</em></span>
+            <em class="asterisk">&nbsp;*</em>
           </p>
           <p>
             <numberbox :class="{error: errors.has('symbol_count')}" v-model="symbol_count"
@@ -35,8 +36,9 @@
         </div>
         <div>
           <p>
-            <span class="label-left">{{$t('exchange.exchange_total')}}<!--金额--><em class="asterisk">&nbsp;*</em></span>
+            <span class="label-left">{{$t('exchange.exchange_total')}}<!--金额--></span>
             <span><em class="unit">&nbsp;{{params.currency}}</em></span>
+            <em class="asterisk">&nbsp;*</em>
           </p>
           <p>
             <numberbox :class="{error: errors.has('currency_count')}" v-model="currency_count"
@@ -46,6 +48,16 @@
           <p class="msg">
             {{errors.has('currency_count')?getErrorMsg('currency_count'):''}}
           </p>
+        </div>
+
+        <div>
+          <p>{{$t('gcox_otc.currency_way')}}</p>
+          <div class="select">
+            <span>{{bankData.card_name}} - {{bankData.card_name}}</span>
+            <ul>
+              <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="btn">
@@ -119,7 +131,9 @@
         params: {},
         ad_id: null,
         matchPayType: null,
-        amount: null
+        amount: null,
+        bankList: [],
+        bankData: {}
       }
     },
     computed: {
@@ -173,7 +187,7 @@
         // if (this.buyType) {
         //   this.currency_count = Number(this.amount)
         // } else {
-        this.symbol_count = Number(this.amount)
+        this.symbol_count = Number(this.amount || 0)
         // }
       }
     },
@@ -290,7 +304,13 @@
       },
       getErrorMsg (name) {
         return this.msgs[name] && this.msgs[name][this.errors.firstRule(name)] ? this.msgs[name][this.errors.firstRule(name)] : this.$t(this.errors.first(name))
-      }
+      },
+      getBank () {
+        otcApi.getPaySettings((res) => {
+          this.bankList = res.data.bankList
+          this.bankData = this.bankList[0]
+        })
+      },
     }
   }
 </script>
@@ -401,18 +421,24 @@
     border-bottom: 1px solid #eeeeee;
 
     .buy-cont {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
+
 
       div {
-        width: 220px;
         font-size: 16px;
+        p:nth-child(1){
+          width: 120px;
+        }
+        p:nth-child(2){
+          width:370px;
+          input{
+            width: 320px;
+          }
+        }
 
         p {
           margin: 10px 0;
           position: relative;
-
+          display: inline-block;
           small {
             position: absolute;
             width: 50px;
@@ -455,5 +481,29 @@
 
   .msg {
     color: #e74c3c;
+  }
+  .select{
+    display: inline-block;
+    width: 370px;
+    span{
+      padding: 15px;
+      height: 20px;
+      border: 1px solid #eeeeee;
+      width: 320px;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        border: 6px solid transparent;
+        border-top-color: #999999;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        width: 0;
+        height: 0;
+      }
+    }
   }
 </style>

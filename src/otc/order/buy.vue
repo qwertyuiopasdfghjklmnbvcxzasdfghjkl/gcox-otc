@@ -47,9 +47,11 @@
           <tr>
             <td>{{$t('otc_ad.otc_ad_status')}}</td>
             <td>
-              <span class="gray_button " v-if="data1.pay_state === 1">{{$t('public0.public154')}}</span>
-              <span class="gray_button " v-if="data1.pay_state === 2">{{$t('otc_exchange.otc_exchange_transactions_completed1')}}</span>
-              <span class="green_button" v-if="data1.pay_state !== 2">{{stateTitle}}</span>
+              <!--<span class="gray_button " v-if="data1.pay_state === 1 && this.data1.state !== 2">{{$t('public0.public154')}}</span>-->
+              <!--<span class="gray_button " v-if="data1.pay_state === 2">{{$t('otc_exchange.otc_exchange_transactions_completed1')}}</span>-->
+              <span class="gray_button mr20" v-if="step === 2">{{$t('public0.public154')}}</span>
+              <span class="gray_button mr20" v-if="step>2">{{$t('otc_ad.otc_ad_completed')}}</span>
+              <span class="green_button" v-if="step <= 2">{{stateTitle}}</span>
             </td>
           </tr>
         </table>
