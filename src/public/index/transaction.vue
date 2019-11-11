@@ -119,6 +119,7 @@
         params: {},
         ad_id: null,
         matchPayType: null,
+        amount: null
       }
     },
     computed: {
@@ -157,7 +158,7 @@
           return
         }
         this.changeInput = 'currency'
-        this.symbol_count = val ? utils.removeEndZero(numUtils.div(val, this.detailData.cur_price).toFixed(5)) : ''
+        this.symbol_count = val ? utils.removeEndZero(numUtils.div(val, this.detailData.cur_price || this.params.cur_price).toFixed(5)) : ''
       },
       symbol_count (val, oldVal) {
         if (numUtils.BN(val).equals(numUtils.BN(0)) || this.changeInput === 'currency') {
@@ -165,7 +166,15 @@
           return
         }
         this.changeInput = 'symbol'
-        this.currency_count = val ? utils.removeEndZero(numUtils.mul(val, this.detailData.cur_price).toFixed(2)) : ''
+        this.currency_count = val ? utils.removeEndZero(numUtils.mul(val, this.detailData.cur_price || this.params.cur_price).toFixed(2)) : ''
+        console.log(this.currency_count, val)
+      },
+      amount () {
+        if (this.buyType) {
+          this.currency_count = Number(this.amount)
+        } else {
+          this.symbol_count = Number(this.amount)
+        }
       }
     },
     created () {
@@ -173,6 +182,8 @@
       this.params = ordDet.params
       this.ad_id = ordDet.ad_id
       this.matchPayType = ordDet.matchPayType
+      this.amount = window.localStorage.amount
+      console.log(ordDet)
 
       console.log(this.params, this.ad_id, this.matchPayType)
 
@@ -438,7 +449,8 @@
       border-radius: 3px;
     }
   }
-  .msg{
+
+  .msg {
     color: #e74c3c;
   }
 </style>

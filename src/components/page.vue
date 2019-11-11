@@ -43,6 +43,7 @@
     },
     computed: {
       totalPage () { // 总页数
+        console.log(this.iTotal, this.iPageSize)
         return Math.max(1, Math.ceil(this.iTotal / this.iPageSize))
       },
       finalTotalPage () {
