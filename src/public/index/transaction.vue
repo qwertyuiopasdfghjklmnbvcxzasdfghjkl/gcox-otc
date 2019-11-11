@@ -170,11 +170,11 @@
         console.log(this.currency_count, val)
       },
       amount () {
-        if (this.buyType) {
-          this.currency_count = Number(this.amount)
-        } else {
-          this.symbol_count = Number(this.amount)
-        }
+        // if (this.buyType) {
+        //   this.currency_count = Number(this.amount)
+        // } else {
+        this.symbol_count = Number(this.amount)
+        // }
       }
     },
     created () {
@@ -206,6 +206,9 @@
         }
       })
       this.fnGetAdvertisementDetail()
+    },
+    beforeDestroy(){
+      window.localStorage.removeItem('amount')
     },
     methods: {
       fnGetAdvertisementDetail () {
