@@ -109,7 +109,10 @@ export default {
     'cancel_not_pay': '您已经取消了该笔交易，请勿付款！',
 
     'card_repetition': '银行卡重复',
-    'residue_pay_time': '剩余支付时间'
+    'residue_pay_time': '剩余支付时间',
+    'default': '设为默认',
+    'remain_count': '剩余数量',
+    'currency_way': '收款方式'
   },
   'login_register': {
     'Next_step': '下一步',

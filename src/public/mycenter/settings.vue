@@ -17,8 +17,14 @@
             </div>
           </div>
           <div class="form-flex-right">
-            <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
-            <span class="red_button" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
+            <div class="btn">
+              <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
+              <span class="del" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
+            </div>
+            <label class="check">
+              <input type="checkbox" @change="change(item)" :checked="true"/>
+              <span>{{$t('gcox_otc.default')}}<!--设为默认--></span>
+            </label>
           </div>
         </div>
       </li>
@@ -389,6 +395,10 @@
             }
           })
         }
+      },
+      change(d){
+        console.log(d)
+        this.getList()
       }
     }
   }
@@ -427,6 +437,21 @@
         }
 
         .form-flex-right {
+          .btn{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .del{
+              color: #0D66EF;
+            }
+          }
+          .check{
+            display: flex;
+            align-items: center;
+            span{
+              padding: 4px;
+            }
+          }
           span {
             padding: 8px 20px;
             display: block;

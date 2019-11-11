@@ -49,7 +49,9 @@
         this.$router.push({name: 'home'})
       }
     },
-    methods: {}
+    methods: {
+
+    }
 
   }
 </script>

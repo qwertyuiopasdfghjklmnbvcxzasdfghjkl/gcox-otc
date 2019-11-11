@@ -19,7 +19,7 @@
           <em class="card icon-bank" :title="$t('otc_ad.otc_ad_BankPay')"
               v-if="(data.pay_type||'').indexOf('1')!==-1"> {{$t('otc_ad.otc_ad_BankPay')}}</em><!--银行卡支付-->
         </p>
-        <p></p>
+        <p>{{$t('gcox_otc.remain_count')}}： {{data.remain_count}} {{data.symbol}}</p>
       </div>
       <div>
         <p :title="data.connect_fd ? $t('error_code.ONLINE'): $t('error_code.OFFLINE')">

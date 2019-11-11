@@ -16,7 +16,6 @@
   "dependencies": {
     "@sentry/browser": "^5.6.2",
     "@sentry/integrations": "^5.6.1",
-    "CountryIconBuilder": "https://github.com/tychio/national_flag.git",
     "axios": "^0.17.1",
     "cryptocurrency-icons": "^0.16.1",
     "echarts": "^4.2.1",
