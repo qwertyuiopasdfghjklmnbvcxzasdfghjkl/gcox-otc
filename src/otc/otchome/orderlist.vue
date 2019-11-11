@@ -358,6 +358,7 @@
               return
           }
           this.params.total = total
+          console.log(this.params.total)
         }, (msg) => {
           console.error(msg)
         })

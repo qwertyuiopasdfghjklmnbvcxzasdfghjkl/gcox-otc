@@ -141,6 +141,9 @@
               Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
               return
             }
+
+            window.localStorage.amount = this.amount
+
             let query = {ad_id: this.listAdv.ad_id, params: this.listAdv, matchPayType: this.matchPayType}
             window.localStorage.ordDet = JSON.stringify(query)
             this.$router.push({
