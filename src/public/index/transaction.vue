@@ -53,9 +53,9 @@
         <div>
           <p>{{$t('gcox_otc.currency_way')}}</p>
           <div class="select">
-            <span>{{bankData.card_name}} - {{bankData.card_name}}</span>
+            <span>{{bankData.card_name}} - {{bankData.card_bank}} - {{bankData.card_number}}</span>
             <ul>
-              <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
+              <li v-for="v in bankList" @click="bankData = v">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
             </ul>
           </div>
         </div>
@@ -220,6 +220,7 @@
         }
       })
       this.fnGetAdvertisementDetail()
+      this.getBank()
     },
     beforeDestroy(){
       window.localStorage.removeItem('amount')
@@ -485,6 +486,7 @@
   .select{
     display: inline-block;
     width: 370px;
+    position: relative;
     span{
       padding: 15px;
       height: 20px;
@@ -493,6 +495,7 @@
       display: inline-block;
       vertical-align: middle;
       position: relative;
+      white-space: nowrap;
       &:after{
         content: '';
         display: block;
@@ -503,6 +506,32 @@
         top: 20px;
         width: 0;
         height: 0;
+      }
+    }
+    &:hover{
+      ul{
+        display: block;
+      }
+    }
+    ul{
+      display: none;
+      position: absolute;
+      top: 50px;
+      left:0;
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      z-index: 99;
+      width: 352px;
+      padding: 15px 0;
+      li{
+        padding: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        border-bottom: 1px solid #eeeeee;
+        white-space: nowrap;
+        &:hover{
+          background: #eeeeee;
+        }
       }
     }
   }

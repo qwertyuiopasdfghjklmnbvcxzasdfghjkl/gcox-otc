@@ -3,7 +3,7 @@
     <div class="title">{{$t(ad_id ? 'otc_ad.otc_edit_title' : 'otc_ad.otc_post_title').format(tradeParams.title1,
       formData.symbol)}}<!--发布广告||修改广告--></div>
     <div class="cont">
-      <div class="cont-item currency">
+      <div class="cont-item">
         <div class="row">
           <label>{{$t('otc_ad.otc_current_currency')}}：<!--当前法币--></label>
           <div class="value">
@@ -11,6 +11,33 @@
               <option v-for="item in currencyList" :key="item.id" :value="item.currency">
                 {{$t(`otc_exchange.otc_exchange_${item.currency}`)}}
               </option>
+            </select>
+          </div>
+        </div>
+        <div class="prompt"></div>
+      </div>
+
+      <div class="cont-item">
+        <div class="row">
+          <label>{{$t('account.estimated_value_coin')}}：<!--币种--></label>
+          <div class="value">
+            <select class="w250" v-model="formData.symbol">
+              <option v-for="item in symbolList" :key="item.symbol" :value="item.symbol">
+                {{item.symbol}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="prompt"></div>
+      </div>
+
+      <div class="cont-item currency">
+        <div class="row">
+          <label>{{$t('trade_record.trade_record_type')}}：<!--方向--></label>
+          <div class="value">
+            <select class="w250" v-model="formData.ad_type">
+              <option :value="1">{{$t('gcox_otc.buy')}}</option>
+              <option :value="2">{{$t('gcox_otc.sell')}}</option>
             </select>
           </div>
         </div>
@@ -331,7 +358,8 @@
         benchDatas: [], // 对标交易所
         isATN: false,
         bankData: {},
-        bankList: []
+        bankList: [],
+        symbolList: []
       }
     },
     computed: {
@@ -427,6 +455,8 @@
       }
     },
     created () {
+      let l = window.localStorage.symbolList
+      this.symbolList = JSON.parse(l)
       console.log(this.params)
       this.getBank()
       this.isATN = additional.includes(this.params.symbol)
