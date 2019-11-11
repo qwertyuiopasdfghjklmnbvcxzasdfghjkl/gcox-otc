@@ -48,6 +48,7 @@
               <td>{{$t('otc_ad.otc_ad_status')}}</td>
               <td>
                 <span class="gray_button mr20" v-if="step>2">{{$t('otc_ad.otc_ad_completed')}}</span>
+                <span class="gray_button mr20" v-if="step === 2">{{$t('public0.public154')}}</span>
                 <span class="green_button" v-if="step <= 2">{{stateTitle}}</span>
               </td>
             </tr>
@@ -66,7 +67,7 @@
               <td>{{$t('otc_ad.payer')}}</td>
               <td>{{payInfo.name||'--'}}</td>
             </tr>
-            <tr v-if="item.pay_type=='1'">
+            <tr >
               <td>{{$t('otc_legal.otc_legal_Bank')}}</td>
               <td>{{payInfo.bank}}</td>
             </tr>
@@ -77,7 +78,7 @@
           </table>
         </div>
         <div class="countdown"  v-if="step!==3">
-          <span class="title">剩余支付时间</span>
+          <span class="title">{{$t('gcox_otc.residue_pay_time')}}<!--剩余支付时间--></span>
           <span class="timer">{{surplus_Time}}</span>
         </div>
         <p class="mt20 pl20"  v-if="step!==3">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
