@@ -122,6 +122,7 @@
       getList () {
         otcApi.getCoinsList(res => {
           this.ts = res
+          window.localStorage.symbolList = JSON.stringify(res)
         })
       },
       getInfo () {
