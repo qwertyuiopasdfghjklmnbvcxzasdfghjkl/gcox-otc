@@ -17,8 +17,14 @@
             </div>
           </div>
           <div class="form-flex-right">
-            <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
-            <span class="red_button" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
+            <div>
+              <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
+              <span class="red_button" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
+            </div>
+            <label>
+              <input type="checkbox"/>
+              <span>{{$t('gcox_otc.default')}}<!--设为默认--></span>
+            </label>
           </div>
         </div>
       </li>
