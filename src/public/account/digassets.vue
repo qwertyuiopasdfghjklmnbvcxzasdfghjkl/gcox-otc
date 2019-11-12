@@ -16,7 +16,7 @@
                   {{$t('gcox_otc.show_all_symbol')}}<!--显示所有货币-->
                 </label>
               </div>
-              <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}<!--历史记录--></a>
+              <!--<a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}&lt;!&ndash;历史记录&ndash;&gt;</a>-->
             </div>
           </div>
           <div class="tab_cont">
