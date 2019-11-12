@@ -76,7 +76,8 @@
         curPrice: 0,
         curList: window.localStorage.currencyList,
         amount: null,
-        listAdv: {}
+        listAdv: {},
+        timeout: false
       }
     },
     computed: {
@@ -101,7 +102,15 @@
     },
     watch: {
       amount () {
-        this.getAdv()
+        this.timeout = false
+        setTimeout(() => {
+          this.timeout = true
+        }, 800)
+      },
+      timeout (e) {
+        if (e) {
+          this.getAdv()
+        }
       }
     },
     created () {

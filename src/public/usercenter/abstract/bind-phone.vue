@@ -1,7 +1,7 @@
 <template>
   <card style="width:750px;">
     <p slot="title">
-      <span>{{$t('gcox_otc.add_phone')}}</span>
+      <span>{{phone ? $t('gcox_otc.update_phone'):$t('gcox_otc.add_phone')}}</span>
       <i @click="close()"><img width="14" src="../../../assets/img/close.png"/></i>
     </p>
     <div class="cont">
@@ -75,6 +75,9 @@
       if (this.phone){
         this.mobileFormData.phoneNumber = this.phone
       }
+    },
+    beforeDestroy(){
+      this.mobileFormData.smsCode = null
     },
     methods: {
       change (item) {

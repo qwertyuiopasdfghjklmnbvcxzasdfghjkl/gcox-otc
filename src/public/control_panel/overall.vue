@@ -12,7 +12,7 @@
     <div class="ad-box ad-box-current">
       <p>{{$t('gcox_otc.your_buy_advertising')}}<!--你的购买广告--></p>
       <ul class="ad-list ad-list-current" v-if="!currentLoading && cDatas.length > 0">
-        <li class="ad-list-item" v-for="item in cDatas" v-if="item.ad_type !== 2" :key="item.ad_id">
+        <li class="ad-list-item" v-for="item in cDatas" :key="item.ad_id">
           <p>
             <span class="ad-list-item-coin">{{$t('account.estimated_value_coin')}}<!--币种--></span>
             <span class="ad-list-item-type">{{$t('shop.payment')}}<!--支付方式--></span>
@@ -40,6 +40,9 @@
           </p>
         </li>
       </ul>
+      <page v-if="!currentLoading && cDatas.length > 0" :pageIndex="form.page" :pageSize="form.show"
+            :total="total" @changePageIndex="pageChange"/>
+
       <div class="ad-nodata">
         <div class="ad-nodata-text">{{$t('public0.public147')}}<!--暂无广告--></div>
       </div>
@@ -47,8 +50,8 @@
     </div>
     <div class="ad-box ad-box-current">
       <p>{{$t('gcox_otc.your_sell_advertising')}}<!--你的销售广告--></p>
-      <ul class="ad-list ad-list-current" v-if="!currentLoading && cDatas.length > 0">
-        <li class="ad-list-item" v-for="item in cDatas" v-if="item.ad_type === 2" :key="item.ad_id">
+      <ul class="ad-list ad-list-current" v-if="!historyLoading && hDatas.length > 0">
+        <li class="ad-list-item" v-for="item in hDatas" :key="item.ad_id">
           <p>
             <span class="ad-list-item-coin">{{$t('account.estimated_value_coin')}}<!--币种--></span>
             <span class="ad-list-item-type">{{$t('shop.payment')}}<!--支付方式--></span>
@@ -76,10 +79,14 @@
           </p>
         </li>
       </ul>
+
+      <page v-if="!historyLoading && hDatas.length > 0" :pageIndex="form1.page" :pageSize="form1.show"
+            :total="total1" @changePageIndex="pageChange1"/>
+
       <div class="ad-nodata">
         <div class="ad-nodata-text">{{$t('public0.public147')}}<!--暂无广告--></div>
       </div>
-      <loading v-if="currentLoading"/>
+      <loading v-if="historyLoading"/>
     </div>
   </div>
 </template>
@@ -104,7 +111,19 @@
         cDatas: [],
         hDatas: [],
         currentLoading: true,
-        historyLoading: true
+        historyLoading: true,
+        form: {
+          page: 1,
+          show: 6,
+          ad_type: 1,
+        },
+        total: 0,
+        form1: {
+          page: 1,
+          show: 6,
+          ad_type: 2,
+        },
+        total1: 0,
       }
     },
     computed: {
@@ -116,64 +135,77 @@
     watch: {
       getApiToken () {
         this.getList()
+        this.getList1()
       },
     },
     created () {
       this.getList()
-      this.$nextTick(() => {
-        this.addEvents({
-          name: 'updateMyAds',
-          fun: this.getList
-        })
-      })
-      // this.addOtcSocketEvent(this.systemEvent)
+      this.getList1()
+      // this.$nextTick(() => {
+      //   this.addEvents({
+      //     name: 'updateMyAds',
+      //     fun: this.getList
+      //   })
+      // })
     },
     methods: {
       ...mapActions(['addOtcSocketEvent', 'removeOtcSocketEvent', 'addEvents', 'removeEvents']),
-      // systemEvent (data) {
-      //   let optType = parseInt(data.operate_type)
-      //   let childType = parseInt(data.child_type)
-      //   if (optType === 1) { // 系统消息
-      //     switch (childType) {
-      //       case 35: // 正常放币消息
-      //       case 36: // 强制放币买家消息
-      //       case 37: // 强制放币卖家消息
-      //         // 更新我的广告列表
-      //         this.getList()
-      //         break
-      //     }
-      //   }
-      // },
       getList () {
         if (!this.getApiToken) {
           return
         }
         this.cDatas = []
         this.currentLoading = true
-        otcApi.getMyAdvertisementList({
-          ad_type: 0,
-          symbol: null
-        }, (res) => {
+        otcApi.getMyAdvertisementList(this.form, (res, total) => {
           res.forEach((item) => {
             // 类型转换
             item.status = parseInt(item.status)
             item.ad_type = parseInt(item.ad_type)
             item.cur_price = item.cur_price ? utils.removeEndZero(parseFloat(item.cur_price).toFixed(2)) : 0
-            if (item.ad_type === 2) {
-              item.min_amount = utils.removeEndZero(parseFloat(item.min_amount).toFixed(2))
-              item.max_amount = utils.removeEndZero(parseFloat(item.max_amount).toFixed(2))
-            } else {
-              item.min_amount = utils.removeEndZero(numUtils.BN(item.min_amount).toFixed(8))
-              item.max_amount = utils.removeEndZero(numUtils.BN(item.max_amount).toFixed(8))
-            }
+            item.min_amount = utils.removeEndZero(parseFloat(item.min_amount).toFixed(2))
+            item.max_amount = utils.removeEndZero(parseFloat(item.max_amount).toFixed(2))
             item.remain_count = utils.removeEndZero(numUtils.BN(item.remain_count).toFixed(8))
           })
           this.cDatas = res
+          this.total = total
+          console.log(this.cDatas)
           this.currentLoading = false
         }, (msg) => {
           this.currentLoading = false
           console.error(msg)
         })
+      },
+      pageChange(e){
+        this.form.page = e;
+        this.getList()
+      },
+      getList1 () {
+        if (!this.getApiToken) {
+          return
+        }
+        this.hDatas = []
+        this.historyLoading = true
+        otcApi.getMyAdvertisementList(this.form1, (res, total) => {
+          res.forEach((item) => {
+            // 类型转换
+            item.status = parseInt(item.status)
+            item.ad_type = parseInt(item.ad_type)
+            item.cur_price = item.cur_price ? utils.removeEndZero(parseFloat(item.cur_price).toFixed(2)) : 0
+            item.min_amount = utils.removeEndZero(parseFloat(item.min_amount).toFixed(2))
+            item.max_amount = utils.removeEndZero(parseFloat(item.max_amount).toFixed(2))
+            item.remain_count = utils.removeEndZero(numUtils.BN(item.remain_count).toFixed(8))
+          })
+          this.hDatas = res
+          this.total1 = total
+          this.historyLoading = false
+        }, (msg) => {
+          this.historyLoading = false
+          console.error(msg)
+        })
+      },
+      pageChange1(e){
+        this.form1.page = e
+        this.getList1()
       },
       toWallet () {
         this.$router.push({name: 'control_wallet'})
