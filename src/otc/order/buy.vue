@@ -84,7 +84,7 @@
         <span class="title">{{$t('public0.public62')}}</span>
         <span class="timer">{{surplus_Time}}</span>
       </div>
-      <p class="time_text" v-if="cancelStatus !== 1">
+      <p class="time_text" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
         {{$t('gcox_otc.time_out')}}
       </p>
       <div class="red_note" v-if="cancelStatus === 1">
@@ -105,15 +105,15 @@
             <ul>
               <li @click="commentType = 1" v-if="!data1.from_user_comment || data1.from_user_comment === 1">
                 <em class="myicon-praise" :class="{active: commentType === 1}"></em>
-                <p>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></p>
+                <span>{{$t('otc_ad.otc_ad_Praise')}}<!--好评--></span>
               </li>
               <li @click="commentType = 2" v-if="!data1.from_user_comment || data1.from_user_comment === 2">
                 <em class="myicon-average" :class="{active: commentType === 2}"></em>
-                <p>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></p>
+                <span>{{$t('otc_ad.otc_ad_Average')}}<!--中评--></span>
               </li>
               <li @click="commentType = 3" v-if="!data1.from_user_comment || data1.from_user_comment === 3">
                 <em class="myicon-bad-review" :class="{active: commentType === 3}"></em>
-                <p>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></p>
+                <span>{{$t('otc_ad.otc_ad_Bad_review')}}<!--差评--></span>
               </li>
             </ul>
           </div>

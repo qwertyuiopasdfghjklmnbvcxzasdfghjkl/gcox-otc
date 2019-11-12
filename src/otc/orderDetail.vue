@@ -112,7 +112,7 @@
                   this.data1.state = 2
                 }
               } else {
-                this.getOrderList()
+                // this.getOrderList()
               }
               break
           }
