@@ -112,7 +112,8 @@ export default {
     'residue_pay_time': '剩余支付时间',
     'default': '设为默认',
     'remain_count': '剩余数量',
-    'currency_way': '收款方式'
+    'currency_way': '收款方式',
+    'not_need_memo': '不需要MEMO'
   },
   'login_register': {
     'Next_step': '下一步',

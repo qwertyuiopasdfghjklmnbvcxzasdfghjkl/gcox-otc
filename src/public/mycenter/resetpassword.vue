@@ -1,7 +1,10 @@
 <template>
   <!--重置密码-->
   <div class="cont">
-    <p>{{$t('usercontent.user49')}}{{$t('usercontent.user39')}}</p>
+    <p>
+      <span>{{$t('user.changePassword')}}</span>
+      <span @click="closeDialog" class="icon-close"></span>
+    </p>
     <div class="form-item">
       <p>{{$t('usercontent.user50')}}</p>
       <input :type="showPass?'text':'password'" name="password" :class="{efont:!formData.password}"
@@ -131,22 +134,31 @@
           delay: 3000
         })
         this.locked = true
-      }
+      },
+      closeDialog () {
+        this.$emit('removeDialog')
+      },
     }
   }
 </script>
 
 <style scoped lang="less">
   .cont {
-    color: #ffffff;
-    background: rgba(27, 26, 31, 0.9);
-    padding: 20px;
+    background: #ffffff;
+    width: 720px;
+    border-radius:6px;
     &>p{
-      padding-bottom: 10px;
+      padding: 15px;
+      border-bottom: 1px solid #eeeeee;
+      margin-bottom: 20px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .form-item {
-      width: 670px;
+      width: 630px;
       margin: 0 auto;
       padding-top: 12px;
       position: relative;
@@ -175,7 +187,7 @@
     line-height: 30px;
     color: #f1304a;
     font-size: 12px;
-    width: 670px;
+    width: 630px;
     margin: 5px auto;
   }
 

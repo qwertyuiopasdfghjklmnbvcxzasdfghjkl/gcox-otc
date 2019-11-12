@@ -7,46 +7,66 @@
           </h2>
           <h4>≈ {{getCoinSign}} {{USDCNY}}</h4>
         </div>
-        <div class="balance_search">
+        <div v-if="!showHistory">
+          <div class="balance_search">
+            <div class="f-fr">
+              <div class="icon-checkbox f-fl" @click.stop="hideZero=!hideZero">
+                <em :class="[hideZero?'icon-checkbox-unchecked':'icon-checkbox-checked']"></em>
+                <label class="ng-binding">
+                  {{$t('gcox_otc.show_all_symbol')}}<!--显示所有货币-->
+                </label>
+              </div>
+              <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}<!--历史记录--></a>
+            </div>
+          </div>
+          <div class="tab_cont">
+            <div class="thead">
+              <p>{{$t('account.estimated_value_coin')}}</p>
+              <p>{{$t('gcox_otc.total')}}</p>
+              <p>{{$t('account.estimated_value_available')}}</p>
+              <p>{{$t('public0.public34')}}</p>
+            </div>
 
-          <div class="f-fr">
-            <div class="icon-checkbox f-fl" @click.stop="hideZero=!hideZero">
-              <em :class="[hideZero?'icon-checkbox-unchecked':'icon-checkbox-checked']"></em>
-              <label class="ng-binding">
-                {{$t('gcox_otc.show_all_symbol')}}<!--显示所有货币-->
-              </label>
+            <div class="flex">
+              <ul class="accountInfo-lists" :class="{pandect:pandectShow}">
+                <li v-for="(data, index) in filterDatas()" :key="data.accountId">
+                  <div class="items">
+                    <div class="ico">
+                      <img :src="`data:image/png;base64,${data.iconBase64}`">
+                    </div>
+                    <div class="coin ">{{data.symbol}}</div>
+                    <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero" v-if="pandectShow">
+                      {{toFixed(data.totalBalance)|removeEndZero}}
+                    </div>
+                    <div class="f-right "
+                         :title="data.totalBalance"
+                         v-else>{{data.totalBalance}}
+                    </div>
+                    <div class="f-right "
+                         :title="data.availableBalance">{{data.availableBalance}}
+                    </div>
+                    <div class="f-right "
+                         :title="data.adFrozenBalance">{{data.adFrozenBalance}}
+                    </div>
+                    <moreinfo class="action"
+                              :googleState="getUserInfo.googleAuthEnable"
+                              :verifyState="getUserInfo.kycState"
+                              :symbol="data.symbol"
+                              :allData="filterDatas()"
+                              :item="data"/>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-        <div class="tab_cont">
-          <p>{{$t('exchange.exchange_wallet')}}</p>
-          <div class="flex">
-            <ul class="accountInfo-lists" :class="{pandect:pandectShow}">
-              <li v-for="(data, index) in filterDatas()" :key="data.accountId">
-                <div class="items">
-                  <div class="ico">
-                    <img :src="`data:image/png;base64,${data.iconBase64}`">
-                  </div>
-                  <div class="coin ">{{data.symbol}}</div>
-                  <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero" v-if="pandectShow">
-                    {{toFixed(data.totalBalance)|removeEndZero}}
-                  </div>
-                  <div class="f-right "
-                       :title="data.totalBalance"
-                       v-else>{{data.totalBalance}}
-                  </div>
-                  <moreinfo class="action"
-                            :googleState="getUserInfo.googleAuthEnable"
-                            :verifyState="getUserInfo.kycState"
-                            :symbol="data.symbol"
-                            :allData="filterDatas()"
-                            :item="data"/>
-                </div>
-              </li>
-            </ul>
-          </div>
+        <div v-else>
+          <historyrecord>
+            <span @click="showHistory = false">{{$t('usercontent.user64')}}</span>
+          </historyrecord>
         </div>
       </div>
+
       <loading v-if="showLoaing"/>
     </div>
   </div>
@@ -63,6 +83,7 @@
   import stakeDialog from '@/public/account/stakeDialog'
   import loading from '@/components/loading'
   import ProgressBar from './progress-bar'
+  import Historyrecord from './historyrecord'
 
   export default {
     props: ['pandect'],
@@ -82,10 +103,12 @@
         accountType: 1,
         pandectShow: true,
         echart: null,
-        polar: {}
+        polar: {},
+        showHistory: false
       }
     },
     components: {
+      Historyrecord,
       ProgressBar,
       moreinfo,
       loading
@@ -273,7 +296,7 @@
     /*background: rgba(27, 26, 31, 0.9);*/
     /*color: #ffffff;*/
     padding: 0 18px 16px;
-    font-size: 12px;
+    font-size: 14px;
     margin: 20px auto;
   }
 
@@ -514,10 +537,13 @@
     white-space: nowrap;
     word-break: break-all;
     padding: 0 4px;
-    min-width: 80px;
+    min-width: 150px;
     text-overflow: ellipsis;
     overflow: hidden;
     align-items: center;
+  }
+  .accountInfo-lists li .items > div.ico{
+    min-width: 60px;
   }
 
   .accountInfo-lists.pandect li .items > div {
@@ -678,15 +704,6 @@
   }
 
   .tab_cont {
-    & > p {
-      height: 50px;
-      background: rgba(238, 238, 238, 1);
-      border-radius: 4px 4px 0px 0px;
-      font-size: 18px;
-      line-height: 50px;
-      text-indent: 20px;
-      color: #333333;
-    }
 
     & > div {
       border: 1px solid rgba(238, 238, 238, 1);
@@ -694,6 +711,24 @@
       li {
         padding: 20px;
         border-bottom: 1px solid #eeeeee;
+      }
+    }
+    .thead{
+      height: 50px;
+      background: rgba(238, 238, 238, 1);
+      border-radius: 4px 4px 0px 0px;
+      font-size: 18px;
+      line-height: 50px;
+      text-indent: 20px;
+      color: #333333;
+      display: flex;
+      align-items: center;
+      p{
+        &:first-child{
+          width: 210px;
+          text-indent: 40px;
+        }
+        min-width: 150px;
       }
     }
   }

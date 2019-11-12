@@ -79,6 +79,10 @@
           <td><b><span class="green">{{detailData.cur_price}}</span> {{params.currency}}/{{params.symbol}}</b></td>
         </tr>
         <tr>
+          <td>{{$t('gcox_otc.remain_count')}}</td>
+          <td><b>{{params.remain_count}} {{params.symbol}}</b></td>
+        </tr>
+        <tr>
           <td>{{$t('gcox_otc.limit_number')}}</td>
           <td><b><span class="radius">{{detailData.min_amount}}{{tradeParams.limit}}</span> - <span class="radius">{{detailData.max_amount}}{{tradeParams.limit}}</span></b>
           </td>
