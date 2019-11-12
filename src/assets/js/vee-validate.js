@@ -54,6 +54,15 @@ Validator.extend('googleCode', {
   }
 })
 
+Validator.extend('memo', {
+  getMessage: (field, args) => {
+    return 'error_code.EOS_MEMO_BLANK' // 谷歌验证码 暂无条件
+  },
+  validate: (value, args) => {
+    return /^[0-9a-zA-Z]+$/.test(value)
+  }
+})
+
 Validator.extend('emailCode', {
   getMessage: (field, args) => {
     return 'usercontent.user66' // 邮件验证码 暂无条件

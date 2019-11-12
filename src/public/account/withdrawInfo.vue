@@ -72,10 +72,26 @@
 
         </div>
 
+        <div class="filed" v-if="symbol==='EOS' || symbol==='XRP'">
+          <div class="filed-number">
+            <em>MEMO</em>
+          </div>
+          <div class="number memo" :class="{error:errors.has('memo')}">
+            <input type="text" maxlength="1000" v-validate="memoState ? '':'required'"
+                   data-vv-name="memo" v-model="memo"/>
+            <em class="error" v-show="errors.has('memo')">
+              {{$t('error_code.EOS_MEMO_BLANK')}}
+            </em>
+          </div>
+          <label class="rpl">
+            <input type="checkbox" v-model="memoState">
+            <span>{{$t('gcox_otc.not_need_memo')}}<!--不需要MEMO--></span>
+          </label>
+        </div>
 
         <div class="filed" v-if="showSMS">
           <div class="filed-number">
-            <em>{{$t('account.user_center_SMS_code')}}<!--短信验证码--> *</em>
+            <em>{{$t('account.user_center_SMS_code')}}<!--短信验证码--> * </em>
 
           </div>
           <div class="number" :class="{error:errors.has('smsCode')}">
@@ -93,6 +109,8 @@
             </em>
           </div>
         </div>
+
+
         <!--<div class="filed">-->
         <!--<div class="withdraw-info f-cb">-->
         <!--<div class="ng-binding">-->
@@ -193,6 +211,7 @@
         disabled: false,
         showSMS: false,
         showGoolge: false,
+        memoState: false,
       }
     },
     watch: {
@@ -211,6 +230,11 @@
       'toAddress' (newVal) {
         if (newVal.length > 100) {
           this.toAddress = newVal.substring(0, 100)
+        }
+      },
+      memoState (e) {
+        if (e) {
+          this.memo = null
         }
       }
     },
@@ -366,6 +390,9 @@
         if (this.showSMS) {
           validData.smsCode = this.smsCode
         }
+        if (!this.memoState && (this.symbol === 'EOS' || this.symbol === 'XRP')) {
+          validData.memo = this.memo
+        }
         this.$validator.validateAll(validData).then((validResult) => {
           if (!validResult) {
             return
@@ -466,16 +493,16 @@
   }
 
   .withdrawBox .filed label {
-    display: inline-block;
-    font-size: 12px;
-    color: #999;
-    width: 150px;
+    /*display: inline-block;*/
+    /*font-size: 12px;*/
+    /*color: #999;*/
+    /*width: 150px;*/
     height: 30px;
     line-height: 30px;
-    text-align: right;
+    /*text-align: right;*/
     position: absolute;
-    left: -25px;
-    top: 0;
+    /*left: -25px;*/
+    /*top: 0;*/
   }
 
   .withdrawBox .filed .withdraw-info {
@@ -894,6 +921,25 @@
         border-top-color: transparent;
         border-right-color: transparent;
       }
+    }
+  }
+
+  .rpl {
+    position: absolute;
+    right: -120px;
+    top: 11px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+  }
+
+  .memo {
+    input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      text-indent: 10px;
+      font-size: 18px;
     }
   }
 </style>

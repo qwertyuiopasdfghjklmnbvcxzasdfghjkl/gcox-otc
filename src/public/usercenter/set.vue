@@ -89,6 +89,18 @@
         </collapse>
       </div>
 
+      <div class="box">
+        <collapse :title="$t('user.changePassword')">
+          <div class="intro">
+            <label>
+              <span>{{$t('user.changePassword')}}</span>
+              <span class="red w2">******</span>
+              <span ><button @click="changePW()">{{$t('gcox_otc.update')}}</button></span>
+            </label>
+          </div>
+        </collapse>
+      </div>
+
     </div>
   </div>
 </template>
@@ -103,6 +115,7 @@
   import userApi from '@/api/user'
   import SwitchVi from '../../components/switch-vi'
   import bind from './abstract/bind-phone'
+  import resetPW from '../mycenter/resetpassword'
 
   export default {
     name: 'set',
@@ -171,6 +184,9 @@
           }
         })
       },
+      changePW(){
+        utils.setDialog(resetPW)
+      }
     }
 
   }

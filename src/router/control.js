@@ -3,6 +3,7 @@ import deal from '../public/control_panel/deal'
 import wallet from '../public/control_panel/wallet'
 import kyc from '../public/control_panel/kyc'
 import pay from '../public/control_panel/pay'
+import historyrecord from '../public/account/historyrecord'
 
 export default [
   {
@@ -33,6 +34,12 @@ export default [
     path: '/control_pay',
     name: 'control_pay',
     component: pay,
+    meta: {login: true}
+  },
+  {
+    path: '/historyrecord',
+    name: 'historyrecord',
+    component: historyrecord,
     meta: {login: true}
   }
 ]

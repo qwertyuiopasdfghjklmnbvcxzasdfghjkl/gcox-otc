@@ -5,7 +5,7 @@
     <div class="cont">
       <div class="cont-item">
         <div class="row">
-          <label>{{$t('otc_ad.otc_current_currency')}}：<!--当前法币--></label>
+          <label class="pr15">{{$t('otc_ad.otc_current_currency')}}：<!--当前法币--></label>
           <div class="value">
             <select class="w250" v-model="formData.currency">
               <option v-for="item in currencyList" :key="item.id" :value="item.currency">
@@ -19,7 +19,7 @@
 
       <div class="cont-item">
         <div class="row">
-          <label>{{$t('account.estimated_value_coin')}}：<!--币种--></label>
+          <label class="pr15">{{$t('account.estimated_value_coin')}}：<!--币种--></label>
           <div class="value">
             <select class="w250" v-model="formData.symbol">
               <option v-for="item in symbolList" :key="item.symbol" :value="item.symbol">
@@ -1059,5 +1059,8 @@
     display: block;
     margin-top: 10px;
     line-height: 24px;
+  }
+  .pr15{
+    padding-right: 15px;
   }
 </style>

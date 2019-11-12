@@ -1,122 +1,130 @@
 <template>
   <div class="history-record">
-    <p>{{$t('usercontent.user59')}}</p>
-    <div class="history_nav">
-      <label :class="{active:show==='deposit'}" @click="show = 'deposit'">{{$t('account.user_center_history_deposit')}}<!--充值记录--></label>
-      <label :class="{active:show==='withdrawal'}" @click="show = 'withdrawal'">{{$t('account.user_center_history_withdrawal')}}<!--提现记录--></label>
-      <label :class="{active:show==='staked'}" @click="show = 'staked'">{{$t('account.history_staked')}}<!--锁仓记录--></label>
-      <label :class="{active:show==='distributed'}" @click="show = 'distributed'">{{$t('account.history_distributed')}}<!--分发记录--></label>
+    <!--<p>{{$t('usercontent.user59')}}</p>-->
+    <div class="history_nav" v-if="false">
+      <label :class="{active:show==='deposit'}" @click="show = 'deposit'">{{$t('account.user_center_history_deposit')}}
+        <!--充值记录--></label>
+      <label :class="{active:show==='withdrawal'}" @click="show = 'withdrawal'">{{$t('account.user_center_history_withdrawal')}}
+        <!--提现记录--></label>
+      <label :class="{active:show==='staked'}" @click="show = 'staked'">{{$t('account.history_staked')}}
+        <!--锁仓记录--></label>
+      <label :class="{active:show==='distributed'}" @click="show = 'distributed'">{{$t('account.history_distributed')}}
+        <!--分发记录--></label>
     </div>
 
-    <div class="search mt10 ui-flex" v-show="show==='deposit'">
-      <div @click="panel.showToken=!panel.showToken">
-        <p>{{params.token!==''?params.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='deposit' && panel.showToken">
-          <li v-for="item in tokens" @click="params.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>
-        </ul>
-      </div>
-      <div @click="panel.showPeriod=!panel.showPeriod">
-        <p>{{params.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='deposit' && panel.showPeriod">
-          <li v-for="item in periods" @click="params.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>
-        </ul>
-      </div>
-      <span class="ml30">{{$t('exchange.exchange_status')}}</span>
-      <div @click="panel.showStatus=!panel.showStatus">
-        <p>{{getRechargeState(params.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='deposit' && panel.showStatus">
-          <li v-for="item in rechargeStatus" @click="params.status=item">{{getRechargeState(item).value}}</li>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="search mt10 ui-flex" v-show="show==='deposit'">-->
+    <!--<div @click="panel.showToken=!panel.showToken">-->
+    <!--<p>{{params.token!==''?params.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='deposit' && panel.showToken">-->
+    <!--<li v-for="item in tokens" @click="params.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<div @click="panel.showPeriod=!panel.showPeriod">-->
+    <!--<p>{{params.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='deposit' && panel.showPeriod">-->
+    <!--<li v-for="item in periods" @click="params.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<span class="ml30">{{$t('exchange.exchange_status')}}</span>-->
+    <!--<div @click="panel.showStatus=!panel.showStatus">-->
+    <!--<p>{{getRechargeState(params.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='deposit' && panel.showStatus">-->
+    <!--<li v-for="item in rechargeStatus" @click="params.status=item">{{getRechargeState(item).value}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
 
-    <div class="search mt10 ui-flex" v-show="show==='withdrawal'">
-      <div @click="panel.showToken=!panel.showToken">
-        <p>{{params2.token!==''?params2.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='withdrawal' && panel.showToken">
-          <li v-for="item in tokens" @click="params2.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>
-        </ul>
-      </div>
-      <div @click="panel.showPeriod=!panel.showPeriod">
-        <p>{{params2.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='withdrawal' && panel.showPeriod">
-          <li v-for="item in periods" @click="params2.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>
-        </ul>
-      </div>
-      <span class="ml30">{{$t('exchange.exchange_status')}}</span>
-      <div @click="panel.showStatus=!panel.showStatus">
-        <p>{{getWithdrawalState(params2.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='withdrawal' && panel.showStatus">
-          <li v-for="item in withdrawalStatus" @click="params2.status=item">{{getWithdrawalState(item).value}}</li>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="search mt10 ui-flex" v-show="show==='withdrawal'">-->
+    <!--<div @click="panel.showToken=!panel.showToken">-->
+    <!--<p>{{params2.token!==''?params2.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='withdrawal' && panel.showToken">-->
+    <!--<li v-for="item in tokens" @click="params2.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<div @click="panel.showPeriod=!panel.showPeriod">-->
+    <!--<p>{{params2.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='withdrawal' && panel.showPeriod">-->
+    <!--<li v-for="item in periods" @click="params2.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<span class="ml30">{{$t('exchange.exchange_status')}}</span>-->
+    <!--<div @click="panel.showStatus=!panel.showStatus">-->
+    <!--<p>{{getWithdrawalState(params2.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='withdrawal' && panel.showStatus">-->
+    <!--<li v-for="item in withdrawalStatus" @click="params2.status=item">{{getWithdrawalState(item).value}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
 
-    <div class="search mt10 ui-flex" v-show="show==='staked'">
-      <div @click="panel.showToken=!panel.showToken">
-        <p>{{params3.token!==''?params3.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='staked' && panel.showToken">
-          <li v-for="item in tokens" @click="params3.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>
-        </ul>
-      </div>
-      <div @click="panel.showPeriod=!panel.showPeriod">
-        <p>{{params3.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='staked' && panel.showPeriod">
-          <li v-for="item in periods" @click="params3.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>
-        </ul>
-      </div>
-      <span class="ml30">{{$t('exchange.exchange_status')}}</span>
-      <div @click="panel.showStatus=!panel.showStatus">
-        <p>{{getStakedState(params3.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='staked' && panel.showStatus">
-          <li v-for="item in stakedStatus" @click="params3.status=item">{{getStakedState(item).value}}</li>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="search mt10 ui-flex" v-show="show==='staked'">-->
+    <!--<div @click="panel.showToken=!panel.showToken">-->
+    <!--<p>{{params3.token!==''?params3.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='staked' && panel.showToken">-->
+    <!--<li v-for="item in tokens" @click="params3.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<div @click="panel.showPeriod=!panel.showPeriod">-->
+    <!--<p>{{params3.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='staked' && panel.showPeriod">-->
+    <!--<li v-for="item in periods" @click="params3.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<span class="ml30">{{$t('exchange.exchange_status')}}</span>-->
+    <!--<div @click="panel.showStatus=!panel.showStatus">-->
+    <!--<p>{{getStakedState(params3.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='staked' && panel.showStatus">-->
+    <!--<li v-for="item in stakedStatus" @click="params3.status=item">{{getStakedState(item).value}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
 
-    <div class="search mt10 ui-flex" v-show="show==='distributed'">
-      <div @click="panel.showToken=!panel.showToken">
-        <p>{{params4.token!==''?params4.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='distributed' && panel.showToken">
-          <li v-for="item in tokens" @click="params4.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>
-        </ul>
-      </div>
-      <div @click="panel.showPeriod=!panel.showPeriod">
-        <p>{{params4.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='distributed' && panel.showPeriod">
-          <li v-for="item in periods" @click="params4.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>
-        </ul>
-      </div>
-      <span class="ml30">{{$t('exchange.exchange_status')}}</span>
-      <div @click="panel.showStatus=!panel.showStatus">
-        <p>{{getDistributedState(params4.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>
-        <ul v-show="show==='distributed' && panel.showStatus">
-          <li v-for="item in rechargeStatus" @click="params4.status=item">{{getDistributedState(item).value}}</li>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="search mt10 ui-flex" v-show="show==='distributed'">-->
+    <!--<div @click="panel.showToken=!panel.showToken">-->
+    <!--<p>{{params4.token!==''?params4.token:$t('trade_record.trade_record_all')}} <i :class="[!panel.showToken?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='distributed' && panel.showToken">-->
+    <!--<li v-for="item in tokens" @click="params4.token=item">{{item!==''?item:$t('trade_record.trade_record_all')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<div @click="panel.showPeriod=!panel.showPeriod">-->
+    <!--<p>{{params4.period}} {{$t('exchange.exchange_day')}} <i :class="[!panel.showPeriod?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='distributed' && panel.showPeriod">-->
+    <!--<li v-for="item in periods" @click="params4.period=item">{{item}} {{$t('exchange.exchange_day')}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<span class="ml30">{{$t('exchange.exchange_status')}}</span>-->
+    <!--<div @click="panel.showStatus=!panel.showStatus">-->
+    <!--<p>{{getDistributedState(params4.status).value}} <i :class="[!panel.showStatus?'icon-arrow-down2':'icon-arrow-up3']"></i></p>-->
+    <!--<ul v-show="show==='distributed' && panel.showStatus">-->
+    <!--<li v-for="item in rechargeStatus" @click="params4.status=item">{{getDistributedState(item).value}}</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
 
-    <div class="recharge" v-if="show==='deposit'">
+    <label class="flex">
+      <span>{{$t('account.user_center_history_deposit')}}</span><!--充值记录-->
+      <slot></slot>
+    </label>
+    <div class="recharge">
       <ul class="header" v-if="!rechargeLoading && rechargeHistory.length > 0">
         <li>
-          <span class="time">{{$t('account.user_center_history_receiveTime')}}<!--到账时间--></span>
+          <span class="id">{{$t('account.user_center_history_tradeID')}}<!--交易ID--></span>
           <span class="currency">{{$t('account.user_center_history_coin')}}<!--币种--></span>
-          <!--<span class="id">{{$t('account.user_center_history_tradeID')}}&lt;!&ndash;交易ID&ndash;&gt;</span>-->
+          <span class="quantity">{{$t('account.user_center_history_amount')}}<!--数量--></span>
           <span class="address">{{$t('account.user_center_history_address')}}<!--转入地址--></span>
           <span class="progress">{{$t('account.user_center_history_progress')}}<!--区块进度--></span>
-          <span class="quantity">{{$t('account.user_center_history_amount')}}<!--数量--></span>
           <span class="status">{{$t('account.user_center_history_status')}}<!--状态--></span>
+          <span class="time">{{$t('account.user_center_history_receiveTime')}}<!--到账时间--></span>
         </li>
       </ul>
       <ul v-if="!rechargeLoading && rechargeHistory.length > 0">
         <li v-for="(item, index) in rechargeHistory" :key="index">
-          <span class="time">{{item.competedAt ? new Date(Number(item.competedAt)).format() : '--'}}</span>
+          <span class="id" :title="item.txId">{{item.txId}}</span>
           <span class="currency">{{item.symbol}}</span>
-          <!--<span class="id" :title="item.txId">{{item.txId}}</span>-->
+          <span class="quantity">{{toFixed(item.amount)}}</span>
           <span class="address" :title="item.fromAddress">{{item.fromAddress}}</span>
           <span class="progress">{{Math.min(item.confirmation < 0 ? 1 : item.confirmation, item.blockConfirm)}}/{{item.blockConfirm}}</span>
-          <span class="quantity">{{toFixed(item.amount)}}</span>
           <span class="status" :class="getRechargeState(item.status)['className']">{{getRechargeState(item.status)['value']}}</span>
+          <span class="time">{{item.competedAt ? new Date(Number(item.competedAt)).format() : '--'}}</span>
         </li>
       </ul>
       <page v-if="!rechargeLoading && rechargeHistory.length > 0" :pageIndex="params.page" :pageSize="params.show"
@@ -128,31 +136,29 @@
       <loading v-if="rechargeLoading"/>
     </div>
 
-    <div class="recharge withdrawal" v-show="show==='withdrawal'">
 
+    <label class="flex">{{$t('account.user_center_history_withdrawal')}}<!--提现记录--></label>
+    <div class="recharge withdrawal">
       <ul class="header" v-if="!withdrawalLoading && withdrawalHistory.length > 0">
         <li>
-          <span class="time">{{$t('account.user_center_history_sendTime')}}<!--发送时间--></span>
-          <span class="currency">{{$t('account.user_center_history_coin')}}<!--币种--></span>
           <span class="id">{{$t('account.user_center_history_tradeID')}}<!--交易ID--></span>
-
+          <span class="currency">{{$t('account.user_center_history_coin')}}<!--币种--></span>
           <span class="quantity">{{$t('account.user_center_history_amount')}}<!--数量--></span>
-          <!--<span class="address">{{$t('account.user_center_history_address')}}&lt;!&ndash;转入地址&ndash;&gt;</span>-->
+          <span class="address">{{$t('account.user_center_history_address')}}<!--转入地址--></span>
           <span class="status">{{$t('account.user_center_history_status')}}<!--状态--></span>
-
+          <span class="time">{{$t('account.user_center_history_sendTime')}}<!--发送时间--></span>
         </li>
       </ul>
 
       <ul v-if="!withdrawalLoading && withdrawalHistory.length > 0">
         <li v-for="(item, index) in withdrawalHistory" :key="index">
-          <span class="time">{{item.updatedAt ? new Date(Number(item.updatedAt)).format() : '--'}}</span>
-          <span class="currency">{{item.symbol}}</span>
           <span class="id" :title="item.txId">{{item.txId || '--'}}</span>
+          <span class="currency">{{item.symbol}}</span>
 
           <span class="quantity">{{toFixed(item.amount)}}</span>
-          <!--<span class="address" :title="item.toAddress">{{item.toAddress}}</span>-->
+          <span class="address" :title="item.toAddress">{{item.toAddress}}</span>
           <span class="status" :class="getWithdrawalState(item.status)['className']">{{getWithdrawalState(item.status)['value']}}</span>
-
+          <span class="time">{{item.updatedAt ? new Date(Number(item.updatedAt)).format() : '--'}}</span>
         </li>
       </ul>
       <page v-if="!withdrawalLoading && withdrawalHistory.length > 0" :pageIndex="params2.page" :pageSize="params2.show"
@@ -217,7 +223,8 @@
 
         </li>
       </ul>
-      <page v-if="!distributedLoading && distributedHistory.length > 0" :pageIndex="params4.page" :pageSize="params4.show"
+      <page v-if="!distributedLoading && distributedHistory.length > 0" :pageIndex="params4.page"
+            :pageSize="params4.show"
             :total="params4.total" @changePageIndex="pageChange4"/>
       <div class="nodata" v-if="!distributedLoading && distributedHistory.length === 0">
         <div class="nodata-icon icon-no-order"></div>
@@ -247,33 +254,33 @@
           page: 1,
           show: 10,
           total: 0,
-          token:'',
-          period:7,
-          status:''
+          token: '',
+          period: 7,
+          status: ''
         },
         params2: {
           page: 1,
           show: 10,
           total: 0,
-          token:'',
-          period:7,
-          status:''
+          token: '',
+          period: 7,
+          status: ''
         },
         params3: {
           page: 1,
           show: 6,
           total: 0,
-          token:'',
-          period:7,
-          status:''
+          token: '',
+          period: 7,
+          status: ''
         },
         params4: {
           page: 1,
           show: 6,
           total: 0,
-          token:'',
-          period:7,
-          status:''
+          token: '',
+          period: 7,
+          status: ''
         },
         rechargeHistory: [],
         withdrawalHistory: [],
@@ -283,15 +290,15 @@
         withdrawalLoading: false,
         stakedLoading: false,
         distributedLoading: false,
-        tokens:[],
-        periods:[7,30,180],
-        rechargeStatus:['', 1, 2],
-        withdrawalStatus:['', 1, 2, 4, 5, 6],
-        stakedStatus:['', 1, -2],
-        panel:{
-          showToken:false,
-          showPeriod:false,
-          showStatus:false
+        tokens: [],
+        periods: [7, 30, 180],
+        rechargeStatus: ['', 1, 2],
+        withdrawalStatus: ['', 1, 2, 4, 5, 6],
+        stakedStatus: ['', 1, -2],
+        panel: {
+          showToken: false,
+          showPeriod: false,
+          showStatus: false
         }
       }
     },
@@ -301,9 +308,9 @@
           direction: 1,
           page: this.params.page,
           pageSize: this.params.show,
-          symbol: this.params.token,
-          time: this.params.period+'days',
-          status: this.params.status
+          // symbol: this.params.token,
+          // time: this.params.period + 'days',
+          // status: this.params.status
         }
       },
       params2Change () {
@@ -311,9 +318,9 @@
           direction: 2,
           page: this.params2.page,
           pageSize: this.params2.show,
-          symbol: this.params2.token,
-          time: this.params2.period+'days',
-          status: this.params2.status
+          // symbol: this.params2.token,
+          // time: this.params2.period + 'days',
+          // status: this.params2.status
         }
       },
       params3Change () {
@@ -321,7 +328,7 @@
           page: this.params3.page,
           pageSize: this.params3.show,
           symbol: this.params3.token,
-          time: this.params3.period+'days',
+          time: this.params3.period + 'days',
           status: this.params3.status
         }
       },
@@ -330,45 +337,45 @@
           page: this.params4.page,
           pageSize: this.params4.show,
           symbol: this.params4.token,
-          time: this.params4.period+'days',
+          time: this.params4.period + 'days',
           status: this.params4.status,
-          direction:6
+          direction: 6
         }
       }
     },
     watch: {
-      show(_new){
-          this.panel.showToken = false
-          this.panel.showPeriod = false
-          this.panel.showStatus = false
-          switch (_new){
-            case 'deposit':
-            this.rechargeHistory.length===0 && this.getListDepositHistory()
+      show (_new) {
+        this.panel.showToken = false
+        this.panel.showPeriod = false
+        this.panel.showStatus = false
+        switch (_new) {
+          case 'deposit':
+            this.rechargeHistory.length === 0 && this.getListDepositHistory()
             break
-            case 'withdrawal':
-            this.withdrawalHistory.length===0 && this.getListWithdrawHistory()
+          case 'withdrawal':
+            this.withdrawalHistory.length === 0 && this.getListWithdrawHistory()
             break
-            case 'staked':
-            this.stakedHistory.length===0 && this.findStakingRecords()
+          case 'staked':
+            this.stakedHistory.length === 0 && this.findStakingRecords()
             break
-            case 'distributed':
-            this.distributedHistory.length===0 && this.findDistributedHistory()
+          case 'distributed':
+            this.distributedHistory.length === 0 && this.findDistributedHistory()
             break
-          }
+        }
       },
-      'panel.showToken'(_new){
+      'panel.showToken' (_new) {
         if (_new) {
           this.panel.showPeriod = false
           this.panel.showStatus = false
         }
       },
-      'panel.showPeriod'(_new){
+      'panel.showPeriod' (_new) {
         if (_new) {
           this.panel.showToken = false
           this.panel.showStatus = false
         }
       },
-      'panel.showStatus'(_new){
+      'panel.showStatus' (_new) {
         if (_new) {
           this.panel.showToken = false
           this.panel.showPeriod = false
@@ -390,12 +397,17 @@
     created () {
       this.getAssets()
       this.getListDepositHistory()
+      this.getListWithdrawHistory()
     },
     methods: {
-      getAssets(){
+      getAssets () {
         userUtils.myAssets({}, (data) => {
-          data = data.filter(item=>{return item.type===1})
-          this.tokens = [''].concat(data.map(item=>{return item.symbol}))
+          data = data.filter(item => {
+            return item.type === 1
+          })
+          this.tokens = [''].concat(data.map(item => {
+            return item.symbol
+          }))
         })
       },
       switch_tab (tab) {
@@ -559,24 +571,27 @@
 </script>
 
 <style scoped lang="less">
-  .history-record{
-    padding: 14px 18px 60px;
-    background-color: rgba(27, 26, 31, 0.9);
+  .history-record {
+    /*padding: 14px 18px 60px;*/
+    /*background-color: rgba(27, 26, 31, 0.9);*/
     padding-bottom: 30px;
-    color: #d8d8da;
-    .history_nav{
+    /*color: #d8d8da;*/
+
+    .history_nav {
       font-size: 14px;
       width: 100%;
       height: 33px;
       position: relative;
       margin-top: 20px;
-      border-bottom: 1px solid hsla(240,4%,95%,.1);
-      label{
+      border-bottom: 1px solid hsla(240, 4%, 95%, .1);
+
+      label {
         position: relative;
         padding-bottom: 12px;
         margin-right: 70px;
         display: inline-block;
-        &.active{
+
+        &.active {
           color: #00a0e9;
           margin-bottom: -1px;
           border-bottom: 2px solid #00a0e9;
@@ -585,6 +600,7 @@
       }
     }
   }
+
   .recharge, .withdrawal {
     margin-top: 20px;
   }
@@ -617,12 +633,12 @@
   }
 
   .recharge ul {
-    padding-left: 20px;
-    padding-right: 20px;
+    /*padding-left: 20px;*/
+    /*padding-right: 20px;*/
   }
 
   .recharge ul.header {
-    /*background: #F5F5F5;*/
+    background: #F5F5F5;
   }
 
   .recharge ul li {
@@ -630,6 +646,8 @@
     justify-content: space-between;
     min-height: 40px;
     line-height: 40px;
+    padding: 4px 15px;
+    border-bottom: 1px solid #eeeeee;
   }
 
   .recharge ul.header li {
@@ -706,21 +724,67 @@
     color: #A1A1A1;
   }
 
-.search {
-  > span {line-height: 24px;}
-  > div {
+  .search {
+    > span {
+      line-height: 24px;
+    }
+
+    > div {
       line-height: 25px;
       position: relative;
-      &+div {margin-left: 30px;}
-      > p {border-bottom: 1px solid hsla(240, 4%, 95%, 0.1); padding-left: 15px; padding-right: 15px; cursor: pointer;  position: relative; display: inline-block; min-width: 100px; }
-      > p i {position: absolute; right: 15px; top: 6px;}
+
+      & + div {
+        margin-left: 30px;
+      }
+
+      > p {
+        border-bottom: 1px solid hsla(240, 4%, 95%, 0.1);
+        padding-left: 15px;
+        padding-right: 15px;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        min-width: 100px;
+      }
+
+      > p i {
+        position: absolute;
+        right: 15px;
+        top: 6px;
+      }
+
       > ul {
-        position: absolute; left: 0; right: 0; background-color: #212028; box-shadow: 1px 1px 3px rgba(0,0,0,.3); max-height: 400px; overflow-y: auto; z-index: 1;
-        li {line-height: 35px; padding-left: 15px; padding-right: 15px; cursor: pointer;}
-        li:hover {background-color: #292831;}
-        li.active {color: #00a0e9; background-color: #292831;}
+        position: absolute;
+        left: 0;
+        right: 0;
+        background-color: #212028;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 1;
+
+        li {
+          line-height: 35px;
+          padding-left: 15px;
+          padding-right: 15px;
+          cursor: pointer;
+        }
+
+        li:hover {
+          background-color: #292831;
+        }
+
+        li.active {
+          color: #00a0e9;
+          background-color: #292831;
+        }
       }
     }
-}
+  }
+  .flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 </style>
 

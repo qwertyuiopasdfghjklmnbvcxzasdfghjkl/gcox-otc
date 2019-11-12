@@ -6,9 +6,6 @@
       <small @click="close()">
         <img src="../../assets/img/close.png">
       </small>
-      <!--<router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}&lt;!&ndash;我的资产&ndash;&gt;</router-link>-->
-      <!--&gt;-->
-      <!--<span>{{$t('usercontent.recharge')}}&lt;!&ndash;数字货币充值&ndash;&gt;</span>-->
     </div>
     <div class="copy">
       <p>{{symbol}}{{$t('referral.address')}} <!--充币地址--></p>
@@ -16,29 +13,9 @@
       <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
     </div>
     <div class="tsmb">
-      <!--<div class="tsmb-flex">-->
-        <!--<p>{{$t('usercontent.notice')}}</p>-->
-        <!--<label>-->
-          <!--<p>{{$t('usercontent.not1').format(symbol)}}</p>-->
-          <!--&lt;!&ndash;<p>{{$t('usercontent.not2').format(symbol,'0.01')}}</p>&ndash;&gt;-->
-        <!--</label>-->
-      <!--</div>-->
-      <!--<div class="tsmb-flex blue">-->
-        <!--<p>{{$t('usercontent.not3')}}</p>-->
-        <!--<label style="padding-left: 4px">-->
-          <!--<p>{{$t('usercontent.not3-1').format(symbol)}}</p>-->
-        <!--</label>-->
-      <!--</div>-->
       <p>{{$t('gcox_otc.fee')}}  {{procedureFee}}</p>
       <p>* {{$t('gcox_otc.explain').format(symbol)}}</p>
     </div>
-    <!--<div class="title-div">-->
-    <!--<small>{{$t('usercontent.user86')}}</small>-->
-    <!--<p @click.stop="showSymbol = !showSymbol">{{symbol}}</p>-->
-    <!--<ul v-show="showSymbol">-->
-    <!--<li v-for="item in allData" @click.prevent="icheck(item)">{{item.symbol}}</li>-->
-    <!--</ul>-->
-    <!--</div>-->
     <div class="bottom-box">
       <div class="qrad">
         <div ref="qrcode" class="qrcode"></div>
@@ -75,7 +52,6 @@
     created () {
       this.symbol = this.paramSymbol || 'ETH'
       this.getListAccount()
-      //console.log(this.addr, this.symbol)
       this.$nextTick(() => {
         utils.qrcode(this.$refs.qrcode, {
           text: this.addr,
@@ -85,11 +61,6 @@
       })
     },
     methods: {
-      icheck (item) {
-        //console.log(item)
-        this.addr = item.address
-        this.symbol = item.symbol
-      },
       onCopy () {
         Vue.$koallTipBox({icon: 'success', message: this.$t(`usercontent.copy-success`)})
       },
@@ -103,7 +74,6 @@
               if (next.symbol === this.symbol) {
                 this.addr = next.address
                 this.procedureFee = next.procedureFee
-                //console.log(next)
               }
             }
             return next.type === 1
