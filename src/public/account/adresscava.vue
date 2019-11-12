@@ -7,26 +7,46 @@
         <img src="../../assets/img/close.png">
       </small>
     </div>
-    <div class="copy">
-      <p>{{symbol}}{{$t('referral.address')}} <!--充币地址--></p>
-      <p class="address">{{addr}}</p>
-      <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
-    </div>
-    <div class="tsmb">
-      <p>{{$t('gcox_otc.fee')}}  {{procedureFee}}</p>
-      <p>* {{$t('gcox_otc.explain').format(symbol)}}</p>
-    </div>
-    <div class="bottom-box">
-      <div class="qrad">
-        <div ref="qrcode" class="qrcode"></div>
+    <div>
+      <div class="copy">
+        <p>{{symbol}}{{$t('referral.address')}} <!--充币地址--></p>
+        <p class="address">{{getAddress}}</p>
+        <label v-clipboard:copy="getAddress" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
+      </div>
+      <div class="tsmb">
+        <p>{{$t('gcox_otc.fee')}} {{procedureFee}}</p>
+        <p>* {{$t('gcox_otc.explain').format(symbol)}}</p>
+      </div>
+      <div class="bottom-box">
+        <div class="qrad">
+          <div ref="qrcode" class="qrcode"></div>
+        </div>
       </div>
     </div>
+
+    <div v-if="symbol==='EOS' || symbol==='XRP'">
+      <div class="copy">
+        <p>MEMO<!--充币地址--></p>
+        <p class="address">{{addr}}</p>
+        <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
+      </div>
+      <div class="tsmb">
+        <p>{{$t('gcox_otc.memo_address_use')}}</p>
+      </div>
+      <div class="bottom-box">
+        <div class="qrad">
+          <div ref="memoQrcode" class="qrcode"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
   import utils from '@/assets/js/utils'
   import Vue from 'vue'
   import userUtils from '@/api/wallet'
+  import {mapGetters} from 'vuex'
 
   export default {
     props: ['paramSymbol'],
@@ -37,12 +57,29 @@
         allData: [],
         showSymbol: false,
         minWithdraw: '',
-        procedureFee: ''
+        procedureFee: '',
+        EOS_MEMO: ''
+      }
+    },
+    computed: {
+      ...mapGetters(['getSysParams']),
+      XRP_MEMO () {
+        return (this.getSysParams['mainAddXRP'] && this.getSysParams.mainAddXRP.value) || ''
+      },
+      getAddress () {
+        return this.symbol === 'EOS' ? this.EOS_MEMO : (this.symbol === 'XRP' ? this.XRP_MEMO : this.addr)
       }
     },
     watch: {
-      addr () {
+      getAddress () {
         utils.qrcode(this.$refs.qrcode, {
+          text: this.getAddress,
+          width: 190,
+          height: 190
+        })
+      },
+      addr () {
+        utils.qrcode(this.$refs.memoQrcode, {
           text: this.addr,
           width: 190,
           height: 190
@@ -54,11 +91,14 @@
       this.getListAccount()
       this.$nextTick(() => {
         utils.qrcode(this.$refs.qrcode, {
-          text: this.addr,
+          text: this.getAddress,
           width: 190,
           height: 190
         })
       })
+      if (this.symbol === 'EOS' && !this.EOS_MEMO) {
+        this.getEosAddress()
+      }
     },
     methods: {
       onCopy () {
@@ -66,6 +106,11 @@
       },
       onError () {
         Vue.$koallTipBox({icon: 'notification', message: this.$t(`usercontent.copy-error`)})
+      },
+      getEosAddress () {
+        userUtils.getEosAddress(data => {
+          this.EOS_MEMO = data
+        })
       },
       getListAccount () {
         userUtils.myAssets({}, res => {
@@ -94,7 +139,8 @@
     padding: 20px;
     border-bottom: 1px solid #eeeeee;
     margin-bottom: 30px;
-    img{
+
+    img {
       width: 16px;
       cursor: pointer;
     }
@@ -104,8 +150,10 @@
     background-color: #fff;
     font-size: 16px;
     width: 900px;
-    border-radius:8px;
+    border-radius: 8px;
     padding-bottom: 40px;
+    height: 85vh;
+    overflow-y: auto;
 
     .tsmb {
       margin: 10px auto;
@@ -115,9 +163,9 @@
       background: #eeeeee;
       border-left: 4px solid #F0B936;
 
-     p{
-       padding: 6px;
-     }
+      p {
+        padding: 6px;
+      }
     }
 
     .title-div {
@@ -190,15 +238,17 @@
       }
     }
   }
+
   .copy {
     width: 500px;
     border: 1px solid hsla(0, 0%, 100%, .12);
     margin: 10px auto;
     position: relative;
-    .address{
+
+    .address {
       padding: 15px;
-      border:1px solid #cccccc;
-      border-radius:3px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
       margin: 10px auto;
       color: #666;
       font-size: 18px;
@@ -207,6 +257,7 @@
       white-space: nowrap;
       overflow: hidden;
     }
+
     label {
       background: url("../../assets/img/cype.png") no-repeat center #eeeeee;
       background-size: 24px;
@@ -220,13 +271,13 @@
     }
 
   }
+
   .bottom-box {
     display: flex;
     /*justify-content: space-between;*/
     align-items: center;
     justify-content: center;
     margin: 0px auto;
-
 
 
     .qrad {
