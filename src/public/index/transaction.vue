@@ -3,6 +3,28 @@
     <div class="top">
       <p class="w1200">{{$t('gcox_otc.get_cny_in_china')}}</p>
     </div>
+    <div class="w800 mt25">
+      <p><span class="numer">{{$t('otc_exchange.otc_exchange_order_number')}}：
+        <!--订单编号-->--</span></p>
+      <ul class="step">
+        <li class="active">
+          1.{{$t('public0.public143')}}
+          <!--新建交易-->
+        </li>
+        <li >
+          2.{{$t('public0.public144')}}
+          <!--请先付款-->
+        </li>
+        <li>
+          3.{{$t('public0.public145')}}
+          <!--等待放币-->
+        </li>
+        <li >
+          4.{{$t('public0.public146')}}
+          <!--完成交易-->
+        </li>
+      </ul>
+    </div>
     <div class="buy">
       <div class="buy-cont">
         <!--<p>-->
@@ -18,6 +40,8 @@
         <!--<span class="label-left">{{$t('otc_exchange.otc_exchange_Trading_limits')}}&lt;!&ndash;交易限额&ndash;&gt;</span>-->
         <!--<span class="trade-limit"><em>{{detailData.min_amount}} - {{detailData.max_amount}}</em><em class="unit">&nbsp;{{tradeParams.limit}}</em></span>-->
         <!--</p>-->
+
+
         <div>
           <p>
             <span class="label-left">{{$t('exchange.exchange_amount')}}<!--数量--></span>
@@ -98,7 +122,7 @@
             <em class="card icon-bank" :title="$t('otc_ad.otc_ad_BankPay')"
                 v-if="(params.pay_type||'').indexOf('1')!==-1"> {{$t('otc_ad.otc_ad_BankPay')}}</em><!--银行卡支付--></td>
         </tr>
-        <tr>
+        <tr v-if="false">
           <td>{{$t('gcox_otc.address')}}</td>
           <td>--</td>
         </tr>
@@ -392,7 +416,7 @@
   }
 
   .box {
-    width: 540px;
+    width: 800px;
     margin: 30px auto;
 
     .title {
@@ -403,7 +427,7 @@
     }
 
     table {
-      width: 540px;
+      width: 100%;
 
       td {
         border: 1px solid #eeeeee;
@@ -420,7 +444,7 @@
   }
 
   .buy {
-    width: 500px;
+    width: 800px;
     padding: 20px;
     margin: 20px auto;
     border-bottom: 1px solid #eeeeee;
@@ -471,8 +495,7 @@
   }
 
   .btn {
-    text-align: right;
-    padding-right: 40px;
+    text-align: center;
     margin-top: 40px;
 
     button {
@@ -489,13 +512,13 @@
   }
   .select{
     display: inline-block;
-    width: 370px;
+    width: 600px;
     position: relative;
     span{
       padding: 15px;
       height: 20px;
       border: 1px solid #eeeeee;
-      width: 320px;
+      width: 600px;
       display: inline-block;
       vertical-align: middle;
       position: relative;
@@ -525,7 +548,7 @@
       background: #ffffff;
       border: 1px solid #eeeeee;
       z-index: 99;
-      width: 352px;
+      width: 630px;
       padding: 15px 0;
       li{
         padding: 10px;
@@ -536,6 +559,63 @@
         &:hover{
           background: #eeeeee;
         }
+      }
+    }
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    li {
+      flex: 1;
+      background: #eeeeee;
+      height: 50px;
+      line-height: 50px;
+      color: #999;
+      font-size: 18px;
+      position: relative;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      &:first-of-type {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+      &:last-of-type {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        &:after {display: none;}
+      }
+
+      &.active {
+        background: #299D82;
+        color: #ffffff;
+
+        &:after {
+          background: #299D82;
+        }
+        &.current {
+          background: #F0B936;
+          &:after {
+            background: #F0B936;
+          }
+        }
+      }
+
+      &:after {
+        content: '';
+        width: 24px;
+        height: 24px;
+        display: block;
+        position: absolute;
+        right: -19px;
+        top: 7px;
+        background: #eeeeee;
+        border: 6px solid #ffffff;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        transform: rotate(-45deg);
+        z-index: 9;
       }
     }
   }

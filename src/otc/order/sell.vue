@@ -47,8 +47,9 @@
             <tr>
               <td>{{$t('otc_ad.otc_ad_status')}}</td>
               <td>
-                <span class="gray_button mr20" v-if="step>2">{{$t('otc_ad.otc_ad_completed')}}</span>
+
                 <span class="gray_button mr20" v-if="step === 2">{{$t('public0.public154')}}</span>
+                <span class="gray_button mr20" v-if="step>2">{{$t('otc_ad.otc_ad_completed')}}</span>
                 <span class="green_button" v-if="step <= 2">{{stateTitle}}</span>
               </td>
             </tr>
@@ -78,7 +79,7 @@
           </table>
         </div>
         <div class="countdown"  v-if="step ===1">
-          <span class="title">{{$t('gcox_otc.residue_pay_time')}}<!--剩余支付时间--></span>
+          <span class="title">{{$t('public0.public62')}}<!--剩余支付时间--></span>
           <span class="timer">{{surplus_Time}}</span>
         </div>
         <p class="mt20 pl20"  v-if="step===1">{{$t('otc_ad.pay_time_expired_tip')}}<!-- 当付款时间过期是交易会被取消，我们将把资金退还给卖家 --></p>
@@ -204,7 +205,7 @@
         if (this.item.state === 2) {
           return this.$t('public0.public146')
         } else if (this.item.pay_state === 0) {
-          return this.$t('public0.public150')
+          return this.$t('public0.public152')
         } else if (this.item.pay_state === 1) {
           return this.$t('public0.public145')
         } else {
@@ -304,6 +305,7 @@
         let surplusTime = this.item.pay_apply_time * 60 - diffTime
         let interval = utils.countDown(surplusTime, (time) => {
           if (time === '00:00') {
+
           } else if (time === '05:00' && this.item.pay_state === 0) {
             // 您的付款确认时间还剩5分钟，5分钟后系统将自动取消订单！请付款并标记确认付款！
             Vue.$confirmDialog({
@@ -371,7 +373,10 @@
         }, (msg) => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
-      }
+      },
+      goCancelList () {
+        this.$router.push({name: 'control_deal', params: {'ip': 3}})
+      },
     }
   }
 </script>

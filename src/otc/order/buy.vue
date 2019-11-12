@@ -79,7 +79,8 @@
           </tr>
         </table>
       </div>
-      <div class="countdown" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
+      <div class="countdown"
+           v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
         <span class="title">{{$t('public0.public62')}}</span>
         <span class="timer">{{surplus_Time}}</span>
       </div>
@@ -92,8 +93,8 @@
 
       <div class="undone-center" v-if="data1.state === 2">
         <!--<div class="undone-center-buys">-->
-          <!--<p>{{$t('otc_exchange.otc_exchange_buy')}}&lt;!&ndash;购买&ndash;&gt;</p>-->
-          <!--<p>{{item.symbol}}</p>-->
+        <!--<p>{{$t('otc_exchange.otc_exchange_buy')}}&lt;!&ndash;购买&ndash;&gt;</p>-->
+        <!--<p>{{item.symbol}}</p>-->
         <!--</div>-->
         <div class="undone-center-type" v-if="!data1.from_user_comment">
           <!--{{$t('otc_ad.otc_ad_prompt9')}}&lt;!&ndash;交易成功！请评价对方&ndash;&gt;-->
@@ -314,6 +315,7 @@
         let interval = utils.countDown(surplusTime, (time) => {
           if (time === '00:00') {
             this.data1.isExpire = true
+            // this.goCancelList()
           } else if (time === '05:00' && this.data.pay_state === 0) {
             // 您的付款确认时间还剩5分钟，5分钟后系统将自动取消订单！请付款并标记确认付款！
             Vue.$confirmDialog({
@@ -372,6 +374,9 @@
         }, (msg) => {
           !noMsg && Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
+      },
+      goCancelList () {
+        this.$router.push({name: 'control_deal', params: {'ip': 3}})
       },
       cancelOrderByConfirm (item) { // 取消订单 - 确认提示
         if (this.cancelStatus !== 1) {
@@ -591,6 +596,7 @@
         .active {
           color: #e74c3c;
         }
+
         [class*=myicon-] {
           display: inline-block;
           height: 26px;
@@ -601,12 +607,30 @@
           vertical-align: middle;
           margin-right: 10px;
         }
-        .myicon-praise {background-image: url('../../assets/img/icon_praise_a.png');}
-        .myicon-praise.active {background-image: url('../../assets/img/icon_praise_b.png');}
-        .myicon-average {background-image: url('../../assets/img/icon_average_a.png');}
-        .myicon-average.active {background-image: url('../../assets/img/icon_average_b.png');}
-        .myicon-bad-review {background-image: url('../../assets/img/icon_bad_a.png');}
-        .myicon-bad-review.active {background-image: url('../../assets/img/icon_bad_b.png');}
+
+        .myicon-praise {
+          background-image: url('../../assets/img/icon_praise_a.png');
+        }
+
+        .myicon-praise.active {
+          background-image: url('../../assets/img/icon_praise_b.png');
+        }
+
+        .myicon-average {
+          background-image: url('../../assets/img/icon_average_a.png');
+        }
+
+        .myicon-average.active {
+          background-image: url('../../assets/img/icon_average_b.png');
+        }
+
+        .myicon-bad-review {
+          background-image: url('../../assets/img/icon_bad_a.png');
+        }
+
+        .myicon-bad-review.active {
+          background-image: url('../../assets/img/icon_bad_b.png');
+        }
       }
     }
   }
@@ -621,12 +645,16 @@
     margin-top: 20px;
     position: relative;
     text-align: center;
-    .timer {font-size: 48px;}
+
+    .timer {
+      font-size: 48px;
+    }
+
     .title {
       position: absolute;
       left: 16px;
       top: 0;
-      bottom:0;
+      bottom: 0;
     }
   }
 
@@ -645,7 +673,8 @@
 
     }
   }
-  .red_note{
+
+  .red_note {
     border-left: 4px solid #e74c3c;
     padding: 20px;
     background: #eeeeee;
