@@ -113,7 +113,8 @@ export default {
     'default': '设为默认',
     'remain_count': '剩余数量',
     'currency_way': '收款方式',
-    'not_need_memo': '不需要MEMO'
+    'not_need_memo': '不需要MEMO',
+    'memo_address_use': 'MEMO和地址同时使用采用充值成功'
   },
   'login_register': {
     'Next_step': '下一步',
