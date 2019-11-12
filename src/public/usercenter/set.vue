@@ -89,7 +89,7 @@
         </collapse>
       </div>
 
-      <div class="box">
+      <div class="box" v-if="false">
         <collapse :title="$t('user.changePassword')">
           <div class="intro">
             <label>
