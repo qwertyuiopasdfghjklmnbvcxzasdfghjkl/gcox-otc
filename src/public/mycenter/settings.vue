@@ -21,8 +21,8 @@
               <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
               <span class="del" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
             </div>
-            <label class="check">
-              <input type="checkbox" @change="change(item)" :checked="true"/>
+            <label class="check" @click="change(item)">
+              <i  :class="{active : item.is_default === 1}"></i>
               <span>{{$t('gcox_otc.default')}}<!--设为默认--></span>
             </label>
           </div>
@@ -396,9 +396,18 @@
           })
         }
       },
-      change(d){
+      change (d) {
         console.log(d)
-        this.getList()
+        if (d.is_default === 0) {
+          let data = {
+            id: d.id
+          }
+          otcApi.setDefault(data, res => {
+            this.getList()
+          }, msg => {
+            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+          })
+        }
       }
     }
   }
@@ -437,21 +446,46 @@
         }
 
         .form-flex-right {
-          .btn{
+          .btn {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            .del{
+
+            .del {
               color: #0D66EF;
             }
           }
-          .check{
+
+          .check {
             display: flex;
             align-items: center;
-            span{
+
+            i {
+              width: 14px;
+              height: 14px;
+              border: 1px solid #686a77;
+              cursor: pointer;
+
+              &.active {
+                border: 1px solid #00a0e9;
+
+                &:before {
+                  content: '✔';
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #00a0e9;
+                  font-size: 12px;
+                  line-height: 14px;
+                }
+              }
+            }
+
+            span {
               padding: 4px;
             }
           }
+
           span {
             padding: 8px 20px;
             display: block;

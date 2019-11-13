@@ -544,4 +544,16 @@ const appeals = function (formData, success, error) {
 }
 otc.appeals = appeals
 
+// 设置默认银行卡
+const setDefault = function (formData, success, error) {
+  api.post(`${domain}api/v2/otc/paytypes/setDefault`, formData, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+otc.setDefault = setDefault
+
 export default otc

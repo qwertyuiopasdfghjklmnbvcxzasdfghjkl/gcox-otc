@@ -90,7 +90,9 @@ if (process.env.NODE_ENV !== 'development') {
 // Object.assign(res, gjh)
 langApi.getLanguage(lang, (res) => {
   i18n.locale = lang
-  i18n.setLocaleMessage(lang, Object.assign(res, gjh))
+  let l = Object.assign(res, gjh)
+  i18n.setLocaleMessage(lang, l)
+  console.log(l)
   window.vm = new Vue({
     el: '#app',
     router,

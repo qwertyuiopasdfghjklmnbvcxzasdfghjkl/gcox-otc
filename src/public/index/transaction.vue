@@ -11,7 +11,7 @@
           1.{{$t('public0.public143')}}
           <!--新建交易-->
         </li>
-        <li >
+        <li>
           2.{{$t('public0.public144')}}
           <!--请先付款-->
         </li>
@@ -19,7 +19,7 @@
           3.{{$t('public0.public145')}}
           <!--等待放币-->
         </li>
-        <li >
+        <li>
           4.{{$t('public0.public146')}}
           <!--完成交易-->
         </li>
@@ -250,7 +250,7 @@
       this.fnGetAdvertisementDetail()
       this.getBank()
     },
-    beforeDestroy(){
+    beforeDestroy () {
       window.localStorage.removeItem('amount')
     },
     methods: {
@@ -314,7 +314,8 @@
                 symbol: this.detailData.symbol,
                 currency: this.detailData.currency,
                 symbol_count: this.symbol_count,
-                currency_count: this.currency_count
+                currency_count: this.currency_count,
+                bankId: this.bankData.id
               }, (id, msg) => {
                 this.locked = false
                 this.params.newOrderCount++
@@ -337,9 +338,13 @@
       getBank () {
         otcApi.getPaySettings((res) => {
           this.bankList = res.data.bankList
-          this.bankData = this.bankList[0]
+          this.bankList.filter(res => {
+            if (res.is_default === 1) {
+              this.bankData = res
+            }
+          })
         })
-      },
+      }
     }
   }
 </script>
@@ -454,12 +459,15 @@
 
       div {
         font-size: 16px;
-        p:nth-child(1){
+
+        p:nth-child(1) {
           width: 120px;
         }
-        p:nth-child(2){
-          width:370px;
-          input{
+
+        p:nth-child(2) {
+          width: 370px;
+
+          input {
             width: 320px;
           }
         }
@@ -468,6 +476,7 @@
           margin: 10px 0;
           position: relative;
           display: inline-block;
+
           small {
             position: absolute;
             width: 50px;
@@ -510,11 +519,13 @@
   .msg {
     color: #e74c3c;
   }
-  .select{
+
+  .select {
     display: inline-block;
     width: 600px;
     position: relative;
-    span{
+
+    span {
       padding: 15px;
       height: 20px;
       border: 1px solid #eeeeee;
@@ -523,7 +534,8 @@
       vertical-align: middle;
       position: relative;
       white-space: nowrap;
-      &:after{
+
+      &:after {
         content: '';
         display: block;
         border: 6px solid transparent;
@@ -535,37 +547,43 @@
         height: 0;
       }
     }
-    &:hover{
-      ul{
+
+    &:hover {
+      ul {
         display: block;
       }
     }
-    ul{
+
+    ul {
       display: none;
       position: absolute;
       top: 50px;
-      left:0;
+      left: 0;
       background: #ffffff;
       border: 1px solid #eeeeee;
       z-index: 99;
       width: 630px;
       padding: 15px 0;
-      li{
+
+      li {
         padding: 10px;
         cursor: pointer;
         transition: 0.3s;
         border-bottom: 1px solid #eeeeee;
         white-space: nowrap;
-        &:hover{
+
+        &:hover {
           background: #eeeeee;
         }
       }
     }
   }
+
   .step {
     display: flex;
     align-items: center;
     margin: 10px 0;
+
     li {
       flex: 1;
       background: #eeeeee;
@@ -577,14 +595,19 @@
       text-align: center;
       margin-top: 10px;
       margin-bottom: 10px;
+
       &:first-of-type {
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
       }
+
       &:last-of-type {
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
-        &:after {display: none;}
+
+        &:after {
+          display: none;
+        }
       }
 
       &.active {
@@ -594,8 +617,10 @@
         &:after {
           background: #299D82;
         }
+
         &.current {
           background: #F0B936;
+
           &:after {
             background: #F0B936;
           }

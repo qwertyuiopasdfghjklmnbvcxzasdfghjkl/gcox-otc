@@ -145,6 +145,16 @@
           Vue.$koallTipBox({icon: 'notification', message: this.$t(message)}) // 请登录后再发布广告||请登录后再交易
           return
         }
+        if (!this.getUserInfo.mobile) {
+          Vue.$confirmDialog({
+            id: 'bind_mobile',
+            content: this.$t('gcox_otc.bind_mobile'), // 请先绑定手机号
+            okCallback: () => {
+              this.$router.push({name: 'usercenter_abstract'})
+            }
+          })
+          return
+        }
         otcApi.getVerifyState((msg) => {
           if (isCheckPaySet) {
             otcApi.getPaySettings((res) => {
