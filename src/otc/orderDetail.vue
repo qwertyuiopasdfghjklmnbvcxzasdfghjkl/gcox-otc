@@ -112,7 +112,7 @@
                   this.data1.state = 2
                 }
               } else {
-                // this.getOrderList()
+                this.getData()
               }
               break
           }
@@ -133,6 +133,9 @@
       addSystemMessage (orderNumber, message) { // 添加系统消息
         this.showChat = true
         this.$refs.chat.addSystemMessage(orderNumber, message)
+      },
+      outTime(){
+        this.getData()
       },
       getData () {
         otcApi.ordersDetail(this.order_id, (item, serverTime) => {

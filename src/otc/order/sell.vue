@@ -58,14 +58,14 @@
         <div class="tab" v-if="step!==3">
           <table width="100%">
             <tr bgcolor="#eeeeee">
-              <td colspan="2" align="center">{{$t('otc_ad.otc_pay_details')}}</td>
+              <td colspan="2" align="center">{{$t('gcox_otc.pay_info')}}</td>
             </tr>
             <tr>
-              <td width="30%">{{$t('otc_ad.pay_method')}}</td>
+              <td width="30%">{{$t('gcox_otc.payment_method')}}</td>
               <td>{{$t(payInfo.method)}}</td>
             </tr>
             <tr>
-              <td>{{$t('otc_ad.payer')}}</td>
+              <td>{{$t('public0.public65')}}</td>
               <td>{{payInfo.name||'--'}}</td>
             </tr>
             <tr >
@@ -151,6 +151,7 @@
   import otcApi from '@/api/otc'
   import utils from '@/assets/js/utils'
   import appeal from '@/otc/otchome/appeal'
+  import warnDialog from '@/otc/otchome/dialog/warnDialog'
 
   export default {
     props: ['item', 'timer'],
@@ -169,6 +170,7 @@
           real_name: '',
           data: {}
         },
+        isExpire: false
       }
     },
     computed: {
@@ -259,7 +261,27 @@
       },
       'hparams.newOrderCount' () {
         this.getOrderList()
-      }
+      },
+      // item(){
+      //   if(this.item.state === 3){
+      //     this.goCancelList()
+      //   }
+      // },
+      // 'isExpire' (newVal) {
+      //   if (newVal && this.item.pay_state === 0) {
+      //     //console.log(`自动取消订单`)
+      //     // 由于您在规定时间内未标记确认付款，系统已经自动取消了您的订单！
+      //     Vue.$confirmDialog({
+      //       id: 'cancel_order_tip',
+      //       content: this.$t('error_code.AUTOMATICALLY_CANCEL'),
+      //       showCancel: false,
+      //       okCallback: () => {
+      //         utils.setDialog(warnDialog)
+      //       }
+      //     })
+      //     this.$emit('cancelOrder', this.item, true)
+      //   }
+      // }
     },
     created () {
       this.time()
@@ -284,14 +306,15 @@
         })
       },
       getPays () {
-        otcApi.getPaySettingsNoToken({
-          user_id: this.item.to_user_id
-        }, (res) => {
-          this.payTypes = {
-            real_name: res.real_name,
-            data: res.data
-          }
-        })
+        this.payTypes = this.item.otcPayTypeBankDTO
+        // otcApi.getPaySettingsNoToken({
+        //   user_id: this.item.to_user_id
+        // }, (res) => {
+        //   this.payTypes = {
+        //     real_name: res.real_name,
+        //     data: res.data
+        //   }
+        // })
       },
       time () {
         this.intervals.forEach((interval) => {
@@ -305,7 +328,7 @@
         let surplusTime = this.item.pay_apply_time * 60 - diffTime
         let interval = utils.countDown(surplusTime, (time) => {
           if (time === '00:00') {
-
+            // this.isExpire = true
           } else if (time === '05:00' && this.item.pay_state === 0) {
             // 您的付款确认时间还剩5分钟，5分钟后系统将自动取消订单！请付款并标记确认付款！
             Vue.$confirmDialog({
@@ -320,6 +343,7 @@
         })
 
         this.intervals.push(interval)
+        // this.isExpire = surplusTime <= 0
       },
       confirm () {
         if (this.item.state === 1 && this.item.pay_state === 0) {

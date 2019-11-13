@@ -1,6 +1,6 @@
 <template>
   <div ref="chat" class="chat" :style="cursorStyle" @click="markRead">
-    <p class="">{{$t('otc_ad.send_msg_to')}} {{curOrder && curOrder.opposite_real_name || '--'}}</p>
+    <p class="">{{$t('gcox_otc.send_msg_to').format(curOrder && curOrder.opposite_user_name || '--')}} </p>
     <div class="chat-body">
       <div class="chat-body-right">
         <div class="chat-body-right-content" ref="content" @mousewheel="mouseWheel($event, 2)">
@@ -132,6 +132,7 @@
             break
           }
         }
+        console.log(data)
         return data
       },
       isReadOnly () {
@@ -407,6 +408,7 @@
           data.opposite_real_name = res.opposite_real_name
           data.oldLoaded = true
           res.chat_info.forEach((item) => {
+            console.log(item)
             data.oldMessages.push(item)
           })
         })

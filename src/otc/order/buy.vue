@@ -67,15 +67,15 @@
           </tr>
           <tr>
             <td>{{$t('public0.public65')}}</td>
-            <td>{{payInfo.card_name}}</td>
+            <td>{{payInfo.cardName}}</td>
           </tr>
           <tr>
             <td>{{$t('otc_legal.otc_legal_Bank')}}</td>
-            <td>{{payInfo.card_bank}}</td>
+            <td>{{payInfo.cardBank}}</td>
           </tr>
           <tr>
             <td>{{$t('otc_legal.otc_legal_Bank_number')}}</td>
-            <td>{{payInfo.card_number}}</td>
+            <td>{{payInfo.cardNumber}}</td>
           </tr>
         </table>
       </div>
@@ -156,6 +156,7 @@
   import loading from '@/components/loading'
   import page from '@/components/page'
   import Adlist from '../otchome/adlist'
+  import warnDialog from '@/otc/otchome/dialog/warnDialog'
 
   export default {
     props: ['orderId', 'data', 'time'],
@@ -177,6 +178,7 @@
         surplus_Time: null,
         payInfo: {},
         cancelStatus: null,
+        isExpire: null
       }
     },
     computed: {
@@ -216,17 +218,32 @@
       },
       'hparams.newOrderCount' () {
         this.getOrderList()
+      },
+      isExpire (newVal) {
+        if (newVal && this.data1.pay_state === 0) {
+          console.log(`自动取消订单`)
+          // 由于您在规定时间内未标记确认付款，系统已经自动取消了您的订单！
+          Vue.$confirmDialog({
+            id: 'cancel_order_tip',
+            content: this.$t('error_code.AUTOMATICALLY_CANCEL'),
+            showCancel: false,
+            okCallback: () => {
+              utils.setDialog(warnDialog)
+            }
+          })
+          this.cancelOrder(this.data1)
+        }
       }
     },
     created () {
       this.getOrderList()
-      this.$nextTick(() => {
-        this.addEvents({
-          name: 'updateOrderList',
-          fun: this.getOrderList
-        })
-      })
-      this.addOtcSocketEvent(this.systemEvent)
+      // this.$nextTick(() => {
+      //   this.addEvents({
+      //     name: 'updateOrderList',
+      //     fun: this.getOrderList
+      //   })
+      // })
+      // this.addOtcSocketEvent(this.systemEvent)
 
     },
     beforeDestroy () {
@@ -238,52 +255,52 @@
     },
     methods: {
       ...mapActions(['addOtcSocketEvent', 'removeOtcSocketEvent', 'addEvents', 'removeEvents', 'tiggerEvents']),
-      getPays () {
-        otcApi.getPaySettingsNoToken({
-          user_id: this.data1.from_user_id
-        }, (res) => {
-          this.payInfo = res.data
-        })
-      },
-      systemEvent (data) {
-        let optType = parseInt(data.operate_type)
-        let childType = parseInt(data.child_type)
-        if (optType === 1) { // 系统消息
-          switch (childType) {
-            case 31: // 新建订单消息
-            case 32: // 取消订单消息
-            case 33: // 系统自动取消订单消息
-            case 34: // 买家付款消息
-            case 35: // 正常放币消息
-            case 36: // 强制放币买家消息
-            case 37: // 强制放币卖家消息
-            case 38: // 解除锁币消息
-              let orderNumber = JSON.parse(data.link).order_number
-              if (childType === 34) {
-                Vue.$confirmDialog({
-                  id: 'pay_success_tip',
-                  showCancel: false,
-                  content: this.$t('error_code.CONFIRM_PAYMENT') // 买方已经标记确认付款，请查收！
-                })
-                if (orderNumber === this.data1.order_number) {
-                  this.data1.pay_state = 1
-                }
-              } else if (childType === 35) {
-                Vue.$confirmDialog({
-                  id: 'put_coin_success_tip',
-                  showCancel: false,
-                  content: this.$t('error_code.CONFIRM_PAYMENT_RECEIPT') // 卖方确认收款，已放币！请进行评价！
-                })
-                if (orderNumber === this.data1.order_number) {
-                  this.data1.state = 2
-                }
-              } else {
-                this.getOrderList()
-              }
-              break
-          }
-        }
-      },
+      // getPays () {
+      //   otcApi.getPaySettingsNoToken({
+      //     user_id: this.data1.from_user_id
+      //   }, (res) => {
+      //     this.payInfo = res.data
+      //   })
+      // },
+      // systemEvent (data) {
+      //   let optType = parseInt(data.operate_type)
+      //   let childType = parseInt(data.child_type)
+      //   if (optType === 1) { // 系统消息
+      //     switch (childType) {
+      //       case 31: // 新建订单消息
+      //       case 32: // 取消订单消息
+      //       case 33: // 系统自动取消订单消息
+      //       case 34: // 买家付款消息
+      //       case 35: // 正常放币消息
+      //       case 36: // 强制放币买家消息
+      //       case 37: // 强制放币卖家消息
+      //       case 38: // 解除锁币消息
+      //         let orderNumber = JSON.parse(data.link).order_number
+      //         if (childType === 34) {
+      //           Vue.$confirmDialog({
+      //             id: 'pay_success_tip',
+      //             showCancel: false,
+      //             content: this.$t('error_code.CONFIRM_PAYMENT') // 买方已经标记确认付款，请查收！
+      //           })
+      //           if (orderNumber === this.data1.order_number) {
+      //             this.data1.pay_state = 1
+      //           }
+      //         } else if (childType === 35) {
+      //           Vue.$confirmDialog({
+      //             id: 'put_coin_success_tip',
+      //             showCancel: false,
+      //             content: this.$t('error_code.CONFIRM_PAYMENT_RECEIPT') // 卖方确认收款，已放币！请进行评价！
+      //           })
+      //           if (orderNumber === this.data1.order_number) {
+      //             this.data1.state = 2
+      //           }
+      //         } else {
+      //           this.getOrderList()
+      //         }
+      //         break
+      //     }
+      //   }
+      // },
       getOrderList () { // 获取订单列表
         if (!this.getApiToken) {
           return
@@ -314,8 +331,7 @@
         let surplusTime = this.data.pay_apply_time * 60 - diffTime
         let interval = utils.countDown(surplusTime, (time) => {
           if (time === '00:00') {
-            this.data1.isExpire = true
-            // this.goCancelList()
+            this.isExpire = true
           } else if (time === '05:00' && this.data.pay_state === 0) {
             // 您的付款确认时间还剩5分钟，5分钟后系统将自动取消订单！请付款并标记确认付款！
             Vue.$confirmDialog({
@@ -329,10 +345,12 @@
           this.surplus_Time = time
         })
         this.intervals.push(interval)
-        this.data1.isExpire = surplusTime <= 0
-        this.getPays()
+        this.isExpire = surplusTime <= 0
+        this.payInfo = this.data.otcPayTypeBankDTO
+        if(this.data1.state === 3){
+          this.goCancelList()
+        }
         console.log(this.data1)
-
       },
       getTradeType (data) { // 交易类型
         if (data.to_user_name === this.getUserInfo.username) {
@@ -369,7 +387,7 @@
             }
           })
           this.cancelStatus = 1
-          // this.getOrderList()
+          this.goCancelList()
           !noMsg && Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
         }, (msg) => {
           !noMsg && Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
