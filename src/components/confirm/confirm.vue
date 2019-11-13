@@ -2,7 +2,7 @@
   <div :id="id" class="dialog" :style="dialogStyle">
     <div class="top" v-if="title">{{title}}</div>
     <div class="form">
-      <div class="content" v-if="!isComponent" :style="`font-weight:${fontWeight};color:${color};`">
+      <div class="content cont_text" v-if="!isComponent" :style="`font-weight:${fontWeight};color:${color};`">
         <template v-if="(content||'').constructor !== Array">
           <p v-html="content"></p>
         </template>
@@ -138,6 +138,7 @@
     flex-flow: column;
     background-color: #fff;
     overflow: hidden;
+    border-radius: 6px;
   }
 
   .top {
@@ -166,8 +167,14 @@
     font-size: 16px;
     word-wrap: break-word;
     word-break: normal;
-  }
 
+  }
+.cont_text{
+  background: #eeeeee;
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+}
   .buttons {
     margin-top: 20px;
     display: flex;
@@ -190,14 +197,14 @@
     height: 35px;
     line-height: 35px;
     color: #fff;
-    background-color: #00B5FF;
+    background-color: #ffd22e;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
   }
 
   .button:hover {
-    background-color: #00B5FF;
+    background-color: #e4bc29;
   }
 
   .button.cancel {

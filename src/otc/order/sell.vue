@@ -221,9 +221,9 @@
             return { // 银行卡
               method: 'otc_ad.otc_ad_BankPay',
               accountName: 'otc_legal.otc_legal_Bank_number',
-              name: this.payTypes.data.card_name,
-              bank: this.payTypes.data.card_bank,
-              number: this.payTypes.data.card_number
+              name: this.payTypes.cardName,
+              bank: this.payTypes.cardBank,
+              number: this.payTypes.cardNumber
             }
           case 2:
             return { // 支付宝
@@ -331,13 +331,13 @@
             // this.isExpire = true
           } else if (time === '05:00' && this.item.pay_state === 0) {
             // 您的付款确认时间还剩5分钟，5分钟后系统将自动取消订单！请付款并标记确认付款！
-            Vue.$confirmDialog({
-              id: 'count_down_tip',
-              showCancel: false,
-              content: this.$t('error_code.PAYMENT_TIMEOUT_REMIND')
-            })
-            // 添加系统消息
-            this.$emit('addSystemMessage', this.item.order_number, 'PAYMENT_TIMEOUT_REMIND')
+            // Vue.$confirmDialog({
+            //   id: 'count_down_tip',
+            //   showCancel: false,
+            //   content: this.$t('error_code.PAYMENT_TIMEOUT_REMIND')
+            // })
+            // // 添加系统消息
+            // this.$emit('addSystemMessage', this.item.order_number, 'PAYMENT_TIMEOUT_REMIND')
           }
           this.surplus_Time = time
         })

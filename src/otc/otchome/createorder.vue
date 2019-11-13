@@ -348,7 +348,8 @@
           pay_type: null,
           max_process_num: 2,
           praise_rate: 50,
-          pay_limit_time: 15
+          pay_limit_time: 15,
+          bankId: null
         },
         currencyList: [],
         benchItem: {
@@ -501,7 +502,11 @@
       getBank () {
         otcApi.getPaySettings((res) => {
           this.bankList = res.data.bankList
-          this.bankData = this.bankList[0]
+          this.bankList.filter(res => {
+            if (res.is_default === 1) {
+              this.bankData = res
+            }
+          })
         })
       },
       fnGetBenchExchange () { // 获取对标交易所
@@ -631,6 +636,7 @@
                 return
               }
               this.locked = true
+              this.formData.bankId = this.bankData.id
               if (this.ad_id) {
                 this.updateAds()
               } else {
