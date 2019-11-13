@@ -8,6 +8,7 @@
            ref="orderlist"
            :data="data"
            :time="time"
+           :ad-info="adInfo"
            @switchOldMessage="switchOldMessage"
            @addSystemMessage="addSystemMessage"/>
       <div class="h500">
@@ -42,7 +43,8 @@
         data: {},
         time: null,
         from_user_id: null,
-        m: null
+        m: null,
+        adInfo: {}
       }
     },
     computed: {
@@ -138,9 +140,10 @@
         this.getData()
       },
       getData () {
-        otcApi.ordersDetail(this.order_id, (item, serverTime) => {
+        otcApi.ordersDetail(this.order_id, (item, serverTime, adInfo) => {
 
           this.data = item
+          this.adInfo = adInfo
           this.m = this.getUserInfo.userId === item.from_user_id ? 1 : 2
           this.time = serverTime
           this.orderNumber = item.order_number
