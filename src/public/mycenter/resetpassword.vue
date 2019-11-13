@@ -47,6 +47,7 @@
     <div class="btn-box">
       <button @click="submit()">{{$t('account.user_submit')}}</button>
     </div>
+    <loading class="load" v-if="load"/>
   </div>
 </template>
 
@@ -65,6 +66,7 @@
         showNewPass: false,
         showPassConfig: false,
         locked: true,
+        load: false,
         formData: {
           password: '',
           newPassword: '',
@@ -108,17 +110,20 @@
         })
       },
       changePassword (formData) {
+        this.load = true
         userApi.getRsaPublicKey(rsaPublicKey => {
           formData.password = utils.encryptPwd(rsaPublicKey, formData.password)
           formData.passwordNew = utils.encryptPwd(rsaPublicKey, formData.passwordNew)
           formData.rsaPublicKey = rsaPublicKey
           userApi.changePwd(formData, msg => {
             this.locked = true
+            this.load = false
             this.setApiToken(null)
             Vue.$koallTipBox({
               icon: 'success',
               message: this.$t(`error_code.${typeof msg === 'string' ? msg : msg[0]}`)
             })
+            this.closeDialog()
             this.$router.push({name: 'login'})
           }, msg => {
             this.tip(msg)
@@ -134,6 +139,7 @@
           delay: 3000
         })
         this.locked = true
+        this.load = false
       },
       closeDialog () {
         this.$emit('removeDialog')
@@ -177,7 +183,7 @@
         width: 100%;
         outline: none;
         background-color: transparent;
-        color: #fff;
+        color: #333333;
       }
     }
   }
@@ -227,5 +233,13 @@
         background-color: #4d4a64;
       }
     }
+  }
+  .load{
+    position: absolute;
+    top: 50%;
+    z-index: 999;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -25px;
   }
 </style>
