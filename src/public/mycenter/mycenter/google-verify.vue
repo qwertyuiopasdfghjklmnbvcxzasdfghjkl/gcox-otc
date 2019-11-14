@@ -1,7 +1,7 @@
 <template>
   <div class="cont">
 
-    <p class="title"  v-if="state === 1">{{$t('usercontent.user24')}}</p>
+    <p class="title" v-if="state === 1">{{$t('usercontent.user24')}}</p>
     <div class="ear" v-if="state === 1">
       <div class="qrcode">
         <div class="bind-qrcode-img" ref="qrcode"></div>
@@ -18,6 +18,14 @@
     <div class="verify-input">
       <p class="title">{{$t('usercontent.user30')}}</p>
       <input type="text" v-model="key"/>
+    </div>
+    <div class="verify-input">
+      <p class="title">{{$t('account.user_center_login_password')}}</p>
+      <input :type="showPass?'text':'password'" v-model="password"/>
+      <div class="pwd-isShow" @click="showPass=!showPass">
+        <img src="../../../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPass">
+        <img src="../../../assets/img/hide_password.png" alt="" style="opacity: 0.8;" v-else>
+      </div>
     </div>
     <div class="operation">
       <button class="black" @click="cancal()">{{$t('usercontent.user31')}}</button>
@@ -38,7 +46,9 @@
     data () {
       return {
         bindGoogleKey: null,
-        key: null
+        key: null,
+        password: null,
+        showPass: false
       }
     },
     created () {
@@ -68,8 +78,10 @@
       getKey () {
         if (!this.key) {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`usercontent.user33`)})
+        } else if (!this.password) {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`public0.public265`)})
         } else {
-          this.$emit('okCallback', this.key)
+          this.$emit('okCallback', this.key, this.bindGoogleKey, this.password)
           this.$emit('removeDialog')
         }
       }
@@ -79,7 +91,7 @@
 
 <style scoped lang="less">
   .cont {
-    width: 520px;
+    width: 920px;
     background: #ffffff;
     padding: 30px 40px;
     color: #19181c;
@@ -115,11 +127,22 @@
       margin-top: 25px;
       display: flex;
       flex-flow: column;
+      position: relative;
 
       input {
         border-bottom: 1px solid rgba(21, 23, 32, .08);
         height: 24px;
         padding: 5px;
+      }
+
+      .pwd-isShow{
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        img {
+          width: 20px;
+          cursor: pointer;
+        }
       }
     }
 
