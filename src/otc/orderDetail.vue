@@ -141,7 +141,6 @@
       },
       getData () {
         otcApi.ordersDetail(this.order_id, (item, serverTime, adInfo) => {
-
           this.data = item
           this.adInfo = adInfo
           this.m = this.getUserInfo.userId === item.from_user_id ? 1 : 2

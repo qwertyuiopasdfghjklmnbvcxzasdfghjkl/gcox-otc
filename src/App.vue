@@ -240,36 +240,36 @@
         console.log(e)
         this.setSymbol(e)
       },
-      createNewOrder (id) {
-        if (this.$refs.orderlist.params.state === 1) {
-          this.$refs.orderlist.params.page = 1
-        }
-        otcApi.ordersDetail(id, (res) => {
-          this.orderNumber = res.orderInfo.order_number
-        })
-      },
-      openChat () {
-        this.showChat = !this.showChat
-        this.newMsg = false
-      },
-      markNewMsg (bool) {
-        if (bool) {
-          this.showChat = true
-        }
-        this.newMsg = bool
-      },
-      switchOldMessage (orderNumber) {
-        this.showChat = true
-        this.switchNew++
-        this.orderNumber = orderNumber
-      },
-      addSystemMessage (orderNumber, message) { // 添加系统消息
-        this.showChat = true
-        this.$refs.chat.addSystemMessage(orderNumber, message)
-      },
-      close () {
-        this.showChat = false
-      }
+      // createNewOrder (id) {
+      //   if (this.$refs.orderlist.params.state === 1) {
+      //     this.$refs.orderlist.params.page = 1
+      //   }
+      //   otcApi.ordersDetail(id, (res) => {
+      //     this.orderNumber = res.orderInfo.order_number
+      //   })
+      // },
+      // openChat () {
+      //   this.showChat = !this.showChat
+      //   this.newMsg = false
+      // },
+      // markNewMsg (bool) {
+      //   if (bool) {
+      //     this.showChat = true
+      //   }
+      //   this.newMsg = bool
+      // },
+      // switchOldMessage (orderNumber) {
+      //   this.showChat = true
+      //   this.switchNew++
+      //   this.orderNumber = orderNumber
+      // },
+      // addSystemMessage (orderNumber, message) { // 添加系统消息
+      //   this.showChat = true
+      //   this.$refs.chat.addSystemMessage(orderNumber, message)
+      // },
+      // close () {
+      //   this.showChat = false
+      // }
     }
   }
 </script>
