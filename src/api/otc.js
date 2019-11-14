@@ -205,7 +205,7 @@ otc.createOrders = createOrders
 const ordersDetail = function (id, success, error) {
   api.get(`${domain}api/v2/otc/orders/detail/${id}`, (res) => {
     if (res.rst === 1) {
-      success && success(res.data.orderInfo || {}, res.data.cur_time)
+      success && success(res.data.orderInfo || {}, res.data.cur_time, res.data.adInfo)
     } else {
       error && error(res.msg)
     }

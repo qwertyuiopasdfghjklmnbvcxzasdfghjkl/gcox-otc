@@ -197,7 +197,7 @@
     height: 35px;
     line-height: 35px;
     color: #fff;
-    background-color: #ffd22e;
+    background-color: #f0b936;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;

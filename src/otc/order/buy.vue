@@ -67,15 +67,15 @@
           </tr>
           <tr>
             <td>{{$t('public0.public65')}}</td>
-            <td>{{payInfo.cardName}}</td>
+            <td>{{payInfo.cardName || '--'}}</td>
           </tr>
           <tr>
             <td>{{$t('otc_legal.otc_legal_Bank')}}</td>
-            <td>{{payInfo.cardBank}}</td>
+            <td>{{payInfo.cardBank || '--'}}</td>
           </tr>
           <tr>
             <td>{{$t('otc_legal.otc_legal_Bank_number')}}</td>
-            <td>{{payInfo.cardNumber}}</td>
+            <td>{{payInfo.cardNumber || '--'}}</td>
           </tr>
         </table>
       </div>
@@ -84,7 +84,8 @@
         <span class="title">{{$t('public0.public62')}}</span>
         <span class="timer">{{surplus_Time}}</span>
       </div>
-      <p class="time_text" v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
+      <p class="time_text"
+         v-if="data1.pay_state === 0 && data1.from_user_name !== getUserInfo.username && cancelStatus !== 1">
         {{$t('gcox_otc.time_out')}}
       </p>
       <div class="red_note" v-if="cancelStatus === 1">
@@ -159,7 +160,7 @@
   import warnDialog from '@/otc/otchome/dialog/warnDialog'
 
   export default {
-    props: ['orderId', 'data', 'time'],
+    props: ['orderId', 'data', 'time', 'adInfo'],
     components: {
       Adlist,
       loading,
@@ -176,7 +177,11 @@
           total: 0
         },
         surplus_Time: null,
-        payInfo: {},
+        payInfo: {
+          cardName: null,
+          cardBank: null,
+          cardNumber: null
+        },
         cancelStatus: null,
         isExpire: null
       }
@@ -206,7 +211,7 @@
         } else {
           return null
         }
-      },
+      }
     },
     watch: {
       getApiToken () {
@@ -233,18 +238,13 @@
           })
           this.cancelOrder(this.data1)
         }
+      },
+      adInfo(){
+        this.payInfo = this.adInfo.otcPayTypeBankDTO
       }
     },
     created () {
       this.getOrderList()
-      // this.$nextTick(() => {
-      //   this.addEvents({
-      //     name: 'updateOrderList',
-      //     fun: this.getOrderList
-      //   })
-      // })
-      // this.addOtcSocketEvent(this.systemEvent)
-
     },
     beforeDestroy () {
       this.intervals.forEach((interval) => {
@@ -310,7 +310,6 @@
           clearInterval(interval)
         })
         this.intervals = []
-
         // 类型转换
         this.data1 = this.data
         this.data1.state = parseInt(this.data.state)
@@ -346,8 +345,8 @@
         })
         this.intervals.push(interval)
         this.isExpire = surplusTime <= 0
-        this.payInfo = this.data.otcPayTypeBankDTO
-        if(this.data1.state === 3){
+
+        if (this.data1.state === 3) {
           this.goCancelList()
         }
         console.log(this.data1)
@@ -462,7 +461,7 @@
         }, (msg) => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
-      },
+      }
     }
   }
 </script>

@@ -79,7 +79,7 @@
       data: null,
       fromImage: null,
       formatSystemMessage: null
-    }
+    },
   })
   export default {
     props: ['value', 'orderNumber', 'switchNew', 'firstEnter'],
@@ -181,6 +181,7 @@
               continue
             }
           }
+          console.log(newMsg)
           return oldMsg.concat(newMsg)
         } else {
           return []
@@ -226,7 +227,7 @@
       }
     },
     created () {
-      this.getList()
+      // this.getList()
       this.$nextTick(() => {
         this.addEvents({
           name: 'chatEvent',
@@ -415,7 +416,7 @@
       },
       getTemplate (item) { // 获取模板
         if (item.is_system && parseInt(item.is_system) === 1) {
-          if (String(item.user_id) === String(this.getUserInfo.userId)) {
+          if ((String(item.user_id) === String(this.getUserInfo.userId)) || item.message === 'OTC_NEW_ORDER') {
             return `sytemTempalte`
           } else {
             return null
