@@ -10,7 +10,7 @@
           <p><span>{{$t('gcox_otc.does')}}</span><span>--</span></p>
           <p><span>{{$t('gcox_otc.success_deal')}}</span><span>--</span></p>
           <p><span>{{$t('gcox_otc.dif_pat')}}</span><span>--</span></p>
-          <p><span>{{$t('otc_exchange.otc_exchange_Good_rating')}}</span><span>好评率</span></p>
+          <p><span>{{$t('otc_exchange.otc_exchange_Good_rating')}}</span><span>{{level.toFixed(1)}}%</span></p>
           <p><span>{{$t('gcox_otc.user_build_time')}}</span><span>--</span></p>
           <p><span>{{$t('gcox_otc.last_login')}}</span><span>--</span></p>
           <p><span>{{$t('gcox_otc.kyc_idcard')}}</span><span>--</span></p>
@@ -59,17 +59,21 @@
   import utils from '@/assets/js/utils'
   import bind from './abstract/bind-phone'
   import userApi from '@/api/user'
+  import otc from '../../api/otc'
 
   export default {
     name: 'abstract',
     data () {
-      return {}
+      return {
+        level: null
+      }
     },
     computed: {
       ...mapGetters(['getUserInfo', 'getLang'])
     },
     created () {
       console.log(this.getUserInfo)
+      this.getLevel()
     },
     methods: {
       ...mapActions(['setUserInfo']),
@@ -86,6 +90,11 @@
           this.setUserInfo(userInfo)
         }, (res) => {
           console.warn(res)
+        })
+      },
+      getLevel () {
+        otc.getUserLevel(res => {
+          this.level = res
         })
       }
     }
