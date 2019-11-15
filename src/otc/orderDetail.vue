@@ -69,7 +69,7 @@
           fun: this.getData
         })
       })
-      this.addOtcSocketEvent(this.getData)
+      this.addOtcSocketEvent(this.systemEvent)
     },
     beforeDestroy () {
       // this.intervals.forEach((interval) => {
@@ -102,8 +102,8 @@
                   showCancel: false,
                   content: this.$t('error_code.CONFIRM_PAYMENT') // 买方已经标记确认付款，请查收！
                 })
-                if (orderNumber === this.data1.order_number) {
-                  this.data1.pay_state = 1
+                if (orderNumber === this.data.order_number) {
+                  this.data.pay_state = 1
                 }
               } else if (childType === 35) {
                 Vue.$confirmDialog({
@@ -111,8 +111,8 @@
                   showCancel: false,
                   content: this.$t('error_code.CONFIRM_PAYMENT_RECEIPT') // 卖方确认收款，已放币！请进行评价！
                 })
-                if (orderNumber === this.data1.order_number) {
-                  this.data1.state = 2
+                if (orderNumber === this.data.order_number) {
+                  this.data.state = 2
                 }
               } else {
                 this.getData()
