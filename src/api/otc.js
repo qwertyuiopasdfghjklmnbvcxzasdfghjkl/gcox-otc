@@ -511,6 +511,18 @@ const getVerifyState = function (success, error) {
 }
 otc.getVerifyState = getVerifyState
 
+// 获取自己的实名验证状态级别
+const permission = function (data, success, error) {
+  api.get(`${domain}api/v2/otc/verify/permission`, data, (res) => {
+    if (res.rst === 1) {
+      success && success(res.msg)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+otc.permission = permission
+
 // 快速买卖
 const match = function (data, success, error) {
   api.post(`${domain}api/v2/otc/orders/match`, data, (res) => {

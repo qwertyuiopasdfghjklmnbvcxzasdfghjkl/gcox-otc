@@ -145,7 +145,11 @@
           let isCheckPaySet = parseInt(this.state) === 1
           this.matchPayType = parseInt(this.state) === 1 ? void 0 : this.listAdv.pay_type
           console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
-          this.checkSetState(() => {
+          let p = {
+            adType: this.state,
+            role: 'Taker'
+          }
+          this.checkSetState(p, () => {
             if (this.getUserInfo.userId === this.listAdv.from_user_id) {
               // 不可以买卖自己发布的广告
               Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
@@ -176,7 +180,7 @@
         })
       },
 
-      checkSetState (successCallback, message, isCheckPaySet, isCheckPayType, id) {
+      checkSetState (p, successCallback, message, isCheckPaySet, isCheckPayType, id) {
         if (!this.getApiToken) {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(message)}) // 请登录后再发布广告||请登录后再交易
           return
@@ -191,7 +195,7 @@
           })
           return
         }
-        otcApi.getVerifyState((msg) => {
+        otcApi.permission(p, (msg) => {
           if (isCheckPaySet) {
             otcApi.getPaySettings((res) => {
               if (isCheckPayType) {
