@@ -84,6 +84,7 @@
       systemEvent (data) {
         let optType = parseInt(data.operate_type)
         let childType = parseInt(data.child_type)
+        console.log(childType)
         if (optType === 1) { // 系统消息
           switch (childType) {
             case 31: // 新建订单消息
@@ -143,6 +144,7 @@
         otcApi.ordersDetail(this.order_id, (item, serverTime, adInfo) => {
           this.data = item
           this.adInfo = adInfo
+          console.log(this.adInfo)
           this.m = this.getUserInfo.userId === item.from_user_id ? 1 : 2
           this.time = serverTime
           this.orderNumber = item.order_number

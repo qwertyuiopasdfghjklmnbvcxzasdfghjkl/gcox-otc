@@ -244,6 +244,8 @@
       }
     },
     created () {
+      this.payInfo = this.adInfo.otcPayTypeBankDTO
+      console.log(this.payInfo)
       this.getOrderList()
     },
     beforeDestroy () {
