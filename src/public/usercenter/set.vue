@@ -8,11 +8,12 @@
         <collapse :title="$t('gcox_otc.tow_v')">
           <div class="google">
             <h2>{{$t('gcox_otc.tow_v')}}</h2>
-            <p v-if="googleState === 0"
+            <p v-if="userInfo.googleAuthEnable === 0"
                v-html="$t('gcox_otc.google_tip').format($t('public0.public194_Low'),'red',$t('user.verify'))"></p>
             <p v-else
-               v-html="$t('gcox_otc.google_tip').format($t('public0.public194_High'),'green',$t('account.user_center_state_bind'))"></p>
-            <button @click="banding()">{{googleState === 0? $t('gcox_otc.star_use'):$t('public0.public42')}}
+               v-html="$t('gcox_otc.google_tip').format($t('public0.public194_High'),'green',$t('public0.public42'))"></p>
+            <button @click="banding()">{{userInfo.googleAuthEnable === 0?
+              $t('gcox_otc.star_use'):$t('public0.public42')}}
             </button>
           </div>
         </collapse>
@@ -31,11 +32,11 @@
                 </p>
                 <p>
                   <span>{{$t('gcox_otc.deal_change')}}</span>
-                  <span><switch-vi :size="'leg'" :background="'#29CDA7'" :open-text="'ON'"/></span>
+                  <span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>
                 </p>
                 <p>
                   <span>{{$t('gcox_otc.deal_msg')}}</span>
-                  <span><switch-vi :size="'leg'" :background="'#29CDA7'" :open-text="'ON'"/></span>
+                  <span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>
                 </p>
               </div>
             </div>
@@ -44,11 +45,11 @@
               <div>
                 <p>
                   <span>{{$t('gcox_otc.new_deal')}}</span>
-                  <span><switch-vi :size="'leg'" :background="'#29CDA7'" :open-text="'ON'"/></span>
+                  <span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>
                 </p>
                 <p>
                   <span>{{$t('gcox_otc.deal_pay')}}</span>
-                  <span><switch-vi :size="'leg'" :background="'#29CDA7'" :open-text="'ON'"/></span>
+                  <span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>
                 </p>
               </div>
             </div>
@@ -95,7 +96,7 @@
             <label>
               <span>{{$t('user.changePassword')}}</span>
               <span class="red w2">******</span>
-              <span><button @click="changePW()">{{$t('gcox_otc.update')}}</button></span>
+              <span ><button @click="changePW()">{{$t('gcox_otc.update')}}</button></span>
             </label>
           </div>
         </collapse>
@@ -123,8 +124,7 @@
     data () {
       return {
         userInfo: {},
-        showLoading: false,
-        googleState: null
+        showLoading: false
       }
     },
     computed: {
@@ -132,20 +132,11 @@
     },
     created () {
       this.userInfo = this.getUserInfo
-      this.getState()
     },
     methods: {
       ...mapActions(['setUserInfo']),
-      getState () {
-        userUtils.getUserState(res => {
-          this.googleState = res.googleState
-          this.showLoading = false
-        }, msg => {
-          Vue.$koallTipBox({icon: 'notification', message: this.$t('error_code.' + msg), delay: 3000})
-        })
-      },
       banding () {
-        if (this.googleState === 0) {
+        if (this.userInfo.googleAuthEnable === 0) {
           this.googleVerify(1)
         } else {
           this.googleVerify(2)
@@ -154,62 +145,48 @@
       googleVerify (i) {
         utils.setDialog(googleVerify, {
           state: i,
-          okCallback: (res, Key, PW) => {
+          okCallback: (res) => {
             let data = {
-              verifyCode: res,
-              password: PW
+              googleCode: res
             }
             this.showLoading = true
             if (i === 1) {
-              data.key = Key
-              this.bingGoogle(data)
+              userUtils.bindGoogleAuth(data, msg => {
+                userApi.getUserInfo((userInfo) => {
+                  this.showLoading = false
+                  this.userInfo = userInfo
+                  this.setUserInfo(userInfo)
+                })
+                Vue.$koallTipBox({icon: 'success', message: this.$t('error_code.' + msg), delay: 3000})
+              }, msg => {
+                this.showLoading = false
+                Vue.$koallTipBox({icon: 'notification', message: this.$t('error_code.' + msg), delay: 3000})
+              })
             } else {
-              this.unbindGoogle(data)
+              userUtils.unbindGoogleAuth(data, res => {
+                userApi.getUserInfo((userInfo) => {
+                  this.showLoading = false
+                  this.userInfo = userInfo
+                  this.setUserInfo(userInfo)
+                })
+                Vue.$koallTipBox({icon: 'success', message: this.$t('error_code.' + res), delay: 3000})
+              }, msg => {
+                this.showLoading = false
+                Vue.$koallTipBox({icon: 'notification', message: this.$t('error_code.' + msg), delay: 3000})
+              })
             }
           }
-        })
-      },
-      bingGoogle (data) {
-        userApi.getRsaPublicKey((rsaPublicKey) => {
-          data.password = utils.encryptPwd(rsaPublicKey, data.password)
-          data.rsaPublicKey = rsaPublicKey
-          userUtils.bindGoogleAuth(data, msg => {
-            this.getState()
-            Vue.$koallTipBox({icon: 'success', message: this.$t('error_code.' + msg), delay: 3000})
-          }, msg => {
-            this.showLoading = false
-            Vue.$koallTipBox({icon: 'notification', message: this.$t('error_code.' + msg), delay: 3000})
-          })
-        })
-      },
-      unbindGoogle (data) {
-        userApi.getRsaPublicKey((rsaPublicKey) => {
-          data.password = utils.encryptPwd(rsaPublicKey, data.password)
-          data.rsaPublicKey = rsaPublicKey
-          userUtils.unbindGoogleAuth(data, res => {
-            this.getState()
-            Vue.$koallTipBox({icon: 'success', message: this.$t('error_code.' + res), delay: 3000})
-          }, msg => {
-            this.showLoading = false
-            Vue.$koallTipBox({icon: 'notification', message: this.$t('error_code.' + msg), delay: 3000})
-          })
-        })
-      },
-      getUInfo () {
-        userApi.getUserInfo((userInfo) => {
-          this.userInfo = userInfo
-          this.setUserInfo(userInfo)
         })
       },
       bind () {
         utils.setDialog(bind, {
           phone: this.getUserInfo.mobile,
           okCallback: () => {
-            this.getUInfo()
+            this.getInfo()
           }
         })
       },
-      changePW () {
+      changePW(){
         utils.setDialog(resetPW)
       }
     }
@@ -258,37 +235,30 @@
       margin: 15px auto;
     }
   }
-
-  .set_msg {
+  .set_msg{
     margin: 20px;
-
-    & > div {
+    &>div{
       border-bottom: 1px solid #E6E6E6;
       padding: 20px 0;
-
-      &:last-child {
+      &:last-child{
         border-bottom: none;
       }
-
-      h4 {
+      h4{
         text-align: center;
         font-size: 24px;
         font-weight: 400;
         padding: 10px;
       }
+      &>div{
 
-      & > div {
-
-        p {
+        p{
           display: flex;
           align-items: center;
           font-size: 18px;
-
-          span {
+          span{
             width: 50%;
             padding: 6px 30px;
-
-            &:first-child {
+            &:first-child{
               text-align: right;
             }
           }
@@ -296,52 +266,43 @@
       }
     }
   }
-
-  .intro {
+  .intro{
     padding: 20px;
-
-    label {
+    label{
       display: flex;
       padding: 10px;
       align-items: center;
-
-      & > span:first-child {
+      &>span:first-child{
         width: 500px;
         text-align: right;
         margin-right: 15px;
       }
-
-      input {
+      input{
         width: 500px;
         padding: 10px;
         height: 30px;
         background: #eeeeee;
-        border-radius: 3px;
+        border-radius:3px;
       }
-
-      .w2, .w3 {
+      .w2, .w3{
         width: 380px;
       }
-
-      span {
-        button {
-          width: 140px;
-          height: 40px;
-          background: rgba(240, 185, 54, 1);
-          border-radius: 3px;
+      span{
+        button{
+          width:140px;
+          height:40px;
+          background:rgba(240,185,54,1);
+          border-radius:3px;
           font-size: 16px;
           color: #ffffff;
         }
       }
     }
   }
-
-  .load {
-    position: absolute;
-    top: 250px;
-    left: 50%;
-    margin-left: -25px;
-  }
-
-  // 遇到傻逼同事怎么
+.load{
+  position: absolute;
+  top: 240px;
+  left: 50%;
+  margin-left: -25px;
+}
 </style>
