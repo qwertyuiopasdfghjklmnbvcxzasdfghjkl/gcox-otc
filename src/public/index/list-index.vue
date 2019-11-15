@@ -118,15 +118,22 @@
 
       createorder (i) {
         this.createParams.ad_type = i
-        this.checkSetState((myPayType) => {
+        let p = {
+          adType: i,
+          role: 'Maker'
+        }
+        this.checkSetState(p,(myPayType) => {
           this.$router.push({name: 'advertising', params: {myPayType: myPayType, params: this.createParams,}})
         }, 'public0.public109', true, false)
       },
       sell (data) {
         let isCheckPaySet = parseInt(data.ad_type) === 1
         this.matchPayType = parseInt(data.ad_type) === 1 ? void 0 : data.pay_type
-        console.log(data)
-        this.checkSetState(() => {
+        let p = {
+          adType: data.ad_type,
+          role: 'Taker'
+        }
+        this.checkSetState(p, () => {
           if (this.getUserInfo.userId === data.from_user_id) {
             // 不可以买卖自己发布的广告
             Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
@@ -140,7 +147,7 @@
         }, 'public0.public15', isCheckPaySet, true, data.ad_id)
       },
 
-      checkSetState (successCallback, message, isCheckPaySet, isCheckPayType, id) {
+      checkSetState (p, successCallback, message, isCheckPaySet, isCheckPayType, id) {
         if (!this.getApiToken) {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(message)}) // 请登录后再发布广告||请登录后再交易
           return
@@ -155,7 +162,7 @@
           })
           return
         }
-        otcApi.getVerifyState((msg) => {
+        otcApi.permission(p, (msg) => {
           if (isCheckPaySet) {
             otcApi.getPaySettings((res) => {
               if (isCheckPayType) {
