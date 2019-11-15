@@ -83,11 +83,11 @@
               </select>
               <span>{{benchItem.lowestPrice}}</span>
             </div>
-            <p class="small">
-              <span>{{$t('gcox_otc.redeme').format(formData.currency,formData.symbol)}}</span>
-              <span
-                v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>
-            </p>
+            <!--<p class="small">-->
+              <!--<span>{{$t('gcox_otc.redeme').format(formData.currency,formData.symbol)}}</span>-->
+              <!--<span-->
+                <!--v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>-->
+            <!--</p>-->
           </div>
           <div class="prompt"></div>
         </div>
