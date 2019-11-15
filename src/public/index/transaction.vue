@@ -1,8 +1,8 @@
 <template>
   <div class="warm">
-    <div class="top">
-      <p class="w1200">{{$t('gcox_otc.get_cny_in_china')}}</p>
-    </div>
+    <!--<div class="top">-->
+      <!--<p class="w1200">{{$t('gcox_otc.get_cny_in_china')}}</p>-->
+    <!--</div>-->
     <div class="w800 mt25">
       <p><span class="numer">{{$t('otc_exchange.otc_exchange_order_number')}}：
         <!--订单编号-->--</span></p>
