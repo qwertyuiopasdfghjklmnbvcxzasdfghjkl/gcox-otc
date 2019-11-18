@@ -17,7 +17,7 @@
       </h4>
       <list-box :datas="sellDatas" :type="'sell'" @submit="sell">
         <li class="colem">
-          <p>{{$t('gcox_otc.better_price')}}</p>
+          <!--<p>{{$t('gcox_otc.better_price')}}</p>-->
           <button class="red_button" @click="createorder(1)">{{$t('gcox_otc.build').format($t('gcox_otc.sell'))}}
           </button>
         </li>

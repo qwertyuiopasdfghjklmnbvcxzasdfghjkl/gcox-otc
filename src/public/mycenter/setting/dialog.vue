@@ -81,7 +81,8 @@
     },
     created () {
       if (this.item) {
-        this.bankData = this.item
+        let d = JSON.stringify(this.item)
+        this.bankData = JSON.parse(d)
       }
     },
     methods: {
@@ -99,6 +100,7 @@
         if (this.status) {
           let formData = new FormData(this.$refs.bankForm)
           this.status = false
+          formData.append('id', this.bankData.id)
           otcApi.savePaySettings(1, formData, res => {
             this.status = true
             Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})

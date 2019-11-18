@@ -11,10 +11,10 @@
           <div class="balance_search">
             <div class="f-fr">
               <div class="icon-checkbox f-fl" @click.stop="hideZero=!hideZero">
-                <em :class="[hideZero?'icon-checkbox-unchecked':'icon-checkbox-checked']"></em>
-                <label class="ng-binding">
-                  {{$t('gcox_otc.show_all_symbol')}}<!--显示所有货币-->
-                </label>
+                <!--<em :class="[hideZero?'icon-checkbox-unchecked':'icon-checkbox-checked']"></em>-->
+                <!--<label class="ng-binding">-->
+                  <!--{{$t('gcox_otc.show_all_symbol')}}&lt;!&ndash;显示所有货币&ndash;&gt;-->
+                <!--</label>-->
               </div>
               <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}<!--历史记录--></a>
             </div>

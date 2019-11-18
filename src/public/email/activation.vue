@@ -1,11 +1,14 @@
 <template>
-  <div class="abcenter text-center f-c-white">
-    <p class="fs20 efont">{{$t('login_register.acWelcome')}}<!-- 欢迎致辞 --></p>
-    <p class="mt45 fs16">{{$t('login_register.acText_1')}}<!-- 账户激活邮件已经发送至 --> <span class="f-c-main">{{$route.query.email}}</span> </p>
-    <p class="mt5 fs16">{{$t('login_register.acText_2')}}<!-- 请打开邮件并点击里面提供的链接来激活您的账户。 --><span v-html="$t('login_register.acText_3').format(`“ <span class=f-c-main>noreply@gcox.com</span> ”`)"></span><!-- 如果您未在收件箱看到来自“ <span class="f-c-main">noreply@gcox.com</span> ”的邮件，请再确认一下垃圾邮件。 --></p>
-    <p class="mt5 fs16">{{$t('login_register.acText_4')}}<!-- 如未收到账户激活邮件，请点击下面的按钮重新发送 --></p>
-    <p class="mt60"><button type="button" class="mint-btn primary round" :disabled="locked" @click="sendEmail">{{$t('login_register.acResend')}}({{this.second}})<!-- 重新发送账户激活邮件 --></button></p>
+  <div class="cont_bg">
+    <div class="abcenter text-center f-c-white">
+      <p class="fs20 efont">{{$t('login_register.acWelcome')}}<!-- 欢迎致辞 --></p>
+      <p class="mt45 fs16">{{$t('login_register.acText_1')}}<!-- 账户激活邮件已经发送至 --> <span class="f-c-main">{{$route.query.email}}</span> </p>
+      <p class="mt5 fs16">{{$t('login_register.acText_2')}}<!-- 请打开邮件并点击里面提供的链接来激活您的账户。 --><span v-html="$t('login_register.acText_3').format(`“ <span class=f-c-main>noreply@gcox.com</span> ”`)"></span><!-- 如果您未在收件箱看到来自“ <span class="f-c-main">noreply@gcox.com</span> ”的邮件，请再确认一下垃圾邮件。 --></p>
+      <p class="mt5 fs16">{{$t('login_register.acText_4')}}<!-- 如未收到账户激活邮件，请点击下面的按钮重新发送 --></p>
+      <p class="mt60"><button type="button" class="mint-btn primary round" :disabled="locked" @click="sendEmail">{{$t('login_register.acResend')}}({{this.second}})<!-- 重新发送账户激活邮件 --></button></p>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -59,6 +62,14 @@ export default {
   width: 1190px;
   margin: 0 auto;
 }
+  .cont_bg{
+    background: #1f1e24;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
 
 
