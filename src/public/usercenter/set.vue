@@ -68,10 +68,10 @@
               <span>{{$t('otc_exchange.otc_exchange_username')}}</span>
               <input :value="userInfo.email" disabled>
             </label>
-            <label>
-              <span>{{$t('public0.public78')}}</span>
-              <input :value="userInfo.userRealName" disabled>
-            </label>
+            <!--<label>-->
+              <!--<span>{{$t('public0.public78')}}</span>-->
+              <!--<input :value="userInfo.userRealName" disabled>-->
+            <!--</label>-->
             <!--<label>-->
             <!--<span>{{$t('gcox_otc.daily_rate')}}</span>-->
             <!--<span><switch-vi :size="'leg'" :background="'#29CDA7'"  :open-text="'ON'"/></span>-->

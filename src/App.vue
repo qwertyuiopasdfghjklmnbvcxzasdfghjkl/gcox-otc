@@ -381,8 +381,8 @@
   }
 
   .minHeight {
-    min-height: -webkit-calc(100vh - 365px);
-    min-height: calc(100vh - 365px)
+    min-height: -webkit-calc(100vh - 331px);
+    min-height: calc(100vh - 331px)
   }
 
   .cat {

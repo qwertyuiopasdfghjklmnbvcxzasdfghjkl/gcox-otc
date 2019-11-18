@@ -1,5 +1,5 @@
 <template>
-  <div class="warm">
+  <div class="warm" @click="showSelect = false">
     <!--<div class="top">-->
       <!--<p class="w1200">{{$t('gcox_otc.get_cny_in_china')}}</p>-->
     <!--</div>-->
@@ -76,10 +76,11 @@
 
         <div>
           <p>{{$t('gcox_otc.currency_way')}}</p>
-          <div class="select">
+          <div class="select" @click.stop="showSelect = !showSelect">
             <span>{{bankData.card_name}} - {{bankData.card_bank}} - {{bankData.card_number}}</span>
-            <ul>
-              <li v-for="v in bankList" @click="bankData = v">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
+            <ul v-show="showSelect">
+              <li v-for="v in bankList"
+                  @click="bankData = v">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
             </ul>
           </div>
         </div>
@@ -161,7 +162,8 @@
         matchPayType: null,
         amount: null,
         bankList: [],
-        bankData: {}
+        bankData: {},
+        showSelect: false
       }
     },
     computed: {
@@ -550,12 +552,12 @@
 
     &:hover {
       ul {
-        display: block;
+        /*display: block;*/
       }
     }
 
     ul {
-      display: none;
+      display: block;
       position: absolute;
       top: 50px;
       left: 0;

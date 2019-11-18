@@ -22,7 +22,7 @@
               <span class="del" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
             </div>
             <label class="check" @click="change(item)">
-              <i  :class="{active : item.is_default === 1}"></i>
+              <i :class="{active : item.is_default === 1}"></i>
               <span>{{$t('gcox_otc.default')}}<!--设为默认--></span>
             </label>
           </div>
@@ -379,22 +379,22 @@
       },
       add () {
         // 先判断是否实名
-        if (this.getUserInfo.kycState === 1) {
-          utils.setDialog(dialog, {
-            list: this.bankList,
-            okCallback: () => {
-              this.getList()
-            }
-          })
-        } else {
-          Vue.$confirmDialog({
-            id: 'KYC_AUTH_FIRST',
-            content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
-            okCallback: () => {
-              this.$router.push({name: 'control_kyc'})
-            }
-          })
-        }
+        // if (this.getUserInfo.kycState === 1) {
+        utils.setDialog(dialog, {
+          list: this.bankList,
+          okCallback: () => {
+            this.getList()
+          }
+        })
+        // } else {
+        //   Vue.$confirmDialog({
+        //     id: 'KYC_AUTH_FIRST',
+        //     content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
+        //     okCallback: () => {
+        //       this.$router.push({name: 'control_kyc'})
+        //     }
+        //   })
+        // }
       },
       change (d) {
         console.log(d)

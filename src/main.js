@@ -83,16 +83,20 @@ if (lang === 'en') {
 }
 
 if (process.env.NODE_ENV !== 'development') {
-  window.console.log = () => {}
-  window.console.error = () => {}
+  window.console.log = () => {
+  }
+  window.console.error = () => {
+  }
 }
 
 // Object.assign(res, gjh)
 langApi.getLanguage(lang, (res) => {
   i18n.locale = lang
-  let l = Object.assign(res, gjh)
+  let l = res
+  if (location.hostname !== 'otc.gcox.sit.koall.io') {
+    l = Object.assign(res, gjh)
+  }
   i18n.setLocaleMessage(lang, l)
-  console.log(l)
   window.vm = new Vue({
     el: '#app',
     router,

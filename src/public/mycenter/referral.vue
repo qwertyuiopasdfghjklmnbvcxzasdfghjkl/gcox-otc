@@ -248,7 +248,8 @@
         this.params.page = currentIndex
       },
       getStatus (status) {
-        let rst = ''
+        let rst = this.$t('account.user_uncompleted')
+        console.log(status)
         switch (status) {
           case '':
             rst = this.$t('trade_record.trade_record_all')
@@ -440,7 +441,7 @@
     border-bottom: 1px solid #eeeeee;
 
     &:hover {
-      background-color: #3F3B3A;
+      background-color: #dcdcdc;
     }
   }
 
