@@ -97,7 +97,7 @@
         }
       },
       price () {
-        return this.listAdv.cur_price
+        return this.listAdv.cur_price || ''
       }
     },
     watch: {
@@ -109,6 +109,12 @@
       },
       timeout (e) {
         if (e) {
+          this.getAdv()
+        }
+      },
+      'params.currency' () {
+        console.log(this.amount)
+        if (this.amount) {
           this.getAdv()
         }
       }
@@ -169,6 +175,7 @@
       getAdv () {
         otcApi.match(this.form, res => {
           this.listAdv = res
+          console.log(res)
         })
       },
       getMax () {

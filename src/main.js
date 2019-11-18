@@ -93,7 +93,7 @@ if (process.env.NODE_ENV !== 'development') {
 langApi.getLanguage(lang, (res) => {
   i18n.locale = lang
   let l = res
-  if (location.hostname !== 'otc.gcox.sit.koall.io') {
+  if (location.hostname === 'localhost') {
     l = Object.assign(res, gjh)
   }
   i18n.setLocaleMessage(lang, l)
