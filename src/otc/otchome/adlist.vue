@@ -236,7 +236,11 @@
         })
       },
       updateAd (obj) { // 修改广告
-        otcApi.getVerifyState((msg) => {
+        let p = {
+          adType: obj.ad_type,
+          role: 'Maker'
+        }
+        otcApi.permission(p,(msg) => {
           otcApi.getPaySettings((res) => {
             // this.params.symbol = obj.symbol
             utils.setDialog(dialogUpdate, {

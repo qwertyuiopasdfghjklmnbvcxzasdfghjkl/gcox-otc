@@ -119,7 +119,7 @@
       createorder (i) {
         this.createParams.ad_type = i
         let p = {
-          adType: i,
+          adType: i === 1 ? 2 : 1,
           role: 'Maker'
         }
         this.checkSetState(p,(myPayType) => {
