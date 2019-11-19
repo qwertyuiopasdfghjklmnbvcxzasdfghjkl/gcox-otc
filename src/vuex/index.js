@@ -60,11 +60,7 @@ export default new Vuex.Store({
       return state.marketConfig
     },
     getUSDCNY (state) {
-      if (state.lang === 'en') {
-        return state.USDCNY && state.USDCNY.USD
-      } else {
-        return state.USDCNY && state.USDCNY.CNY
-      }
+      return state.USDCNY[state.currency]
     },
     getUsdRate (state) {
       if (state.USDCNY && state.USDCNY.USD && state.USDCNY.CNY) {

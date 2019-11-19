@@ -60,7 +60,7 @@
               <!--</router-link>-->
               <a href="javascript:;" @click="createAd()" class="sub-item" tag="div">
                 <i class="create"></i>
-                <span class="f-c-gray">{{$t('gcox_otc.create_ad')}}<!--  创建广告--></span>
+                <span class="f-c-gray">{{$t('otc_ad.otc_post_ad')}}<!--  创建广告--></span>
               </a>
               <router-link :to="{name:'control_deal'}" class="sub-item" tag="div">
                 <i class="deal"></i>
@@ -111,7 +111,7 @@
           <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag"
                                                               :class="'country-'+currency"></small>
             {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
-          <div class="popover-nav" style="width: 200px" :class="{en:getLang==='en'}" ref="nav3"
+          <div class="popover-nav cur" ref="nav3"
                @click="hidePopoverNav('nav3')">
             <div class="popover-menu currency">
               <span v-for="data in curList" @click="currencyFun(data.currency)">
@@ -127,8 +127,8 @@
           </span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
             <div class="popover-menu">
-              <p class="lang" @click="setLanguage('en')">ENGLISH</p>
               <p class="lang" @click="setLanguage('zh-CN')">简体中文</p>
+              <p class="lang" @click="setLanguage('en')">ENGLISH</p>
             </div>
           </div>
         </router-link>
@@ -156,7 +156,8 @@
         allSymbol: [],
         showBalance: true,
         curList: [],
-        createParams: {}
+        createParams: {},
+        location: null
       }
     },
     computed: {
@@ -186,7 +187,16 @@
         }
       },
       currency () {
-        return this.getCurrency
+        let c = null
+        this.curList.filter(res => {
+          if (res.currency.indexOf(this.location) !== -1) {
+            c = res.currency
+          }
+        })
+        if (!this.getCurrency) {
+          this.setCurrency(c)
+        }
+        return this.getCurrency || c
       },
       lang () {
         switch (this.getLang) {
@@ -201,6 +211,7 @@
     created () {
       this.getBalance()
       this.getCurList()
+      this.getLocation()
     },
     beforeDestroy () {
 
@@ -226,6 +237,11 @@
         otcApi.getCurrencys(res => {
           this.curList = res
           window.localStorage.currencyList = res
+        })
+      },
+      getLocation () {
+        otcApi.location(res => {
+          this.location = res
         })
       },
       setLanguage (lang) {
@@ -399,6 +415,9 @@
         margin-left: 60px;
       }
 
+      .cur{
+        width: 210px;
+      }
       .popover-nav {
         position: absolute;
         top: 60px;

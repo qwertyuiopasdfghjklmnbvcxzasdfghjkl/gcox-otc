@@ -568,4 +568,16 @@ const setDefault = function (formData, success, error) {
 }
 otc.setDefault = setDefault
 
+// 默认法币
+const location = function (success, error) {
+  api.get(`${domain}api/v1/gcox/user/location`, (res) => {
+    if (res.rst === 1) {
+      success && success(res.data)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+otc.location = location
+
 export default otc

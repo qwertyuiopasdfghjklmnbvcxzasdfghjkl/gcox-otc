@@ -5,7 +5,7 @@
         <div class="total">
           <h2>{{$t('gcox_otc.appraisement')}}：<!--估计资产价值：--><span>{{String(getBTCValuation).toMoney()}} BTC</span>
           </h2>
-          <h4>≈ {{getCoinSign}} {{USDCNY}}</h4>
+          <h4>≈ {{USDCNY}} {{getCurrency}} </h4>
         </div>
         <div v-if="!showHistory">
           <div class="balance_search">
@@ -114,8 +114,9 @@
       loading
     },
     computed: {
-      ...mapGetters(['getBTCValuation', 'getUSDCNY', 'getCoinSign']),
+      ...mapGetters(['getBTCValuation', 'getUSDCNY', 'getCoinSign', 'getCurrency']),
       USDCNY () {
+        console.log(this.getUSDCNY)
         return numUtils.mul(this.getBTCValuation, this.getUSDCNY).toFixed(2).toMoney()
       },
     },

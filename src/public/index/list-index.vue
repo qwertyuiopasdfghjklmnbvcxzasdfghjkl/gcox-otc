@@ -7,7 +7,8 @@
       <list-box :datas="buyDatas" :type="'buy'" @submit="sell">
         <li class="colem">
           <p>{{$t('gcox_otc.better_price')}}</p>
-          <button class="green_button" @click="createorder(2)">{{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_buy'))}}
+          <button class="green_button" @click="createorder(2)">
+            {{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_buy'))}}
           </button>
         </li>
       </list-box>
@@ -19,7 +20,8 @@
       <list-box :datas="sellDatas" :type="'sell'" @submit="sell">
         <li class="colem">
           <p>{{$t('gcox_otc.better_price')}}</p>
-          <button class="red_button" @click="createorder(1)">{{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_sell'))}}
+          <button class="red_button" @click="createorder(1)">
+            {{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_sell'))}}
           </button>
         </li>
       </list-box>
@@ -123,7 +125,7 @@
           adType: i === 1 ? 2 : 1,
           role: 'Maker'
         }
-        this.checkSetState(p,(myPayType) => {
+        this.checkSetState(p, (myPayType) => {
           this.$router.push({name: 'advertising', params: {myPayType: myPayType, params: this.createParams,}})
         }, 'public0.public109', true, false)
       },
@@ -145,7 +147,7 @@
           this.$router.push({
             name: 'transaction',
           })
-        }, 'public0.public15', isCheckPaySet, true, data.ad_id)
+        }, 'public0.public15', true, true, data.ad_id)
       },
 
       checkSetState (p, successCallback, message, isCheckPaySet, isCheckPayType, id) {
@@ -166,6 +168,17 @@
         otcApi.permission(p, (msg) => {
           if (isCheckPaySet) {
             otcApi.getPaySettings((res) => {
+              console.log(res.data.bankList.length)
+              if (res.data.bankList.length === 0) {
+                Vue.$confirmDialog({
+                  id: 'NO_PAY_TYPE',
+                  content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
+                  okCallback: () => {
+                    this.$router.push({name: 'control_pay'})
+                  }
+                })
+                return
+              }
               if (isCheckPayType) {
                 otcApi.matchPayTypes(id, (data2) => {
                   this.matchPayType = data2
