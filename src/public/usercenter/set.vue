@@ -57,7 +57,7 @@
         </collapse>
       </div>
 
-      <div class="box">
+      <div class="box" v-if="false">
         <collapse :title="$t('home.intro')">
           <div class="intro">
             <label>
@@ -96,7 +96,7 @@
             <label>
               <span>{{$t('user.changePassword')}}</span>
               <span class="red w2">******</span>
-              <span ><button @click="changePW()">{{$t('gcox_otc.update')}}</button></span>
+              <span ><button @click="changePW()">{{$t('account.user_center_change')}}</button></span>
             </label>
           </div>
         </collapse>

@@ -1,7 +1,7 @@
 <template>
   <div class="header-container">
     <div class="header-bg"></div>
-    <div class="w1200 header-top">
+    <div class="w1200 header-top" v-if="false">
       <p>
         <switch-vi v-model="showBalance"/>
         {{$t('gcox_otc.total')}} {{symbolInfo.symbol || 'BTC'}}：
@@ -35,13 +35,16 @@
       </div>
       <div class="right ui-flex-1">
 
+        <div class="flex_left">
+          <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}
+          </router-link>
+          <router-link :to="{name:'invite'}" class="item" :activeClass="'active'" v-if="isLogin">
+            {{$t('gcox_otc.invite')}}
+          </router-link>
+        </div>
+
         <router-link :to="{name:'msg'}" class="item msg">
           <img src="../assets/img/msg.png" width="40"/>
-        </router-link>
-
-        <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}</router-link>
-        <router-link :to="{name:'invite'}" class="item" :activeClass="'active'" v-if="isLogin">
-          {{$t('gcox_otc.invite')}}
         </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
@@ -51,25 +54,17 @@
           </span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav2" @click="hidePopoverNav('nav2')">
             <div class="popover-menu">
-              <router-link :to="{name:'overall'}" class="sub-item" tag="div">
-                <i class="overall"></i>
-                <span>{{$t('gcox_otc.overall')}}<!-- 总体 --></span>
-              </router-link>
+              <!--<router-link :to="{name:'overall'}" class="sub-item" tag="div">-->
+              <!--<i class="create"></i>-->
+              <!--<span>{{$t('gcox_otc.overall')}}&lt;!&ndash;  总体&ndash;&gt;</span>-->
+              <!--</router-link>-->
+              <a href="javascript:;" @click="createAd()" class="sub-item" tag="div">
+                <i class="create"></i>
+                <span class="f-c-gray">{{$t('gcox_otc.create_ad')}}<!--  创建广告--></span>
+              </a>
               <router-link :to="{name:'control_deal'}" class="sub-item" tag="div">
                 <i class="deal"></i>
                 <span>{{$t('gcox_otc.P2P_deal')}}<!-- P2P交易 --></span>
-              </router-link>
-              <router-link :to="{name:'control_wallet'}" class="sub-item" tag="div">
-                <i class="wallet"></i>
-                <span>{{$t('exchange.exchange_wallet')}}<!-- 钱包 --></span>
-              </router-link>
-              <router-link :to="{name:'control_pay'}" class="sub-item" tag="div">
-                <i class="pay icon-bank"></i>
-                <span>{{$t('gcox_otc.pay_way')}}<!-- 付款方式 --></span>
-              </router-link>
-              <router-link :to="{name:'control_kyc'}" class="sub-item" tag="div">
-                <i class="kyc"></i>
-                <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
               </router-link>
             </div>
           </div>
@@ -83,6 +78,18 @@
               <router-link :to="{name:'usercenter_abstract'}" class="sub-item" tag="div">
                 <i class="abstract"></i>
                 <span>{{$t('home.intro')}}<!-- 简介 --></span>
+              </router-link>
+              <router-link :to="{name:'control_wallet'}" class="sub-item" tag="div">
+                <i class="wallet"></i>
+                <span>{{$t('exchange.exchange_wallet')}}<!-- 钱包 --></span>
+              </router-link>
+              <router-link :to="{name:'control_pay'}" class="sub-item" tag="div">
+                <i class="pay icon-bank"></i>
+                <span>{{$t('gcox_otc.pay_way')}}<!-- 付款方式 --></span>
+              </router-link>
+              <router-link :to="{name:'control_kyc'}" class="sub-item" tag="div">
+                <i class="kyc"></i>
+                <span>{{$t('usercontent.user38')}}<!-- KYC认证 --></span>
               </router-link>
               <router-link :to="{name:'usercenter_set'}" class="sub-item" tag="div">
                 <i class="set"></i>
@@ -104,7 +111,8 @@
           <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag"
                                                               :class="'country-'+currency"></small>
             {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
-          <div class="popover-nav" style="width: 200px" :class="{en:getLang==='en'}" ref="nav3" @click="hidePopoverNav('nav3')">
+          <div class="popover-nav" style="width: 200px" :class="{en:getLang==='en'}" ref="nav3"
+               @click="hidePopoverNav('nav3')">
             <div class="popover-menu currency">
               <span v-for="data in curList" @click="currencyFun(data.currency)">
                 <small class="country-icon currency_flag" :class="'country-'+data.currency"></small>
@@ -139,6 +147,7 @@
   import switchVi from './switch-vi'
   import userUtils from '@/api/wallet'
   import otcApi from '@/api/otc'
+  import Vue from 'vue'
 
   export default {
     components: {switchVi},
@@ -147,6 +156,7 @@
         allSymbol: [],
         showBalance: true,
         curList: [],
+        createParams: {}
       }
     },
     computed: {
@@ -161,7 +171,7 @@
       },
       symbolInfo () {
         let data = {}
-        let s = this.getSymbol;
+        let s = this.getSymbol
         if (this.allSymbol) {
           this.allSymbol.filter(res => {
             if (res.caption === this.getSymbol.caption) {
@@ -196,7 +206,7 @@
 
     },
     methods: {
-      ...mapActions(['setLang', 'setApiToken', 'setCurrency','setSymbol']),
+      ...mapActions(['setLang', 'setApiToken', 'setCurrency', 'setSymbol']),
       showQuickLogin () {
         utils.setDialog(quickLogin, {
           backClose: true
@@ -243,13 +253,91 @@
       // change (e) {
       //   this.showBalance = e
       // }
+      createAd () {
+        this.createParams.ad_type = 2
+        this.createParams.currency = this.getCurrency
+        let p = {
+          adType: 1,
+          role: 'Maker'
+        }
+        this.checkSetState(p, (myPayType) => {
+          this.$router.push({name: 'advertising', params: {myPayType: myPayType, params: this.createParams,}})
+        }, 'public0.public109', true, false)
+      },
+      checkSetState (p, successCallback, message, isCheckPaySet, isCheckPayType, id) {
+        if (!this.isLogin) {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(message)}) // 请登录后再发布广告||请登录后再交易
+          return
+        }
+        if (!this.getUserInfo.mobile) {
+          Vue.$confirmDialog({
+            id: 'bind_mobile',
+            content: this.$t('gcox_otc.bind_mobile'), // 请先绑定手机号
+            okCallback: () => {
+              this.$router.push({name: 'usercenter_abstract'})
+            }
+          })
+          return
+        }
+        otcApi.permission(p, (msg) => {
+          if (isCheckPaySet) {
+            otcApi.getPaySettings((res) => {
+              if (isCheckPayType) {
+                otcApi.matchPayTypes(id, (data2) => {
+                  this.matchPayType = data2
+                  successCallback && successCallback()
+                }, (msg3) => {
+                  if (msg3 === 'PAY_TYPE_UNMATCH') {
+                    Vue.$confirmDialog({
+                      id: 'PAY_TYPE_UNMATCH',
+                      content: this.$t('error_code.PAY_TYPE_UNMATCH'), // 支付方式不匹配，请设置对应的支付方式
+                      okCallback: () => {
+                      }
+                    })
+                  } else {
+                    Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg3}`)})
+                  }
+                })
+              } else {
+                successCallback && successCallback(res.data.pay_type)
+              }
+            }, (res) => {
+              if (res.msg === 'NO_PAY_TYPE') {
+                Vue.$confirmDialog({
+                  id: 'NO_PAY_TYPE',
+                  content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
+                  okCallback: () => {
+                    this.$router.push({name: 'control_pay'})
+                  }
+                })
+              } else {
+                Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+              }
+            })
+          } else {
+            successCallback && successCallback()
+          }
+        }, (msg) => {
+          if (msg === 'KYC_AUTH_FIRST') {
+            Vue.$confirmDialog({
+              id: 'KYC_AUTH_FIRST',
+              content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
+              okCallback: () => {
+                this.$router.push({name: 'control_kyc'})
+              }
+            })
+          } else {
+            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
+          }
+        })
+      }
     }
   }
 </script>
 
 <style lang="less" scoped>
   .header-container {
-    height: 100px;
+    height: 60px;
 
   }
 
@@ -259,7 +347,7 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 100px;
+    height: 60px;
     background-color: #0C0D34;
   }
 
@@ -284,7 +372,7 @@
   .header {
     position: fixed;
     z-index: 1000;
-    top: 40px;
+    top: 0;
     left: 0;
     right: 0;
     height: 60px;
@@ -372,6 +460,10 @@
 
             .overall {
               background-image: url('../assets/img/icon_otc01.png');
+            }
+
+            .create {
+              background-image: url('../assets/img/create.png');
             }
 
             .deal {
@@ -516,6 +608,7 @@
   .currency {
     display: flex;
     flex-wrap: wrap;
+
     span {
       flex: 1;
       padding: 6px 18px;
@@ -523,7 +616,8 @@
       align-items: center;
       transition: 0.3s;
       white-space: nowrap;
-      &:hover{
+
+      &:hover {
         background: #eeeeee;
       }
 
@@ -537,11 +631,21 @@
     border-radius: 50%;
     margin-right: 4px;
   }
-  .lang{
+
+  .lang {
     padding: 0 20px;
     transition: 0.3s;
-    &:hover{
+
+    &:hover {
       background: #eeeeee;
+    }
+  }
+
+  .flex_left {
+    flex: 1;
+
+    a {
+      margin-left: 48px;
     }
   }
 </style>

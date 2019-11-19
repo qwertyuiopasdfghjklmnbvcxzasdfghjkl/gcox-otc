@@ -18,8 +18,8 @@
           </div>
           <div class="form-flex-right">
             <div class="btn">
-              <span class="yellow_button" @click="update(item)">{{$t('gcox_otc.update')}}<!--修改--></span>
-              <span class="del" @click="del(item.card_number)">{{$t('gcox_otc.delete')}}<!--删除--></span>
+              <span class="yellow_button" @click="update(item)">{{$t('account.user_center_change')}}<!--修改--></span>
+              <span class="del" @click="del(item.card_number)">{{$t('public0.public3')}}<!--删除--></span>
             </div>
             <label class="check" @click="change(item)">
               <i :class="{active : item.is_default === 1}"></i>

@@ -97,7 +97,7 @@
       <table>
         <tr>
           <td>{{$t('gcox_otc.pay_to')}}</td>
-          <td>{{params.username}}</td>
+          <td>{{params.nickname||params.username}}</td>
         </tr>
         <tr>
           <td>{{$t('exchange.exchange_price')}}</td>
@@ -109,7 +109,8 @@
         </tr>
         <tr>
           <td>{{$t('gcox_otc.limit_number')}}</td>
-          <td><b><span class="radius">{{detailData.min_amount}}{{tradeParams.limit}}</span> - <span class="radius">{{detailData.max_amount}}{{tradeParams.limit}}</span></b>
+          <td><b><span class="radius">{{detailData.min_amount}}{{tradeParams.limit}}</span> -
+            <span class="radius">{{max(detailData)}}{{tradeParams.limit}}</span></b>
           </td>
         </tr>
         <tr>
@@ -144,6 +145,7 @@
   import numUtils from '@/assets/js/numberUtils'
   import numberbox from '@/components/formel/numberInput'
   import orderconfirm from '@/otc/otchome/orderconfirm'
+  import util from '../../assets/js/numberUtils'
 
   export default {
     // props: ['params', 'ad_id', 'matchPayType'],
@@ -346,6 +348,17 @@
             }
           })
         })
+      },
+      max (data) {
+        let n = ''
+        if (!this.buyType) {
+          n = Number(data.max_amount) > Number(data.remain_count) ? data.remain_count : data.max_amount
+        } else {
+          let m = util.mul(data.remain_count, data.cur_price)
+          console.log(m, data)
+          n = m > Number(data.max_amount) ? Number(data.max_amount) : m
+        }
+        return n
       }
     }
   }

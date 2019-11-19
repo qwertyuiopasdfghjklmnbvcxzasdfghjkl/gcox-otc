@@ -36,8 +36,8 @@
           <label>{{$t('trade_record.trade_record_type')}}：<!--方向--></label>
           <div class="value">
             <select class="w250" v-model="formData.ad_type">
-              <option :value="1">{{$t('gcox_otc.buy')}}</option>
-              <option :value="2">{{$t('gcox_otc.sell')}}</option>
+              <option :value="1">{{$t('otc_exchange.otc_exchange_buy')}}</option>
+              <option :value="2">{{$t('otc_exchange.otc_exchange_sell')}}</option>
             </select>
           </div>
         </div>
@@ -188,8 +188,8 @@
           <div class="row">
             <label>{{$t('gcox_otc.pay_way')}}</label>
             <p class="value flex bank_box">
-              <b>{{$t('gcox_otc.bank_transfer')}}</b>
-              <router-link :to="{name: 'control_pay'}">{{$t('gcox_otc.add')}}</router-link>
+              <b>{{$t('otc_legal.otc_legal_Bank_Transfer')}}</b>
+              <router-link :to="{name: 'control_pay'}">{{$t('account.user_add')}}</router-link>
             <ul class="bank_list">
               <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
             </ul>
@@ -203,7 +203,7 @@
           </div>
         </div>
         <div class="column cont-item">
-          <label>{{$t('gcox_otc.bank_card_id')}}</label>
+          <label>{{$t('public.bank_account')}}</label>
           <div class="value">
             <p>{{bankData.card_number}}</p>
           </div>

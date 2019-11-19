@@ -4,7 +4,7 @@
       <div>
         <h6><span :class="type === 'sell'? 'red': 'green'">{{data.cur_price}}</span> {{data.currency}}/{{data.symbol}}
         </h6>
-        <p>{{$t('gcox_otc.limit_number')}}： {{data.min_amount}} - {{data.max_amount}}
+        <p>{{$t('gcox_otc.limit_number')}}： {{data.min_amount}} - {{max(data)}}
           {{type === 'sell' ? data.symbol : data.currency}}</p>
       </div>
       <div>
@@ -32,7 +32,7 @@
       </div>
       <div>
         <button :class="type === 'sell'? 'red_button':'green_button'" @click="sub(data)">
-          {{type === 'sell'? $t('gcox_otc.sell'): $t('gcox_otc.buy')}}
+          {{type === 'sell'? $t('otc_exchange.otc_exchange_sell'): $t('otc_exchange.otc_exchange_buy')}}
         </button>
       </div>
     </li>
@@ -42,6 +42,7 @@
 
 <script>
   import avatar from '@/assets/images/touxiang.png'
+  import util from '../assets/js/numberUtils'
 
   export default {
     name: 'list-box',
@@ -51,12 +52,26 @@
         avatarUrl: avatar,
       }
     },
+    computed: {
+
+    },
     created () {
 
     },
     methods: {
       sub (d) {
         this.$emit('submit', d)
+      },
+      max (data) {
+        let n = ''
+        if (this.type === 'sell') {
+          n = Number(data.max_amount) > Number(data.remain_count) ? data.remain_count : data.max_amount
+        } else {
+          let m = util.mul(data.remain_count, data.cur_price);
+          console.log(m, data)
+          n = m > Number(data.max_amount) ? Number(data.max_amount) : m
+        }
+        return n
       }
     }
 
@@ -73,13 +88,16 @@
     align-items: center;
     font-size: 16px;
     margin-bottom: 20px;
-    &>div:nth-child(1){
+
+    & > div:nth-child(1) {
       width: 220px;
     }
-    &>div:nth-child(2){
+
+    & > div:nth-child(2) {
       width: 320px;
     }
-    &>div:nth-child(3){
+
+    & > div:nth-child(3) {
       width: 320px;
     }
 
@@ -114,14 +132,16 @@
       }
     }
   }
-  .status{
+
+  .status {
     display: inline-block;
     width: 10px;
     height: 10px;
     background: #9d9fa7;
-    border-radius:50%;
+    border-radius: 50%;
     margin-right: 6px;
-    &.active{
+
+    &.active {
       background: #00aeef;
     }
   }
