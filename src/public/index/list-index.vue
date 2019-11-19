@@ -2,23 +2,24 @@
   <div class="cont">
     <div class="top w1200">
       <h4><img src="../../assets/img/flag.png">
-        <span v-html="$t('gcox_otc.you_want').format('green',$t('gcox_otc.buy'),params.name)"></span>
+        <span v-html="$t('gcox_otc.you_want').format('green',$t('otc_exchange.otc_exchange_buy'),params.name)"></span>
       </h4>
       <list-box :datas="buyDatas" :type="'buy'" @submit="sell">
-        <li>
-          <button class="green_button" @click="createorder(2)">{{$t('gcox_otc.build').format($t('gcox_otc.buy'))}}
+        <li class="colem">
+          <p>{{$t('gcox_otc.better_price')}}</p>
+          <button class="green_button" @click="createorder(2)">{{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_buy'))}}
           </button>
         </li>
       </list-box>
     </div>
     <div class="top bottom w1200">
       <h4><img src="../../assets/img/flag.png">
-        <span v-html="$t('gcox_otc.you_want').format('red',$t('gcox_otc.sell'),params.name)"></span>
+        <span v-html="$t('gcox_otc.you_want').format('red',$t('otc_exchange.otc_exchange_sell'),params.name)"></span>
       </h4>
       <list-box :datas="sellDatas" :type="'sell'" @submit="sell">
         <li class="colem">
-          <!--<p>{{$t('gcox_otc.better_price')}}</p>-->
-          <button class="red_button" @click="createorder(1)">{{$t('gcox_otc.build').format($t('gcox_otc.sell'))}}
+          <p>{{$t('gcox_otc.better_price')}}</p>
+          <button class="red_button" @click="createorder(1)">{{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_sell'))}}
           </button>
         </li>
       </list-box>

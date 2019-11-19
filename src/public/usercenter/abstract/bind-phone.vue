@@ -26,7 +26,7 @@
           {{$t('public0.public6')}}
         </em>
         <p class="btn">
-          <button class="yellow_button" @click="next(2)">{{$t('gcox_otc.next')}}</button>
+          <button class="yellow_button" @click="next(2)">{{$t('shop.continue')}}</button>
         </p>
       </div>
 
@@ -38,7 +38,7 @@
         <p class="btn">
           <button class="" @click="step = 1">{{$t('gcox_otc.back')}}</button>
           <button class="yellow_button" @click="bind()" :class="{'dis':mobileFormData.smsCode}">
-            {{$t('gcox_otc.next')}}
+            {{$t('shop.continue')}}
           </button>
         </p>
       </div>
