@@ -75,7 +75,7 @@
         </div>
 
         <div>
-          <p>{{$t('gcox_otc.currency_way')}}</p>
+          <p>{{$t('gcox_otc.currency_way')}}<em class="asterisk">&nbsp;*</em></p>
           <div class="select" @click.stop="showSelect = !showSelect">
             <span>{{bankData.card_name}} - {{bankData.card_bank}} - {{bankData.card_number}}</span>
             <ul v-show="showSelect">

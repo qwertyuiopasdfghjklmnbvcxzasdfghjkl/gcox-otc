@@ -187,8 +187,19 @@
         }
         marketApi.getBtcPrice(res => {
           this.setUSDCNY({
+            CNY: numUtils.BN(res.CNY).toFixed(2),
+            HKD: numUtils.BN(res.HKD).toFixed(2),
+            IDR: numUtils.BN(res.IDR).toFixed(2),
+            KHR: numUtils.BN(res.KHR).toFixed(2),
+            MOP: numUtils.BN(res.MOP).toFixed(2),
+            MYR: numUtils.BN(res.MYR).toFixed(2),
+            PHP: numUtils.BN(res.PHP).toFixed(2),
+            SGD: numUtils.BN(res.SGD).toFixed(2),
+            THB: numUtils.BN(res.THB).toFixed(2),
+            TWD: numUtils.BN(res.TWD).toFixed(2),
             USD: numUtils.BN(res.USD).toFixed(2),
-            CNY: numUtils.BN(res.CNY).toFixed(2)
+            USDT: numUtils.BN(res.USDT).toFixed(2),
+            VND: numUtils.BN(res.VND).toFixed(2)
           })
           this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
         })
