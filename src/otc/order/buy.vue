@@ -439,13 +439,13 @@
         }, (msg) => {
           this.data1.pay_state = 1
           this.surplus_Time = null
-          this.tiggerEvents({
-            name: 'chatEvent',
-            params: {
-              type: 'markReadOnly',
-              orderNumber: this.data1.order_number
-            }
-          })
+          // this.tiggerEvents({
+          //   name: 'chatEvent',
+          //   params: {
+          //     type: 'markReadOnly',
+          //     orderNumber: this.data1.order_number
+          //   }
+          // })
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
         }, (msg) => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
