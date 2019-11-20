@@ -7,38 +7,41 @@
         <img src="../../assets/img/close.png">
       </small>
     </div>
-    <div>
-      <div class="copy">
-        <p>{{symbol}}{{$t('referral.address')}} <!--充币地址--></p>
-        <p class="address">{{getAddress}}</p>
-        <label v-clipboard:copy="getAddress" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
+    <div class="scroll">
+      <div>
+        <div class="copy">
+          <p>{{symbol}}{{$t('referral.address')}} <!--充币地址--></p>
+          <p class="address">{{getAddress}}</p>
+          <label v-clipboard:copy="getAddress" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
+        </div>
+        <div class="tsmb">
+          <!--<p>{{$t('gcox_otc.fee')}} {{procedureFee}}</p>-->
+          <p>* {{$t('gcox_otc.explain').format(symbol)}}</p>
+        </div>
+        <div class="bottom-box">
+          <div class="qrad">
+            <div ref="qrcode" class="qrcode"></div>
+          </div>
+        </div>
       </div>
-      <div class="tsmb">
-        <p>{{$t('gcox_otc.fee')}} {{procedureFee}}</p>
-        <p>* {{$t('gcox_otc.explain').format(symbol)}}</p>
-      </div>
-      <div class="bottom-box">
-        <div class="qrad">
-          <div ref="qrcode" class="qrcode"></div>
+
+      <div v-if="symbol==='EOS' || symbol==='XRP'">
+        <div class="copy">
+          <p>MEMO<!--充币地址--></p>
+          <p class="address">{{addr}}</p>
+          <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
+        </div>
+        <div class="tsmb">
+          <p>{{$t('gcox_otc.memo_address_use')}}</p>
+        </div>
+        <div class="bottom-box">
+          <div class="qrad">
+            <div ref="memoQrcode" class="qrcode"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div v-if="symbol==='EOS' || symbol==='XRP'">
-      <div class="copy">
-        <p>MEMO<!--充币地址--></p>
-        <p class="address">{{addr}}</p>
-        <label v-clipboard:copy="addr" v-clipboard:success="onCopy" v-clipboard:error="onError"></label>
-      </div>
-      <div class="tsmb">
-        <p>{{$t('gcox_otc.memo_address_use')}}</p>
-      </div>
-      <div class="bottom-box">
-        <div class="qrad">
-          <div ref="memoQrcode" class="qrcode"></div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </template>
@@ -152,9 +155,18 @@
     width: 900px;
     border-radius: 8px;
     padding-bottom: 40px;
-    height: 85vh;
+    max-height: 85vh;
+    position: relative;
     overflow-y: auto;
 
+    .scroll{
+      /*position: absolute;*/
+      /*height: 100%;*/
+      /*width: 100%;*/
+      /*left: 0;*/
+      /*top: 60px;*/
+      /*overflow-y: auto;*/
+    }
     .tsmb {
       margin: 10px auto;
       width: 480px;

@@ -38,6 +38,7 @@
         <div class="flex_left">
           <router-link :to="{name:'home'}" class="item" :activeClass="'active'">{{$t('gcox_otc.P2P_swop')}}
           </router-link>
+          <a :href="url" target="_blank">{{$t('otc_public.otc_navigation_support')}} <!-- 帮助中心--></a>
           <router-link :to="{name:'invite'}" class="item" :activeClass="'active'" v-if="isLogin">
             {{$t('gcox_otc.invite')}}
           </router-link>
@@ -169,6 +170,20 @@
         } else {
           return ''
         }
+      },
+      url () {
+        let href = null
+        switch (this.getLang) {
+          case 'zh-CN' :
+            href = 'https://gcoxotc.zendesk.com/hc/zh-cn'
+            break
+          case 'en' :
+            href = 'https://gcoxotc.zendesk.com/hc/en-us'
+            break
+          case 'vi-vn' :
+            href = 'https://gcoxotc.zendesk.com/hc/vi-vn'
+        }
+        return href
       },
       symbolInfo () {
         let data = {}
@@ -415,9 +430,10 @@
         margin-left: 60px;
       }
 
-      .cur{
+      .cur {
         width: 210px;
       }
+
       .popover-nav {
         position: absolute;
         top: 60px;

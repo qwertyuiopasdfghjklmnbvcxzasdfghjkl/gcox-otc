@@ -39,16 +39,20 @@
           </span>
           <span>
             <!--<select class="w250" v-model="price">-->
-              <!--<option :key="listAdv.cur_price" :value="listAdv.cur_price">-->
-              <!--{{listAdv.cur_price}}-->
-              <!--</option>-->
+            <!--<option :key="listAdv.cur_price" :value="listAdv.cur_price">-->
+            <!--{{listAdv.cur_price}}-->
+            <!--</option>-->
             <!--</select>-->
             {{price}}
           </span>
         </div>
-        <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">Create offer</button>
-        <p v-if="state === 1" @click="state=2">{{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_sell'))}}{{t.symbol}} ?</p>
-        <p v-if="state === 2" @click="state=1">{{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_buy'))}}{{t.symbol}} ?</p>
+        <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">
+          {{$t('exchange.exchange_determine')}}
+        </button>
+        <p v-if="state === 1" @click="state=2">
+          {{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_sell'))}}{{t.symbol}} ?</p>
+        <p v-if="state === 2" @click="state=1">
+          {{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_buy'))}}{{t.symbol}} ?</p>
       </div>
 
     </div>
@@ -119,6 +123,11 @@
         if (this.amount) {
           this.getAdv()
         }
+      },
+      state () {
+        if (this.amount) {
+          this.getAdv()
+        }
       }
     },
     created () {
@@ -149,36 +158,40 @@
         })
       },
       sub () {
-        if (this.form.amount && this.price) {
-          let isCheckPaySet = parseInt(this.state) === 1
-          this.matchPayType = parseInt(this.state) === 1 ? void 0 : this.listAdv.pay_type
-          console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
-          let p = {
-            adType: this.state,
-            role: 'Taker'
-          }
-          this.checkSetState(p, () => {
-            if (this.getUserInfo.userId === this.listAdv.from_user_id) {
-              // 不可以买卖自己发布的广告
-              Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
-              return
+        if (this.form.amount) {
+          if (this.price) {
+            let isCheckPaySet = parseInt(this.state) === 1
+            this.matchPayType = parseInt(this.state) === 1 ? void 0 : this.listAdv.pay_type
+            console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
+            let p = {
+              adType: this.state,
+              role: 'Taker'
             }
+            this.checkSetState(p, () => {
+              if (this.getUserInfo.userId === this.listAdv.from_user_id) {
+                // 不可以买卖自己发布的广告
+                Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
+                return
+              }
 
-            window.localStorage.amount = this.amount
+              window.localStorage.amount = this.amount
 
-            let query = {ad_id: this.listAdv.ad_id, params: this.listAdv, matchPayType: this.matchPayType}
-            window.localStorage.ordDet = JSON.stringify(query)
-            this.$router.push({
-              name: 'transaction',
-            })
-          }, 'public0.public15', isCheckPaySet, true, this.listAdv.ad_id)
+              let query = {ad_id: this.listAdv.ad_id, params: this.listAdv, matchPayType: this.matchPayType}
+              window.localStorage.ordDet = JSON.stringify(query)
+              this.$router.push({
+                name: 'transaction',
+              })
+            }, 'public0.public15', isCheckPaySet, true, this.listAdv.ad_id)
+          }
+        } else {
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`exchange.exchange_number_empty`)})
         }
       },
       getAdv () {
         otcApi.match(this.form, res => {
           this.listAdv = res
           console.log(res)
-        },msg =>{
+        }, msg => {
           this.noAd = msg
         })
       },

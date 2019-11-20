@@ -538,13 +538,14 @@
     white-space: nowrap;
     word-break: break-all;
     padding: 0 4px;
-    min-width: 150px;
+    width: 220px;
     text-overflow: ellipsis;
     overflow: hidden;
     align-items: center;
   }
   .accountInfo-lists li .items > div.ico{
     min-width: 60px;
+    width: 60px;
   }
 
   .accountInfo-lists.pandect li .items > div {
@@ -604,7 +605,7 @@
   .accountInfo-lists li .items > div.coin {
     /*flex: 1;*/
     text-align: left;
-    width: 140px;
+    width: 160px;
   }
 
   .accountInfo-lists li .items > div.coin .icon-checkbox {
@@ -726,10 +727,10 @@
       align-items: center;
       p{
         &:first-child{
-          width: 210px;
           text-indent: 40px;
         }
-        min-width: 150px;
+        width: 220px;
+
       }
     }
   }

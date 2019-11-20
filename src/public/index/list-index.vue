@@ -12,6 +12,9 @@
           </button>
         </li>
       </list-box>
+      <page v-if="!loading && buyDatas.length > 0" :pageIndex="form.buyPage" :pageSize="10"
+            :total="buyTotal" @changePageIndex="pageChangeBuy"/>
+      <loading class="load" v-if="loading"/>
     </div>
     <div class="top bottom w1200">
       <h4><img src="../../assets/img/flag.png">
@@ -25,6 +28,9 @@
           </button>
         </li>
       </list-box>
+      <page v-if="!loading && sellDatas.length > 0" :pageIndex="form.sellPage" :pageSize="10"
+            :total="sellTotal" @changePageIndex="pageChangeSell"/>
+      <loading class="load" v-if="loading1"/>
     </div>
   </div>
 </template>
@@ -38,17 +44,26 @@
   import avatar from '@/assets/images/touxiang.png'
   import ListBox from '../../components/list-box'
   import createorder from '@/otc/otchome/createorder'
+  import Page from '../../components/page'
 
   export default {
     name: 'list-index',
-    components: {ListBox},
+    components: {Page, ListBox},
     props: ['params'],
     data () {
       return {
         buyDatas: [],
         sellDatas: [],
         avatarUrl: avatar,
-        createParams: this.params
+        createParams: this.params,
+        form: {
+          sellPage: 1,
+          buyPage: 1
+        },
+        loading: false,
+        loading1: false,
+        buyTotal: 0,
+        sellTotal: 0,
       }
     },
     computed: {
@@ -71,13 +86,12 @@
       this.getSellList()
     },
     methods: {
-      getList (i, succes) { // 获取广告列表
-        this.loading = true
+      getList (data, succes) { // 获取广告列表
         otcApi.getAdvertisementList({
-          ad_type: i,
+          ad_type: data.i,
           symbol: this.params.symbol,
           currency: this.getCurrency,
-          page: 1,
+          page: data.page,
           show: 10
         }, (res) => {
           res.data.forEach((item) => { // 广告列表数据格式化处理
@@ -86,16 +100,23 @@
             item.max_amount = utils.removeEndZero(parseFloat(item.max_amount).toFixed(2))
             item.remain_count = utils.removeEndZero(numUtils.BN(item.remain_count).toFixed(8))
           })
-          this.loading = false
-          succes && succes(res.data)
+          succes && succes(res.data, res.total)
         }, (msg) => {
           this.loading = false
-          console.error(msg)
+          this.loading1 = false
+          // console.error(msg)
+          Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
       },
 
       getBuyList () { // 获取广告列表
-        this.getList(2, (res) => {
+        let data = {
+          i: 2,
+          page: this.form.buyPage
+        }
+        this.loading = true
+        this.getList(data, (res, total) => {
+          this.buyTotal = total
           this.buyDatas = res
           this.buyDatas.sort((item1, item2) => {
             let m1 = numUtils.BN(item1.cur_price)
@@ -104,10 +125,21 @@
           })
           let buyCur = this.buyDatas[0] ? this.buyDatas[0].cur_price : 0
           this.$emit('buyCur', buyCur)
+          this.loading = false
         })
       },
+      pageChangeBuy (e) {
+        this.form.buyPage = e
+        this.getBuyList()
+      },
       getSellList () {
-        this.getList(1, (res) => {
+        let data = {
+          i: 1,
+          page: this.form.sellPage
+        }
+        this.loading1 = true
+        this.getList(data, (res, total) => {
+          this.sellTotal = total
           this.sellDatas = res
           this.sellDatas.sort((item1, item2) => {
             let m1 = numUtils.BN(item1.cur_price)
@@ -116,7 +148,12 @@
           })
           let sellCur = this.sellDatas[0] ? this.sellDatas[0].cur_price : 0
           this.$emit('sellCur', sellCur)
+          this.loading1 = false
         })
+      },
+      pageChangeSell (e) {
+        this.form.sellPage = e
+        this.getSellList()
       },
 
       createorder (i) {
