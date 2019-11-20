@@ -17,12 +17,12 @@
     <bottom v-show="!$route.meta.noBottom"/>
 
     <!--<div class="cat" v-show="showChat">-->
-      <!--<em class="close" @click="openChat()"><img width="20" src="./assets/img/close.png"/></em>-->
-      <!--<chat ref="chat" v-if="getApiToken"-->
-            <!--v-show="showChat" v-model="showChat"-->
-            <!--:orderNumber="orderNumber"-->
-            <!--:switchNew="switchNew"-->
-            <!--:firstEnter="firstEnter" @markNewMsg="markNewMsg"/>-->
+    <!--<em class="close" @click="openChat()"><img width="20" src="./assets/img/close.png"/></em>-->
+    <!--<chat ref="chat" v-if="getApiToken"-->
+    <!--v-show="showChat" v-model="showChat"-->
+    <!--:orderNumber="orderNumber"-->
+    <!--:switchNew="switchNew"-->
+    <!--:firstEnter="firstEnter" @markNewMsg="markNewMsg"/>-->
     <!--</div>-->
   </div>
 </template>
@@ -139,6 +139,7 @@
     },
     created () {
       this.getBtcPrice()
+      this.getPrice()
       this.getSysparams()
       // this.getBTCValuation()
       this.getUserInfoMethod()
@@ -186,6 +187,12 @@
           return
         }
         marketApi.getBtcPrice(res => {
+          this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
+        })
+      },
+      getPrice () {
+        marketApi.getPrice(res => {
+          console.log(res)
           this.setUSDCNY({
             CNY: numUtils.BN(res.CNY).toFixed(2),
             HKD: numUtils.BN(res.HKD).toFixed(2),
@@ -198,10 +205,9 @@
             THB: numUtils.BN(res.THB).toFixed(2),
             TWD: numUtils.BN(res.TWD).toFixed(2),
             USD: numUtils.BN(res.USD).toFixed(2),
-            USDT: numUtils.BN(res.USDT).toFixed(2),
+            // USDT: numUtils.BN(res.USDT).toFixed(2),
             VND: numUtils.BN(res.VND).toFixed(2)
           })
-          this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
         })
       },
       getSysparams () {

@@ -41,11 +41,24 @@
 </head>
 <body>
 <div id="app"></div>
-<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=3f218c8f-b41e-4762-83bd-a4c1c07dae34"> </script>
+<script id="ze-snippet"
+        src="https://static.zdassets.com/ekr/snippet.js?key=3f218c8f-b41e-4762-83bd-a4c1c07dae34"></script>
 <script type="text/javascript">
   function receiveMessage (event) {
     if (typeof event.data === 'string') {
-      var data = window.JSON.parse(event.data)
+      var data = {}
+      try {
+        data = JSON.parse(event.data)
+        if (typeof data == 'object' && data) {
+        } else {
+          return
+        }
+      } catch (e) {
+        console.log('error：' + event.data + '!!!' + e)
+        return
+      }
+
+      console.log(data)
       if (data.transactionReference) {
         //jumio kyc 事件监听
         console.log('Netverify Web was loaded in an iframe.')
@@ -84,7 +97,6 @@
   gtag('js', new Date())
 
   gtag('config', 'UA-135198121-1')
-
 </script>
 </body>
 </html>
