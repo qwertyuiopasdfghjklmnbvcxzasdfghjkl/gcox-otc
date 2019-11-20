@@ -369,6 +369,18 @@ const getBtcPrice = function (success, error) {
 }
 market.getBtcPrice = getBtcPrice
 
+// 查询BTC汇率价格
+const getPrice = function (success, error) {
+  api.get(`${domain}api/v2/account2/getBtcPrice `, (res) => {
+    if (res.rst === 1) {
+      success && success(res)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+market.getPrice = getPrice
+
 // 查询市场Kline
 const getKlineData = function (data, success, error) {
   api.get(`${domain}api/v3/kline`, data, (res) => {
