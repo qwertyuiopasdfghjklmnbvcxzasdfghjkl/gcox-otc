@@ -301,7 +301,7 @@
           <!--确认--></button>
       </div>
     </div>
-    <loading v-if="locked"/>
+    <loading class="load" v-if="locked"/>
   </div>
 </template>
 
@@ -453,6 +453,7 @@
       },
       benchSymbolParams () {
         this.getBenchSymbolInfo()
+        this.fnGetSymbolAndCurrency(true, this.formData.ad_type)
       }
     },
     created () {
@@ -1068,5 +1069,11 @@
   }
   .pr15{
     padding-right: 15px;
+  }
+  .load{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -25px;
   }
 </style>

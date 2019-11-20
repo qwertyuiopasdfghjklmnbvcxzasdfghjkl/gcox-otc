@@ -112,18 +112,19 @@
 
   .page-item {
     display: inline-block;
-    height: 24px;
-    line-height: 24px;
-    min-width: 24px;
+    height: 30px;
+    line-height: 30px;
+    min-width: 30px;
     font-size: 14px;
-    color: #979799;
+    color: #312e45;
     cursor: pointer;
     border:1px solid #312e45;
-    margin: 2px;
+    margin: 4px;
+    border-radius: 4px;
   }
 
   .page-item:hover {
-    color: #ffffff;
+    opacity: 0.8;
   }
 
   .page-item.more {
@@ -131,39 +132,40 @@
   }
 
   .page-item.more:hover {
-    color: #959eb7;
+    /*color: #959eb7;*/
   }
 
   .page-item.prev {
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-right: 10px;
   }
 
   .page-item.next {
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-left: 10px;
   }
 
   .page-item.active {
-    background: #312e45;
+    background: #F0B936;
+    border-color: #F0B936;
+    color: #ffffff;
   }
 
   .page-item.prev:hover,
   .page-item.next:hover,
   .page-item.active:hover {
-    color: #ffffff;
+
   }
 
   .page-item.disabled {
-    color: #2f2f42;
-    border-color: #2f2f42;
+    opacity: 0.6;
     cursor: not-allowed;
   }
 
   .page-item.disabled:hover {
-    color: #959eb7;
+
   }
 </style>
 
