@@ -15,6 +15,9 @@
           <!--</div>-->
         </li>
       </ul>
+      <page v-if="!show && datas.length > 0" :pageIndex="formData.page" :pageSize="formData.show"
+            :total="total" @changePageIndex="pageChange"/>
+
       <div class="message-nodata" v-if="!show && datas.length === 0">
         <div class="message-nodata-icon icon-no-order"></div>
         <div class="message-nodata-text">{{$t('message.no_message')}}<!--暂无站内消息--></div>
@@ -52,7 +55,8 @@
         datas: [],
         unReadLength: 0,
         body: null,
-        showCont: false
+        showCont: false,
+        total: 0
       }
     },
     computed: {},
@@ -65,7 +69,7 @@
       formatSystemMessage: utils.formatSystemMessage,
       getList () {
         msgApi.getMessages(this.formData, (res) => {
-          this.totalItem = res.total
+          this.total = res.total
           this.totalPage = Math.max(1, Math.ceil(res.total / this.formData.showItem))
           res.data.forEach((item) => {
             item.show = false
@@ -87,7 +91,8 @@
         })
       },
       pageChange (currentIndex) {
-        this.formData.currentPage = currentIndex
+        this.formData.page = currentIndex
+        this.getList()
       },
       markItemRead (item) {
         this.showCont = !this.showCont

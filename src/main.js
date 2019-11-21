@@ -87,6 +87,8 @@ if (process.env.NODE_ENV !== 'development') {
   }
   window.console.error = () => {
   }
+  window.console.warn = () => {
+  }
 }
 
 // Object.assign(res, gjh)
