@@ -2,6 +2,10 @@
   <div class="wrap">
     <!--下拉-->
     <select-index :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>
+
+    <!-- 币种 -->
+    <!--<symbol-list :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>-->
+
     <!-- 通知 -->
     <!--<notice/>-->
     <!--推荐市场-->
@@ -62,10 +66,12 @@
   import ListIndex from './index/list-index'
   import chat from '@/components/chat'
   import otcApi from '@/api/otc'
+  import SymbolList from './index/symbol-list'
 
   export default {
     name: 'app',
     components: {
+      SymbolList,
       ListIndex,
       SelectIndex,
       indexdatatable,

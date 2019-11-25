@@ -4,32 +4,35 @@
       <h4><img src="../../assets/img/flag.png">
         <span v-html="$t('gcox_otc.you_want').format('green',$t('otc_exchange.otc_exchange_buy'),params.name)"></span>
       </h4>
-      <list-box :datas="buyDatas" :type="'buy'" @submit="sell">
+      <list-box :datas="buyDatas" :type="'buy'" @submit="sell"></list-box>
+
+      <page v-if="!loading && buyDatas.length > 0" :pageIndex="form.buyPage" :pageSize="6"
+            :total="buyTotal" @changePageIndex="pageChangeBuy"/>
+      <ul>
         <li class="colem">
           <p>{{$t('gcox_otc.better_price')}}</p>
           <button class="green_button" @click="createorder(2)">
             {{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_buy'))}}
           </button>
         </li>
-      </list-box>
-      <page v-if="!loading && buyDatas.length > 0" :pageIndex="form.buyPage" :pageSize="10"
-            :total="buyTotal" @changePageIndex="pageChangeBuy"/>
+      </ul>
       <loading class="load" v-if="loading"/>
     </div>
     <div class="top bottom w1200">
       <h4><img src="../../assets/img/flag.png">
         <span v-html="$t('gcox_otc.you_want').format('red',$t('otc_exchange.otc_exchange_sell'),params.name)"></span>
       </h4>
-      <list-box :datas="sellDatas" :type="'sell'" @submit="sell">
+      <list-box :datas="sellDatas" :type="'sell'" @submit="sell"></list-box>
+      <page v-if="!loading && sellDatas.length > 0" :pageIndex="form.sellPage" :pageSize="6"
+            :total="sellTotal" @changePageIndex="pageChangeSell"/>
+      <ul>
         <li class="colem">
           <p>{{$t('gcox_otc.better_price')}}</p>
           <button class="red_button" @click="createorder(1)">
             {{$t('gcox_otc.build').format($t('otc_exchange.otc_exchange_sell'))}}
           </button>
         </li>
-      </list-box>
-      <page v-if="!loading && sellDatas.length > 0" :pageIndex="form.sellPage" :pageSize="10"
-            :total="sellTotal" @changePageIndex="pageChangeSell"/>
+      </ul>
       <loading class="load" v-if="loading1"/>
     </div>
   </div>
@@ -92,7 +95,7 @@
           symbol: this.params.symbol,
           currency: this.getCurrency,
           page: data.page,
-          show: 10
+          show: 6
         }, (res) => {
           res.data.forEach((item) => { // 广告列表数据格式化处理
             item.cur_price = item.cur_price ? utils.removeEndZero(parseFloat(item.cur_price).toFixed(2)) : 0
@@ -291,6 +294,14 @@
       }
 
       li {
+        background: #FBFBFB;
+        border-left: 4px solid #eeeeee;
+        padding: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        margin-bottom: 20px;
         &.colem {
           display: flex;
           flex-flow: column;

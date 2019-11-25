@@ -15,7 +15,8 @@
           <!--</div>-->
         </li>
       </ul>
-      <page v-if="!show && datas.length > 0" :pageIndex="formData.page" :pageSize="formData.show"
+      <page v-if="!show && datas.length > 0 && !showCont"
+            :pageIndex="formData.page" :pageSize="formData.show"
             :total="total" @changePageIndex="pageChange"/>
 
       <div class="message-nodata" v-if="!show && datas.length === 0">
@@ -95,6 +96,7 @@
         this.getList()
       },
       markItemRead (item) {
+        return;
         this.showCont = !this.showCont
         this.body = item ? item.body : ''
         // item.show = item.show === false

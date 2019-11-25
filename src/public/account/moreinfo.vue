@@ -455,7 +455,7 @@
   }
 
   .depositBox .filed > div.active {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
   }
 
   .depositBox .filed > div.lists {
@@ -587,7 +587,7 @@
     vertical-align: text-bottom;
     position: relative;
     border-radius: 3px;
-    margin-right: 26px;
+    margin-left: 26px;
   }
 
   .depositBox .filed span.disabled {
