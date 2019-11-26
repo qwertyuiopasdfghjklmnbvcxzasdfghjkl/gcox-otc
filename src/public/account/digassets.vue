@@ -538,7 +538,7 @@
     white-space: nowrap;
     word-break: break-all;
     padding: 0 4px;
-    width: 220px;
+    width: 200px;
     text-overflow: ellipsis;
     overflow: hidden;
     align-items: center;
@@ -647,6 +647,7 @@
     text-align: right;
     display: flex;
     justify-content: flex-end;
+    width: auto;
   }
 
   .acount_tab {

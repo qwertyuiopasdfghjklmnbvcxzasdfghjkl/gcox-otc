@@ -239,7 +239,7 @@
           this.cancelOrder(this.data1)
         }
       },
-      adInfo(){
+      adInfo () {
         this.payInfo = this.adInfo.otcPayTypeBankDTO
       }
     },
@@ -350,6 +350,14 @@
 
         if (this.data1.state === 3) {
           this.goCancelList()
+        } else if (this.data1.state === 2) {
+          this.tiggerEvents({
+            name: 'chatEvent',
+            params: {
+              type: 'markReadOnly',
+              orderNumber: this.data.order_number
+            }
+          })
         }
         console.log(this.data1)
       },

@@ -8,6 +8,12 @@
           {{type === 'sell' ? data.symbol : data.currency}}</p>
       </div>
       <div>
+        <h6><!--{{$t('gcox_otc.remain_count')}}：--> <b>
+          <span :class="type === 'sell'? 'red': 'green'">{{data.remain_count}}</span>
+          {{data.symbol}}</b></h6>
+        <p> </p>
+      </div>
+      <div>
         <!--<p>招商银行-China merchants</p>-->
         <p>
           <em class="wechat icon-paypal" :title="$t('public0.public219')"
@@ -19,7 +25,7 @@
           <em class="card icon-bank" :title="$t('otc_ad.otc_ad_BankPay')"
               v-if="(data.pay_type||'').indexOf('1')!==-1"> {{$t('otc_ad.otc_ad_BankPay')}}</em><!--银行卡支付-->
         </p>
-        <p>{{$t('gcox_otc.remain_count')}}： {{data.remain_count}} {{data.symbol}}</p>
+        <p></p>
       </div>
       <div>
         <p :title="data.connect_fd ? $t('error_code.ONLINE'): $t('error_code.OFFLINE')">
@@ -90,14 +96,18 @@
     margin-bottom: 20px;
 
     & > div:nth-child(1) {
-      width: 220px;
+      width: 280px;
     }
 
     & > div:nth-child(2) {
-      width: 320px;
+      width: 180px;
     }
 
     & > div:nth-child(3) {
+      width: 200px;
+    }
+
+    & > div:nth-child(4) {
       width: 320px;
     }
 

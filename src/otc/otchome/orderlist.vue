@@ -55,9 +55,9 @@
                             <em @click="cancelApeal(item)" v-if="item.appeal_state === 0">{{$t('public0.public208')}}
                               <!--取消申诉--></em>
                           </template>
-                          <template v-if="item.pay_state === 0 && item.from_user_name !== getUserInfo.username">
-                            <em @click="cancelOrderByConfirm(item)">{{$t('otc_ad.otc_ad_cancel_order')}}<!--取消订单--></em>
-                          </template>
+                          <!--<template v-if="item.pay_state === 0 && item.from_user_name !== getUserInfo.username">-->
+                            <!--<em @click="cancelOrderByConfirm(item)">{{$t('otc_ad.otc_ad_cancel_order')}}&lt;!&ndash;取消订单&ndash;&gt;</em>-->
+                          <!--</template>-->
                         </template>
                       </span>
             </div>

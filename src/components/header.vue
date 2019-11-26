@@ -44,8 +44,9 @@
           </router-link>
         </div>
 
-        <router-link :to="{name:'msg'}" class="item msg">
+        <router-link :to="{name:'msg'}" @click="newMsg = false" class="item msg">
           <img src="../assets/img/msg.png" width="40"/>
+          <i class="new_msg" v-if="newMsg"></i>
         </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
@@ -158,7 +159,8 @@
         showBalance: true,
         curList: [],
         createParams: {},
-        location: null
+        location: null,
+        newMsg: false
       }
     },
     computed: {
@@ -227,12 +229,20 @@
       this.getBalance()
       this.getCurList()
       this.getLocation()
+      this.addOtcSocketEvent(this.systemEvent)
     },
     beforeDestroy () {
 
     },
     methods: {
-      ...mapActions(['setLang', 'setApiToken', 'setCurrency', 'setSymbol']),
+      ...mapActions(['addOtcSocketEvent', 'setLang', 'setApiToken', 'setCurrency', 'setSymbol']),
+      systemEvent (data) {
+        let optType = parseInt(data.operate_type)
+        if (optType === 1) {
+          this.newMsg = true
+        }
+        console.log(data)
+      },
       showQuickLogin () {
         utils.setDialog(quickLogin, {
           backClose: true
@@ -637,6 +647,19 @@
   .msg {
     img {
       vertical-align: middle;
+    }
+
+    position: relative;
+
+    .new_msg {
+      position: absolute;
+      top: 22px;
+      right: 8px;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #cc0000;
+      border-radius: 50%;
     }
   }
 

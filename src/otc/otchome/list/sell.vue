@@ -33,7 +33,7 @@
               <p>{{payTypeTitle}}</p>
             </div>
             <div class="undone-center-adress">
-                <p>{{$t('public0.public28')}}<!--耐心等待买家付款--></p>
+                <!--<p>{{$t('public0.public28')}}&lt;!&ndash;耐心等待买家付款&ndash;&gt;</p>-->
                 <p>{{$t('public0.public29')}}<!--确认付款后，请尽快放币--></p>
             </div>
         </div>
