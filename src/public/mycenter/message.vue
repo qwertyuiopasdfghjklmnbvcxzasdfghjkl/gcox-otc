@@ -2,7 +2,7 @@
   <div class="message">
     <p>{{$t('usercontent.user55')}}</p>
     <div class="message-cont">
-      <p class="back" v-if="showCont" @click="markItemRead()">{{$t('usercontent.user64')}}</p>
+      <p class="back" v-if="showCont">{{$t('usercontent.user64')}}</p>
       <ul class="message-list" v-if="!show && datas.length > 0&&!showCont">
         <li class="message-item" :class="{markread: item.messageState === 1}" v-for="(item, index) in datas"
             :key="index">
@@ -11,7 +11,7 @@
             <span class="time">{{item.msgTime}}</span>
           </p>
           <!--<div class="message-item-cont" v-show="item.show">-->
-            <!--<div class="inner">{{formatSystemMessage(item.body, item.msgType !== 5)}}</div>-->
+          <!--<div class="inner">{{formatSystemMessage(item.body, item.msgType !== 5)}}</div>-->
           <!--</div>-->
         </li>
       </ul>
@@ -96,9 +96,15 @@
         this.getList()
       },
       markItemRead (item) {
-        return;
-        this.showCont = !this.showCont
-        this.body = item ? item.body : ''
+        let link = JSON.parse(item.link)
+        console.log(link)
+        if (item.msgType === 3) {
+          this.$router.push({name: 'otc_detail', query: {id: link.order_id}})
+        }
+
+        // return;
+        // this.showCont = !this.showCont
+        // this.body = item ? item.body : ''
         // item.show = item.show === false
         // if (item.messageState === 0) {
         //   msgApi.markItemRead({
@@ -116,31 +122,36 @@
 <style scoped lang="less">
   .message {
     color: #333333;
-    border:1px solid #eeeeee;;
+    border: 1px solid #eeeeee;;
     padding: 20px;
     min-height: 200px;
-    .message-nodata{
+
+    .message-nodata {
       text-align: center;
       margin: 30px auto;
     }
-    ul{
+
+    ul {
       margin-top: 20px;
-      .message-item{
+
+      .message-item {
         border-top: 1px solid #eeeeee;
         cursor: pointer;
       }
     }
-    .message-item-title{
+
+    .message-item-title {
       height: 40px;
       line-height: 40px;
-      border-bottom: 1px solid hsla(240,4%,89%,.1);
+      border-bottom: 1px solid hsla(240, 4%, 89%, .1);
       padding-right: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
       color: #666666;
-      .main{
+
+      .main {
         width: 76%;
         overflow: hidden;
         white-space: nowrap;
@@ -150,7 +161,8 @@
         font-size: 12px;
       }
     }
-    .back{
+
+    .back {
       margin: 18px 0;
       display: inline-block;
       cursor: pointer;

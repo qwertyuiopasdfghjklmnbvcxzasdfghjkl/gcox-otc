@@ -9,22 +9,29 @@
         </swiper-slide>
       </swiper>
     </div>
-    <div class="w1200">
-
+    <div class="list_box">
+      <ul>
+        <li v-for="item in listSymbol">
+          <list-box/>
+        </li>
+      </ul>
+    </div>
+    <div class="w1200 check">
+      <ul class="check_symbol">
+        <li v-for="item in ts" @click="change(item)">
+          <p>
+            <cryptoicon :symbol="item.symbol" size="40"/>
+            <span>{{item.caption}}</span>
+          </p>
+        </li>
+      </ul>
       <div class="select">
         <p @click.stop="show=!show">
           <cryptoicon :symbol="t.symbol" size="40"/>
           <span>{{t.caption}}</span>
           <i></i>
         </p>
-        <ul v-if="show">
-          <li v-for="item in ts" @click="change(item)">
-            <p>
-              <cryptoicon :symbol="item.symbol" size="40"/>
-              <span>{{item.caption}}</span>
-            </p>
-          </li>
-        </ul>
+
       </div>
 
       <div class="box" v-if="state === 0">
@@ -76,9 +83,10 @@
   import numUtils from '@/assets/js/numberUtils'
   import {mapGetters, mapActions} from 'vuex'
   import numberUtils from '../../assets/js/numberUtils'
+  import ListBox from '../../components/list-box'
 
   export default {
-    components: {Numberbox, Inputbox},
+    components: {ListBox, Numberbox, Inputbox},
     props: ['params', 'buyCur', 'sellCur'],
     data () {
       return {
@@ -94,9 +102,6 @@
         noAd: null,
         slide: [
           {
-            src: require('@/assets/images/home/line.jpg')
-          },
-          {
             src: require('@/assets/images/home/symbol.jpg')
           },
           {
@@ -106,11 +111,12 @@
         swiperOption: {
           //自动轮播
           autoplay: {
-            delay: 30000
+            delay: 3000
           },
           //开启循环模式
           loop: true,
-        }
+        },
+        listSymbol: [1,2,3,4,5,6]
       }
     },
     computed: {
@@ -307,7 +313,7 @@
 
   .swrap {
     width: 100%;
-    height: 50%;
+    height: 45%;
     font-size: 50px;
     text-align: center;
     background-color: rosybrown;
@@ -330,7 +336,7 @@
 
   .cont {
     height: calc(~'100vh - 60px');
-    min-height: 700px;
+    min-height: 800px;
     background: #13143A;
     overflow: auto;
     position: relative;
@@ -516,6 +522,44 @@
         padding: 0 20px;
         font-weight: 600;
         margin-right: 10px;
+      }
+    }
+  }
+  .list_box{
+    width: 100%;
+    height: 210px;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: calc(~'45% - 100px');
+    ul{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      li{
+        background: #191A40;
+        flex: 1;
+        margin: 0 10px;
+        height: 210px;
+        border-radius:10px;
+        transition: 0.3s;
+        &:hover{
+          background:#363766
+        }
+      }
+    }
+
+  }
+  .check{
+    position: relative;
+    left: 0;
+    top: calc(~'45% + 110px');
+    .check_symbol{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      li{
+
       }
     }
   }
