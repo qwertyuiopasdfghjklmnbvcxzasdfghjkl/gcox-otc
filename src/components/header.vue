@@ -210,10 +210,10 @@
             c = res.currency
           }
         })
-        if (!this.getCurrency) {
+        if (c) {
           this.setCurrency(c)
         }
-        return this.getCurrency || c
+        return this.getCurrency
       },
       lang () {
         switch (this.getLang) {
@@ -267,6 +267,7 @@
       getLocation () {
         otcApi.location(res => {
           this.location = res
+          console.log(res)
         })
       },
       setLanguage (lang) {
