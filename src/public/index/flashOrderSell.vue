@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p><img src="../../assets/img/sell.png"><span>{{$t('exchange.exchange_sell')}}</span>{{params.symbol}}：</p>
+    <p><img src="../../assets/img/sell.png"><span>{{$t('exchange.exchange_sell')}}</span> {{params.symbol}}：</p>
     <p class="row_box">
       <span>{{$t('exchange.exchange_price')}}({{getCurrency}})</span>
       <span><i class="red">{{price}}</i> {{getCurrency}}</span>

@@ -18,74 +18,20 @@
     </div>
     <div class="w1200 check">
       <ul class="check_symbol">
-        <li v-for="(item, index) in ts" :class="{active: index === checkSymbolState}"
-            @click="change(item);checkSymbolState = index">
+        <li v-for="item in ts" :class="{active: item.symbol === t.symbol}"
+            @click="change(item)">
           <p>
             <cryptoicon :symbol="item.symbol" size="40"/>
             <span>{{item.caption}}</span>
           </p>
         </li>
       </ul>
-      <!--<div class="select">-->
-      <!--<p @click.stop="show=!show">-->
-      <!--<cryptoicon :symbol="t.symbol" size="40"/>-->
-      <!--<span>{{t.caption}}</span>-->
-      <!--<i></i>-->
-      <!--</p>-->
-
-      <!--</div>-->
 
       <div class="box">
-        <!--<div class="left-box">-->
-          <!--&lt;!&ndash;<p><img src="../../assets/img/buy.png"><span>{{$t('exchange.exchange_buy')}}</span>{{t.symbol}}：</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p class="row_box">&ndash;&gt;-->
-            <!--&lt;!&ndash;<span>{{$t('exchange.exchange_price')}}({{params.currency}})</span>&ndash;&gt;-->
-            <!--&lt;!&ndash;<span><i class="green">{{price}}</i> {{params.currency}}</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p class="row_box">&ndash;&gt;-->
-            <!--&lt;!&ndash;<span>{{$t('home.home40')}}({{t.symbol}})</span>&ndash;&gt;-->
-            <!--&lt;!&ndash;<span><numberbox :accuracy="8" v-model="buyAmount"></numberbox></span>&ndash;&gt;-->
-          <!--&lt;!&ndash;</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;&lt;!&ndash;<span>&ndash;&gt;&ndash;&gt;-->
-          <!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;<button v-if="state === 2" @click="getMax()">Max</button>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
-          <!--&lt;!&ndash;&lt;!&ndash;</span>&ndash;&gt;&ndash;&gt;-->
-          <!--&lt;!&ndash;<button @click="sub(1)">{{$t('gcox_otc.now_buy')}}</button>&ndash;&gt;-->
-          <!---->
-        <!--</div>-->
         <flash-order :params="params"/>
         <flash-order-sell :params="params"/>
-        <!--<div class="right-box">-->
-          <!--<p><img src="../../assets/img/sell.png"><span>{{$t('exchange.exchange_sell')}}</span>{{t.symbol}}：</p>-->
-          <!--<p class="row_box">-->
-            <!--<span>{{$t('exchange.exchange_price')}}({{params.currency}})</span>-->
-            <!--<span><i class="red">{{sellPrice}}</i> {{params.currency}}</span>-->
-          <!--</p>-->
-          <!--<p class="row_box">-->
-            <!--<span>{{$t('home.home40')}}({{t.symbol}})</span>-->
-            <!--<span><numberbox :accuracy="8" v-model="sellAmount"></numberbox></span>-->
-          <!--</p>-->
-          <!--<button @click="sub(2)">{{$t('gcox_otc.now_sell')}}</button>-->
-        <!--</div>-->
       </div>
 
-      <!--<div class="buy_box">-->
-      <!--<div class="input_box">-->
-      <!--<span>-->
-      <!--<numberbox :accuracy="8" v-model="amount"></numberbox>-->
-      <!--<button v-if="state === 2" @click="getMax()">Max</button>-->
-      <!--</span>-->
-      <!--<span>-->
-      <!--{{price}}-->
-      <!--</span>-->
-      <!--</div>-->
-      <!--<button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">-->
-      <!--{{$t('exchange.exchange_determine')}}-->
-      <!--</button>-->
-      <!--<p v-if="state === 1" @click="state=2">-->
-      <!--{{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_sell'))}}{{t.symbol}} ?</p>-->
-      <!--<p v-if="state === 2" @click="state=1">-->
-      <!--{{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_buy'))}}{{t.symbol}} ?</p>-->
-      <!--</div>-->
 
     </div>
   </div>
@@ -97,8 +43,7 @@
   import Numberbox from '../../components/formel/numberbox'
   import otcApi from '@/api/otc'
   import numUtils from '@/assets/js/numberUtils'
-  import {mapGetters, mapActions} from 'vuex'
-  import numberUtils from '../../assets/js/numberUtils'
+  import {mapGetters} from 'vuex'
   import ListBox from '../../components/list-box'
   import FlashOrder from './flashOrderBuy'
   import FlashOrderSell from './flashOrderSell'
@@ -115,15 +60,6 @@
         curPrice: 0,
         checkSymbolState: 0,
         curList: window.localStorage.currencyList,
-        amount: null,
-        buyAmount: null,
-        sellAmount: null,
-        listAdv: {},
-        sellListAdv: {},
-        timeout: false,
-        sellTimeout: false,
-        noAd: null,
-        sellNoAd: null,
         slide: [
           {
             src: require('@/assets/images/home/symbol.jpg')
@@ -135,7 +71,7 @@
         swiperOption: {
           //自动轮播
           autoplay: {
-            delay: 3000
+            delay: 10000
           },
           //开启循环模式
           loop: true,
@@ -150,82 +86,15 @@
           currency: this.params.currency,
           symbol: this.t.symbol
         }
-      },
-      form () {
-        return {
-          amount: this.buyAmount,
-          currency: this.params.currency,
-          symbol: this.params.symbol,
-          direction: this.state
-        }
-      },
-      price () {
-        return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : 0.00)
-      },
-      sellPrice () {
-        return this.sellListAdv.cur_price || (this.sellNoAd ? this.$t(`error_code.${this.sellNoAd}`) : 0.00)
       }
     },
-    watch: {
-      buyAmount (e) {
-        if (e) {
-          this.timeout = false
-          setTimeout(() => {
-            this.timeout = true
-          }, 800)
-        }
-      },
-      sellAmount (e) {
-        if (e) {
-          this.sellTimeout = false
-          setTimeout(() => {
-            this.sellTimeout = true
-          }, 800)
-        }
-      },
-      timeout (e) {
-        if (e) {
-          let data = {
-            amount: this.buyAmount,
-            currency: this.params.currency,
-            symbol: this.params.symbol,
-            direction: 1
-          }
-          this.getAdv(data, (res) => {
-            this.listAdv = res
-          }, msg => {
-            this.noAd = msg
-          })
-        }
-      },
-      sellTimeout (e) {
-        if (e) {
-          let data = {
-            amount: this.sellAmount,
-            currency: this.params.currency,
-            symbol: this.params.symbol,
-            direction: 2
-          }
-          this.getAdv(data, (res) => {
-            this.sellListAdv = res
-          }, msg => {
-            this.sellNoAd = msg
-          })
-        }
-      },
-      params (e) {
-        console.log(e)
-        // if (this.amount) {
-        //   this.getAdv()
-        // }
-      }
-    },
+    watch: {},
     created () {
       this.getList()
       this.getInfo()
-      this.$nextTick(() => {
-        this.fnGetBenchExchange()
-      })
+      // this.$nextTick(() => {
+      //   this.fnGetBenchExchange()
+      // })
     },
     methods: {
       change (data) {
@@ -246,120 +115,9 @@
           console.log(res)
         })
       },
-      sub (i) {
-        let amount = i === 1 ? this.buyAmount : this.sellAmount
-        let price = i === 1 ? this.price : this.sellPrice
-        console.log(amount)
-        if (amount) {
-          if (price) {
-            let isCheckPaySet = i === 1
-            this.matchPayType = i === 1 ? void 0 : this.listAdv.pay_type
-            console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
-            let p = {
-              adType: i,
-              role: 'Taker'
-            }
-            this.checkSetState(p, () => {
-              if (this.getUserInfo.userId === this.listAdv.from_user_id) {
-                // 不可以买卖自己发布的广告
-                Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.not_buy_myself`)})
-                return
-              }
-
-              // window.localStorage.amount = this.amount
-
-              let query = {ad_id: this.listAdv.ad_id, params: this.listAdv, matchPayType: this.matchPayType}
-              window.localStorage.ordDet = JSON.stringify(query)
-              this.$router.push({
-                name: 'transaction',
-              })
-            }, 'public0.public15', isCheckPaySet, true, this.listAdv.ad_id)
-          }
-        } else {
-          Vue.$koallTipBox({icon: 'notification', message: this.$t(`exchange.exchange_number_empty`)})
-        }
-      },
-      getAdv (data, succse, error) {
-        otcApi.match(data, res => {
-          succse && succse(res)
-        }, msg => {
-          error && error(msg)
-        })
-      },
-      getMax () {
-        this.amount = this.getSymbol.totalBalance || 0
-      },
       fnGetBenchExchange () { // 获取对标交易所
         otcApi.getBenchExchange((res) => {
           this.benchDatas = res
-        })
-      },
-
-      checkSetState (p, successCallback, message, isCheckPaySet, isCheckPayType, id) {
-        if (!this.getApiToken) {
-          Vue.$koallTipBox({icon: 'notification', message: this.$t(message)}) // 请登录后再发布广告||请登录后再交易
-          return
-        }
-        if (!this.getUserInfo.mobile) {
-          Vue.$confirmDialog({
-            id: 'bind_mobile',
-            content: this.$t('gcox_otc.bind_mobile'), // 请先绑定手机号
-            okCallback: () => {
-              this.$router.push({name: 'usercenter_abstract'})
-            }
-          })
-          return
-        }
-        otcApi.permission(p, (msg) => {
-          if (isCheckPaySet) {
-            otcApi.getPaySettings((res) => {
-              if (isCheckPayType) {
-                otcApi.matchPayTypes(id, (data2) => {
-                  this.matchPayType = data2
-                  successCallback && successCallback()
-                }, (msg3) => {
-                  if (msg3 === 'PAY_TYPE_UNMATCH') {
-                    Vue.$confirmDialog({
-                      id: 'PAY_TYPE_UNMATCH',
-                      content: this.$t('error_code.PAY_TYPE_UNMATCH'), // 支付方式不匹配，请设置对应的支付方式
-                      okCallback: () => {
-                      }
-                    })
-                  } else {
-                    Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg3}`)})
-                  }
-                })
-              } else {
-                successCallback && successCallback(res.data.pay_type)
-              }
-            }, (res) => {
-              if (res.msg === 'NO_PAY_TYPE') {
-                Vue.$confirmDialog({
-                  id: 'NO_PAY_TYPE',
-                  content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
-                  okCallback: () => {
-                    this.$router.push({name: 'control_pay'})
-                  }
-                })
-              } else {
-                Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
-              }
-            })
-          } else {
-            successCallback && successCallback()
-          }
-        }, (msg) => {
-          if (msg === 'KYC_AUTH_FIRST') {
-            Vue.$confirmDialog({
-              id: 'KYC_AUTH_FIRST',
-              content: this.$t('error_code.KYC_AUTH_FIRST'), // 请先完成实名验证
-              okCallback: () => {
-                this.$router.push({name: 'control_kyc'})
-              }
-            })
-          } else {
-            Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
-          }
         })
       }
     }
@@ -374,7 +132,7 @@
     height: 45%;
     font-size: 50px;
     text-align: center;
-    background-color: rosybrown;
+    background-color: #13143A;
     position: absolute;
     top: 0;
     left: 0;
