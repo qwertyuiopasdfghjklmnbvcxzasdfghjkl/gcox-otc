@@ -1,5 +1,5 @@
 <template>
-  <div class="createorder" :class="{'sell-pend': formData.ad_type === 2}">
+  <div class="createorder" :class="{'sell-pend': formData.ad_type === 2}" @click="showTime = false">
     <div class="title">{{$t(ad_id ? 'otc_ad.otc_edit_title' : 'otc_ad.otc_post_title').format(tradeParams.title1,
       formData.symbol)}}<!--发布广告||修改广告--></div>
     <div class="cont">
@@ -266,37 +266,19 @@
         <div class="cont-item timelimit">
           <div class="row">
             <label>{{$t('otc_ad.otc_ad_expiration_pay')}}<!--付款期限--></label>
-            <div class="value">
-              <select v-model="formData.pay_limit_time" v-validate="'required'" data-vv-name="pay_limit_time">
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-              </select>
+            <div class="value time" @click.stop="showTime = !showTime">
+              <label>{{formData.pay_limit_time}}</label>
+              <ul v-show="showTime">
+                <li v-for="t in pay_time_list" @click.stop="formData.pay_limit_time = t;showTime=false">{{t}}</li>
+              </ul>
               <em>{{$t('otc_ad.otc_ad_minute')}}<!--分钟--></em>
             </div>
           </div>
           <div class="prompt">{{getErrorMsg('pay_limit_time')}}<!--请输入付款期限--></div>
         </div>
       </div>
-      <!--<div class="cont-item tradetype">-->
-      <!--<div class="row">-->
-      <!--<label>{{$t('otc_exchange.otc_exchange_transaction_method')}}：&lt;!&ndash;交易方式&ndash;&gt;<em-->
-      <!--class="asterisk">&nbsp;*</em></label>-->
-      <!--<div class="value">-->
-      <!--<input :class="{error: errors.has('pay_type')}" type="hidden" v-validate="'required'" data-vv-name="pay_type"-->
-      <!--v-model="formData.pay_type"/>-->
-      <!--<span v-for="item in payments" :key="item.id" @click="setPayment(item)"-->
-      <!--v-if="myPayType.indexOf(item.id) !== -1">-->
-      <!--<i :class="[item.checked ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked']"></i>{{$t(item.key)}}-->
-      <!--</span>-->
-      <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="prompt">{{getErrorMsg('pay_type')}}</div>-->
-      <!--</div>-->
 
       <div class="cont-item button">
-        <!--<button class="cancel" @click="closeDalg">{{$t('otc_legal.otc_legal_cancel')}}&lt;!&ndash;取消&ndash;&gt;</button>-->
         <button class="yellow_button" :class="{disabled:locked}" @click="saveAds">{{$t('otc_ad.otc_ad_confirm')}}
           <!--确认--></button>
       </div>
@@ -334,6 +316,7 @@
         loading: false,
         payments: JSON.parse(JSON.stringify(otcConfig.payments)),
         isClickPayments: false,
+        showTime: false,
         formData: {
           ad_type: Number(this.params.ad_type) === 2 ? 1 : 2,
           symbol: this.params.symbol || otcConfig.symbol,
@@ -360,7 +343,8 @@
         isATN: false,
         bankData: {},
         bankList: [],
-        symbolList: []
+        symbolList: [],
+        pay_time_list: [15, 20, 30]
       }
     },
     computed: {
@@ -1011,6 +995,9 @@
     display: block;
   }
 
+  .bank_box > b{
+    position: relative;
+  }
   .bank_box > b:after {
     content: '';
     display: block;
@@ -1019,8 +1006,8 @@
     border: 6px solid transparent;
     border-top-color: #333333;
     position: absolute;
-    top: 23px;
-    left: 80px;
+    top: 8px;
+    right: -22px;
   }
 
   .bank_list {
@@ -1075,5 +1062,29 @@
     top: 50%;
     left: 50%;
     margin-left: -25px;
+  }
+  .time{
+    border:1px solid #cccccc;
+    text-indent: 10px;
+    position: relative;
+
+  }
+  .time ul{
+    position: absolute;
+    width: 100%;
+    border: 1px solid #cccccc;
+    top: 50px;
+    left: -1px;
+    z-index: 999;
+  }
+  .time ul li{
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #ffffff;
+  }
+  .time ul li:hover{
+    background:#F0B936;
+    color: #ffffff;
   }
 </style>

@@ -7,27 +7,7 @@
           <img src="../../assets/img/close.png">
         </small>
       </div>
-      <!--<div>-->
-      <!--<p class="tbsm">-->
-      <!--<span>{{$t('usercontent.description')}} </span>-->
-      <!--<span style="padding-left:4px ">{{$t('usercontent.description-text')}}</span>-->
-      <!--</p>-->
-      <!--</div>-->
       <div class="input-box">
-        <!--<div class="filed symbol">-->
-        <!--<em>-->
-        <!--{{$t('usercontent.user86')}}-->
-        <!--</em>-->
-        <!--<div class="withAdress">-->
-        <!--<p class="drown" @click.stop="showSymbol=!showSymbol">{{symbol}}</p>-->
-        <!--<ul v-show="showSymbol">-->
-        <!--<li v-for="item in allData"-->
-        <!--@click.prevent="changeW(item)"-->
-        <!--:class="{active: item.symbol === symbol}">{{item.symbol}}-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</div>-->
         <div class="filed">
           <em>{{$t('account.estimated_value_available')}}<!--可用余额--></em>
           <p class="c-box">
@@ -50,9 +30,6 @@
               <li v-else>{{$t('usercontent.no-address')}}</li>
             </ul>
           </div>
-          <!--<p @click="useNewAddress" class="add-address">-->
-          <!--{{$t('account.user_new_address')}}&lt;!&ndash;使用新地址&ndash;&gt;-->
-          <!--</p>-->
         </div>
         <div class="filed">
           <div class="filed-number">
@@ -63,10 +40,6 @@
             <numberbox v-validate="'required|isLessMin|isMoreMax'" :accuracy="8" data-vv-name="amount" class="numberAll"
                        type="text" v-model="amount"/>
             <a href="javascript:;" @click="allWithdraw">Max<!--全部提现--></a>
-            <!--<span>-->
-            <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
-            <!--class="green">{{available}} {{symbol}}</small>-->
-            <!--</span>-->
             <em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>
           </div>
 
@@ -99,44 +72,11 @@
                        type="text" v-model="smsCode"/>
             <a href="javascript:;" @click="senSMS()" class="send_sms">{{disabled ? time+'s':$t('public0.public161')}}
               <!--发送--></a>
-            <!--<span>-->
-            <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;：<small-->
-            <!--class="green">{{available}} {{symbol}}</small>-->
-            <!--</span>-->
-            <!--<em class="error" v-if="errors.has('amount')">{{getErrors('amount')}}</em>-->
             <em class="error">
               <template v-if="errors.firstRule('smsCode')==='required'">{{$t('login_register.verify_code')}}</template>
             </em>
           </div>
         </div>
-
-
-        <!--<div class="filed">-->
-        <!--<div class="withdraw-info f-cb">-->
-        <!--<div class="ng-binding">-->
-        <!--<p>{{$t('exchange.advanced_fee')}}&lt;!&ndash;手续费&ndash;&gt; </p>-->
-        <!--<span>{{procedureFee}} {{symbol}}</span>-->
-        <!--</div>-->
-        <!--<div class="ng-binding">-->
-        <!--<p>{{$t('account.user_Actual_arrival')}}&lt;!&ndash;实际到账&ndash;&gt; </p>-->
-        <!--<span>{{lastMount}} {{symbol}}</span>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="filed">-->
-        <!--<em>-->
-        <!--{{$t('usercontent.user11')}}&lt;!&ndash;资金密码&ndash;&gt;-->
-        <!--</em>-->
-        <!--<div class="withAdress" style="position:relative;" :class="{error:errors.has('payPassword')}">-->
-        <!--<input :type="showPayPW?'text':'password'" maxlength="100" v-validate="'required'"-->
-        <!--data-vv-name="payPassword" v-model="payPassword"/>-->
-        <!--<div class="pwd-isShow" @click="showPayPW=!showPayPW">-->
-        <!--<img src="../../assets/img/show_password.png" alt="" style="opacity: 0.8;" v-if="showPayPW">-->
-        <!--<img src="../../assets/img/hide_password.png" alt="" style="opacity: 0.8;" v-else>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<em class="error" v-if="errors.has('payPassword')">{{getErrors('payPassword')}}</em>-->
-        <!--</div>-->
         <div class="filed" v-if="showGoolge">
           <em>
             {{$t('usercontent.user61')}}<!--谷歌验证码--> *
@@ -152,13 +92,6 @@
           <input type="button" class="BNB-subbtn" :value="$t('account.user_submit')" @click="walletWithdraw"/><!--提交-->
         </div>
       </div>
-      <!--<div class="f-fr">-->
-      <!--<ul class="tips">-->
-      <!--<li>{{$t('account.user_minimum_number_of_cash').format(`：${minWithdraw} ${symbol}`)}}&lt;!&ndash;最小提现数量为{0}。&ndash;&gt;</li>-->
-      <!--<li>{{$t('account.user_prompt7')}}&lt;!&ndash;请勿直接提现至众筹或ICO地址.我们不会处理未来代币的发放.&ndash;&gt;</li>-->
-      <!--<li>{{$t('public0.public229')}}&lt;!&ndash;您可以在充值提现历史记录页面跟踪状态。&ndash;&gt;</li>-->
-      <!--</ul>-->
-      <!--</div>-->
     </div>
   </div>
 </template>
@@ -816,12 +749,12 @@
   }
 
   .withdrawBox .filed > em:not(.error) {
-    width: 100px;
+    width: 210px;
   }
 
   .filed {
     .filed-number {
-      width: 100px;
+      width: 210px;
       display: inline-block;
     }
 
@@ -871,7 +804,7 @@
 
   .input-box {
     padding-top: 30px;
-    width: 580px;
+    width: 700px;
     margin: 0 auto;
   }
 
@@ -926,11 +859,14 @@
 
   .rpl {
     position: absolute;
-    right: -120px;
+    right: -104px;
     top: 11px;
     width: 120px;
     display: flex;
     align-items: center;
+    span{
+      font-size: 12px;
+    }
   }
 
   .memo {

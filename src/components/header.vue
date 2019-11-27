@@ -111,8 +111,8 @@
 
         <router-link to="" class="item">
           <span style="color: #fff;" class="nav-title"><small class="country-icon currency_flag"
-                                                              :class="'country-'+currency"></small>
-            {{currency}}<img src="../assets/img/icon-otc10.png"/></span>
+                                                              :class="'country-'+getCurrency"></small>
+            {{getCurrency}}<img src="../assets/img/icon-otc10.png"/></span>
           <div class="popover-nav cur" ref="nav3"
                @click="hidePopoverNav('nav3')">
             <div class="popover-menu currency">
@@ -131,6 +131,7 @@
             <div class="popover-menu">
               <p class="lang" @click="setLanguage('zh-CN')">简体中文</p>
               <p class="lang" @click="setLanguage('en')">ENGLISH</p>
+              <!--<a href="javascript:void($zopim.livechat.setLanguage('en'))">English</a>-->
             </div>
           </div>
         </router-link>
@@ -203,18 +204,26 @@
           this.getBalance()
         }
       },
-      currency () {
-        let c = null
-        this.curList.filter(res => {
-          if (res.currency.indexOf(this.location) !== -1) {
-            c = res.currency
-          }
-        })
-        if (c) {
-          this.setCurrency(c)
-        }
-        return this.getCurrency
-      },
+      // currency () {
+      //   let c = null
+      //   this.curList.filter(res => {
+      //     if (res.currency.indexOf(this.location) !== -1) {
+      //       c = res.currency
+      //     }
+      //   })
+      //   if (c) {
+      //     this.setCurrency(c)
+      //   }
+      // },
+      // setCurrency () {
+      //   let c = null
+      //   this.curList.filter(res => {
+      //     if (res.currency.indexOf(this.location) !== -1) {
+      //       c = res.currency
+      //     }
+      //   })
+      //   return c
+      // },
       lang () {
         switch (this.getLang) {
           case 'en':
@@ -224,12 +233,26 @@
         }
       }
     },
-    watch: {},
+    watch: {
+      location () {
+        if (this.curList) {
+          this.setC()
+        }
+      },
+      curList () {
+        if (this.location) {
+          this.setC()
+        }
+      }
+    },
     created () {
       this.getBalance()
       this.getCurList()
       this.getLocation()
       this.addOtcSocketEvent(this.systemEvent)
+    },
+    mounted () {
+      zE('webWidget', 'setLocale', this.getLang);
     },
     beforeDestroy () {
 
@@ -242,6 +265,17 @@
           this.newMsg = true
         }
         console.log(data)
+      },
+      setC () {
+        let c = null
+        this.curList.filter(res => {
+          if (res.currency.indexOf(this.location) !== -1) {
+            c = res.currency
+          }
+        })
+        if (c) {
+          this.setCurrency(c)
+        }
       },
       showQuickLogin () {
         utils.setDialog(quickLogin, {
@@ -271,6 +305,8 @@
         })
       },
       setLanguage (lang) {
+        this.setLiveChat(lang)
+
         this.setLang(lang)
         if (!utils.isPlainEmpty(this.$i18n.getLocaleMessage(lang))) {
           this.$i18n.locale = lang
@@ -280,6 +316,18 @@
           this.$i18n.locale = lang
           this.$i18n.setLocaleMessage(lang, res)
         })
+      },
+      setLiveChat (lang) {
+        switch (lang) {
+          case 'zh-CN' :
+            $zopim.livechat.setLanguage('zh_CN')
+            break
+          case 'en' :
+            $zopim.livechat.setLanguage('en')
+            break
+          case 'vi-vn' :
+            $zopim.livechat.setLanguage('vi_vn')
+        }
       },
       logout () {
         this.setApiToken(null)
