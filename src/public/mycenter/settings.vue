@@ -366,7 +366,7 @@
             okCallback: () => {
               this.delStatus = false
               otcApi.delPay(id, res => {
-                Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res}`)})
+                Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.DELETE_SUCCESS`)})
                 this.delStatus = true
                 this.getList()
               }, msg => {

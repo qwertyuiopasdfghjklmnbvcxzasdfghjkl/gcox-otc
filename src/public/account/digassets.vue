@@ -538,7 +538,7 @@
     white-space: nowrap;
     word-break: break-all;
     padding: 0 4px;
-    width: 200px;
+    width: 216px;
     text-overflow: ellipsis;
     overflow: hidden;
     align-items: center;

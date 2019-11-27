@@ -589,6 +589,9 @@
     border-radius: 3px;
     margin-left: 26px;
   }
+  .depositBox .filed span:first-child{
+    margin-left: 0;
+  }
 
   .depositBox .filed span.disabled {
     cursor: no-drop;

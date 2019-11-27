@@ -88,7 +88,7 @@
       <div class="btn">
         <!--<span class="cancel" @click="cancel">{{$t('otc_legal.otc_legal_cancel')}}&lt;!&ndash;取消&ndash;&gt;</span>-->
         <button @click="createOrder" :class="buyType? 'green_button': 'red_button'">
-          {{tradeParams.tradeTxt}}{{params.symbol}}
+          {{tradeParams.tradeTxt}} {{params.symbol}}
           <!--确认--></button>
       </div>
     </div>

@@ -262,6 +262,7 @@
               }
               setTimeout(timeOut, 1000)
             }
+            timeOut()
             Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           }, (msg) => {
             this.disabled = false
@@ -318,6 +319,13 @@
           amount: this.amount,
         }
         if (this.showGoolge) {
+          if (this.getUserInfo.googleAuthEnable === 0) {
+            Vue.$koallTipBox({
+              icon: 'notification',
+              message: this.$t(`account.user_center_state_unbind`) + this.$t(`auth_warning.warning_google_auth`)
+            })
+            return
+          }
           validData.googleCode = this.googleCode
         }
         if (this.showSMS) {
@@ -864,7 +872,8 @@
     width: 120px;
     display: flex;
     align-items: center;
-    span{
+
+    span {
       font-size: 12px;
     }
   }
