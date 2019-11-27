@@ -18,58 +18,74 @@
     </div>
     <div class="w1200 check">
       <ul class="check_symbol">
-        <li v-for="item in ts" @click="change(item)">
+        <li v-for="(item, index) in ts" :class="{active: index === checkSymbolState}"
+            @click="change(item);checkSymbolState = index">
           <p>
             <cryptoicon :symbol="item.symbol" size="40"/>
             <span>{{item.caption}}</span>
           </p>
         </li>
       </ul>
-      <div class="select">
-        <p @click.stop="show=!show">
-          <cryptoicon :symbol="t.symbol" size="40"/>
-          <span>{{t.caption}}</span>
-          <i></i>
-        </p>
+      <!--<div class="select">-->
+      <!--<p @click.stop="show=!show">-->
+      <!--<cryptoicon :symbol="t.symbol" size="40"/>-->
+      <!--<span>{{t.caption}}</span>-->
+      <!--<i></i>-->
+      <!--</p>-->
 
+      <!--</div>-->
+
+      <div class="box">
+        <!--<div class="left-box">-->
+          <!--&lt;!&ndash;<p><img src="../../assets/img/buy.png"><span>{{$t('exchange.exchange_buy')}}</span>{{t.symbol}}：</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="row_box">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>{{$t('exchange.exchange_price')}}({{params.currency}})</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span><i class="green">{{price}}</i> {{params.currency}}</span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="row_box">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span>{{$t('home.home40')}}({{t.symbol}})</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<span><numberbox :accuracy="8" v-model="buyAmount"></numberbox></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;<span>&ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;<button v-if="state === 2" @click="getMax()">Max</button>&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;</span>&ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<button @click="sub(1)">{{$t('gcox_otc.now_buy')}}</button>&ndash;&gt;-->
+          <!---->
+        <!--</div>-->
+        <flash-order :params="params"/>
+        <flash-order-sell :params="params"/>
+        <!--<div class="right-box">-->
+          <!--<p><img src="../../assets/img/sell.png"><span>{{$t('exchange.exchange_sell')}}</span>{{t.symbol}}：</p>-->
+          <!--<p class="row_box">-->
+            <!--<span>{{$t('exchange.exchange_price')}}({{params.currency}})</span>-->
+            <!--<span><i class="red">{{sellPrice}}</i> {{params.currency}}</span>-->
+          <!--</p>-->
+          <!--<p class="row_box">-->
+            <!--<span>{{$t('home.home40')}}({{t.symbol}})</span>-->
+            <!--<span><numberbox :accuracy="8" v-model="sellAmount"></numberbox></span>-->
+          <!--</p>-->
+          <!--<button @click="sub(2)">{{$t('gcox_otc.now_sell')}}</button>-->
+        <!--</div>-->
       </div>
 
-      <div class="box" v-if="state === 0">
-        <div class="left-box">
-          <p><img src="../../assets/img/buy.png"><span>{{$t('gcox_otc.sell_price')}}</span></p>
-          <h4><span class="green">{{buyCur}}</span> {{params.currency}}</h4>
-          <button @click="state=1">{{$t('gcox_otc.now_buy')}}</button>
-        </div>
-        <div class="right-box">
-          <p><img src="../../assets/img/sell.png"><span>{{$t('gcox_otc.buy_price')}}</span></p>
-          <h4><span class="red">{{sellCur}}</span> {{params.currency}}</h4>
-          <button @click="state=2">{{$t('gcox_otc.now_sell')}}</button>
-        </div>
-      </div>
-
-      <div class="buy_box" v-if="state !== 0">
-        <div class="input_box">
-          <span>
-            <numberbox :accuracy="8" v-model="amount"></numberbox>
-            <button v-if="state === 2" @click="getMax()">Max</button>
-          </span>
-          <span>
-            <!--<select class="w250" v-model="price">-->
-            <!--<option :key="listAdv.cur_price" :value="listAdv.cur_price">-->
-            <!--{{listAdv.cur_price}}-->
-            <!--</option>-->
-            <!--</select>-->
-            {{price}}
-          </span>
-        </div>
-        <button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">
-          {{$t('exchange.exchange_determine')}}
-        </button>
-        <p v-if="state === 1" @click="state=2">
-          {{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_sell'))}}{{t.symbol}} ?</p>
-        <p v-if="state === 2" @click="state=1">
-          {{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_buy'))}}{{t.symbol}} ?</p>
-      </div>
+      <!--<div class="buy_box">-->
+      <!--<div class="input_box">-->
+      <!--<span>-->
+      <!--<numberbox :accuracy="8" v-model="amount"></numberbox>-->
+      <!--<button v-if="state === 2" @click="getMax()">Max</button>-->
+      <!--</span>-->
+      <!--<span>-->
+      <!--{{price}}-->
+      <!--</span>-->
+      <!--</div>-->
+      <!--<button :class="state === 1 ? 'yellow_button': 'red_button'" @click="sub()">-->
+      <!--{{$t('exchange.exchange_determine')}}-->
+      <!--</button>-->
+      <!--<p v-if="state === 1" @click="state=2">-->
+      <!--{{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_sell'))}}{{t.symbol}} ?</p>-->
+      <!--<p v-if="state === 2" @click="state=1">-->
+      <!--{{$t('gcox_otc.want').format($t('otc_exchange.otc_exchange_buy'))}}{{t.symbol}} ?</p>-->
+      <!--</div>-->
 
     </div>
   </div>
@@ -84,9 +100,11 @@
   import {mapGetters, mapActions} from 'vuex'
   import numberUtils from '../../assets/js/numberUtils'
   import ListBox from '../../components/list-box'
+  import FlashOrder from './flashOrderBuy'
+  import FlashOrderSell from './flashOrderSell'
 
   export default {
-    components: {ListBox, Numberbox, Inputbox},
+    components: {FlashOrderSell, FlashOrder, ListBox, Numberbox, Inputbox},
     props: ['params', 'buyCur', 'sellCur'],
     data () {
       return {
@@ -95,11 +113,17 @@
         t: this.params,
         ts: [],
         curPrice: 0,
+        checkSymbolState: 0,
         curList: window.localStorage.currencyList,
         amount: null,
+        buyAmount: null,
+        sellAmount: null,
         listAdv: {},
+        sellListAdv: {},
         timeout: false,
+        sellTimeout: false,
         noAd: null,
+        sellNoAd: null,
         slide: [
           {
             src: require('@/assets/images/home/symbol.jpg')
@@ -116,7 +140,7 @@
           //开启循环模式
           loop: true,
         },
-        listSymbol: [1,2,3,4,5,6]
+        listSymbol: [1, 2, 3, 4, 5, 6]
       }
     },
     computed: {
@@ -129,38 +153,71 @@
       },
       form () {
         return {
-          amount: this.amount,
+          amount: this.buyAmount,
           currency: this.params.currency,
           symbol: this.params.symbol,
           direction: this.state
         }
       },
       price () {
-        return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : '')
+        return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : 0.00)
+      },
+      sellPrice () {
+        return this.sellListAdv.cur_price || (this.sellNoAd ? this.$t(`error_code.${this.sellNoAd}`) : 0.00)
       }
     },
     watch: {
-      amount () {
-        this.timeout = false
-        setTimeout(() => {
-          this.timeout = true
-        }, 800)
+      buyAmount (e) {
+        if (e) {
+          this.timeout = false
+          setTimeout(() => {
+            this.timeout = true
+          }, 800)
+        }
+      },
+      sellAmount (e) {
+        if (e) {
+          this.sellTimeout = false
+          setTimeout(() => {
+            this.sellTimeout = true
+          }, 800)
+        }
       },
       timeout (e) {
         if (e) {
-          this.getAdv()
+          let data = {
+            amount: this.buyAmount,
+            currency: this.params.currency,
+            symbol: this.params.symbol,
+            direction: 1
+          }
+          this.getAdv(data, (res) => {
+            this.listAdv = res
+          }, msg => {
+            this.noAd = msg
+          })
         }
       },
-      'params.currency' () {
-        console.log(this.amount)
-        if (this.amount) {
-          this.getAdv()
+      sellTimeout (e) {
+        if (e) {
+          let data = {
+            amount: this.sellAmount,
+            currency: this.params.currency,
+            symbol: this.params.symbol,
+            direction: 2
+          }
+          this.getAdv(data, (res) => {
+            this.sellListAdv = res
+          }, msg => {
+            this.sellNoAd = msg
+          })
         }
       },
-      state () {
-        if (this.amount) {
-          this.getAdv()
-        }
+      params (e) {
+        console.log(e)
+        // if (this.amount) {
+        //   this.getAdv()
+        // }
       }
     },
     created () {
@@ -172,7 +229,6 @@
     },
     methods: {
       change (data) {
-        this.show = false
         this.t = data
         this.t.currency = this.params.currency
         this.getInfo()
@@ -190,14 +246,17 @@
           console.log(res)
         })
       },
-      sub () {
-        if (this.form.amount) {
-          if (this.price) {
-            let isCheckPaySet = parseInt(this.state) === 1
-            this.matchPayType = parseInt(this.state) === 1 ? void 0 : this.listAdv.pay_type
+      sub (i) {
+        let amount = i === 1 ? this.buyAmount : this.sellAmount
+        let price = i === 1 ? this.price : this.sellPrice
+        console.log(amount)
+        if (amount) {
+          if (price) {
+            let isCheckPaySet = i === 1
+            this.matchPayType = i === 1 ? void 0 : this.listAdv.pay_type
             console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
             let p = {
-              adType: this.state,
+              adType: i,
               role: 'Taker'
             }
             this.checkSetState(p, () => {
@@ -207,7 +266,7 @@
                 return
               }
 
-              window.localStorage.amount = this.amount
+              // window.localStorage.amount = this.amount
 
               let query = {ad_id: this.listAdv.ad_id, params: this.listAdv, matchPayType: this.matchPayType}
               window.localStorage.ordDet = JSON.stringify(query)
@@ -220,12 +279,11 @@
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`exchange.exchange_number_empty`)})
         }
       },
-      getAdv () {
-        otcApi.match(this.form, res => {
-          this.listAdv = res
-          console.log(res)
+      getAdv (data, succse, error) {
+        otcApi.match(data, res => {
+          succse && succse(res)
         }, msg => {
-          this.noAd = msg
+          error && error(msg)
         })
       },
       getMax () {
@@ -324,10 +382,12 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    .swiper-slide{
+
+    .swiper-slide {
       width: 100%;
       height: 100%;
-      img{
+
+      img {
         min-height: 100%;
         min-width: 100%;
       }
@@ -336,7 +396,7 @@
 
   .cont {
     height: calc(~'100vh - 60px');
-    min-height: 800px;
+    min-height: 880px;
     background: #13143A;
     overflow: auto;
     position: relative;
@@ -409,20 +469,26 @@
   }
 
   .box {
-    width: 930px;
-    margin: 0 auto;
-    margin-top: 58px;
     position: relative;
     display: flex;
-    height: 190px;
+    height: calc(100% - 120px);
     justify-content: space-between;
     color: #ffffff;
 
     div {
-      width: 390px;
+      flex: 1;
       background: #1A1B42;
       border-radius: 6px;
-      padding: 26px;
+      padding: 3vh 50px;
+      margin: 0 20px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       p {
         font-size: 18px;
@@ -438,9 +504,41 @@
         font-weight: 400;
       }
 
+      .row_box {
+        line-height: 32px;
+        margin-top: 1vh;
+        display: flex;
+
+        span {
+          &:first-child {
+            width: 120px;
+          }
+
+          &:last-child {
+            flex: 1;
+
+            input {
+              border: 1px solid #292A57;
+              background: transparent;
+              border-radius: 4px;
+              width: 100%;
+              height: 40px;
+              text-indent: 10px;
+              color: #ffffff;
+              font-size: 18px;
+              font-weight: bold;
+              padding: 0;
+            }
+          }
+
+          padding-left: 0;
+        }
+      }
+
       button {
-        width: 124px;
-        height: 60px;
+        margin-top: 2vh;
+        height: 50px;
+        width: 100%;
         background: rgba(41, 157, 130, 1);
         border-radius: 4px;
         padding: 0;
@@ -525,41 +623,74 @@
       }
     }
   }
-  .list_box{
+
+  .list_box {
     width: 100%;
     height: 210px;
     position: absolute;
     z-index: 999;
     left: 0;
     top: calc(~'45% - 100px');
-    ul{
+
+    ul {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      li{
+
+      li {
         background: #191A40;
         flex: 1;
         margin: 0 10px;
         height: 210px;
-        border-radius:10px;
+        border-radius: 10px;
         transition: 0.3s;
-        &:hover{
-          background:#363766
+
+        &:hover {
+          background: #363766
         }
       }
     }
 
   }
-  .check{
+
+  .check {
     position: relative;
     left: 0;
     top: calc(~'45% + 110px');
-    .check_symbol{
+    height: calc(~'55% - 140px');
+
+    .check_symbol {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      li{
+      margin: 15px 0;
 
+      li {
+        height: 100px;
+        background: #191A40;
+        border-radius: 8px;
+        margin-left: 12px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        p {
+          text-align: center;
+
+          span {
+            display: block;
+            color: #ffffff;
+          }
+        }
+      }
+
+      .active {
+        background: #363766;
       }
     }
   }

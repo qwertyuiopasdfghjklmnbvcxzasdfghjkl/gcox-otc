@@ -535,7 +535,7 @@
   }
 
   .uncompleted-title span.numer {
-    width: 250px;
+    width: 270px;
   }
 
   .uncompleted-title span.second {

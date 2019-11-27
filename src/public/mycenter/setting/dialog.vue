@@ -1,7 +1,7 @@
 <template>
   <Card style="width: 800px">
     <p slot="title">
-      {{vm.$t('gcox_otc.add_bankcard')}}
+      {{item ? vm.$t('account.user_center_change'):vm.$t('gcox_otc.add_bankcard')}}
       <span @click="closeDialog" class="icon-close"></span>
     </p>
     <form class="form-col" ref="bankForm" data-vv-scope="bank_scope">
