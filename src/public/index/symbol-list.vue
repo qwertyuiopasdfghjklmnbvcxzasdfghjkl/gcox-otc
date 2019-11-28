@@ -4,15 +4,15 @@
       <swiper :options="swiperOption">
         <swiper-slide class="swiper-slide" v-for="(item,index) in slide" :key="index">
           <div class="img_box">
-            <img :src="item.src">
+            <img :src="showImg(item)">
           </div>
         </swiper-slide>
       </swiper>
     </div>
     <div class="list_box">
       <ul>
-        <li v-for="item in listSymbol">
-          <list-box/>
+        <li v-for="item in products">
+          <list-box :item="item" :kline="getKline(item.kline)"/>
         </li>
       </ul>
     </div>
@@ -32,7 +32,6 @@
         <flash-order-sell :params="params"/>
       </div>
 
-
     </div>
   </div>
 </template>
@@ -42,9 +41,12 @@
   import Inputbox from '../../components/formel/inputbox'
   import Numberbox from '../../components/formel/numberbox'
   import otcApi from '@/api/otc'
+  import individual from '@/api/individual'
+  import marketApi from '@/api/market'
   import numUtils from '@/assets/js/numberUtils'
+  import config from '@/assets/js/config'
   import {mapGetters} from 'vuex'
-  import ListBox from '../../components/list-box'
+  import ListBox from './list-box'
   import FlashOrder from './flashOrderBuy'
   import FlashOrderSell from './flashOrderSell'
 
@@ -60,14 +62,7 @@
         curPrice: 0,
         checkSymbolState: 0,
         curList: window.localStorage.currencyList,
-        slide: [
-          {
-            src: require('@/assets/images/home/symbol.jpg')
-          },
-          {
-            src: require('@/assets/images/home/timg.jpg')
-          }
-        ],
+        slide: [],
         swiperOption: {
           //自动轮播
           autoplay: {
@@ -76,7 +71,7 @@
           //开启循环模式
           loop: true,
         },
-        listSymbol: [1, 2, 3, 4, 5, 6]
+        products: []
       }
     },
     computed: {
@@ -92,11 +87,28 @@
     created () {
       this.getList()
       this.getInfo()
-      // this.$nextTick(() => {
-      //   this.fnGetBenchExchange()
-      // })
+      this.getBanners()
     },
     methods: {
+      getBanners () {
+        individual.getBannersList(res => {
+          console.log(res)
+          this.slide = res
+        })
+      },
+      showImg (data) {
+        let src = data['activityImgUrl']
+        switch (this.getLang) {
+          case 'zh-CN':
+            src = data['activityImgUrl']
+            break
+          case 'en':
+            src = data['activityImgUrlEn']
+            break
+        }
+        // config.origin +
+        return src
+      },
       change (data) {
         this.t = data
         this.t.currency = this.params.currency
@@ -114,11 +126,6 @@
           this.curPrice = numUtils.BN(res[0].price).toFixed(6)
           console.log(res)
         })
-      },
-      fnGetBenchExchange () { // 获取对标交易所
-        otcApi.getBenchExchange((res) => {
-          this.benchDatas = res
-        })
       }
     }
 
@@ -132,7 +139,7 @@
     height: 45%;
     font-size: 50px;
     text-align: center;
-    background-color: #13143A;
+    /*background-color: #13143A;*/
     position: absolute;
     top: 0;
     left: 0;
@@ -402,6 +409,8 @@
         height: 210px;
         border-radius: 10px;
         transition: 0.3s;
+        overflow: hidden;
+        position: relative;
 
         &:hover {
           background: #363766

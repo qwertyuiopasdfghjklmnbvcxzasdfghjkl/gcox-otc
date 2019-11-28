@@ -62,7 +62,7 @@
         </div>
         <div v-else>
           <historyrecord>
-            <span @click="showHistory = false">{{$t('usercontent.user64')}}</span>
+            <span class="back" @click="showHistory = false">{{$t('usercontent.user64')}}</span>
           </historyrecord>
         </div>
       </div>
@@ -734,6 +734,10 @@
 
       }
     }
+  }
+  .back:hover{
+    cursor:pointer;
+    color: #00a0e9;
   }
 
 </style>

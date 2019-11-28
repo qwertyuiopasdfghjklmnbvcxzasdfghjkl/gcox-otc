@@ -111,15 +111,16 @@
       }
 
       .item2 {
-        width: 14%;
+        width: 15%;
       }
 
       .item3 {
-        width: 14%;
+        width: 10%;
       }
 
       .item4 {
         width: 30%;
+        word-break: break-word;
       }
 
       .item5 {

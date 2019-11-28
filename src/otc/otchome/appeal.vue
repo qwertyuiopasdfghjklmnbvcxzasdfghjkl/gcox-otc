@@ -213,7 +213,7 @@
     display: flex;
     height: 24px;
     line-height: 24px;
-    width: 120px;
+    /*width: 120px;*/
   }
 
   .question-row label em.asterisk {
