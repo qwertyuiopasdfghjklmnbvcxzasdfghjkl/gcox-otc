@@ -22,7 +22,7 @@
           <!---->
           <!--<p><span>{{$t('gcox_otc.kyc_idcard')}}</span><span>&#45;&#45;</span></p>-->
           <!--<p><span>{{$t('gcox_otc.peer_authentication')}}</span><span>&#45;&#45;</span></p>-->
-          <p><span>{{$t('shop.phone')}}</span>
+          <p><span>{{$t('business.MOBILE')}}</span>
             <span>
                 <i>{{this.getUserInfo.mobileAuthEnable === 1?getUserInfo.countryCode+ ' '+ getUserInfo.mobile : $t('gcox_otc.no_submit')}}
                 </i>

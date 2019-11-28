@@ -45,6 +45,32 @@
 
         </div>
 
+        <div class="filed">
+          <div class="filed-number">
+            <em>{{$t('business.FEE')}}<!--手续费--> </em>
+
+          </div>
+          <div class="number" :class="{error:errors.has('amount')}">
+            <numberbox :accuracy="8"
+                       disabled="false"
+                       class="numberAll"
+                       type="text" v-model="procedureFee"/>
+          </div>
+        </div>
+
+        <div class="filed">
+          <div class="filed-number">
+            <em>{{$t('account.user_Actual_arrival')}}<!--实际到账--> </em>
+
+          </div>
+          <div class="number" :class="{error:errors.has('amount')}">
+            <numberbox :accuracy="8"
+                       disabled="false"
+                       class="numberAll"
+                       type="text" v-model="lastMount"/>
+          </div>
+        </div>
+
         <div class="filed" v-if="symbol==='EOS' || symbol==='XRP'">
           <div class="filed-number">
             <em>MEMO</em>
@@ -174,13 +200,13 @@
     computed: {
       ...mapGetters(['getUserInfo', 'getSysParams']),
       procedureFee () { // 手续费 提现数量-固定手续费
-        return utils.removeEndZero(numUtils.BN(this.procedure).toFixed(8))
+        return utils.removeEndZero(numUtils.BN(this.procedure).toFixed(8)) + this.symbol
       },
       lastMount () { // 实际到账
         if (this.amount === '' || this.amount === 0) {
-          return 0
+          return '0 ' + this.symbol
         } else {
-          return utils.removeEndZero(numUtils.minus(this.amount, this.procedureFee).toFixed(8, 1))
+          return utils.removeEndZero(numUtils.minus(this.amount, this.procedureFee).toFixed(8, 1)) + this.symbol
         }
       },
       isLessMin () { // 是否小于最小额度
@@ -196,6 +222,7 @@
       this.showGoolge = this.getSysParams.withdrawGoogleAuth.value == 2
       let item = this.item || this.$route.params.item
       this.allData = this.all_data || this.$route.params.allData
+
       console.log(item, this.allData)
       if (!item || item === 'undefined') {
         //console.log('error')
@@ -423,6 +450,8 @@
     height: 40px;
     line-height: 40px;
     color: #999;
+    text-align: right;
+    padding-right: 10px;
   }
 
   .withdrawBox .filed em i.asterisk {
@@ -764,6 +793,8 @@
     .filed-number {
       width: 210px;
       display: inline-block;
+      text-align: right;
+      padding-right: 10px;
     }
 
     .number, .withAdress, .c-box {
@@ -812,7 +843,7 @@
 
   .input-box {
     padding-top: 30px;
-    width: 700px;
+    width: 760px;
     margin: 0 auto;
   }
 

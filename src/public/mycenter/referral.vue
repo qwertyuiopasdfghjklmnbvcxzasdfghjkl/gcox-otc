@@ -297,7 +297,7 @@
 
       span {
         display: inline-block;
-        min-width: 100px;
+        min-width: 140px;
         vertical-align: middle;
         text-align: right;
         margin-right: 20px;

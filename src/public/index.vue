@@ -1,10 +1,10 @@
 <template>
   <div class="wrap">
     <!--下拉-->
-    <select-index :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>
+    <!--<select-index :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>-->
 
     <!-- 币种 -->
-    <!--<symbol-list :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>-->
+    <symbol-list :params="params" @change="change" :buyCur="buyCur" :sellCur="sellCur"/>
 
     <!-- 通知 -->
     <!--<notice/>-->

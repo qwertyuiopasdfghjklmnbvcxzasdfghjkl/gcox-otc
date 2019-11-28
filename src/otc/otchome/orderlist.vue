@@ -374,9 +374,9 @@
       },
       getBuyOrSellUser (data) {
         if (data.to_user_id === this.getUserInfo.userId) {
-          return `${this.$t('public0.public148')}：${data.to_user_name}`
+          return `${this.$t('public0.public149')}：${data.from_user_name}`
         }
-        return `${this.$t('public0.public149')}：${data.from_user_name}`
+        return `${this.$t('public0.public148')}：${data.to_user_name}`
       },
       getOrderState (state) { // 获取订单状态
         if (state === 1) {
