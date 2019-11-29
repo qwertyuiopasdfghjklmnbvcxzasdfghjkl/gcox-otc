@@ -11,7 +11,7 @@
         <h6><!--{{$t('gcox_otc.remain_count')}}：--> <b>
           <span :class="type === 'sell'? 'red': 'green'">{{data.remain_count}}</span>
           {{data.symbol}}</b></h6>
-        <p> </p>
+        <p></p>
       </div>
       <div>
         <!--<p>招商银行-China merchants</p>-->
@@ -37,7 +37,8 @@
         </p>
       </div>
       <div>
-        <button :class="type === 'sell'? 'red_button':'green_button'" @click="sub(data)">
+        <button :class="style(data)"
+                @click="sub(data)">
           {{type === 'sell'? $t('otc_exchange.otc_exchange_sell'): $t('otc_exchange.otc_exchange_buy')}}
         </button>
       </div>
@@ -49,6 +50,7 @@
 <script>
   import avatar from '@/assets/images/touxiang.png'
   import util from '../assets/js/numberUtils'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     name: 'list-box',
@@ -59,7 +61,7 @@
       }
     },
     computed: {
-
+      ...mapGetters(['getUserInfo']),
     },
     created () {
 
@@ -73,11 +75,17 @@
         if (this.type === 'sell') {
           n = Number(data.max_amount) > Number(data.remain_count) ? data.remain_count : data.max_amount
         } else {
-          let m = util.mul(data.remain_count, data.cur_price);
+          let m = util.mul(data.remain_count, data.cur_price)
           console.log(m, data)
           n = m > Number(data.max_amount) ? Number(data.max_amount) : m
         }
         return n
+      },
+      style (data) {
+        console.log(data.from_user_id, this.getUserInfo.userId)
+        let c = this.getUserInfo.userId === data.from_user_id ? 'disb' : ''
+        let d = this.type === 'sell' ? 'red_button' : 'green_button'
+        return c + ' ' + d
       }
     }
 
@@ -139,6 +147,10 @@
         height: 40px;
         border-radius: 4px;
         color: #ffffff;
+        &.disb{
+          background: #686a77;
+          cursor: no-drop;
+        }
       }
     }
   }

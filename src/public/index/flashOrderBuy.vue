@@ -12,7 +12,9 @@
       <span>{{$t('home.home40')}}({{params.symbol}})</span>
       <span><numberbox :accuracy="8" v-model="amount"></numberbox></span>
     </p>
-    <button @click="sub()">{{$t('gcox_otc.now_buy')}}</button>
+    <button @click="sub()"
+            :disabled="!amount"
+            :class="{disabled: !amount}">{{$t('gcox_otc.now_buy')}}</button>
   </div>
 </template>
 
@@ -229,7 +231,7 @@
           flex: 1;
 
           input {
-            border: 1px solid #292A57;
+            border: 1px solid #F0B936;
             background: transparent;
             border-radius: 4px;
             width: 100%;
@@ -255,6 +257,10 @@
       padding: 0;
       font-size: 18px;
       color: #ffffff;
+      &.disabled{
+        background: rgb(104, 106, 119);
+        cursor: no-drop;
+      }
     }
   }
 </style>
