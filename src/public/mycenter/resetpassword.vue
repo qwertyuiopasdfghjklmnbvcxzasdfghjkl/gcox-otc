@@ -190,7 +190,7 @@
 
   .error-msg {
     height: 30px;
-    line-height: 30px;
+    line-height: 18px;
     color: #f1304a;
     font-size: 12px;
     width: 630px;

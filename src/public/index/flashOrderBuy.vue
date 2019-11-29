@@ -231,7 +231,7 @@
           flex: 1;
 
           input {
-            border: 1px solid #F0B936;
+            border: 1px solid #303166;
             background: transparent;
             border-radius: 4px;
             width: 100%;
@@ -241,6 +241,9 @@
             font-size: 18px;
             font-weight: bold;
             padding: 0;
+            &:focus{
+              border: 1px solid #F0B936 !important;
+            }
           }
         }
 
