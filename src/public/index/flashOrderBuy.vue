@@ -3,13 +3,18 @@
     <p><img src="../../assets/img/buy.png"><span>{{$t('exchange.exchange_buy')}}</span> {{params.symbol}}：</p>
     <p class="row_box">
       <span>{{$t('exchange.exchange_price')}}({{getCurrency}})</span>
-      <span><i class="green">{{price}}</i> {{getCurrency}}</span>
+      <span>
+        <img v-show="load" src="../../assets/img/load.svg" width="20"/>
+        <i class="green">{{price}}</i> {{getCurrency}}
+      </span>
     </p>
     <p class="row_box">
       <span>{{$t('home.home40')}}({{params.symbol}})</span>
       <span><numberbox :accuracy="8" v-model="amount"></numberbox></span>
     </p>
-    <button @click="sub()">{{$t('gcox_otc.now_buy')}}</button>
+    <button @click="sub()"
+            :disabled="!amount"
+            :class="{disabled: !amount}">{{$t('gcox_otc.now_buy')}}</button>
   </div>
 </template>
 
@@ -21,20 +26,25 @@
 
   export default {
     components: {Numberbox},
-    props: ['params'],
+    props: ['params', 'buyCur'],
     data () {
       return {
         amount: null,
         noAd: null,
         timeout: false,
         listAdv: {},
-        t: this.params
+        t: this.params,
+        load: false
       }
     },
     computed: {
       ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
       price () {
-        return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : 0.00)
+        if (!this.amount) {
+          return this.buyCur
+        } else {
+          return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : null)
+        }
       },
       form () {
         return {
@@ -49,6 +59,7 @@
       amount (e) {
         if (e) {
           this.timeout = false
+          this.load = true
           setTimeout(() => {
             this.timeout = true
           }, 800)
@@ -63,7 +74,7 @@
       params () {
         this.emit()
       },
-      getCurrency(){
+      getCurrency () {
         this.emit()
       }
     },
@@ -78,10 +89,14 @@
         this.listAdv = {}
       },
       getAdv () {
+        this.load = true
+        this.listAdv.cur_price = null
         otcApi.match(this.form, (res) => {
           this.listAdv = res
+          this.load = false
         }, msg => {
           this.noAd = msg
+          this.load = false
         })
       },
       sub () {
@@ -216,7 +231,7 @@
           flex: 1;
 
           input {
-            border: 1px solid #292A57;
+            border: 1px solid #F0B936;
             background: transparent;
             border-radius: 4px;
             width: 100%;
@@ -242,6 +257,10 @@
       padding: 0;
       font-size: 18px;
       color: #ffffff;
+      &.disabled{
+        background: rgb(104, 106, 119);
+        cursor: no-drop;
+      }
     }
   }
 </style>

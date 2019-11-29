@@ -46,29 +46,17 @@
         </div>
 
         <div class="filed">
-          <div class="filed-number">
-            <em>{{$t('business.FEE')}}<!--手续费--> </em>
-
-          </div>
-          <div class="number" :class="{error:errors.has('amount')}">
-            <numberbox :accuracy="8"
-                       disabled="false"
-                       class="numberAll"
-                       type="text" v-model="procedureFee"/>
-          </div>
+          <em>{{$t('business.FEE')}}<!--手续费--> </em>
+          <p class="c-box">
+            <small>{{procedureFee}} {{symbol}}</small>
+          </p>
         </div>
 
         <div class="filed">
-          <div class="filed-number">
-            <em>{{$t('account.user_Actual_arrival')}}<!--实际到账--> </em>
-
-          </div>
-          <div class="number" :class="{error:errors.has('amount')}">
-            <numberbox :accuracy="8"
-                       disabled="false"
-                       class="numberAll"
-                       type="text" v-model="lastMount"/>
-          </div>
+          <em>{{$t('account.user_Actual_arrival')}}<!--实际到账--> </em>
+          <p class="c-box">
+            <small>{{lastMount}} {{symbol}}</small>
+          </p>
         </div>
 
         <div class="filed" v-if="symbol==='EOS' || symbol==='XRP'">
@@ -200,13 +188,13 @@
     computed: {
       ...mapGetters(['getUserInfo', 'getSysParams']),
       procedureFee () { // 手续费 提现数量-固定手续费
-        return utils.removeEndZero(numUtils.BN(this.procedure).toFixed(8)) + this.symbol
+        return utils.removeEndZero(numUtils.BN(this.procedure).toFixed(8))
       },
       lastMount () { // 实际到账
         if (this.amount === '' || this.amount === 0) {
           return '0 ' + this.symbol
         } else {
-          return utils.removeEndZero(numUtils.minus(this.amount, this.procedureFee).toFixed(8, 1)) + this.symbol
+          return utils.removeEndZero(numUtils.minus(this.amount, this.procedureFee).toFixed(8, 1))
         }
       },
       isLessMin () { // 是否小于最小额度
@@ -898,7 +886,7 @@
 
   .rpl {
     position: absolute;
-    right: -104px;
+    right: -64px;
     top: 11px;
     width: 120px;
     display: flex;

@@ -28,8 +28,8 @@
       </ul>
 
       <div class="box">
-        <flash-order :params="params"/>
-        <flash-order-sell :params="params"/>
+        <flash-order :params="params" :buyCur="buyCur"/>
+        <flash-order-sell :params="params" :sellCur="sellCur"/>
       </div>
 
     </div>
