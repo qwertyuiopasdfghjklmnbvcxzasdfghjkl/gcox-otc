@@ -3,7 +3,10 @@
     <p><img src="../../assets/img/sell.png"><span>{{$t('exchange.exchange_sell')}}</span> {{params.symbol}}：</p>
     <p class="row_box">
       <span>{{$t('exchange.exchange_price')}}({{getCurrency}})</span>
-      <span><i class="red">{{price}}</i> {{getCurrency}}</span>
+      <span>
+        <img v-show="load" src="../../assets/img/load.svg" width="20"/>
+        <i class="red">{{price}}</i> {{getCurrency}}
+      </span>
     </p>
     <p class="row_box">
       <span>{{$t('home.home40')}}({{params.symbol}})</span>
@@ -21,20 +24,25 @@
 
   export default {
     components: {Numberbox},
-    props: ['params'],
+    props: ['params', 'sellCur'],
     data () {
       return {
         amount: null,
         noAd: null,
         timeout: false,
         listAdv: {},
-        t: this.params
+        t: this.params,
+        load: false
       }
     },
     computed: {
       ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
       price () {
-        return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : 0.00)
+        if (!this.amount) {
+          return this.sellCur
+        } else {
+          return this.listAdv.cur_price || (this.noAd ? this.$t(`error_code.${this.noAd}`) : null)
+        }
       },
       form () {
         return {
@@ -49,6 +57,7 @@
       amount (e) {
         if (e) {
           this.timeout = false
+          this.load = true
           setTimeout(() => {
             this.timeout = true
           }, 800)
@@ -78,10 +87,14 @@
         this.listAdv = {}
       },
       getAdv () {
+        this.load = true
+        this.listAdv.cur_price = null
         otcApi.match(this.form, (res) => {
           this.listAdv = res
+          this.load = false
         }, msg => {
           this.noAd = msg
+          this.load = false
         })
       },
       sub () {

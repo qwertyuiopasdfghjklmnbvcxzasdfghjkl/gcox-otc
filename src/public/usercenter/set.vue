@@ -11,7 +11,7 @@
             <p v-if="userInfo.googleAuthEnable === 0"
                v-html="$t('gcox_otc.google_tip').format($t('public0.public194_Low'),'red',$t('user.verify'))"></p>
             <p v-else
-               v-html="$t('gcox_otc.google_tip').format($t('public0.public194_High'),'green',$t('public0.public42'))"></p>
+               v-html="$t('gcox_otc.google_tip').format($t('public0.public194_High'),'green',$t('account.user_center_state_bind'))"></p>
             <button @click="banding()">{{userInfo.googleAuthEnable === 0?
               $t('gcox_otc.star_use'):$t('public0.public42')}}
             </button>
