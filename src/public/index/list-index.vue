@@ -5,9 +5,11 @@
         <span v-html="$t('gcox_otc.you_want').format('green',$t('otc_exchange.otc_exchange_buy'),params.name)"></span>
       </h4>
       <list-box :datas="buyDatas" :type="'buy'" @submit="sell"></list-box>
+      <p class="fl_r">
+        <page v-if="!loading && buyDatas.length > 0" :pageIndex="form.buyPage" :pageSize="6"
+              :total="buyTotal" @changePageIndex="pageChangeBuy"/>
+      </p>
 
-      <page v-if="!loading && buyDatas.length > 0" :pageIndex="form.buyPage" :pageSize="6"
-            :total="buyTotal" @changePageIndex="pageChangeBuy"/>
       <ul>
         <li class="colem">
           <p>{{$t('gcox_otc.better_price')}}</p>
@@ -23,8 +25,11 @@
         <span v-html="$t('gcox_otc.you_want').format('red',$t('otc_exchange.otc_exchange_sell'),params.name)"></span>
       </h4>
       <list-box :datas="sellDatas" :type="'sell'" @submit="sell"></list-box>
-      <page v-if="!loading && sellDatas.length > 0" :pageIndex="form.sellPage" :pageSize="6"
-            :total="sellTotal" @changePageIndex="pageChangeSell"/>
+      <p class="fl_r">
+        <page v-if="!loading && sellDatas.length > 0" :pageIndex="form.sellPage" :pageSize="6"
+              :total="sellTotal" @changePageIndex="pageChangeSell"/>
+      </p>
+
       <ul>
         <li class="colem">
           <p>{{$t('gcox_otc.better_price')}}</p>
@@ -302,6 +307,7 @@
         align-items: center;
         font-size: 16px;
         margin-bottom: 20px;
+
         &.colem {
           display: flex;
           flex-flow: column;
@@ -319,5 +325,10 @@
     .bottom {
       /*margin-top: 45px;*/
     }
+  }
+
+  .fl_r {
+    display: flex;
+    justify-content: flex-end;
   }
 </style>

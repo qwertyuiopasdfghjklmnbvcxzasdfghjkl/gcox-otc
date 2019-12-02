@@ -112,13 +112,13 @@
 
   .page-item {
     display: inline-block;
-    height: 30px;
-    line-height: 30px;
+    height: 32px;
+    line-height: 32px;
     min-width: 30px;
     font-size: 14px;
     color: #312e45;
     cursor: pointer;
-    border:1px solid #312e45;
+    background: #EDEDED;
     margin: 4px;
     border-radius: 4px;
   }
