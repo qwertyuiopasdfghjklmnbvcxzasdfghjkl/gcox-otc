@@ -118,6 +118,7 @@ export default {
     'send_msg_to': '发送信息给 {0}',
     'bind_mobile': '请先绑定手机号',
 
-    'create_ad': '创建广告'
+    'create_ad': '创建广告',
+    'delect_ad_affirm': '是否要删除此条广告'
   }
 }

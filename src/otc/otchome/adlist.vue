@@ -32,6 +32,7 @@
                          :value="$t('otc_ad.otc_cancel_ad')" @click="deleteAd(item.ad_id)"/>
                   <input class="ad-list-item-btn" v-if="item.status===0" type="button" :value="$t('otc_ad.otc_edit_ad')"
                          @click="updateAd(item)"/>
+                  <em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>
                 </span>
           </li>
         </ul>
@@ -107,7 +108,7 @@
           page: 1,
           show: 6,
           ad_type: 0,
-          symbol: null,
+          symbol: null
         },
         total: 0,
         currentLoading: true,
@@ -240,7 +241,7 @@
           adType: obj.ad_type,
           role: 'Maker'
         }
-        otcApi.permission(p,(msg) => {
+        otcApi.permission(p, (msg) => {
           otcApi.getPaySettings((res) => {
             // this.params.symbol = obj.symbol
             utils.setDialog(dialogUpdate, {
@@ -287,6 +288,16 @@
       pageChange1 (e) {
         this.form.page = e
         this.getCurAdList()
+      },
+      deleteAdv (data) {
+        Vue.$confirmDialog({
+          content: this.$t('gcox_otc.delect_ad_affirm'), // 请先完成实名验证
+          okCallback: () => {
+            // this.$emit('goToMyCenter')
+            // this.$emit('removeDialog')
+            console.log(data)
+          }
+        })
       }
     }
   }
@@ -307,10 +318,11 @@
     border-bottom: 1px solid #333;
   }
 
-  .tab_tit{
+  .tab_tit {
     display: flex;
 
   }
+
   .ad-tabs-item {
     height: 48px;
     line-height: 48px;
@@ -388,7 +400,7 @@
   }
 
   .ad-list-item-operate {
-    width: 80px;
+    width: 120px;
   }
 
   .ad-list-item-type.buy {
@@ -400,19 +412,18 @@
   }
 
   .ad-list-item-btn {
-    height: 25px;
-    margin-top: 8px;
+    height: 34px;
+    margin-top: 4px;
     vertical-align: top;
-    background-color: transparent;
-    border: 1px solid #00a0e9;
+    background-color: #F0B936;
+    border: 1px solid #F0B936;
     border-radius: 4px;
     cursor: pointer;
-    color: #00a0e9;
+    color: #ffffff;
   }
 
   .ad-list-item-btn:hover {
-    border-color: #2565c5;
-    color: #2565c5;
+    opacity: 0.8;
   }
 
   .ad-nodata {
@@ -430,5 +441,9 @@
     height: 40px;
     line-height: 20px;
     color: #333;
+  }
+
+  .del {
+    color: #00a0e9;
   }
 </style>

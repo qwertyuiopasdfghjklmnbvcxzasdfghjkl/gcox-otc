@@ -718,7 +718,7 @@
 
     span {
       flex: 1;
-      padding: 6px 18px;
+      padding: 6px 15px;
       display: inline-flex;
       align-items: center;
       transition: 0.3s;
