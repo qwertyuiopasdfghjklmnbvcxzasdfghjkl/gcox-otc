@@ -96,7 +96,7 @@ langApi.getLanguage(lang, (res) => {
   i18n.locale = lang
   let l = res
   if (location.hostname === 'localhost') {
-    l = Object.assign(res, gjh)
+    l = res
   }
   i18n.setLocaleMessage(lang, l)
   window.vm = new Vue({

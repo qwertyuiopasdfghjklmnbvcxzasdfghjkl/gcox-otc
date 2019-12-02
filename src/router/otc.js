@@ -5,7 +5,7 @@ const routes = [
   {
     path: '/otc',
     name: 'otc_detail',
-    component: order,
+    component: Home,
     meta: {login: true}
   }
 ]

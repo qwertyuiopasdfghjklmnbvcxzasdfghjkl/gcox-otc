@@ -1,13 +1,15 @@
 <template>
   <div class="echart_box">
     <div class="data_box">
-      <h4>BTC {{$t('public0.public158')}}</h4>
-      <h2><span class="red">35.12</span> {{getCurrency}}
-        <small v-html="percent(item)">-12.12%</small>
+      <h4>{{item.symbol}} {{$t('public0.public158')}} <!--指数--></h4>
+      <h2>
+        <span :class="percent.toString().indexOf('-') === -1 ? 'green' : 'red'">
+        {{curPrice}}</span> {{getCurrency}}
+        <small :class="percent.toString().indexOf('-') === -1 ? 'green' : 'red'">{{percent}} %</small>
       </h2>
       <div class="text_flex">
-        <p><span>24H Low</span><span>{{item.lowPrice24h}}</span></p>
-        <p><span>24H Hign</span><span>{{item.highPrice24h}}</span></p>
+        <p><span>{{$t('exchange.exchange_low')}}<!--24h最低价--></span><span>{{minPrice||'0.00'}}</span></p>
+        <p><span>{{$t('exchange.exchange_high')}}<!--24h最高价--></span><span>{{maxPrice||'0.00'}}</span></p>
       </div>
     </div>
     <div class="line-box">
@@ -19,11 +21,16 @@
 <script>
   import {mapGetters} from 'vuex'
   import numUtils from '@/assets/js/numberUtils'
+  import otcApi from '@/api/otc'
 
   export default {
-    props: ['item', 'kline'],
+    props: ['item'],
     data () {
       return {
+        percent: null,
+        curPrice: null,
+        minPrice: null,
+        maxPrice: null,
         polar: {
           animation: false,
           height: 90,
@@ -64,27 +71,56 @@
     },
     computed: {
       ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
+      paramsChange () {
+        return {
+          bench_marking_id: 1,
+          currency: this.getCurrency,
+          symbol: this.item.symbol
+        }
+      }
     },
     watch: {
-      kline(e){
+      kline (e) {
         console.log(e)
         this.polar.series[0].data = e.sData
         this.polar.xAxis.data = e.xData
+      },
+      paramsChange () {
+        this.getCoinMarket()
       }
     },
     created () {
-
+      this.$nextTick(() => {
+        this.getCoinMarket()
+      })
     },
     methods: {
-      percent (item) {
-        if (numUtils.BN(item.openingPrice).equals(0)) {
-          return '0.00%'
-        } else if (item.openingPrice && item.lastPrice) {
-          var percent = numUtils.mul(numUtils.BN(item.change24h).div(item.openingPrice), 100)
-          return `<font class="${percent < 0 ? 'rang-down' : 'rang-up'}">` + percent.toFixed(2) + '%</font>'
-        } else {
-          return '0.00%'
-        }
+      getCoinMarket () {
+        otcApi.getCoinMarket(this.paramsChange, (res) => {
+          let priceArray = []
+          let timeArray = []
+          this.curPrice = numUtils.BN(res[0].price).toFixed(6)
+          this.percent = res[0].percent_change_24h || 0
+          res.reverse()
+          res.forEach((item) => {
+            priceArray.push(item.price)
+            timeArray.push(item.time)
+          })
+          priceArray = priceArray.length ? priceArray : [0]
+          if (this.isATN) {
+            this.maxPrice = this.minPrice = this.curPrice
+          } else {
+            this.minPrice = numUtils.BN(Math.min.apply(null, priceArray)).toFixed(6)
+            this.maxPrice = numUtils.BN(Math.max.apply(null, priceArray)).toFixed(6)
+          }
+          this.createCanvas(priceArray, timeArray)
+        }, (msg) => {
+          console.error(msg)
+        })
+      },
+      createCanvas (sData, xData) {
+        this.polar.series[0].data = sData
+        this.polar.xAxis.data = xData
       }
     }
   }
