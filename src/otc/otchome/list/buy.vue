@@ -34,9 +34,9 @@
         </select>
       </div>
       <div class="undone-center-adress">
-        <p>{{$t('public0.public65')}}<!--收款人--> ：{{payInfo.name}}</p>
-        <p v-if="formData.pay_type === 1">{{$t('otc_legal.otc_legal_Bank')}}：<!--开户行--> {{payInfo.bank}}</p>
-        <p v-if="formData.pay_type === 1">{{$t('otc_legal.otc_legal_Bank_number')}}：<!--银行卡号--> {{payInfo.number}}</p>
+        <p>{{$t('public0.public65')}}<!--收款人--> ：{{item.otcPayTypeBankDTO.cardName}}</p>
+        <p v-if="formData.pay_type === 1">{{$t('otc_legal.otc_legal_Bank')}}：<!--开户行--> {{item.otcPayTypeBankDTO.cardBank}}</p>
+        <p v-if="formData.pay_type === 1">{{$t('otc_legal.otc_legal_Bank_number')}}：<!--银行卡号--> {{item.otcPayTypeBankDTO.cardNumber}}</p>
         <p v-if="formData.pay_type === 2">{{$t('otc_legal.otc_legal_Alipay_number')}}：<!--支付宝账号-->
           {{payInfo.number}}</p>
         <p v-if="formData.pay_type === 3">{{$t('otc_legal.otc_legal_Wechat_number')}}：<!--微信账号--> {{payInfo.number}}</p>
@@ -212,7 +212,7 @@
       }
     },
     created () {
-      this.getPays()
+      // this.getPays()
     },
     methods: {
       getPays () {

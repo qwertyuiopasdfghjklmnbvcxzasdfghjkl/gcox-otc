@@ -11,8 +11,8 @@
     </div>
     <div class="list_box">
       <ul>
-        <li v-for="item in products">
-          <list-box :item="item" :kline="getKline(item.kline)"/>
+        <li v-for="item in symbolList">
+          <list-box :item="item"/>
         </li>
       </ul>
     </div>
@@ -59,9 +59,6 @@
         state: 0,
         t: this.params,
         ts: [],
-        curPrice: 0,
-        checkSymbolState: 0,
-        curList: window.localStorage.currencyList,
         slide: [],
         swiperOption: {
           //自动轮播
@@ -71,7 +68,7 @@
           //开启循环模式
           loop: true,
         },
-        products: []
+        symbolList: []
       }
     },
     computed: {
@@ -118,6 +115,10 @@
       getList () {
         otcApi.getCoinsList(res => {
           this.ts = res
+          this.symbolList = []
+          this.ts.map(res => {
+            this.symbolList.push(res)
+          })
           window.localStorage.symbolList = JSON.stringify(res)
         })
       },
