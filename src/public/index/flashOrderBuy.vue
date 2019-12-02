@@ -224,7 +224,7 @@
 
       span {
         &:first-child {
-          width: 120px;
+          width: 130px;
         }
 
         &:last-child {

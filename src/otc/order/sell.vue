@@ -34,7 +34,7 @@
             </tr>
             <tr>
               <td>{{$t('otc_exchange.otc_exchange_ask')}}</td>
-              <td>{{item.cur_price}} {{item.currency}}</td>
+              <td>{{pre}} {{item.currency}}</td>
             </tr>
             <tr>
               <td>{{$t('exchange.exchange_amount')}}</td>
@@ -150,6 +150,7 @@
   import {mapGetters, mapActions} from 'vuex'
   import otcApi from '@/api/otc'
   import utils from '@/assets/js/utils'
+  import numUtils from '@/assets/js/numberUtils'
   import appeal from '@/otc/otchome/appeal'
   import warnDialog from '@/otc/otchome/dialog/warnDialog'
 
@@ -175,6 +176,9 @@
     },
     computed: {
       ...mapGetters(['getApiToken', 'getUserInfo']),
+      pre(){
+        return utils.removeEndZero(numUtils.BN(this.item.cur_price).toFixed(2))
+      },
       paramsChange () {
         return {
           page: this.params.page,

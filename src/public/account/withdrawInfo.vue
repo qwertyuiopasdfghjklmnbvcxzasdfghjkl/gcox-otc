@@ -284,7 +284,13 @@
             Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
           })
         } else {
-          Vue.$koallTipBox({icon: 'notification', message: this.$t(`gcox_otc.no_bind_mobile`)})
+          Vue.$confirmDialog({
+            id: 'bind_mobile',
+            content: this.$t('gcox_otc.bind_mobile'), // 请先绑定手机号
+            okCallback: () => {
+              this.$router.push({name: 'usercenter_abstract'})
+            }
+          })
         }
       },
       toFixed (value, fixed) {
