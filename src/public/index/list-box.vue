@@ -102,7 +102,7 @@
         otcApi.getCoinMarket(this.paramsChange, (res) => {
           let priceArray = []
           let timeArray = []
-          this.curPrice = numUtils.BN(res[0].price).toFixed(6)
+          this.curPrice = numUtils.BN(res[0].price).toFixed(2)
           this.percent = res[0].percent_change_24h || 0
           res.reverse()
           res.forEach((item) => {
@@ -113,8 +113,8 @@
           if (this.isATN) {
             this.maxPrice = this.minPrice = this.curPrice
           } else {
-            this.minPrice = numUtils.BN(Math.min.apply(null, priceArray)).toFixed(6)
-            this.maxPrice = numUtils.BN(Math.max.apply(null, priceArray)).toFixed(6)
+            this.minPrice = numUtils.BN(Math.min.apply(null, priceArray)).toFixed(2)
+            this.maxPrice = numUtils.BN(Math.max.apply(null, priceArray)).toFixed(2)
           }
           this.createCanvas(priceArray, timeArray)
         }, (msg) => {
@@ -124,7 +124,8 @@
       createCanvas (sData, xData) {
         this.polar.series[0].data = sData
         this.polar.xAxis.data = xData
-      }
+      },
+
     }
   }
 </script>
