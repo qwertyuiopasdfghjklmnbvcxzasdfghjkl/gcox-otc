@@ -248,11 +248,13 @@
     created () {
       this.getBalance()
       this.getCurList()
-      this.getLocation()
+      if (!this.getCurrency) {
+        this.getLocation()
+      }
       this.addOtcSocketEvent(this.systemEvent)
     },
     mounted () {
-      zE('webWidget', 'setLocale', this.getLang);
+      zE('webWidget', 'setLocale', this.getLang)
     },
     beforeDestroy () {
 

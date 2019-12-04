@@ -219,15 +219,15 @@
           this.setSysParams(params)
         })
       },
-      getBTCValuation () {
-        marketApi.BTCValuation(data => {
-          this.setUSDCNY({
-            USD: numUtils.BN(data.USD).toFixed(2),
-            CNY: numUtils.BN(data.USDCNY).toFixed(2)
-          })
-          this.setBTCValuation(numUtils.BN(data.totalAmount).toFixed(8)) // 当前转换人民币
-        })
-      },
+      // getBTCValuation () {
+      //   marketApi.BTCValuation(data => {
+      //     this.setUSDCNY({
+      //       USD: numUtils.BN(data.USD).toFixed(2),
+      //       CNY: numUtils.BN(data.USDCNY).toFixed(2)
+      //     })
+      //     this.setBTCValuation(numUtils.BN(data.totalAmount).toFixed(8)) // 当前转换人民币
+      //   })
+      // },
       checkRouteChange (currentRoute) {
         if (this.getApiToken) {
           currentRoute.meta.noEntry ? this.$router.push({name: 'home'}) : void 0

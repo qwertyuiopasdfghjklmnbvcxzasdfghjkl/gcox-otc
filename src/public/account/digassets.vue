@@ -84,6 +84,7 @@
   import loading from '@/components/loading'
   import ProgressBar from './progress-bar'
   import Historyrecord from './historyrecord'
+  import marketApi from '@/api/market'
 
   export default {
     props: ['pandect'],
@@ -151,9 +152,15 @@
         this.pandectShow = false
       }
       this.getList()
+      this.getBtcPrice()
     },
     methods: {
-      ...mapGetters(['getUserInfo', 'getLang']),
+      ...mapGetters(['getUserInfo', 'getLang', 'setBTCValuation']),
+      getBtcPrice () {
+        marketApi.getBtcPrice(res => {
+          this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
+        })
+      },
       showStake (accountName) {
         let data = this.myAssets.filter(item => {
           return item.accountName === accountName && item.type === 1
@@ -186,44 +193,6 @@
             return true
           }
         })
-        // ndatas = ndatas.filter(item => {
-        //   return item.type === this.accountType
-        // })
-        // ndatas.sort((item1, item2) => {
-        //   if (this.sortActive === 'symbol') {
-        //     let m1 = item1.symbol
-        //     let m2 = item2.symbol
-        //     return this.sort === 'asc' ? (m1 < m2 ? -1 : 1) : (m1 > m2 ? -1 : 1)
-        //   } else if (this.sortActive === 'fullName') {
-        //     let m1 = this.$t(`symbol.${item1.symbol}`)
-        //     let m2 = this.$t(`symbol.${item2.symbol}`)
-        //     return this.sort === 'desc' ? (m1 < m2 ? -1 : 1) : (m1 > m2 ? -1 : 1)
-        //   } else if (this.sortActive === 'available') {
-        //     let m1 = numUtils.BN(item1.availableBalance)
-        //     let m2 = numUtils.BN(item2.availableBalance)
-        //     if (m1.equals(m2)) {
-        //       return item1.idx < item2.idx ? -1 : 1
-        //     } else {
-        //       return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-        //     }
-        //   } else if (this.sortActive === 'frozen') {
-        //     let m1 = numUtils.BN(item1.frozenBalance)
-        //     let m2 = numUtils.BN(item2.frozenBalance)
-        //     if (m1.equals(m2)) {
-        //       return item1.idx < item2.idx ? -1 : 1
-        //     } else {
-        //       return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-        //     }
-        //   } else {
-        //     let m1 = numUtils.BN(item1.totalBalance)
-        //     let m2 = numUtils.BN(item2.totalBalance)
-        //     if (m1.equals(m2)) {
-        //       return item1.idx < item2.idx ? -1 : 1
-        //     } else {
-        //       return this.sort === 'desc' ? (m1.lt(m2) ? -1 : 1) : (m1.gt(m2) ? -1 : 1)
-        //     }
-        //   }
-        // })
         this.echart = ndatas
         return ndatas
       },
