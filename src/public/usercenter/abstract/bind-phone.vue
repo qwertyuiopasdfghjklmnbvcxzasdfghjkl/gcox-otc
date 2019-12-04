@@ -48,6 +48,7 @@
 
 <script>
   import Vue from 'vue'
+  import {mapGetters, mapActions} from 'vuex'
   import Card from '../../../components/card'
   import commonConfig from '@/assets/js/commonConfig'
   import userApi from '@/api/individual'
@@ -58,12 +59,23 @@
     props: ['phone'],
     data () {
       return {
-        mobileFormData: commonConfig.default,
         areaCodeList: commonConfig.areaCodeList,
         showFlag: false,
         step: 1,
         showerror: false,
         disabled: true,
+      }
+    },
+    computed: {
+      ...mapGetters(['getLocation']),
+      mobileFormData () {
+        let data = commonConfig.default
+        this.areaCodeList.filter(res => {
+          if (res.key === this.getLocation) {
+            data = res
+          }
+        })
+        return data
       }
     },
     watch: {
@@ -72,11 +84,11 @@
       }
     },
     created () {
-      if (this.phone){
+      if (this.phone) {
         this.mobileFormData.phoneNumber = this.phone
       }
     },
-    beforeDestroy(){
+    beforeDestroy () {
       this.mobileFormData.smsCode = null
     },
     methods: {

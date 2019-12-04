@@ -6,7 +6,6 @@
     <div class="cont w1200">
       <div class="tab">
         <div class="cloum">
-          <!--<p class="title">{{getUserInfo.username}}{{$t('home.intro')}}&lt;!&ndash; 简介 &ndash;&gt;</p>-->
           <p><span>{{$t('home.home08')}}</span><span>{{getUserInfo.email}}</span></p>
           <p><span>{{$t('otc_exchange.otc_exchange_username')}}</span><span>{{getUserInfo.username}}</span></p>
           <p><span>{{$t('vote_mining.nick_name')}}</span>
@@ -15,49 +14,20 @@
                 <small v-if="!getUserInfo.nickname" @click="updateNike()">{{$t('public0.public40')}}</small>
               </span>
           </p>
-
+          <p><span>{{$t('gcox_otc.rank')}}</span><span><img width="50px" title="gold" :src="url"/></span></p>
           <p><span>{{$t('gcox_otc.does')}}</span><span>--</span></p>
           <p><span>{{$t('gcox_otc.success_deal')}}</span><span>{{score}}</span></p>
           <p><span>{{$t('otc_exchange.otc_exchange_Good_rating')}}</span><span>{{level}}%</span></p>
-          <!---->
-          <!--<p><span>{{$t('gcox_otc.kyc_idcard')}}</span><span>&#45;&#45;</span></p>-->
-          <!--<p><span>{{$t('gcox_otc.peer_authentication')}}</span><span>&#45;&#45;</span></p>-->
           <p><span>{{$t('business.MOBILE')}}</span>
             <span>
                 <i>{{this.getUserInfo.mobileAuthEnable === 1?getUserInfo.countryCode+ ' '+ getUserInfo.mobile : $t('gcox_otc.no_submit')}}
                 </i>
                 <small @click="bind()" class="blue">{{this.getUserInfo.mobileAuthEnable === 1?
                 $t('gcox_otc.update_phone'):$t('gcox_otc.add_phone')}}</small>
-              </span>
+            </span>
           </p>
-          <!--<p class="tow_button">-->
-          <!--<button>{{$t('gcox_otc.new_buyer')}}</button>-->
-          <!--<button>{{$t('gcox_otc.arrears_goods')}}</button>-->
-          <!--</p>-->
-          <!--<p class="one_button">-->
-          <!--<button>{{$t('gcox_otc.block_account')}}</button>-->
-          <!--</p>-->
         </div>
-
       </div>
-      <!--<div class="list">-->
-      <!--<div class="list_box">-->
-      <!--<h4><img src="../../assets/img/flag.png"/>{{$t('gcox_otc.buy_form').format('BTC')}}{{getUserInfo.username}}-->
-      <!--</h4>-->
-      <!--<div></div>-->
-      <!--<p>{{$t('gcox_otc.not_advertising')}}</p>-->
-      <!--</div>-->
-      <!--<div class="list_box">-->
-      <!--<h4><img src="../../assets/img/flag.png"/>{{$t('gcox_otc.sell_to').format('BTC')}}{{getUserInfo.username}}-->
-      <!--</h4>-->
-      <!--<div></div>-->
-      <!--<p>{{$t('gcox_otc.not_advertising')}}</p>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="right">-->
-      <!--<h4>{{$t('gcox_otc.back_communications').format(getUserInfo.username)}}</h4>-->
-      <!--<p>{{$t('gcox_otc.no_communications')}}</p>-->
-      <!--</div>-->
       <loading class="load" v-if="load"/>
     </div>
   </div>
@@ -81,7 +51,10 @@
       }
     },
     computed: {
-      ...mapGetters(['getUserInfo', 'getLang'])
+      ...mapGetters(['getUserInfo', 'getLang']),
+      url () {
+        return require('../../assets/img/Gold.png')
+      }
     },
     created () {
       console.log(this.getUserInfo)

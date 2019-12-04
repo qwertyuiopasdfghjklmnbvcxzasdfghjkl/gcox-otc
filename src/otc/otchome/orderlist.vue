@@ -577,7 +577,7 @@
   }
 
   .uncompleted-title span.second em.username {
-    max-width: 170px;
+    /*max-width: 170px;*/
     padding-left: 0;
     color: #333;
   }

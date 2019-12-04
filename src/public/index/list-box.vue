@@ -3,9 +3,9 @@
     <div class="data_box">
       <h4>{{item.symbol}} {{$t('public0.public158')}} <!--指数--></h4>
       <h2>
-        <span :class="percent.toString().indexOf('-') === -1 ? 'green' : 'red'">
+        <span :class="state">
         {{curPrice}}</span> {{getCurrency}}
-        <small :class="percent.toString().indexOf('-') === -1 ? 'green' : 'red'">{{percent}} %</small>
+        <small :class="state">{{percent}} %</small>
       </h2>
       <div class="text_flex">
         <p><span>{{$t('exchange.exchange_low')}}<!--24h最低价--></span><span>{{minPrice||'0.00'}}</span></p>
@@ -77,6 +77,9 @@
           currency: this.getCurrency,
           symbol: this.item.symbol
         }
+      },
+      state () {
+        return this.percent >= 0 ? 'green' : 'red'
       }
     },
     watch: {

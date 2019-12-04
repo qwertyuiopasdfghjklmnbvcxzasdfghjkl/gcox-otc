@@ -1,11 +1,13 @@
 <template>
-  <div class="cont">
-
+  <div class="cont" :style="style">
     <p class="title"  v-if="state === 1">{{$t('usercontent.user24')}}</p>
+    <p class="title" :class="{'tow_title': state === 0}" v-if="state === 0">
+      {{$t('usercontent.user30')}}</p>
     <div class="ear" v-if="state === 1">
       <div class="qrcode">
         <div class="bind-qrcode-img" ref="qrcode"></div>
         <p class="qrcode-p">{{bindGoogleKey}}</p>
+        <loading v-if="loading" class="load"/>
       </div>
       <div class="right">
         <p>{{$t('usercontent.user25')}}</p>
@@ -16,10 +18,10 @@
       </div>
     </div>
     <div class="verify-input">
-      <p class="title">{{$t('usercontent.user30')}}</p>
-      <input type="text" v-model="key"/>
+      <p class="title">{{$t('usercontent.user33')}}</p>
+      <input type="text" :class="{'tow_input': state === 0}" v-model="key"/>
     </div>
-    <div class="operation">
+    <div class="operation" :class="{'tow_btn': state === 0}">
       <button class="black" @click="cancal()">{{$t('usercontent.user31')}}</button>
       <button class="orange" @click="getKey()">{{$t('usercontent.user32')}}</button>
     </div>
@@ -34,11 +36,12 @@
 
   export default {
     name: 'goole-verify',
-    props: ['state'],
+    props: ['state','style'],
     data () {
       return {
         bindGoogleKey: null,
-        key: null
+        key: null,
+        loading: true
       }
     },
     created () {
@@ -58,7 +61,9 @@
             height: 150,
             text: qrCode
           })
+          this.loading = false
         }, (msg) => {
+          this.loading = false
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
       },
@@ -98,6 +103,13 @@
         width: 150px;
         padding-right: 10px;
         flex-shrink: 0;
+        position: relative;
+        .load{
+          position: absolute;
+          top: 25px;
+          left: 50%;
+          margin-left: -25px;
+        }
 
         .qrcode-p {
           word-wrap: break-word
@@ -121,6 +133,10 @@
         height: 24px;
         padding: 5px;
       }
+      .tow_input{
+        border: 1px solid #dadada;
+        margin-top: 10px;
+      }
     }
 
     .operation {
@@ -140,5 +156,27 @@
         }
       }
     }
+    .tow_btn{
+      text-align: center;
+      button{
+        background: #858585;
+        border-bottom: none;
+        padding: 2px 26px;
+        border-radius: 40px;
+        color: #ffffff;
+        &.orange {
+          border-bottom: none;
+          margin-left: 20px;
+          background: #00a0e9;
+        }
+      }
+    }
+  }
+  .tow_title{
+    text-align: center;
+    border-bottom: 1px solid #dadada;
+    padding-bottom: 20px;
+    font-size: 16px;
+    margin: -10px -40px 10px -40px;
   }
 </style>

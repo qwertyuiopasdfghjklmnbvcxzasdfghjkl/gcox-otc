@@ -322,24 +322,33 @@
     display: flex;
 
   }
+  .tab_tit li:first-child{
+    border-right-color: transparent;
+    border-radius: 4px 0 0 4px
+  }
+  .tab_tit li:last-child{
+    border-left-color: transparent;
+    border-radius: 0 4px 4px 0
+  }
 
   .ad-tabs-item {
-    height: 48px;
-    line-height: 48px;
-    margin-right: 40px;
-    margin-bottom: -1px;
-    border-bottom: 2px solid transparent;
+    height: 22px;
+    line-height: 22px;
     cursor: pointer;
+    /*background: #ffffff;*/
+    border: 1px solid #eeeeee;
+    padding: 10px 20px;
   }
 
   .ad-tabs-item.active {
-    color: #00a0e9;
-    border-bottom-color: #00a0e9;
+    color: #ffffff;
+    background: #EFBC3F;
+    border:1px solid #EFBC3F;
   }
 
-  .ad-tabs-item:hover {
-    color: #00a0e9;
-  }
+  /*.ad-tabs-item:hover {*/
+    /*color: #00a0e9;*/
+  /*}*/
 
   .ad-list {
     display: flex;

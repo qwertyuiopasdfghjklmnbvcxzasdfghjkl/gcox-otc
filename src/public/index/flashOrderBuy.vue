@@ -13,8 +13,8 @@
       <span><numberbox :accuracy="8" v-model="amount"></numberbox></span>
     </p>
     <button @click="sub()"
-            :disabled="!amount"
-            :class="{disabled: !amount}">{{$t('gcox_otc.now_buy')}}</button>
+            :class="disabled">{{$t('gcox_otc.now_buy')}}
+    </button>
   </div>
 </template>
 
@@ -53,6 +53,13 @@
           symbol: this.params.symbol,
           direction: 1
         }
+      },
+      disabled () {
+        if (this.amount) {
+          return this.listAdv.cur_price ? '' : 'disabled'
+        } else {
+          return 'disabled'
+        }
       }
     },
     watch: {
@@ -60,13 +67,15 @@
         if (e) {
           this.timeout = false
           this.load = true
+          this.listAdv.cur_price = null
+          this.noAd = null
           setTimeout(() => {
             this.timeout = true
           }, 800)
         }
       },
       timeout (e) {
-        console.log('timeout' + e)
+        console.log('timeout -- ' + e)
         if (e) {
           this.getAdv()
         }
@@ -90,7 +99,6 @@
       },
       getAdv () {
         this.load = true
-        this.listAdv.cur_price = null
         otcApi.match(this.form, (res) => {
           this.listAdv = res
           this.load = false
@@ -101,7 +109,7 @@
       },
       sub () {
         if (this.amount) {
-          if (this.price) {
+          if (this.listAdv.cur_price) {
             let isCheckPaySet = true
             this.matchPayType = void 0
             console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
@@ -241,7 +249,8 @@
             font-size: 18px;
             font-weight: bold;
             padding: 0;
-            &:focus{
+
+            &:focus {
               border: 1px solid #F0B936 !important;
             }
           }
@@ -260,8 +269,9 @@
       padding: 0;
       font-size: 18px;
       color: #ffffff;
-      &.disabled{
-        background: rgb(104, 106, 119);
+
+      &.disabled {
+        background: #1F2048;
         cursor: no-drop;
       }
     }

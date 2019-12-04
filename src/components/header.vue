@@ -258,7 +258,7 @@
 
     },
     methods: {
-      ...mapActions(['addOtcSocketEvent', 'setLang', 'setApiToken', 'setCurrency', 'setSymbol']),
+      ...mapActions(['addOtcSocketEvent', 'setLang', 'setApiToken', 'setCurrency', 'setSymbol', 'setLocation']),
       systemEvent (data) {
         let optType = parseInt(data.operate_type)
         if (optType === 1) {
@@ -301,6 +301,7 @@
       getLocation () {
         otcApi.location(res => {
           this.location = res
+          this.setLocation(res)
           console.log(res)
         })
       },

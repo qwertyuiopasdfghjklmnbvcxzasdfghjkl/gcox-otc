@@ -7,7 +7,7 @@ const config = {
     {code: '+62', key: 'ID', name: '印度尼西亚'},
     {code: '+855', key: 'KH', name: '柬埔寨'},
     {code: '+63', key: 'PH', name: '菲律宾'},
-    {code: '+86', key: 'China', name: '中国大陆'},
+    {code: '+86', key: 'CN', name: '中国大陆'},
     {code: '+852', key: 'HK', name: '中国香港'},
     {code: '+853', key: 'MO', name: '中国澳门'},
     {code: '+886', key: 'TW', name: '中国台湾'}
