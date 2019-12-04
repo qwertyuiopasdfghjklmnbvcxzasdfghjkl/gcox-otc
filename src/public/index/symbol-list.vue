@@ -400,7 +400,7 @@
 
     ul {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
 
       li {
@@ -412,6 +412,7 @@
         transition: 0.3s;
         overflow: hidden;
         position: relative;
+        max-width: 300px;
 
         &:hover {
           background: #363766
