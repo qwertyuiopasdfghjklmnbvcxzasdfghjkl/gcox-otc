@@ -32,7 +32,7 @@
                          :value="$t('otc_ad.otc_cancel_ad')" @click="deleteAd(item.ad_id)"/>
                   <input class="ad-list-item-btn" v-if="item.status===0" type="button" :value="$t('otc_ad.otc_edit_ad')"
                          @click="updateAd(item)"/>
-                  <em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>
+                  <!--<em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>-->
                 </span>
           </li>
         </ul>

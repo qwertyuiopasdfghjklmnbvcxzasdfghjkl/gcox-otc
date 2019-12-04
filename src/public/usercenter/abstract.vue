@@ -14,7 +14,7 @@
                 <small v-if="!getUserInfo.nickname" @click="updateNike()">{{$t('public0.public40')}}</small>
               </span>
           </p>
-          <p><span>{{$t('gcox_otc.rank')}}</span><span><img width="50px" title="gold" :src="url"/></span></p>
+          <!--<p><span>{{$t('gcox_otc.rank')}}</span><span><img width="50px" title="gold" :src="url"/></span></p>-->
           <p><span>{{$t('gcox_otc.does')}}</span><span>--</span></p>
           <p><span>{{$t('gcox_otc.success_deal')}}</span><span>{{score}}</span></p>
           <p><span>{{$t('otc_exchange.otc_exchange_Good_rating')}}</span><span>{{level}}%</span></p>
