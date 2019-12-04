@@ -70,8 +70,7 @@
         needGoogleCode: false,
         formData: {
           username: '',
-          password: '',
-          googleCode: ''
+          password: ''
         }
       }
     },
@@ -104,6 +103,7 @@
             formData[i] = this.formData[i]
           }
           if (!this.needGoogleCode) {
+            console.log('极速验证')
             this.gtLocked = true
             utils.gtValidate((gtParams) => {
               for (let i in gtParams) {
@@ -138,7 +138,11 @@
               this.needGoogleCode = true
               utils.setDialog(gooleVerify, {
                 state: 0,
-                style: {width: '400px'},
+                face: {width: '400px'},
+                errCallback: (e) => {
+                  this.needGoogleCode = false
+                  console.log('取消谷歌',e)
+                },
                 okCallback: (res) => {
                   this.formData.googleCode = res
                   this.login()

@@ -1,5 +1,5 @@
 <template>
-  <div class="cont" :style="style">
+  <div class="cont" :style="face">
     <p class="title"  v-if="state === 1">{{$t('usercontent.user24')}}</p>
     <p class="title" :class="{'tow_title': state === 0}" v-if="state === 0">
       {{$t('usercontent.user30')}}</p>
@@ -36,7 +36,13 @@
 
   export default {
     name: 'goole-verify',
-    props: ['state','style'],
+    props: {
+      state: null,
+      face: {
+        type: Object,
+        default: {}
+      }
+    },
     data () {
       return {
         bindGoogleKey: null,
@@ -68,6 +74,7 @@
         })
       },
       cancal () {
+        this.$emit('errCallback')
         this.$emit('removeDialog')
       },
       getKey () {
