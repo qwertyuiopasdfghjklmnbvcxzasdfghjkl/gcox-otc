@@ -18,11 +18,11 @@
           <em>
             {{$t('account.user_Pick_up_address').format(symbol)}}<!--提现地址--> *
           </em>
-          <div class="withAdress" style="position:relative;" :class="{error:errors.has('selToAddress')}">
+          <div class="withAdress" style="position:relative;" :class="{error:errors.has('toAddress')}">
             <input type="text" maxlength="100" v-validate="'required'"
-                   data-vv-name="selToAddress" v-model="toAddress"/>
+                   data-vv-name="toAddress" v-model="toAddress"/>
             <span class="dowml" @click.stop="showDropdown=!showDropdown"></span>
-            <em class="error" v-if="errors.has('selToAddress')">{{this.$t('public0.public44')}}<!--请选择地址或使用新地址--></em>
+            <em class="error" v-if="errors.has('toAddress')">{{this.$t('public0.public44')}}<!--请选择地址或使用新地址--></em>
             <ul v-show="showDropdown">
               <li v-if="datas" class="user-addr" @click.prevent="userSelAddress(datas)">{{datas.memo}} -
                 {{datas.address}}
@@ -82,7 +82,8 @@
 
           </div>
           <div class="number" :class="{error:errors.has('smsCode')}">
-            <numberbox data-vv-name="amount" class="numberAll"
+            <numberbox data-vv-name="smsCode" class="numberAll"
+                       v-validate="'required'"
                        type="text" v-model="smsCode"/>
             <a href="javascript:;" @click="senSMS()" class="send_sms">{{disabled ? time+'s':$t('public0.public161')}}
               <!--发送--></a>
@@ -446,6 +447,10 @@
     color: #999;
     text-align: right;
     padding-right: 10px;
+  }
+
+  .withdrawBox .filed em.error{
+    line-height: 24px;
   }
 
   .withdrawBox .filed em i.asterisk {

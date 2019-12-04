@@ -35,7 +35,8 @@ export default new Vuex.Store({
     btcValues: {},
     sysParams: {}, // System params
     symbol: symbol,
-    currency: localStorage.currency || 'CNY'
+    currency: localStorage.currency || 'CNY',
+    location: null
   },
   getters: {
     getSysParams (state) {
@@ -101,6 +102,9 @@ export default new Vuex.Store({
     },
     getCurrency (state) {
       return state.currency
+    },
+    getLocation (state) {
+      return state.location
     }
   },
   mutations: {
@@ -178,6 +182,9 @@ export default new Vuex.Store({
     },
     updateCurrency (state, currency) {
       state.currency = currency
+    },
+    updateLocation (state, location) {
+      state.location = location
     }
   },
   actions: {
@@ -294,6 +301,9 @@ export default new Vuex.Store({
     setCurrency (context, currency) {
       context.commit('updateCurrency', currency)
       localStorage.currency = currency
+    },
+    setLocation (context, location) {
+      context.commit('updateLocation', location)
     },
     setBtcValues (context, data) {
       let btcValues = {}

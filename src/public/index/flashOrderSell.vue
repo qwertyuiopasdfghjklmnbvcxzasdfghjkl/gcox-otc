@@ -13,8 +13,7 @@
       <span><numberbox :accuracy="8" v-model="amount"></numberbox></span>
     </p>
     <button @click="sub()"
-            :disabled="!amount"
-            :class="{disabled: !amount}">{{$t('gcox_otc.now_sell')}}</button>
+            :class="disabled">{{$t('gcox_otc.now_sell')}}</button>
   </div>
 </template>
 
@@ -53,6 +52,13 @@
           symbol: this.params.symbol,
           direction: 2
         }
+      },
+      disabled () {
+        if (this.amount) {
+          return this.listAdv.cur_price ? '' : 'disabled'
+        } else {
+          return 'disabled'
+        }
       }
     },
     watch: {
@@ -60,6 +66,8 @@
         if (e) {
           this.timeout = false
           this.load = true
+          this.listAdv.cur_price = null
+          this.noAd = null
           setTimeout(() => {
             this.timeout = true
           }, 800)
@@ -90,7 +98,6 @@
       },
       getAdv () {
         this.load = true
-        this.listAdv.cur_price = null
         otcApi.match(this.form, (res) => {
           this.listAdv = res
           this.load = false
@@ -101,7 +108,7 @@
       },
       sub () {
         if (this.amount) {
-          if (this.price) {
+          if (this.listAdv.cur_price) {
             let isCheckPaySet = false
             this.matchPayType = this.listAdv.pay_type
             console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
@@ -261,7 +268,7 @@
       font-size: 18px;
       color: #ffffff;
       &.disabled{
-        background: rgb(104, 106, 119);
+        background: #1F2048;
         cursor: no-drop;
       }
     }

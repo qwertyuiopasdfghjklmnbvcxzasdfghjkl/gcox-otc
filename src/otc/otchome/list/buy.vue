@@ -277,7 +277,7 @@
 
   .undone-center {
     display: flex;
-    width: 560px;
+    width: 600px;
     align-items: center;
   }
 
@@ -365,7 +365,7 @@
     line-height: 22px;
     white-space: normal;
     word-break: break-all;
-    max-width: 200px;
+    /*max-width: 200px;*/
   }
 
   .undone-center-adress p em {
