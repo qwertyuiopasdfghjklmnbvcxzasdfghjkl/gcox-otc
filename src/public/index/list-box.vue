@@ -33,13 +33,13 @@
         maxPrice: null,
         polar: {
           animation: false,
-          height: 90,
+          height: 70,
           grid: {
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            height: '90px',
+            height: '70px',
             show: false
           },
           xAxis: {
@@ -73,7 +73,7 @@
       ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
       paramsChange () {
         return {
-          bench_marking_id: 1,
+          bench_marking_id: 2,
           currency: this.getCurrency,
           symbol: this.item.symbol
         }
@@ -124,8 +124,7 @@
       createCanvas (sData, xData) {
         this.polar.series[0].data = sData
         this.polar.xAxis.data = xData
-      },
-
+      }
     }
   }
 </script>
@@ -175,13 +174,13 @@
     .line-box {
       position: absolute;
       width: 100%;
-      height: 90px;
+      height: 70px;
       bottom: 0;
       left: 0;
 
       .v_chart {
         width: 100%;
-        height: 90px;
+        height: 70px;
       }
     }
   }

@@ -52,6 +52,7 @@
   import Card from '../../../components/card'
   import commonConfig from '@/assets/js/commonConfig'
   import userApi from '@/api/individual'
+  import otcApi from '@/api/otc'
 
   export default {
     name: 'bind-phone',
@@ -74,6 +75,7 @@
           if (res.key === this.getLocation) {
             data = res
           }
+          console.log(res, this.getLocation)
         })
         return data
       }
@@ -87,11 +89,20 @@
       if (this.phone) {
         this.mobileFormData.phoneNumber = this.phone
       }
+      if (!this.getLocation) {
+        this.location()
+      }
     },
     beforeDestroy () {
       this.mobileFormData.smsCode = null
     },
     methods: {
+      ...mapActions(['setLocation']),
+      location () {
+        otcApi.location(res => {
+          this.setLocation(res)
+        })
+      },
       change (item) {
         this.mobileFormData.code = item.code
         this.mobileFormData.key = item.key
