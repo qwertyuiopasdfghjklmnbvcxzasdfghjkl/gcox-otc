@@ -73,7 +73,7 @@
       ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
       paramsChange () {
         return {
-          bench_marking_id: 1,
+          bench_marking_id: 2,
           currency: this.getCurrency,
           symbol: this.item.symbol
         }
