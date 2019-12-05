@@ -270,6 +270,7 @@
       &.disabled{
         background: #1F2048;
         cursor: no-drop;
+        color: #999999;
       }
     }
   }
