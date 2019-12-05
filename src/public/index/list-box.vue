@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="line-box">
-      <v-chart class="v_chart" :options="polar"/>
+      <v-chart class="v_chart" ref="runTimes_creditChart" :options="polar"/>
     </div>
   </div>
 </template>
@@ -83,8 +83,6 @@
         console.log(e)
         this.polar.series[0].data = e.sData
         this.polar.xAxis.data = e.xData
-        // this.polar.yAxis.max = this.maxPrice
-        // this.polar.yAxis.min = this.minPrice
       },
       paramsChange () {
         this.getCoinMarket()
@@ -123,7 +121,13 @@
       createCanvas (sData, xData) {
         this.polar.series[0].data = sData
         this.polar.xAxis.data = xData
+      },
+      resizeTheChart () {
+        this.$refs.runTimes_creditChart.resize()
       }
+    },
+    mounted () {
+      window.addEventListener('resize', this.resizeTheChart)
     }
   }
 </script>
@@ -184,7 +188,8 @@
       }
     }
   }
-  .active{
+
+  .active {
     background: #363766;
   }
 </style>
