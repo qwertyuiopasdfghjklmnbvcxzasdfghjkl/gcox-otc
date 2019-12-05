@@ -163,7 +163,7 @@
       }
 
       .text_flex {
-        color: #ffffff;
+        color: #aaaaaa;
 
         p {
           display: flex;
