@@ -38,7 +38,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken']),
+      ...mapGetters(['getLang', 'getSymbol', 'getCurrency', 'getUserInfo', 'getApiToken', 'isLogin']),
       price () {
         if (!this.amount) {
           return this.buyCur
@@ -77,7 +77,18 @@
       timeout (e) {
         console.log('timeout -- ' + e)
         if (e) {
-          this.getAdv()
+          if (this.isLogin) {
+            this.getAdv()
+          } else {
+            Vue.$confirmDialog({
+              id: 'login',
+              showCancel: false,
+              content: this.$t('public0.public15'), // 请登录后再交易
+              okCallback: () => {
+                this.$router.push({name: 'login'})
+              }
+            })
+          }
         }
       },
       params () {
