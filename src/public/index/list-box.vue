@@ -51,22 +51,16 @@
             data: [],
           },
           yAxis: {
-            show: false
+            show: false,
+            min: 'dataMin'
           },
           series: [{
             data: [],
             type: 'line',
             smooth: true,
-            itemStyle: {
-              opacity: 0
-            },
-            lineStyle: {
-              color: 'rgb(48, 50, 101)',
-              width: 3
-            },
-            areaStyle: {
-              color: 'rgb(30, 31, 65)'
-            },
+            itemStyle: {opacity: 0},
+            lineStyle: {color: 'rgb(48, 50, 101)', width: 3},
+            areaStyle: {color: 'rgb(30, 31, 65)'}
           }]
         }
       }
@@ -89,6 +83,8 @@
         console.log(e)
         this.polar.series[0].data = e.sData
         this.polar.xAxis.data = e.xData
+        // this.polar.yAxis.max = this.maxPrice
+        // this.polar.yAxis.min = this.minPrice
       },
       paramsChange () {
         this.getCoinMarket()
