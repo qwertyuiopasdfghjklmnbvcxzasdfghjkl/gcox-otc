@@ -28,12 +28,12 @@
             <span class="ad-list-item-surplus">{{item.remain_count}} {{item.symbol}}</span>
             <span class="ad-list-item-status">{{$t(item.status===1?'public0.public51':'public0.public52')}}</span>
             <span class="ad-list-item-operate">
-                  <input class="ad-list-item-btn" v-if="item.status===1" type="button"
-                         :value="$t('otc_ad.otc_cancel_ad')" @click="deleteAd(item.ad_id)"/>
-                  <input class="ad-list-item-btn" v-if="item.status===0" type="button" :value="$t('otc_ad.otc_edit_ad')"
-                         @click="updateAd(item)"/>
-                  <!--<em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>-->
-                </span>
+              <input class="ad-list-item-btn" v-if="item.status===1" type="button"
+                     :value="$t('otc_ad.otc_cancel_ad')" @click="deleteAd(item.ad_id)"/>
+              <input class="ad-list-item-btn" v-if="item.status===0" type="button" :value="$t('otc_ad.otc_edit_ad')"
+                     @click="updateAd(item)"/>
+              <!--<em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>-->
+            </span>
           </li>
         </ul>
         <page v-if="!currentLoading && cDatas.length > 0"

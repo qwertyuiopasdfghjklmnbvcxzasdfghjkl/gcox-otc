@@ -83,7 +83,7 @@
     watch: {},
     created () {
       this.getList()
-      this.getInfo()
+      // this.getInfo()
       this.getBanners()
     },
     methods: {
@@ -109,7 +109,7 @@
       change (data) {
         this.t = data
         this.t.currency = this.params.currency
-        this.getInfo()
+        // this.getInfo()
         this.$emit('change', this.t)
       },
       getList () {
@@ -122,12 +122,12 @@
           window.localStorage.symbolList = JSON.stringify(res)
         })
       },
-      getInfo () {
-        otcApi.getCoinMarket(this.paramsChange, res => {
-          this.curPrice = numUtils.BN(res[0].price).toFixed(6)
-          console.log(res)
-        })
-      }
+      // getInfo () {
+      //   otcApi.getCoinMarket(this.paramsChange, res => {
+      //     this.curPrice = numUtils.BN(res[0].price).toFixed(6)
+      //     console.log(res)
+      //   })
+      // }
     }
 
   }
