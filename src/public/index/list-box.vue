@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="line-box">
-      <v-chart class="v_chart" :options="polar"/>
+      <v-chart class="v_chart" ref="runTimes_creditChart" :options="polar"/>
     </div>
   </div>
 </template>
@@ -51,22 +51,16 @@
             data: [],
           },
           yAxis: {
-            show: false
+            show: false,
+            min: 'dataMin'
           },
           series: [{
             data: [],
             type: 'line',
             smooth: true,
-            itemStyle: {
-              opacity: 0
-            },
-            lineStyle: {
-              color: 'rgb(48, 50, 101)',
-              width: 3
-            },
-            areaStyle: {
-              color: 'rgb(30, 31, 65)'
-            },
+            itemStyle: {opacity: 0},
+            lineStyle: {color: 'rgb(48, 50, 101)', width: 3},
+            areaStyle: {color: 'rgb(30, 31, 65)'}
           }]
         }
       }
@@ -127,7 +121,13 @@
       createCanvas (sData, xData) {
         this.polar.series[0].data = sData
         this.polar.xAxis.data = xData
+      },
+      resizeTheChart () {
+        this.$refs.runTimes_creditChart.resize()
       }
+    },
+    mounted () {
+      window.addEventListener('resize', this.resizeTheChart)
     }
   }
 </script>
@@ -188,7 +188,8 @@
       }
     }
   }
-  .active{
+
+  .active {
     background: #363766;
   }
 </style>
