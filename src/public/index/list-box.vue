@@ -1,5 +1,5 @@
 <template>
-  <div class="echart_box">
+  <div class="echart_box" :class="{active: item.symbol === getSymbol.symbol}">
     <div class="data_box">
       <h4>{{item.symbol}} {{$t('public0.public158')}} <!--指数--></h4>
       <h2>
@@ -8,8 +8,8 @@
         <small :class="state">{{percent}} %</small>
       </h2>
       <div class="text_flex">
-        <p><span>{{$t('exchange.exchange_low')}}<!--24h最低价--></span><span>{{minPrice||'0.00'}}</span></p>
         <p><span>{{$t('exchange.exchange_high')}}<!--24h最高价--></span><span>{{maxPrice||'0.00'}}</span></p>
+        <p><span>{{$t('exchange.exchange_low')}}<!--24h最低价--></span><span>{{minPrice||'0.00'}}</span></p>
       </div>
     </div>
     <div class="line-box">
@@ -34,12 +34,14 @@
         polar: {
           animation: false,
           height: 70,
+          width: '100%',
           grid: {
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
             height: '70px',
+            width: '100%',
             show: false
           },
           xAxis: {
@@ -93,6 +95,7 @@
       }
     },
     created () {
+      console.log(this.getSymbol)
       this.$nextTick(() => {
         this.getCoinMarket()
       })
@@ -134,6 +137,7 @@
     position: absolute;
     width: 100%;
     height: 210px;
+    transition: 0.3s;
 
     .data_box {
       padding: 15px;
@@ -183,5 +187,8 @@
         height: 70px;
       }
     }
+  }
+  .active{
+    background: #363766;
   }
 </style>
