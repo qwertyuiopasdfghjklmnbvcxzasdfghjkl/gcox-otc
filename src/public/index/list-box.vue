@@ -121,13 +121,12 @@
       createCanvas (sData, xData) {
         this.polar.series[0].data = sData
         this.polar.xAxis.data = xData
-      },
-      resizeTheChart () {
-        this.$refs.runTimes_creditChart.resize()
       }
     },
     mounted () {
-      window.addEventListener('resize', this.resizeTheChart)
+      window.addEventListener('resize', () => {
+        this.$refs.runTimes_creditChart.resize()
+      })
     }
   }
 </script>

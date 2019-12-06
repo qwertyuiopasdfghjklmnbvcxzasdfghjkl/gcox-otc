@@ -420,13 +420,16 @@
         utils.setDialog(appeal, {
           orderNumber: item.order_number,
           okCallback: () => {
-            this.getOrderList()
+            // this.getOrderList()
+            this.data1.appeal_state = 0
           }
         })
       },
       cancelApeal (item) { // 取消申诉
         otcApi.cancelAppeal(item.appeal_manage_id, (msg) => {
-          this.getOrderList()
+          // this.getOrderList()
+          this.data1.appeal_state = 1
+          console.log(this.$parent)
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
         }, (msg) => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
@@ -488,7 +491,7 @@
       height: 50px;
       line-height: 50px;
       color: #999;
-      font-size: 18px;
+      font-size: 16px;
       position: relative;
       text-align: center;
       margin-top: 10px;
@@ -616,7 +619,7 @@
       display: flex;
 
       li {
-        margin: 0 20px;
+        margin: 0 16px;
         text-align: center;
         cursor: pointer;
 
