@@ -605,7 +605,7 @@
       height: 50px;
       line-height: 50px;
       color: #999;
-      font-size: 18px;
+      font-size: 16px;
       position: relative;
       text-align: center;
       margin-top: 10px;

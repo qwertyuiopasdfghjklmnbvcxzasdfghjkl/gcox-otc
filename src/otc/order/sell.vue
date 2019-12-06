@@ -13,7 +13,7 @@
           <!--等待付款-->
         </li>
         <li :class="{active:step>=2, current:step===2}">
-          3.{{$t('otc_ad.otc_ad_prompt8')}}
+          <span class="lg">3.{{$t('otc_ad.otc_ad_prompt8')}}</span>
           <!--释放货币-->
         </li>
         <li :class="{active:step>=3, current:step===3}">
@@ -86,32 +86,8 @@
       </div>
 
     </div>
-    <!--<div class="undone-center" v-if="item.state === 1">-->
-    <!--<div class="undone-center-sells">-->
-    <!--<p>{{$t('otc_exchange.otc_exchange_sell')}}</p>-->
-    <!--<p>{{item.symbol}}</p>-->
-    <!--</div>-->
-    <!--<div class="undone-center-number">-->
-    <!--<p class="undone-center-number-font">{{item.total_price}} {{item.currency}}</p>-->
-    <!--<p>{{$t(params.ad_type==2?'otc_exchange.otc_exchange_ask':'otc_exchange.otc_exchange_bid')}}-->
-    <!--&lt;!&ndash;单价&ndash;&gt;{{item.cur_price}} {{item.currency}}</p>-->
-    <!--<p>{{$t('exchange.exchange_amount')}} {{item.symbol_count}} {{item.symbol}}</p>-->
-    <!--</div>-->
-    <!--<div class="undone-center-type">-->
-    <!--<p>{{payTypeTitle}}</p>-->
-    <!--</div>-->
-    <!--<div class="undone-center-adress">-->
-    <!--<p>{{$t('public0.public28')}}&lt;!&ndash;耐心等待买家付款&ndash;&gt;</p>-->
-    <!--<p>{{$t('public0.public29')}}&lt;!&ndash;确认付款后，请尽快放币&ndash;&gt;</p>-->
-    <!--</div>-->
-    <!--</div>-->
     <div class="undone-center" v-if="item.state === 2">
-      <!--<div class="undone-center-sells">-->
-        <!--<p>{{$t('otc_exchange.otc_exchange_sell')}}</p>-->
-        <!--<p>{{item.symbol}}</p>-->
-      <!--</div>-->
       <div class="undone-center-type" v-if="!item.to_user_comment">
-
       </div>
       <div class="undone-center-adress ui-flex">
         <span class="">{{$t('otc_ad.otc_ad_prompt9')}}</span>
@@ -420,7 +396,7 @@
       height: 50px;
       line-height: 50px;
       color: #999;
-      font-size: 18px;
+      font-size: 16px;
       position: relative;
       text-align: center;
       margin-top: 10px;
@@ -500,7 +476,7 @@
     justify-content: center;
 
     & > a {
-      width: 150px;
+      padding: 0 20px;
       height: 50px;
       display: block;
       text-align: center;
@@ -535,7 +511,7 @@
     ul{
       display: flex;
       li{
-        margin: 0 20px;
+        margin: 0 16px;
         text-align: center;
         cursor: pointer;
         .active{
@@ -577,5 +553,11 @@
       top: 0;
       bottom:0;
     }
+  }
+  .lg{
+    position: relative;
+    z-index: 999;
+    text-indent: 24px;
+    display: block;
   }
 </style>
