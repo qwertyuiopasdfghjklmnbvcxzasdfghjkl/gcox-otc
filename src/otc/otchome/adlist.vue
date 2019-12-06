@@ -32,7 +32,7 @@
                      :value="$t('otc_ad.otc_cancel_ad')" @click="deleteAd(item.ad_id)"/>
               <input class="ad-list-item-btn" v-if="item.status===0" type="button" :value="$t('otc_ad.otc_edit_ad')"
                      @click="updateAd(item)"/>
-              <!--<em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>-->
+              <em v-if="item.status===0" class="del" @click="deleteAdv(item)">{{$t('public0.public3')}}</em>
             </span>
           </li>
         </ul>
@@ -61,7 +61,7 @@
             <span class="ad-list-item-limit">{{item.min_amount}}-{{item.max_amount}} {{item.ad_type === 2 ? item.currency : item.symbol}}</span>
             <span class="ad-list-item-price">{{item.cur_price}} {{item.currency}}</span>
             <span class="ad-list-item-amount">{{item.symbol_count}} {{item.symbol}}</span>
-            <span class="ad-list-item-status">{{$t('otc_ad.otc_ad_completed')}}</span>
+            <span class="ad-list-item-status">{{item.status === 3 ? $t('gcox_otc.deleted') : $t('otc_ad.otc_ad_completed')}}</span>
           </li>
         </ul>
         <page v-if="!historyLoading && hDatas.length > 0"
@@ -291,10 +291,16 @@
       },
       deleteAdv (data) {
         Vue.$confirmDialog({
-          content: this.$t('gcox_otc.delect_ad_affirm'), // 请先完成实名验证
+          content: this.$t('gcox_otc.delect_ad_affirm'), // 确定删除？
           okCallback: () => {
+            otcApi.deleteAdv(data.ad_id, (msg) => {
+              Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
+              this.getCurAdList()
+              // this.$emit('removeDialog')
+            }, (msg) => {
+              Vue.$confirmDialog({showCancel: false, content: this.$t(`error_code.${msg}`)})
+            })
             // this.$emit('goToMyCenter')
-            // this.$emit('removeDialog')
             console.log(data)
           }
         })
