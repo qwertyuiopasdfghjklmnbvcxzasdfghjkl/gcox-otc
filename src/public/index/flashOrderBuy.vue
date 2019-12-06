@@ -174,8 +174,9 @@
                   if (msg3 === 'PAY_TYPE_UNMATCH') {
                     Vue.$confirmDialog({
                       id: 'PAY_TYPE_UNMATCH',
-                      content: this.$t('error_code.PAY_TYPE_UNMATCH'), // 支付方式不匹配，请设置对应的支付方式
+                      content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
                       okCallback: () => {
+                        this.$router.push({name: 'control_pay'})
                       }
                     })
                   } else {
