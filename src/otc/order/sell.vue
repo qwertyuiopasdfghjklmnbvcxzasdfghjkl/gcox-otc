@@ -479,6 +479,7 @@
       padding: 0 20px;
       height: 50px;
       display: block;
+      min-width: 90px;
       text-align: center;
       line-height: 50px;
       margin: 0 15px;
