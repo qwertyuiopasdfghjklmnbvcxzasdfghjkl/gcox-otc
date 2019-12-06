@@ -28,25 +28,21 @@
             </div>
 
             <div class="flex">
-              <ul class="accountInfo-lists" :class="{pandect:pandectShow}">
+              <ul class="accountInfo-lists" >
                 <li v-for="(data, index) in filterDatas()" :key="data.accountId">
                   <div class="items">
                     <div class="ico">
                       <img :src="`data:image/png;base64,${data.iconBase64}`">
                     </div>
                     <div class="coin ">{{data.symbol}}</div>
-                    <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero" v-if="pandectShow">
+                    <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero" >
                       {{toFixed(data.totalBalance)|removeEndZero}}
-                    </div>
-                    <div class="f-right "
-                         :title="data.totalBalance"
-                         v-else>{{data.totalBalance}}
                     </div>
                     <div class="f-right "
                          :title="data.availableBalance">{{data.availableBalance}}
                     </div>
                     <div class="f-right "
-                         :title="data.adFrozenBalance">{{data.adFrozenBalance}}
+                         :title="data.frozenBalance">{{data.frozenBalance | removeEndZero}}
                     </div>
                     <moreinfo class="action"
                               :googleState="getUserInfo.googleAuthEnable"
