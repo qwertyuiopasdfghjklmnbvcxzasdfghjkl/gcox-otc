@@ -367,7 +367,8 @@
             fromAccount: this.fromAccount, // 用户id
             memo: this.memo,
             lang: window.localStorage.getItem('lang') === 'zh-CN' ? 'cn' : 'en',
-            type: 0
+            type: 0,
+            checkPsw: 1
           }
           Object.assign(formData, validData)
           console.log(formData)
