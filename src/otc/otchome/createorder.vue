@@ -149,8 +149,8 @@
               ({{formData.symbol}}) </label>
             <div class="value">
               <numberbox :class="{error: errors.has('symbol_count')}" v-model="formData.symbol_count" :size="15"
-                         :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|maxInputValue:9999999999'"
-                         data-vv-name="symbol_count"/>
+                         :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|sellAmount|maxInputValue:9999999999'"
+                         data-vv-name="symbol_count" :min-val="min_count"/>
             </div>
             <p class="small"></p>
           </div>
@@ -296,6 +296,7 @@
   import numUtils from '@/assets/js/numberUtils'
   import utils from '@/assets/js/utils'
   import numberbox from '@/components/formel/numberInput'
+  import number from '@/components/formel/numberbox'
   import adconfirm from '@/otc/otchome/adconfirm'
 
   let additional = []
@@ -305,7 +306,8 @@
   export default {
     props: ['params', 'ad_id', 'myPayType'],
     components: {
-      numberbox
+      numberbox,
+      number
     },
     data () {
       return {
@@ -344,7 +346,8 @@
         bankData: {},
         bankList: [],
         symbolList: [],
-        pay_time_list: [15, 20, 30]
+        pay_time_list: [15, 20, 30],
+        min_count: 0
       }
     },
     computed: {
@@ -476,6 +479,19 @@
           }
         }
       })
+      Validator.extend('sellAmount', {
+        getMessage: (field, args) => {
+          return this.$t('public0.public120').format(this.min_count) // 购买数量必须大于等于{0}
+        },
+        validate: (value, args) => {
+          value = parseFloat(value)
+          if (this.formData.ad_type === 2) {
+            return value >= this.min_count
+          } else {
+            return true
+          }
+        }
+      })
       this.$nextTick(() => {
         this.fnGetBenchExchange()
         this.fnGetAdvertisementDetail()
@@ -536,7 +552,7 @@
             //console.log(this.formData)
             this.formData.ad_type = res.ad_type
             this.formData.bench_marking_id = parseInt(res.bench_marking_id)
-            this.formData.symbol_count = utils.removeEndZero(numUtils.BN(res.symbol_count).toFixed(5))
+            this.formData.symbol_count = utils.removeEndZero(numUtils.BN(res.remain_count).toFixed(5))
             this.formData.min_amount = utils.removeEndZero(numUtils.BN(res.min_amount).toFixed(parseInt(res.ad_type) === 1 ? 5 : 2))
             this.formData.max_amount = utils.removeEndZero(numUtils.BN(res.max_amount).toFixed(parseInt(res.ad_type) === 1 ? 5 : 2))
             this.formData.price_type = 1
@@ -558,6 +574,10 @@
               this.coinMinLimit = item.minLimit
               if (isNew) {
                 this.formData.min_amount = item.minLimit
+                if(adType === 2){
+                  this.formData.symbol_count = item.minLimit
+                  this.min_count = item.minLimit
+                }
               }
             }
           })

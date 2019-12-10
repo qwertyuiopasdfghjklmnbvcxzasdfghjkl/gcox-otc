@@ -549,6 +549,8 @@
       vertical-align: middle;
       position: relative;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &:after {
         content: '';

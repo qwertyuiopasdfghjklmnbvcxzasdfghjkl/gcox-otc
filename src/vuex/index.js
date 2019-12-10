@@ -36,7 +36,7 @@ export default new Vuex.Store({
     sysParams: {}, // System params
     symbol: symbol,
     currency: localStorage.currency || 'CNY',
-    location: null
+    location: localStorage.location || null
   },
   getters: {
     getSysParams (state) {
@@ -304,6 +304,7 @@ export default new Vuex.Store({
     },
     setLocation (context, location) {
       context.commit('updateLocation', location)
+      localStorage.location = location
     },
     setBtcValues (context, data) {
       let btcValues = {}
