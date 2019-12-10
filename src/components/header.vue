@@ -165,7 +165,7 @@
       }
     },
     computed: {
-      ...mapGetters(['isLogin', 'getUserInfo', 'getLang', 'getSymbol', 'getCurrency']),
+      ...mapGetters(['isLogin', 'getUserInfo', 'getLang', 'getSymbol', 'getCurrency', 'getLocation']),
       displayUsername () {
         if (this.getUserInfo.username) {
           let temp = this.getUserInfo.username.split('@')
@@ -204,26 +204,6 @@
           this.getBalance()
         }
       },
-      // currency () {
-      //   let c = null
-      //   this.curList.filter(res => {
-      //     if (res.currency.indexOf(this.location) !== -1) {
-      //       c = res.currency
-      //     }
-      //   })
-      //   if (c) {
-      //     this.setCurrency(c)
-      //   }
-      // },
-      // setCurrency () {
-      //   let c = null
-      //   this.curList.filter(res => {
-      //     if (res.currency.indexOf(this.location) !== -1) {
-      //       c = res.currency
-      //     }
-      //   })
-      //   return c
-      // },
       lang () {
         switch (this.getLang) {
           case 'en':
@@ -248,8 +228,8 @@
     created () {
       this.getBalance()
       this.getCurList()
-      if (!this.getCurrency) {
-        this.getLocation()
+      if (!this.getLocation) {
+        this.getLoca()
       }
       this.addOtcSocketEvent(this.systemEvent)
     },
@@ -300,7 +280,7 @@
           window.localStorage.currencyList = res
         })
       },
-      getLocation () {
+      getLoca () {
         otcApi.location(res => {
           this.location = res
           this.setLocation(res)

@@ -120,7 +120,7 @@
       sub () {
         if (this.amount) {
           if (this.listAdv.cur_price) {
-            let isCheckPaySet = false
+            let isCheckPaySet = true
             this.matchPayType = this.listAdv.pay_type
             console.log(this.listAdv.from_user_id, this.getUserInfo.userId)
             let p = {
