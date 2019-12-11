@@ -215,7 +215,7 @@ export default {
 .error-msg {
     height: 30px;
     margin-top: 5px;
-    line-height: 30px;
+    line-height: 16px;
     color: #f1304a;
     font-size: 12px;
 }
