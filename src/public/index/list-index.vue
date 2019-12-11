@@ -122,6 +122,7 @@
           i: 2,
           page: this.form.buyPage
         }
+        this.buyDatas = []
         this.loading = true
         this.getList(data, (res, total) => {
           this.buyTotal = total
@@ -145,6 +146,7 @@
           i: 1,
           page: this.form.sellPage
         }
+        this.sellDatas = []
         this.loading1 = true
         this.getList(data, (res, total) => {
           this.sellTotal = total

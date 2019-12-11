@@ -160,7 +160,7 @@
   import warnDialog from '@/otc/otchome/dialog/warnDialog'
 
   export default {
-    props: ['orderId', 'data', 'time', 'adInfo'],
+    props: ['orderId', 'datas', 'time', 'adInfo'],
     components: {
       Adlist,
       loading,
@@ -241,6 +241,9 @@
       },
       adInfo () {
         this.payInfo = this.adInfo.otcPayTypeBankDTO
+      },
+      datas () {
+        this.getOrderList()
       }
     },
     created () {
@@ -257,52 +260,7 @@
     },
     methods: {
       ...mapActions(['addOtcSocketEvent', 'removeOtcSocketEvent', 'addEvents', 'removeEvents', 'tiggerEvents']),
-      // getPays () {
-      //   otcApi.getPaySettingsNoToken({
-      //     user_id: this.data1.from_user_id
-      //   }, (res) => {
-      //     this.payInfo = res.data
-      //   })
-      // },
-      // systemEvent (data) {
-      //   let optType = parseInt(data.operate_type)
-      //   let childType = parseInt(data.child_type)
-      //   if (optType === 1) { // 系统消息
-      //     switch (childType) {
-      //       case 31: // 新建订单消息
-      //       case 32: // 取消订单消息
-      //       case 33: // 系统自动取消订单消息
-      //       case 34: // 买家付款消息
-      //       case 35: // 正常放币消息
-      //       case 36: // 强制放币买家消息
-      //       case 37: // 强制放币卖家消息
-      //       case 38: // 解除锁币消息
-      //         let orderNumber = JSON.parse(data.link).order_number
-      //         if (childType === 34) {
-      //           Vue.$confirmDialog({
-      //             id: 'pay_success_tip',
-      //             showCancel: false,
-      //             content: this.$t('error_code.CONFIRM_PAYMENT') // 买方已经标记确认付款，请查收！
-      //           })
-      //           if (orderNumber === this.data1.order_number) {
-      //             this.data1.pay_state = 1
-      //           }
-      //         } else if (childType === 35) {
-      //           Vue.$confirmDialog({
-      //             id: 'put_coin_success_tip',
-      //             showCancel: false,
-      //             content: this.$t('error_code.CONFIRM_PAYMENT_RECEIPT') // 卖方确认收款，已放币！请进行评价！
-      //           })
-      //           if (orderNumber === this.data1.order_number) {
-      //             this.data1.state = 2
-      //           }
-      //         } else {
-      //           this.getOrderList()
-      //         }
-      //         break
-      //     }
-      //   }
-      // },
+
       getOrderList () { // 获取订单列表
         if (!this.getApiToken) {
           return
@@ -313,27 +271,27 @@
         })
         this.intervals = []
         // 类型转换
-        this.data1 = this.data
-        this.data1.state = parseInt(this.data.state)
-        this.data1.pay_state = parseInt(this.data.pay_state)
-        this.data1.to_user_apply = parseInt(this.data.to_user_apply)
-        this.data1.trade_type = parseInt(this.data.trade_type)
-        this.data1.from_user_comment = parseInt(this.data.from_user_comment)
-        this.data1.to_user_comment = parseInt(this.data.to_user_comment)
+        this.data1 = this.datas
+        this.data1.state = parseInt(this.datas.state)
+        this.data1.pay_state = parseInt(this.datas.pay_state)
+        this.data1.to_user_apply = parseInt(this.datas.to_user_apply)
+        this.data1.trade_type = parseInt(this.datas.trade_type)
+        this.data1.from_user_comment = parseInt(this.datas.from_user_comment)
+        this.data1.to_user_comment = parseInt(this.datas.to_user_comment)
 
-        this.data1.pay_type = `${this.data.pay_type || ''}`
-        this.data1.cur_price = utils.removeEndZero(numUtils.BN(this.data.cur_price).toFixed(2))
-        this.data1.symbol_count = utils.removeEndZero(numUtils.BN(this.data.symbol_count).toFixed(8))
-        this.data1.total_price = utils.removeEndZero(numUtils.BN(this.data.currency_count).toFixed(2))
+        this.data1.pay_type = `${this.datas.pay_type || ''}`
+        this.data1.cur_price = utils.removeEndZero(numUtils.BN(this.datas.cur_price).toFixed(2))
+        this.data1.symbol_count = utils.removeEndZero(numUtils.BN(this.datas.symbol_count).toFixed(8))
+        this.data1.total_price = utils.removeEndZero(numUtils.BN(this.datas.currency_count).toFixed(2))
         this.data1.surplus_Time = '00:00'
-        let date = utils.formatDate(this.data.apply_time).getTime()
+        let date = utils.formatDate(this.datas.apply_time).getTime()
         let ndate = utils.formatDate(this.time).getTime()
         let diffTime = Math.floor((ndate - date) / 1000)
-        let surplusTime = this.data.pay_apply_time * 60 - diffTime
+        let surplusTime = this.datas.pay_apply_time * 60 - diffTime
         let interval = utils.countDown(surplusTime, (time) => {
           if (time === '00:00') {
             this.isExpire = true
-          } else if (time === '05:00' && this.data.pay_state === 0) {
+          } else if (time === '05:00' && this.datas.pay_state === 0) {
             // 您的付款确认时间还剩5分钟，5分钟后系统将自动取消订单！请付款并标记确认付款！
             Vue.$confirmDialog({
               id: 'count_down_tip',
@@ -341,7 +299,7 @@
               content: this.$t('error_code.PAYMENT_TIMEOUT_REMIND')
             })
             // 添加系统消息
-            this.$emit('addSystemMessage', this.data.order_number, 'PAYMENT_TIMEOUT_REMIND')
+            this.$emit('addSystemMessage', this.datas.order_number, 'PAYMENT_TIMEOUT_REMIND')
           }
           this.surplus_Time = time
         })
@@ -355,7 +313,7 @@
             name: 'chatEvent',
             params: {
               type: 'markReadOnly',
-              orderNumber: this.data.order_number
+              orderNumber: this.datas.order_number
             }
           })
         }
@@ -422,10 +380,12 @@
           okCallback: () => {
             // this.getOrderList()
             this.data1.appeal_state = 0
+            this.$parent.getData()
           }
         })
       },
       cancelApeal (item) { // 取消申诉
+        console.log(item)
         otcApi.cancelAppeal(item.appeal_manage_id, (msg) => {
           // this.getOrderList()
           this.data1.appeal_state = 1

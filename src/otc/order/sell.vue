@@ -287,6 +287,7 @@
       },
       getPays () {
         this.payTypes = this.item.otcPayTypeBankDTO
+        // this.payTypes = this.adInfo.otcPayTypeBankDTO
         // otcApi.getPaySettingsNoToken({
         //   user_id: this.item.to_user_id
         // }, (res) => {
@@ -479,7 +480,7 @@
       padding: 0 20px;
       height: 50px;
       display: block;
-      min-width: 90px;
+      min-width: 110px;
       text-align: center;
       line-height: 50px;
       margin: 0 15px;

@@ -73,8 +73,9 @@
         </router-link>
 
         <router-link to="" class="item" v-if="isLogin">
-          <span style="color: #fff;" class="nav-title">{{displayUsername}}<img v-if="displayUsername"
-                                                                               src="../assets/img/icon-otc10.png"/></span>
+          <span style="color: #fff;" class="nav-title">{{displayUsername}}
+            <img v-if="displayUsername" src="../assets/img/icon-otc10.png"/>
+          </span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
             <div class="popover-menu">
               <router-link :to="{name:'usercenter_abstract'}" class="sub-item" tag="div">
