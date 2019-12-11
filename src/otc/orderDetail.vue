@@ -6,7 +6,7 @@
             :item="data"/>
       <buy v-if="m === 2"
            ref="orderlist"
-           :data="data"
+           :datas="data"
            :time="time"
            :ad-info="adInfo"
            @switchOldMessage="switchOldMessage"

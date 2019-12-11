@@ -1,6 +1,6 @@
 <template>
   <div class="bottom-container">
-    <div class="bottom">
+    <div class="bottom w1200">
       <div class="left">
         <div><img src="../assets/img/logo.png" class="logo"></div>
         <div class="mt30">   <!--{{$t('about.slogen')}} 你最爱的名人币交易所 --></div>
@@ -138,7 +138,7 @@
   }
 
   .bottom {
-    width: 1190px;
+    /*width: 1190px;*/
     padding-top: 35px;
     padding-bottom: 26px;
     margin-left: auto;
