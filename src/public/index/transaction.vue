@@ -590,7 +590,7 @@
         cursor: pointer;
         transition: 0.3s;
         border-bottom: 1px solid #eeeeee;
-        white-space: nowrap;
+        white-space: pre-wrap;
 
         &:hover {
           background: #eeeeee;
