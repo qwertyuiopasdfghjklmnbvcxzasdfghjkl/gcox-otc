@@ -59,10 +59,10 @@
       <div class="tab" v-if="cancelStatus !== 1 && data1.state === 1">
         <table width="100%">
           <tr bgcolor="#eeeeee">
-            <td colspan="2" align="center">{{$t('gcox_otc.pay_info')}}</td>
+            <td colspan="2" align="center">{{$t('gcox_otc.currency_way')}}</td>
           </tr>
           <tr>
-            <td width="30%">{{$t('gcox_otc.payment_method')}}</td>
+            <td width="30%">{{$t('gcox_otc.currency_way')}}</td>
             <td>{{$t('otc_legal.oyc_legal_Bank_card')}}</td>
           </tr>
           <tr>

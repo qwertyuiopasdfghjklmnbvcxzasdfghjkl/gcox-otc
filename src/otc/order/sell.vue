@@ -65,7 +65,7 @@
               <td>{{$t(payInfo.method)}}</td>
             </tr>
             <tr>
-              <td>{{$t('public0.public65')}}</td>
+              <td>{{$t('otc_ad.payer')}}</td>
               <td>{{payInfo.name||'--'}}</td>
             </tr>
             <tr >
