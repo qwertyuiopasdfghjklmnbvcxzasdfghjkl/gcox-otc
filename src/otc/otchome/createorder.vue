@@ -440,7 +440,9 @@
       },
       benchSymbolParams () {
         this.getBenchSymbolInfo()
-        this.fnGetSymbolAndCurrency(true, this.formData.ad_type)
+        if(!this.ad_id){
+          this.fnGetSymbolAndCurrency(true, this.formData.ad_type)
+        }
       }
     },
     created () {
@@ -558,6 +560,7 @@
             this.formData.price_type = 1
             // 获取Symbol或Currency的最小交易限额
             this.fnGetSymbolAndCurrency(false, res.ad_type)
+            console.log('false')
           }, (msg) => {
             console.error(msg)
           })
@@ -565,6 +568,7 @@
           this.formData.pay_type = this.myPayType
           // 获取Symbol或Currency的最小交易限额
           this.fnGetSymbolAndCurrency(true, this.formData.ad_type)
+          console.log('true')
         }
       },
       fnGetSymbolAndCurrency (isNew, adType) {
@@ -577,6 +581,7 @@
                 if(adType === 2){
                   this.formData.symbol_count = item.minLimit
                   this.min_count = item.minLimit
+                  console.log('isNew',isNew,this.formData.symbol_count)
                 }
               }
             }
@@ -634,7 +639,7 @@
             isComponent: true,
             content: adconfirm,
             btnPosition: 'right',
-            width: 620,
+            width: 640,
             item: formData,
             okCallback: () => {
               if (this.locked) {
