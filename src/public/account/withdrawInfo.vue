@@ -61,7 +61,7 @@
 
         <div class="filed" v-if="symbol==='EOS' || symbol==='XRP'">
           <div class="filed-number">
-            <em>MEMO</em>
+            <em>MEMO <span v-show="!memoState">*</span></em>
           </div>
           <div class="number memo" :class="{error:errors.has('memo')}">
             <input type="text" maxlength="1000" v-validate="memoState ? '':'required'"
@@ -72,7 +72,7 @@
           </div>
           <label class="rpl">
             <input type="checkbox" v-model="memoState">
-            <span>{{$t('gcox_otc.not_need_memo')}}<!--不需要MEMO--></span>
+            <span>{{$t('gcox_otc.not_need_memo')}}<!--不需要MEMO--> </span>
           </label>
         </div>
 
