@@ -113,7 +113,7 @@
             break
         }
         // config.origin +
-        return config.origin + src
+        return src
       },
       change (data) {
         this.t = data
