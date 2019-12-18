@@ -5,7 +5,7 @@
       <h2>
         <span :class="state">
         {{curPrice}}</span> {{getCurrency}}
-        <small :class="state">{{percent}} %</small>
+        <!-- <small :class="state">{{percent}} %</small> -->
       </h2>
       <div class="text_flex">
         <p><span>{{$t('exchange.exchange_high')}}<!--24h最高价--></span><span>{{maxPrice||'0.00'}}</span></p>

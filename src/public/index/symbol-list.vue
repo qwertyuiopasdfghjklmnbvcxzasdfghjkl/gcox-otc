@@ -1,24 +1,26 @@
 <template>
   <div class="cont" @click="show=false">
     <div class="swrap">
-      <swiper :options="swiperOption">
+      <swiper :options="swiperOption" v-if="slide.length">
         <swiper-slide class="swiper-slide" v-for="(item,index) in slide" :key="index">
           <div class="img_box">
             <img :src="showImg(item)">
           </div>
         </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
     <div class="list_box">
       <ul>
-        <li v-for="item in symbolList">
+        <li v-for="(item,i) in symbolList" :key="i">
           <list-box :item="item"/>
         </li>
       </ul>
     </div>
     <div class="w1200 check">
       <ul class="check_symbol">
-        <li v-for="item in ts" :class="{active: item.symbol === t.symbol}"
+        <li v-for="(item,i) in ts" :class="{active: item.symbol === t.symbol}" :key="i"
             @click="change(item)">
           <p>
             <cryptoicon :symbol="item.symbol" size="40"/>
@@ -61,12 +63,19 @@
         ts: [],
         slide: [],
         swiperOption: {
-          //自动轮播
-          autoplay: {
-            delay: 10000
-          },
           //开启循环模式
           loop: true,
+          //自动轮播
+          autoplay: {
+            delay: 10000,
+            stopOnLastSlide: false,
+            disableOnInteraction: false,
+          },
+          centeredSlides:true,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          },
         },
         symbolList: []
       }
