@@ -159,7 +159,7 @@
                          data-vv-name="symbol_count" :min-val="min_count"/>
             </div>
             <p class="small" v-show="formData.symbol_count">
-              {{$t('otc_ad.purchase_quantity_tip').format(formData.symbol)}}
+              {{$t(formData.ad_type===1?'otc_ad.purchase_quantity_tip':'otc_ad.sell_quantity_tip').format(formData.symbol)}}
             </p>
           </div>
           <div class="prompt">{{getErrorMsg('symbol_count')}}<!--请输入币种数量--></div>
@@ -210,7 +210,7 @@
             </ul>
             </p>
             <p class="small">
-              {{$t('otc_ad.payment_method_tip')}}
+              {{$t(formData.ad_type===1?'otc_ad.payment_method_tip':'otc_ad.gather_method_tip')}}
             </p>
           </div>
         </div>
@@ -219,7 +219,7 @@
             <label>{{$t('gcox_otc.bank_name')}}</label>
             <div class="value"></div>
             <p class="small">
-              {{$t('otc_ad.payment_bank_name_tip')}}
+              {{$t(formData.ad_type===1?'otc_ad.payment_bank_name_tip':'otc_ad.gather_bank_name_tip')}}
             </p>
           </div>
           <div class="value">
@@ -231,7 +231,7 @@
             <label>{{$t('public.bank_account')}}</label>
             <div class="value"></div>
             <p class="small">
-              {{$t('otc_ad.payment_bank_account_tip')}}
+              {{$t(formData.ad_type===1?'otc_ad.payment_bank_account_tip':'otc_ad.gather_bank_account_tip')}}
             </p>
           </div>
           <div class="value">
@@ -243,7 +243,7 @@
             <label>{{$t('gcox_otc.bank_user')}}</label>
             <div class="value"></div>
             <p class="small">
-              {{$t('otc_ad.payment_bank_account_name_tip')}}
+              {{$t(formData.ad_type===1?'otc_ad.payment_bank_account_name_tip':'otc_ad.gather_bank_account_name_tip')}}
             </p>
           </div>
           <div class="value">
@@ -316,7 +316,7 @@
               <em>{{$t('otc_ad.otc_ad_minute')}}<!--分钟--></em>
             </div>
             <p class="small" v-show="formData.pay_limit_time">
-              {{$t('otc_ad.confirm_payment_time_tip').format(formData.pay_limit_time)}}
+              {{$t(formData.ad_type===1?'otc_ad.confirm_payment_time_tip':'otc_ad.confirm_gather_time_tip').format(formData.pay_limit_time)}}
             </p>
           </div>
           <div class="prompt">{{getErrorMsg('pay_limit_time')}}<!--请输入付款期限--></div>
