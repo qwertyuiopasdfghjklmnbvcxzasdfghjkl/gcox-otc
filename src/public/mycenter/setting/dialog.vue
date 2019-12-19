@@ -124,7 +124,7 @@
       align-items: center;
 
       label {
-        width: 100px;
+        width: 115px;
       }
 
       .input_div {

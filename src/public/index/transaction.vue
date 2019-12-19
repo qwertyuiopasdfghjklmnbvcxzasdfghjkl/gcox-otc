@@ -82,8 +82,8 @@
           <div class="select" @click.stop="showSelect = !showSelect">
             <span>{{bankData.card_name}} - {{bankData.card_bank}} - {{bankData.card_number}}</span>
             <ul v-show="showSelect">
-              <li v-for="v in bankList"
-                  @click="bankData = v">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
+              <li v-for="(v,i) in bankList"
+                  @click="bankData = v" :key="i">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
             </ul>
           </div>
         </div>
