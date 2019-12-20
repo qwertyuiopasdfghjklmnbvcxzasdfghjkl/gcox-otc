@@ -6,8 +6,10 @@
         <template v-if="(content||'').constructor !== Array">
           <p v-html="content"></p>
         </template>
-        <template v-for="item in content" v-if="(content||'').constructor === Array">
-          <p v-html="item"></p>
+        <template v-if="(content||'').constructor === Array">
+          <div v-for="(item,i) in content" :key="i">
+            <p v-html="item"></p>
+          </div>
         </template>
       </div>
       <div class="content" v-if="isComponent">

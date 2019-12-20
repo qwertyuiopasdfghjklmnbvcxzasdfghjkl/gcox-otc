@@ -453,6 +453,7 @@
 
             .del {
               color: #0D66EF;
+              cursor: pointer;
             }
           }
 
@@ -490,6 +491,10 @@
             padding: 8px 20px;
             display: block;
             margin: 10px 0;
+            transition: all .2s;
+          }
+          span:hover {
+            opacity: .75;
           }
         }
       }
