@@ -299,7 +299,7 @@
             isComponent: true,
             content: orderconfirm,
             btnPosition: 'right',
-            width: 620,
+            width: 650,
             item: {
               trade_type: this.params.ad_type === 1 ? 2 : 1,
               cur_price: this.detailData.cur_price,
