@@ -3,7 +3,7 @@
     <h3> {{$t('otc_legal.otc_legal_Bank_Transfer')}}<!--银行转账--></h3>
     <ul class="list">
       <!-- 银行卡 -->
-      <li class="form-item" v-if="bankList.length" v-for="item in bankList">
+      <li class="form-item" v-if="bankList.length" v-for="(item,i) in bankList" :key="i">
         <div class="form-flex">
           <div class="form-flex-left">
             <i class="icon-bank"></i>

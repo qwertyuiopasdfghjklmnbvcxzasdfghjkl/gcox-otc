@@ -227,7 +227,9 @@
     }
 
     button {
-      width: 136px;
+      // width: 136px;
+      padding-left: 15px;
+      padding-right: 15px;
       height: 50px;
       background: rgba(240, 185, 54, 1);
       border-radius: 3px;

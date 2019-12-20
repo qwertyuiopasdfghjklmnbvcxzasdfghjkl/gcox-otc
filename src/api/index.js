@@ -32,6 +32,7 @@ function requireLogin(response) {
   // 用户不存在，退出登录
   window.localStorage.removeItem('userInfo')
   JsCookies.remove('api_token')
+  // console.log(this.$route)
   Vue.$confirmDialog({
     id: 'please_login_again',
     showCancel: false,
