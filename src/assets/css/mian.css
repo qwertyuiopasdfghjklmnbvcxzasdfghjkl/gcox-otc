@@ -341,3 +341,11 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   color: #ffffff;
   margin: 0 6px;
 }
+.koall-dialog .icon-close{
+  color: #333;
+  cursor: pointer;
+  transition: all .2s;
+}
+.koall-dialog .icon-close:hover{
+  color: #000;
+}
