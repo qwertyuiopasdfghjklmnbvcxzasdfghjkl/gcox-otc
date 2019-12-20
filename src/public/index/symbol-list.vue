@@ -452,6 +452,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+        transition: all .3s;
 
         &:first-child {
           margin-left: 0;
@@ -465,6 +467,9 @@
             color: #ffffff;
           }
         }
+      }
+      li:hover{
+        background-color: #363766;
       }
 
       .active {
