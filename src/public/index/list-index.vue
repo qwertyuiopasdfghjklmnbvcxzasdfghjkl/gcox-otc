@@ -180,7 +180,7 @@
         let isCheckPaySet = parseInt(data.ad_type) === 1
         this.matchPayType = parseInt(data.ad_type) === 1 ? void 0 : data.pay_type
         let p = {
-          adType: data.ad_type,
+          adType: data.ad_type === 2 ? 1 : 2,
           role: 'Taker'
         }
         this.checkSetState(p, () => {

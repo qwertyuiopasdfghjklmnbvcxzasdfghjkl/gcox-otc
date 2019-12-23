@@ -227,10 +227,10 @@
     }
 
     button {
-      // width: 136px;
+      min-width: 136px;
       padding-left: 15px;
       padding-right: 15px;
-      height: 50px;
+      height: 40px;
       background: rgba(240, 185, 54, 1);
       border-radius: 3px;
       color: #ffffff;

@@ -43,30 +43,6 @@
         </div>
         <div class="prompt"></div>
       </div>
-      <!--<div class="cont-item exchange">-->
-      <!--<div class="column">-->
-      <!--<label>{{$t('otc_exchange.otc_exchange_Bid')}}：&lt;!&ndash;对标交易所&ndash;&gt;</label>-->
-      <!--<div class="value">-->
-      <!--<select v-model="formData.bench_marking_id">-->
-      <!--<option v-for="item in benchDatas" :key="item.bench_marking_id" :value="item.bench_marking_id">-->
-      <!--{{item.marking_name}}-->
-      <!--</option>-->
-      <!--</select>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="prompt"></div>-->
-      <!--</div>-->
-
-      <!--<div class="cont-item currentprice">-->
-      <!--<div class="row">-->
-      <!--<label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})：&lt;!&ndash;交易所价格&ndash;&gt;</label>-->
-      <!--<div class="value">-->
-      <!--<span>{{benchItem.lowestPrice}}</span>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--<div class="prompt"></div>-->
-      <!--</div>-->
-
 
       <div class="box">
         <p class="title_p">{{$t('exchange.exchange_price')}}</p>
@@ -98,9 +74,6 @@
                 <span class="tips-container">
                 <i class="tips-icon" v-tip.top="tip1">?</i>
                   <!--对交易所价格的浮动比例-->
-                  <!--
-                  <em class="tips-text">{{$t('otc_exchange.otc_exchange_price_float_rate')}}</em>
-                  -->
                 </span>
               </div>
             </label>
@@ -133,7 +106,6 @@
         <div class="cont-item acceptable" v-if="!isATN">
           <div class="row">
             <label>{{tradeParams.title2}}<!--可接受的最低单价||可接受的最高单价--> ({{formData.currency}})</label>
-            <!--<span class="wn">{{benchItem.lowestPrice}} {{formData.currency}}/{{formData.symbol}}</span>-->
             <div class="value">
               <numberbox :class="{error: errors.has('lowest_price')}" v-model="formData.lowest_price" :size="13"
                          :accuracy="2" v-validate="'intOrDecimal|maxInputValue:9999999999'"
@@ -154,9 +126,13 @@
             <label>{{tradeParams.title3}}<!--我要出售多少||我要购买多少-->
               ({{formData.symbol}}) </label>
             <div class="value">
-              <numberbox :class="{error: errors.has('symbol_count')}" v-model="formData.symbol_count" :size="15"
-                         :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|sellAmount|maxInputValue:9999999999'"
-                         data-vv-name="symbol_count" :min-val="min_count"/>
+              <numberbox :class="{error: errors.has('symbol_count')}"
+                         v-model="formData.symbol_count"
+                         :size="15"
+                         :accuracy="4"
+                         v-validate="'required|intOrDecimal|buyAmountLimitValid|sellAmount|maxInputValue:9999999999'"
+                         data-vv-name="symbol_count"
+                         :min-val="min_count"/>
             </div>
             <p class="small" v-show="formData.symbol_count">
               {{$t(formData.ad_type===1?'otc_ad.purchase_quantity_tip':'otc_ad.sell_quantity_tip').format(formData.symbol)}}
@@ -258,15 +234,6 @@
           <div class="row">
             <label class="label-tips">
               <span>{{$t('otc_ad.otc_ad_maximum_orders')}}<!--最大处理订单数--></span>
-              <!--<div class="tips">-->
-              <!--<span class="tips-container">-->
-              <!--<i class="tips-icon" v-tip.top="tip2">?</i>-->
-              <!--&lt;!&ndash;单个广告可同时存在的未完成订单最大数量&ndash;&gt;-->
-              <!--&lt;!&ndash;-->
-              <!--<em class="tips-text">{{$t('otc_ad.otc_ad_max_uncompleted_orders')}}</em>-->
-              <!--&ndash;&gt;-->
-              <!--</span>-->
-              <!--</div>-->
             </label>
             <div class="value">
               <numberbox :class="{error: errors.has('max_process_num')}" v-model="formData.max_process_num"
@@ -284,15 +251,6 @@
           <div class="row">
             <label class="label-tips">
               <span>{{$t('otc_exchange.otc_exchange_Good_rating')}}<!--好评率--></span>
-              <!--<div class="tips">-->
-              <!--<span class="tips-container">-->
-              <!--<i class="tips-icon" v-tip.top="tip3">?</i>-->
-              <!--&lt;!&ndash;要求对手方好评率必须大于此设定值&ndash;&gt;-->
-              <!--&lt;!&ndash;-->
-              <!--<em class="tips-text">{{$t('otc_exchange.otc_exchange_good_rating')}}</em>-->
-              <!--&ndash;&gt;-->
-              <!--</span>-->
-              <!--</div>-->
             </label>
             <div class="value">
               <numberbox :class="{error: errors.has('praise_rate')}" v-model="formData.praise_rate" :size="4"
