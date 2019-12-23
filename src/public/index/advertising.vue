@@ -1,26 +1,5 @@
 <template>
   <div class="cont">
-    <!--<div class="title">-->
-    <!--<p>-->
-    <!--<span>{{$t('gcox_otc.base')}}</span>-->
-    <!--<span>{{$t('gcox_otc.detail')}}</span>-->
-    <!--</p>-->
-    <!--</div>-->
-    <!--<div class="list">-->
-    <!--<div>-->
-    <!--<p class="tit">{{$t('gcox_otc.i_want')}}</p>-->
-    <!--<label>-->
-    <!--<span>{{$t('gcox_otc.buy')}}Ethereum</span>-->
-    <!--<span>{{$t('gcox_otc.sell')}}Ethereum</span>-->
-    <!--</label>-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--<p class="tit">Change coin</p>-->
-    <!--<label>-->
-    <!--<p>Ethereum</p>-->
-    <!--</label>-->
-    <!--</div>-->
-    <!--</div>-->
     <div class="top">
       <p class="w1200">{{$t('gcox_otc.new_advertising')}}</p>
     </div>

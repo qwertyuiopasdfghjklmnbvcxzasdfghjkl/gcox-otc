@@ -166,7 +166,7 @@
       }
     },
     computed: {
-      ...mapGetters(['isLogin', 'getUserInfo', 'getLang', 'getSymbol', 'getCurrency', 'getLocation']),
+      ...mapGetters(['isLogin', 'getUserInfo', 'getLang', 'getSymbol', 'getCurrency', 'getLocation', 'getNewMsg']),
       displayUsername () {
         if (this.getUserInfo.username) {
           let temp = this.getUserInfo.username.split('@')
@@ -224,6 +224,9 @@
         if (this.location) {
           this.setC()
         }
+      },
+      getNewMsg (e) {
+        this.newMsg = e
       }
     },
     created () {
