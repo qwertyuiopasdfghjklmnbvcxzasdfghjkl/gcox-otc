@@ -83,11 +83,9 @@
               </select>
               <span>{{benchItem.lowestPrice}}</span>
             </div>
-            <!--<p class="small">-->
-              <!--<span>{{$t('gcox_otc.redeme').format(formData.currency,formData.symbol)}}</span>-->
-              <!--<span-->
-                <!--v-html="$t('gcox_otc.radio_market').format(formData.symbol,'coinmarketcap',benchItem.lowestPrice)"></span>-->
-            <!--</p>-->
+            <p class="small">
+              {{$t('otc_ad.exchange_price_tip').format(getBenchName(formData.bench_marking_id),formData.symbol,formData.currency,benchItem.lowestPrice)}}
+            </p>
           </div>
           <div class="prompt"></div>
         </div>
@@ -112,6 +110,9 @@
                          v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>
               <em>%</em>
             </div>
+            <p class="small" v-show="formData.price_rate">
+              {{$t('otc_ad.price_fluctuation_tip').format(formData.price_rate)}}
+            </p>
           </div>
           <div class="prompt">{{getErrorMsg('price_rate')}}</div>
         </div>
@@ -122,6 +123,9 @@
             <div class="value">
               <span>{{curPrice}}</span>
             </div>
+            <p class="small" v-show="formData.price_rate">
+              {{$t('otc_ad.price_after_premium_tip ').format(formData.currency)}}
+            </p>
           </div>
           <div class="prompt"></div>
         </div>
@@ -135,7 +139,9 @@
                          :accuracy="2" v-validate="'intOrDecimal|maxInputValue:9999999999'"
                          data-vv-name="lowest_price"/>
             </div>
-
+            <p class="small" v-show="formData.lowest_price">
+              {{formData.ad_type===1?$t('otc_ad.price_no_more_than_tip'):$t('otc_ad.price_no_less_than_tip')}}
+            </p>
           </div>
           <div class="prompt">{{getErrorMsg('lowest_price')}}</div>
         </div>
@@ -152,33 +158,42 @@
                          :accuracy="4" v-validate="'required|intOrDecimal|buyAmountLimitValid|sellAmount|maxInputValue:9999999999'"
                          data-vv-name="symbol_count" :min-val="min_count"/>
             </div>
-            <p class="small"></p>
+            <p class="small" v-show="formData.symbol_count">
+              {{$t(formData.ad_type===1?'otc_ad.purchase_quantity_tip':'otc_ad.sell_quantity_tip').format(formData.symbol)}}
+            </p>
           </div>
           <div class="prompt">{{getErrorMsg('symbol_count')}}<!--请输入币种数量--></div>
         </div>
         <div class="cont-item tradelimit">
           <div class="row">
-            <label class="move">{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额-->
+            <label>{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额-->
               ({{this.formData.ad_type === 1 ?formData.symbol : formData.currency }})</label>
-            <div class="">
-              <div class="value">
-                <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"
-                           :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
-                           v-validate="'required|intOrDecimal|minAmountValid|minamount|maxInputValue:9999999999,public0.public258'"
-                           data-vv-name="min_amount"/>
-                <em>{{$t('public0.public114')}}<!--最小限额--></em>
-              </div>
-              <div class="prompt">{{getErrorMsg('min_amount')}}</div>
-              <div class="value">
-                <numberbox id="ads_max_amount" :class="{error: errors.has('max_amount')}" v-model="formData.max_amount"
-                           :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
-                           v-validate="'required|intOrDecimal|maxamount|maxInputValue:9999999999,public0.public259'"
-                           data-vv-name="max_amount"/>
-                <em>{{$t('public0.public115')}}<!--最大限额--></em>
-              </div>
-              <div class="prompt">{{getErrorMsg('max_amount')}}</div>
+            <div class="value">
+              <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"
+                         :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
+                         v-validate="'required|intOrDecimal|minAmountValid|minamount|maxInputValue:9999999999,public0.public258'"
+                         data-vv-name="min_amount"/>
+              <em>{{$t('public0.public114')}}<!--最小限额--></em>
             </div>
+            <p class="small" v-show="formData.min_amount">
+              {{$t('otc_ad.mini_trans_num_tip').format(formData.symbol)}}
+            </p>
           </div>
+          <div class="prompt">{{getErrorMsg('min_amount')}}</div>
+          <div class="row">
+            <label></label>
+            <div class="value">
+              <numberbox id="ads_max_amount" :class="{error: errors.has('max_amount')}" v-model="formData.max_amount"
+                         :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
+                         v-validate="'required|intOrDecimal|maxamount|maxInputValue:9999999999,public0.public259'"
+                         data-vv-name="max_amount"/>
+              <em>{{$t('public0.public115')}}<!--最大限额--></em>
+            </div>
+            <p class="small" v-show="formData.max_amount">
+              {{$t('otc_ad.max_trans_num_tip').format(formData.symbol)}}
+            </p>
+          </div>
+          <div class="prompt">{{getErrorMsg('max_amount')}}</div>
         </div>
       </div>
 
@@ -194,22 +209,43 @@
               <li v-for="v in bankList" @click="bankData = v">{{v.card_bank}}-{{v.card_name}}-{{v.card_number}}</li>
             </ul>
             </p>
+            <p class="small">
+              {{$t(formData.ad_type===1?'otc_ad.payment_method_tip':'otc_ad.gather_method_tip')}}
+            </p>
           </div>
         </div>
         <div class="column cont-item">
-          <label>{{$t('gcox_otc.bank_name')}}</label>
+          <div class="row">
+            <label>{{$t('gcox_otc.bank_name')}}</label>
+            <div class="value"></div>
+            <p class="small">
+              {{$t(formData.ad_type===1?'otc_ad.payment_bank_name_tip':'otc_ad.gather_bank_name_tip')}}
+            </p>
+          </div>
           <div class="value">
             <p>{{bankData.card_bank}}</p>
           </div>
         </div>
         <div class="column cont-item">
-          <label>{{$t('public.bank_account')}}</label>
+          <div class="row">
+            <label>{{$t('public.bank_account')}}</label>
+            <div class="value"></div>
+            <p class="small">
+              {{$t(formData.ad_type===1?'otc_ad.payment_bank_account_tip':'otc_ad.gather_bank_account_tip')}}
+            </p>
+          </div>
           <div class="value">
             <p>{{bankData.card_number}}</p>
           </div>
         </div>
         <div class="column cont-item">
-          <label>{{$t('gcox_otc.bank_user')}}</label>
+          <div class="row">
+            <label>{{$t('gcox_otc.bank_user')}}</label>
+            <div class="value"></div>
+            <p class="small">
+              {{$t(formData.ad_type===1?'otc_ad.payment_bank_account_name_tip':'otc_ad.gather_bank_account_name_tip')}}
+            </p>
+          </div>
           <div class="value">
             <p>{{bankData.card_name}}</p>
           </div>
@@ -238,6 +274,9 @@
                          v-validate="`required|pInteger|otcProcessNumValid:${1},${maxOrderProcessing}`"
                          data-vv-name="max_process_num"/>
             </div>
+            <p class="small" v-show="formData.max_process_num">
+              {{$t('otc_ad.trans_orders_num_tip')}}
+            </p>
           </div>
           <div class="prompt">{{getErrorMsg('max_process_num')}}</div>
         </div>
@@ -260,6 +299,9 @@
                          :accuracy="1" v-validate="'required|ratingValid'" data-vv-name="praise_rate"/>
               <em>%</em>
             </div>
+            <p class="small" v-show="formData.praise_rate">
+              {{$t('otc_ad.favorable_rate_tip').format(formData.praise_rate)}}
+            </p>
           </div>
           <div class="prompt">{{getErrorMsg('praise_rate')}}</div>
         </div>
@@ -273,6 +315,9 @@
               </ul>
               <em>{{$t('otc_ad.otc_ad_minute')}}<!--分钟--></em>
             </div>
+            <p class="small" v-show="formData.pay_limit_time">
+              {{$t(formData.ad_type===1?'otc_ad.confirm_payment_time_tip':'otc_ad.confirm_gather_time_tip').format(formData.pay_limit_time)}}
+            </p>
           </div>
           <div class="prompt">{{getErrorMsg('pay_limit_time')}}<!--请输入付款期限--></div>
         </div>
@@ -502,6 +547,16 @@
 
     },
     methods: {
+      getBenchName(id){
+        let _name = ''
+        for(let item of this.benchDatas){
+          if(item.bench_marking_id == id){
+            _name = item.marking_name
+            break
+          }
+        }
+        return _name
+      },
       getBank () {
         otcApi.getPaySettings((res) => {
           this.bankList = res.data.bankList
@@ -977,7 +1032,7 @@
     margin: 10px 0;
   }
 
-  .cont .column .value {
+  .cont .column > .value {
     width: 670px !important;
     height: 50px;
   }
