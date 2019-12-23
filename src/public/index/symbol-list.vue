@@ -103,13 +103,13 @@
         })
       },
       showImg (data) {
-        let src = data['activityImgUrl']
+        let src = config.origin+data['activityImgUrl']
         switch (this.getLang) {
           case 'zh-CN':
-            src = data['activityImgUrl']
+            src = config.origin+data['activityImgUrl']
             break
           case 'en':
-            src = data['activityImgUrlEn']
+            src = config.origin+data['activityImgUrlEn']
             break
         }
         // config.origin +

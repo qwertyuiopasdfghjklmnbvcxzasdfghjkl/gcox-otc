@@ -215,8 +215,7 @@
         otcApi.permission(p, (msg) => {
           if (isCheckPaySet) {
             otcApi.getPaySettings((res) => {
-              console.log(res.data.bankList.length)
-              if (res.data.bankList.length === 0) {
+              if (!res.data.bankList) {
                 Vue.$confirmDialog({
                   id: 'NO_PAY_TYPE',
                   content: this.$t('error_code.SET_PAY_TYPE_FIRST'), // 请先设置支付方式
