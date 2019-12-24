@@ -31,6 +31,7 @@
         curPrice: null,
         minPrice: null,
         maxPrice: null,
+        timer: true,
         polar: {
           animation: false,
           height: 70,
@@ -125,10 +126,16 @@
     },
     mounted () {
       window.addEventListener('resize', () => {
-        console.log(this.$refs.runTimes_creditChart)
-        if (this.$refs.runTimes_creditChart) {
-          this.$refs.runTimes_creditChart.resize()
+        if (this.timer) {
+          if (this.$refs.runTimes_creditChart) {
+            this.timer = false
+            console.log('resize')
+            this.$refs.runTimes_creditChart.resize()
+          }
         }
+        setTimeout(() => {
+          this.timer = true
+        }, 300)
       })
     },
     beforeDestroy () {
