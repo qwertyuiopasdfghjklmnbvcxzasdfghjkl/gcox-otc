@@ -51,7 +51,8 @@
             <label>{{$t('otc_ad.otc_ad_prompt1')}}({{formData.currency}})<!---交易所价格--></label>
             <div class="value">
               <select class="w250" v-model="formData.bench_marking_id">
-                <option v-for="item in benchDatas" :key="item.bench_marking_id"
+                <option v-for="item in benchDatas"
+                        :key="item.bench_marking_id"
                         :value="item.bench_marking_id"
                         :disabled="formData.symbol === 'USDT'&&item.marking_name === 'Coinbase'">
                   {{item.marking_name}}
@@ -78,7 +79,10 @@
               </div>
             </label>
             <div class="value">
-              <numberbox :class="{error: errors.has('price_rate')}" v-model="formData.price_rate" :size="6"
+              <numberbox :class="{error: errors.has('price_rate')}"
+                         v-model="formData.price_rate"
+                         :size="6"
+                         v-focus
                          :accuracy="2"
                          v-validate="'premiumPriceValid'" data-vv-name="price_rate"/>
               <em>%</em>
@@ -443,7 +447,7 @@
       },
       benchSymbolParams () {
         this.getBenchSymbolInfo()
-        if(!this.ad_id){
+        if (!this.ad_id) {
           this.fnGetSymbolAndCurrency(true, this.formData.ad_type)
         }
       }
@@ -505,10 +509,10 @@
 
     },
     methods: {
-      getBenchName(id){
+      getBenchName (id) {
         let _name = ''
-        for(let item of this.benchDatas){
-          if(item.bench_marking_id == id){
+        for (let item of this.benchDatas) {
+          if (item.bench_marking_id == id) {
             _name = item.marking_name
             break
           }
@@ -591,10 +595,10 @@
               this.coinMinLimit = item.minLimit
               if (isNew) {
                 this.formData.min_amount = item.minLimit
-                if(adType === 2){
+                if (adType === 2) {
                   this.formData.symbol_count = item.minLimit
                   this.min_count = item.minLimit
-                  console.log('isNew',isNew,this.formData.symbol_count)
+                  console.log('isNew', isNew, this.formData.symbol_count)
                 }
               }
             }
@@ -641,6 +645,7 @@
       saveAds () {
         this.$validator.validateAll(this.formData).then((validResult) => {
           if (!validResult) {
+            window.scrollTo(0, 800)
             return
           }
           var formData = JSON.parse(JSON.stringify(this.formData))
@@ -926,6 +931,7 @@
     font-size: 12px;
     color: #e53f3f;
     white-space: nowrap;
+    text-indent: 190px;
   }
 
   .cont-item.button {
@@ -1033,9 +1039,10 @@
     display: block;
   }
 
-  .bank_box > b{
+  .bank_box > b {
     position: relative;
   }
+
   .bank_box > b:after {
     content: '';
     display: block;
@@ -1093,22 +1100,26 @@
     margin-top: 10px;
     line-height: 24px;
   }
-  .pr15{
+
+  .pr15 {
     padding-right: 15px;
   }
-  .load{
+
+  .load {
     position: absolute;
     top: 50%;
     left: 50%;
     margin-left: -25px;
   }
-  .time{
-    border:1px solid #cccccc;
+
+  .time {
+    border: 1px solid #cccccc;
     text-indent: 10px;
     position: relative;
 
   }
-  .time ul{
+
+  .time ul {
     position: absolute;
     width: 100%;
     border: 1px solid #cccccc;
@@ -1116,14 +1127,16 @@
     left: -1px;
     z-index: 999;
   }
-  .time ul li{
+
+  .time ul li {
     padding: 10px;
     cursor: pointer;
     transition: 0.3s;
     background: #ffffff;
   }
-  .time ul li:hover{
-    background:#F0B936;
+
+  .time ul li:hover {
+    background: #F0B936;
     color: #ffffff;
   }
 </style>
