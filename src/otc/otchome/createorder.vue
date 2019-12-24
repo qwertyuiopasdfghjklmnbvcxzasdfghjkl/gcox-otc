@@ -1085,6 +1085,7 @@
     font-size: 16px;
     color: #aaaaaa;
     margin-left: 60px;
+    flex: 1;
   }
 
   .small span {

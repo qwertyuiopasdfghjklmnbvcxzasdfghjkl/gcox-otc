@@ -193,7 +193,7 @@
       },
       lastMount () { // 实际到账
         if (this.amount === '' || this.amount === 0) {
-          return '0 ' + this.symbol
+          return '0 '
         } else {
           return utils.removeEndZero(numUtils.minus(this.amount, this.procedureFee).toFixed(8, 1))
         }
