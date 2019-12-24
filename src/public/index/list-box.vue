@@ -125,8 +125,14 @@
     },
     mounted () {
       window.addEventListener('resize', () => {
-        this.$refs.runTimes_creditChart.resize()
+        console.log(this.$refs.runTimes_creditChart)
+        if (this.$refs.runTimes_creditChart) {
+          this.$refs.runTimes_creditChart.resize()
+        }
       })
+    },
+    beforeDestroy () {
+
     }
   }
 </script>
