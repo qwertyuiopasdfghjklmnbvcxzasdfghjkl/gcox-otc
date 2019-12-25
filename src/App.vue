@@ -39,6 +39,7 @@
   import marketApi from '@/api/market'
   import chat from '@/components/chat'
   import msgApi from '@/api/individual'
+  import Vue from 'vue'
 
   export default {
     name: 'app',

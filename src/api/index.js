@@ -70,7 +70,6 @@ axios.interceptors.response.use(function (response) {
      Vue.$koallTipBox({icon: 'notification', message: window.$i18n.t(`error_code.server_deserted`)})
     return Promise.resolve('')
   }
-
   return Promise.reject(error)
 })
 
