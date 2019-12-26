@@ -13,7 +13,8 @@
       <span><numberbox :accuracy="8" v-model="amount"></numberbox></span>
     </p>
     <button @click="sub()"
-            :class="disabled">{{$t('gcox_otc.now_sell')}}</button>
+            :class="disabled">{{$t('gcox_otc.now_sell')}}
+    </button>
   </div>
 </template>
 
@@ -76,24 +77,24 @@
       timeout (e) {
         console.log('timeout' + e)
         if (e) {
-          if (this.isLogin) {
-            this.getAdv()
-          } else {
-            Vue.$confirmDialog({
-              id: 'login',
-              showCancel: false,
-              content: this.$t('public0.public15'), // 请登录后再交易
-              okCallback: () => {
-                this.$router.push({name: 'login'})
-              }
-            })
-          }
+          // if (this.isLogin) {
+          this.getAdv()
+          // } else {
+          //   Vue.$confirmDialog({
+          //     id: 'login',
+          //     showCancel: false,
+          //     content: this.$t('public0.public15'), // 请登录后再交易
+          //     okCallback: () => {
+          //       this.$router.push({name: 'login'})
+          //     }
+          //   })
+          // }
         }
       },
       params () {
         this.emit()
       },
-      getCurrency(){
+      getCurrency () {
         this.emit()
       }
     },
@@ -260,7 +261,8 @@
             font-size: 18px;
             font-weight: bold;
             padding: 0;
-            &:focus{
+
+            &:focus {
               border: 1px solid #F0B936 !important;
             }
           }
@@ -279,7 +281,8 @@
       padding: 0;
       font-size: 18px;
       color: #ffffff;
-      &.disabled{
+
+      &.disabled {
         background: #1F2048;
         cursor: no-drop;
         color: #999999;
