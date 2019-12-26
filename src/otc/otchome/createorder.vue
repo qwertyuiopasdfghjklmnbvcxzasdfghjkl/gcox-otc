@@ -149,23 +149,30 @@
             <label>{{$t('otc_ad.otc_ad_Trading_restrictions')}}<!--交易限额-->
               ({{this.formData.ad_type === 1 ?formData.symbol : formData.currency }})</label>
             <div class="value">
-              <numberbox id="ads_min_amount" :class="{error: errors.has('min_amount')}" v-model="formData.min_amount"
-                         :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
+              <numberbox id="ads_min_amount"
+                         :class="{error: errors.has('min_amount') && formData.min_amount > formData.max_amount}"
+                         v-model="formData.min_amount"
+                         :size="tradeLimitAccuracy.size"
+                         :accuracy="tradeLimitAccuracy.accuracy"
                          v-validate="'required|intOrDecimal|minAmountValid|minamount|maxInputValue:9999999999,public0.public258'"
                          data-vv-name="min_amount"/>
-              <em>{{$t('public0.public114')}}<!--最小限额--></em>
+              <em>{{$t('public0.public114')}}<!--最小限额-- formData.min_amount < coinMinLimit || --></em>
             </div>
             <p class="small" v-show="formData.min_amount">
               {{$t('otc_ad.mini_trans_num_tip').format(formData.symbol)}}
             </p>
           </div>
-          <div class="prompt">{{getErrorMsg('min_amount')}}</div>
+          <div class="prompt" >
+            <span v-if="formData.min_amount > formData.max_amount">
+              {{getErrorMsg('min_amount')}}
+            </span>
+          </div>
           <div class="row">
             <label></label>
             <div class="value">
               <numberbox id="ads_max_amount" :class="{error: errors.has('max_amount')}" v-model="formData.max_amount"
                          :size="tradeLimitAccuracy.size" :accuracy="tradeLimitAccuracy.accuracy"
-                         v-validate="'required|intOrDecimal|maxamount|maxInputValue:9999999999,public0.public259'"
+                         v-validate="'required|intOrDecimal|maxamount|minamount|maxInputValue:9999999999,public0.public259'"
                          data-vv-name="max_amount"/>
               <em>{{$t('public0.public115')}}<!--最大限额--></em>
             </div>
@@ -424,7 +431,10 @@
       },
       tradeLimitAccuracy () {
         return this.formData.ad_type === 1 ? {size: 15, accuracy: 4} : {size: 13, accuracy: 2}
-      }
+      },
+      showMinError () {
+        return
+      },
     },
     watch: {
       'formData.pay_type' () {
@@ -444,6 +454,11 @@
         if (this.formData.ad_type === 1) {
           this.formData.max_amount = newVal
         }
+      },
+      'formData.max_amount' () {
+        // this.formData.max_amount = Number(this.formData.ad_type) === 1 ? null : 20000 getErrorMsg('min_amount')
+        // console.log(this.formData.max_amount)
+        // this.getErrorMsg('min_amount')
       },
       benchSymbolParams () {
         this.getBenchSymbolInfo()

@@ -77,18 +77,18 @@
       timeout (e) {
         console.log('timeout -- ' + e)
         if (e) {
-          if (this.isLogin) {
+          // if (this.isLogin) {
             this.getAdv()
-          } else {
-            Vue.$confirmDialog({
-              id: 'login',
-              showCancel: false,
-              content: this.$t('public0.public15'), // 请登录后再交易
-              okCallback: () => {
-                this.$router.push({name: 'login'})
-              }
-            })
-          }
+          // } else {
+          //   Vue.$confirmDialog({
+          //     id: 'login',
+          //     showCancel: false,
+          //     content: this.$t('public0.public15'), // 请登录后再交易
+          //     okCallback: () => {
+          //       this.$router.push({name: 'login'})
+          //     }
+          //   })
+          // }
         }
       },
       params () {
