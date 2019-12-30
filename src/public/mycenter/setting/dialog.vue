@@ -90,13 +90,18 @@
         this.$emit('removeDialog')
       },
       saveSettings (event) {
+        console.log('1' + this.list)
         event.preventDefault() || (event.returnValue = false)
-        this.list.filter(res => {
-          if (res.card_number === this.bankData.card_number) {
+        console.log('1' + event)
+        for (let i in this.list) {
+          if (this.list[i].card_number === this.bankData.card_number) {
             Vue.$koallTipBox({icon: 'notification', message: this.$t('gcox_otc.card_repetition')})
             this.status = false
           }
-        })
+        }
+        // this.list.filter(res => {
+        //
+        // })
         if (this.status) {
           let formData = new FormData(this.$refs.bankForm)
           this.status = false
@@ -124,7 +129,7 @@
       align-items: center;
 
       label {
-        width: 100px;
+        width: 115px;
       }
 
       .input_div {

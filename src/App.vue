@@ -31,14 +31,15 @@
   import {mapGetters, mapActions} from 'vuex'
   import utils from '@/assets/js/utils'
   import numUtils from '@/assets/js/numberUtils'
-  import GlobalWebSocket from '@/assets/js/websocket'
+  // import GlobalWebSocket from '@/assets/js/websocket'
   import OtcWebSocket from '@/assets/js/websocket-otc'
   import bheader from '@/components/header'
   import bottom from '@/components/bottom'
   import userApi from '@/api/user'
   import marketApi from '@/api/market'
   import chat from '@/components/chat'
-  import otcApi from '@/api/otc'
+  import msgApi from '@/api/individual'
+  import Vue from 'vue'
 
   export default {
     name: 'app',
@@ -55,7 +56,7 @@
         fromRoute: null,
         showChat: false,
         orderNumber: null,
-        newMsg: false,
+        // newMsg: false,
         firstEnter: 0,
         switchNew: 0,
       }
@@ -141,7 +142,6 @@
       this.getBtcPrice()
       this.getPrice()
       this.getSysparams()
-      // this.getBTCValuation()
       this.getUserInfoMethod()
       this.checkRouteChange(this.$route)
       this.ws = new OtcWebSocket({
@@ -153,35 +153,31 @@
           }
         }
       })
-      // this.gws = new GlobalWebSocket({
-      //   type: 'global',
-      //   checkNetWork: (signal) => {
-      //     this.setNetworkSignal(signal)
-      //   },
-      //   onClose: () => {
-      //     this.setNetworkSignal(3)
-      //   },
-      //   callback: (res) => {
-      //     if (res.dataType === 'LastValuation') {
-      //       this.setUSDCNY({
-      //         USD: numUtils.BN(res.USD).toFixed(2),
-      //         CNY: numUtils.BN(res.USDCNY).toFixed(2)
-      //       })
-      //       this.setBTCValuation(numUtils.BN(res.totalAmount).toFixed(8)) // 当前转换人民币
-      //     }
-      //   }
-      // })
       if (utils.isMobile) {
         var f = Math.min(window.screen.width, window.screen.height)
         document.documentElement.className = 'phone'
         document.documentElement.style.fontSize = f / 7.5 + 'px'
       }
     },
+    mounted () {
+      setTimeout(() => {
+        if (this.getApiToken) {
+          this.newMsg()
+        }
+      }, 3000)
+    },
     beforeDestroy () {
       this.ws && this.ws.close()
     },
     methods: {
-      ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setUserInfo', 'setSysParams', 'setSymbol']),
+      ...mapActions(['setBTCValuation', 'setUSDCNY', 'setNetworkSignal', 'setUserInfo', 'setSysParams', 'setSymbol', 'setNewMsg']),
+      newMsg () {
+        msgApi.getMessages({}, res => {
+          if (res.data) {
+            this.setNewMsg(true)
+          }
+        })
+      },
       getBtcPrice () {
         if (!this.getApiToken) {
           return
@@ -219,15 +215,6 @@
           this.setSysParams(params)
         })
       },
-      // getBTCValuation () {
-      //   marketApi.BTCValuation(data => {
-      //     this.setUSDCNY({
-      //       USD: numUtils.BN(data.USD).toFixed(2),
-      //       CNY: numUtils.BN(data.USDCNY).toFixed(2)
-      //     })
-      //     this.setBTCValuation(numUtils.BN(data.totalAmount).toFixed(8)) // 当前转换人民币
-      //   })
-      // },
       checkRouteChange (currentRoute) {
         if (this.getApiToken) {
           currentRoute.meta.noEntry ? this.$router.push({name: 'home'}) : void 0
@@ -256,37 +243,7 @@
       change (e) {
         console.log(e)
         this.setSymbol(e)
-      },
-      // createNewOrder (id) {
-      //   if (this.$refs.orderlist.params.state === 1) {
-      //     this.$refs.orderlist.params.page = 1
-      //   }
-      //   otcApi.ordersDetail(id, (res) => {
-      //     this.orderNumber = res.orderInfo.order_number
-      //   })
-      // },
-      // openChat () {
-      //   this.showChat = !this.showChat
-      //   this.newMsg = false
-      // },
-      // markNewMsg (bool) {
-      //   if (bool) {
-      //     this.showChat = true
-      //   }
-      //   this.newMsg = bool
-      // },
-      // switchOldMessage (orderNumber) {
-      //   this.showChat = true
-      //   this.switchNew++
-      //   this.orderNumber = orderNumber
-      // },
-      // addSystemMessage (orderNumber, message) { // 添加系统消息
-      //   this.showChat = true
-      //   this.$refs.chat.addSystemMessage(orderNumber, message)
-      // },
-      // close () {
-      //   this.showChat = false
-      // }
+      }
     }
   }
 </script>

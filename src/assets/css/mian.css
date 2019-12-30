@@ -301,6 +301,8 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   display: inline-block;
   background: #E65656;
   color: #ffffff;
+  cursor: pointer;
+  transition: all .2s;
 }
 .green_button{
   border-radius: 4px;
@@ -308,6 +310,8 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   display: inline-block;
   background: #299D82;
   color: #ffffff;
+  cursor: pointer;
+  transition: all .2s;
 }
 .yellow_button{
   border-radius: 4px;
@@ -315,6 +319,8 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   display: inline-block;
   background: #F0B936;
   color: #ffffff;
+  cursor: pointer;
+  transition: all .2s;
 }
 .gray_button{
   border-radius: 4px;
@@ -322,6 +328,11 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   display: inline-block;
   background: #eeeeee;
   color: #999;
+  cursor: pointer;
+  transition: all .2s;
+}
+.gray_button:hover,.yellow_button:hover,.green_button:hover,.red_button:hover{
+  opacity: .8;
 }
 .green_bg{
   background: #299D82;
@@ -329,4 +340,12 @@ div.hopscotch-bubble h3,div.hopscotch-bubble .hopscotch-content{color:#aeb7d0;}
   border-radius:20px;
   color: #ffffff;
   margin: 0 6px;
+}
+.koall-dialog .icon-close{
+  color: #333;
+  cursor: pointer;
+  transition: all .2s;
+}
+.koall-dialog .icon-close:hover{
+  color: #000;
 }

@@ -27,21 +27,6 @@
     </div>
     <div class="buy">
       <div class="buy-cont">
-        <!--<p>-->
-        <!--<span class="label-left">{{$t(params.ad_type==2?'otc_exchange.otc_exchange_ask':'otc_exchange.otc_exchange_bid')}}-->
-        <!--&lt;!&ndash;单价&ndash;&gt;</span>-->
-        <!--<span>{{detailData.cur_price}}<em class="unit">&nbsp;{{params.currency}}</em></span>-->
-        <!--</p>-->
-        <!--<p>-->
-        <!--<span class="label-left">{{$t('message.msg_surplus')}}&lt;!&ndash;剩余&ndash;&gt;</span>-->
-        <!--<span>{{detailData.remain_count}}<em class="unit">&nbsp;{{params.symbol}}</em></span>-->
-        <!--</p>-->
-        <!--<p>-->
-        <!--<span class="label-left">{{$t('otc_exchange.otc_exchange_Trading_limits')}}&lt;!&ndash;交易限额&ndash;&gt;</span>-->
-        <!--<span class="trade-limit"><em>{{detailData.min_amount}} - {{detailData.max_amount}}</em><em class="unit">&nbsp;{{tradeParams.limit}}</em></span>-->
-        <!--</p>-->
-
-
         <div>
           <p>
             <span class="label-left">{{$t('exchange.exchange_amount')}}<!--数量--></span>
@@ -82,8 +67,8 @@
           <div class="select" @click.stop="showSelect = !showSelect">
             <span>{{bankData.card_name}} - {{bankData.card_bank}} - {{bankData.card_number}}</span>
             <ul v-show="showSelect">
-              <li v-for="v in bankList"
-                  @click="bankData = v">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
+              <li v-for="(v,i) in bankList"
+                  @click="bankData = v" :key="i">{{v.card_name}}-{{v.card_bank}}-{{v.card_number}}</li>
             </ul>
           </div>
         </div>
@@ -222,7 +207,7 @@
         // if (this.buyType) {
         //   this.currency_count = Number(this.amount)
         // } else {
-        this.symbol_count = Number(this.amount || 0)
+        this.symbol_count = Number(this.amount) || null
         // }
       }
     },
@@ -299,7 +284,7 @@
             isComponent: true,
             content: orderconfirm,
             btnPosition: 'right',
-            width: 620,
+            width: 650,
             item: {
               trade_type: this.params.ad_type === 1 ? 2 : 1,
               cur_price: this.detailData.cur_price,
