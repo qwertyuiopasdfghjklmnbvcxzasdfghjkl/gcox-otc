@@ -74,7 +74,7 @@
 
         <router-link to="" class="item" v-if="isLogin">
           <span style="color: #fff;" class="nav-title">{{displayUsername}}
-            <img v-if="displayUsername" src="../assets/img/icon-otc10.png"/>
+            <img src="../assets/img/icon-otc10.png"/></span>
           </span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
             <div class="popover-menu">
@@ -168,11 +168,20 @@
     computed: {
       ...mapGetters(['isLogin', 'getUserInfo', 'getLang', 'getSymbol', 'getCurrency', 'getLocation', 'getNewMsg']),
       displayUsername () {
-        if (this.getUserInfo.username) {
+        if(this.getUserInfo.nickname){
+          return this.getUserInfo.nickname
+        }else if (this.getUserInfo.username) {
           let temp = this.getUserInfo.username.split('@')
           return temp[0].slice(0, Math.ceil(temp[0].length / 2)) + '*'.repeat(Math.floor(temp[0].length / 2)) + '@' + temp[1]
         } else {
           return ''
+        }
+      },
+      headerImagePath(){
+        if(this.getUserInfo.headerImagePath){
+          return this.getUserInfo.headerImagePath
+        }else{
+          return false
         }
       },
       url () {
@@ -272,8 +281,9 @@
         this.setCurrency(id)
       },
       getBalance () {
+        let cur = this.$store.state.currency
         if (this.isLogin) {
-          userUtils.myAssets({}, res => {
+          userUtils.myAssets({currency:cur}, res => {
             this.allSymbol = res
           })
         }
@@ -677,6 +687,10 @@
       width: 12px;
       height: 7px;
       margin-left: 4px;
+    }
+    img.head {
+      width: 24px;
+      height: inherit;
     }
   }
 
