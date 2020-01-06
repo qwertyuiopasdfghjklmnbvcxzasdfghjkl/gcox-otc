@@ -234,8 +234,8 @@
 
     .pwd-isShow {
       position: absolute;
-      right: 5px;
-      top: 6px;
+      right: 24px;
+      top: -1px;
 
       img {
         width: 20px;
@@ -250,5 +250,12 @@
     background: rgba(19, 20, 58, 1);
     border-radius: 3px;
     color: #ffffff;
+  }
+  input::-webkit-credentials-auto-fill-button {
+    display: none !important;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
   }
 </style>
