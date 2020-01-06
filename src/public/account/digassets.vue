@@ -21,10 +21,11 @@
           </div>
           <div class="tab_cont">
             <div class="thead">
-              <p>{{$t('account.estimated_value_coin')}}</p>
+              <p style="width:155px;">{{$t('account.estimated_value_coin')}}</p>
               <p>{{$t('gcox_otc.total')}}</p>
               <p>{{$t('account.estimated_value_available')}}</p>
               <p>{{$t('public0.public34')}}</p>
+              <p>{{$t('wallet.currency_valuation')}}</p>
             </div>
 
             <div class="flex">
@@ -34,7 +35,7 @@
                     <div class="ico">
                       <img :src="`data:image/png;base64,${data.iconBase64}`">
                     </div>
-                    <div class="coin ">{{data.symbol}}</div>
+                    <div class="coin">{{data.symbol}}</div>
                     <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero" >
                       {{toFixed(data.totalBalance)|removeEndZero}}
                     </div>
@@ -43,6 +44,9 @@
                     </div>
                     <div class="f-right "
                          :title="data.frozenBalance">{{data.frozenBalance | removeEndZero}}
+                    </div>
+                    <div class="f-right" style="width:230px"
+                         :title="(data.currencyValuation || 0) + getCurrency">{{data.currencyValuation || 0 }}{{' '+getCurrency}}
                     </div>
                     <moreinfo class="action"
                               :googleState="getUserInfo.googleAuthEnable"
@@ -114,6 +118,7 @@
       ...mapGetters(['getBTCValuation', 'getUSDCNY', 'getCoinSign', 'getCurrency']),
       USDCNY () {
         console.log(this.getUSDCNY)
+        this.getList();
         return numUtils.mul(this.getBTCValuation, this.getUSDCNY).toFixed(2).toMoney()
       },
     },
@@ -213,7 +218,7 @@
       },
       getList () {
         this.showLoaing = true
-        userUtils.myAssets({}, (data) => {
+        userUtils.myAssets({currency: this.getCurrency}, (data) => {
           data.forEach((item) => {
             item.show = false
             item.frozenBalance = numUtils.add(item.frozenBalance, item.adFrozenBalance).add(item.loanBalance).toFixed(8)
@@ -503,7 +508,7 @@
     white-space: nowrap;
     word-break: break-all;
     padding: 0 4px;
-    width: 216px;
+    width: 185px;
     text-overflow: ellipsis;
     overflow: hidden;
     align-items: center;
@@ -570,7 +575,7 @@
   .accountInfo-lists li .items > div.coin {
     /*flex: 1;*/
     text-align: left;
-    width: 160px;
+    width: 90px;
   }
 
   .accountInfo-lists li .items > div.coin .icon-checkbox {
@@ -695,7 +700,7 @@
         &:first-child{
           text-indent: 40px;
         }
-        width: 220px;
+        width: 185px;
 
       }
     }

@@ -159,7 +159,7 @@
               <em>{{$t('public0.public114')}}<!--最小限额-- formData.min_amount < coinMinLimit || --></em>
             </div>
             <p class="small" v-show="formData.min_amount">
-              {{$t('otc_ad.mini_trans_num_tip').format(formData.symbol)}}
+              {{$t('otc_ad.mini_trans_num_tip').format(this.formData.ad_type === 1 ?formData.symbol : formData.currency )}}
             </p>
           </div>
           <div class="prompt" >
@@ -177,7 +177,7 @@
               <em>{{$t('public0.public115')}}<!--最大限额--></em>
             </div>
             <p class="small" v-show="formData.max_amount">
-              {{$t('otc_ad.max_trans_num_tip').format(formData.symbol)}}
+              {{$t('otc_ad.max_trans_num_tip').format(this.formData.ad_type === 1 ?formData.symbol : formData.currency )}}
             </p>
           </div>
           <div class="prompt">{{getErrorMsg('max_amount')}}</div>
