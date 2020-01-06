@@ -1,6 +1,6 @@
 <template>
   <div class="cont" :style="face">
-    <p class="title"  v-if="state === 1">{{$t('usercontent.user24')}}</p>
+    <p class="title" v-if="state === 1">{{$t('usercontent.user24')}}</p>
     <p class="title" :class="{'tow_title': state === 0}" v-if="state === 0">
       {{$t('usercontent.user30')}}</p>
     <div class="ear" v-if="state === 1">
@@ -19,7 +19,7 @@
     </div>
     <div class="verify-input">
       <p class="title">{{$t('usercontent.user33')}}</p>
-      <input type="text" :class="{'tow_input': state === 0}" v-model="key"/>
+      <input type="text" :class="{'tow_input': state === 0}" v-model="key" maxlength="6"/>
     </div>
     <div class="operation" :class="{'tow_btn': state === 0}">
       <button class="black" @click="cancal()">{{$t('usercontent.user31')}}</button>
@@ -48,6 +48,13 @@
         bindGoogleKey: null,
         key: null,
         loading: true
+      }
+    },
+    watch: {
+      key () {
+        if (this.key.length >= 6) {
+          this.getKey()
+        }
       }
     },
     created () {
@@ -111,7 +118,8 @@
         padding-right: 10px;
         flex-shrink: 0;
         position: relative;
-        .load{
+
+        .load {
           position: absolute;
           top: 25px;
           left: 50%;
@@ -140,7 +148,8 @@
         height: 24px;
         padding: 5px;
       }
-      .tow_input{
+
+      .tow_input {
         border: 1px solid #dadada;
         margin-top: 10px;
       }
@@ -163,14 +172,17 @@
         }
       }
     }
-    .tow_btn{
+
+    .tow_btn {
       text-align: center;
-      button{
+
+      button {
         background: #858585;
         border-bottom: none;
         padding: 2px 26px;
         border-radius: 40px;
         color: #ffffff;
+
         &.orange {
           border-bottom: none;
           margin-left: 20px;
@@ -179,7 +191,8 @@
       }
     }
   }
-  .tow_title{
+
+  .tow_title {
     text-align: center;
     border-bottom: 1px solid #dadada;
     padding-bottom: 20px;
