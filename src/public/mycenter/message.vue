@@ -4,7 +4,7 @@
     <div class="message-cont">
       <p class="back" v-if="showCont">{{$t('usercontent.user64')}}</p>
       <ul class="message-list" v-if="!show && datas.length > 0&&!showCont">
-        <li class="message-item" :class="{markread: item.messageState === 1}" v-for="(item, index) in datas"
+        <li class="message-item" :class="{markread: item.msgType === 3}" v-for="(item, index) in datas"
             :key="index">
           <p class="message-item-title" @click="markItemRead(item)">
             <span class="main">{{formatSystemMessage(item.title, item.msgType !== 5)}}</span>
@@ -166,6 +166,11 @@
       margin: 18px 0;
       display: inline-block;
       cursor: pointer;
+    }
+  }
+  .markread{
+    .main{
+      font-weight: bold;
     }
   }
 </style>

@@ -163,7 +163,8 @@
             </p>
           </div>
           <div class="prompt" >
-            <span v-if="formData.min_amount > formData.max_amount">
+            <!--<p>{{formData.min_amount}}，{{formData.max_amount}}</p>-->
+            <span>
               {{getErrorMsg('min_amount')}}
             </span>
           </div>

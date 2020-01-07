@@ -74,7 +74,7 @@
 
         <router-link to="" class="item" v-if="isLogin">
           <span style="color: #fff;" class="nav-title">{{displayUsername}}
-            <img src="../assets/img/icon-otc10.png"/></span>
+            <img v-show="displayUsername" src="../assets/img/icon-otc10.png"/>
           </span>
           <div class="popover-nav" :class="{en:getLang==='en'}" ref="nav1" @click="hidePopoverNav('nav1')">
             <div class="popover-menu">
