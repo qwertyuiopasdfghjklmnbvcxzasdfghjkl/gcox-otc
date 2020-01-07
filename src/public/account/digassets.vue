@@ -3,7 +3,7 @@
     <div class="hcontainer">
       <div class="chargeWithdraw" v-if="!showLoaing">
         <div class="total">
-          <h2>{{$t('gcox_otc.appraisement')}}：<!--估计资产价值：--><span>{{String(getBTCValuation).toMoney()}} BTC</span>
+          <h2>{{$t('gcox_otc.appraisement')}}：<!--估计资产价值：--><span>{{BTC}} BTC</span>
           </h2>
           <h4>≈ {{USDCNY}} {{getCurrency}} </h4>
         </div>
@@ -13,10 +13,11 @@
               <div class="icon-checkbox f-fl" @click.stop="hideZero=!hideZero">
                 <!--<em :class="[hideZero?'icon-checkbox-unchecked':'icon-checkbox-checked']"></em>-->
                 <!--<label class="ng-binding">-->
-                  <!--{{$t('gcox_otc.show_all_symbol')}}&lt;!&ndash;显示所有货币&ndash;&gt;-->
+                <!--{{$t('gcox_otc.show_all_symbol')}}&lt;!&ndash;显示所有货币&ndash;&gt;-->
                 <!--</label>-->
               </div>
-              <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}<!--历史记录--></a>
+              <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}
+                <!--历史记录--></a>
             </div>
           </div>
           <div class="tab_cont">
@@ -29,14 +30,14 @@
             </div>
 
             <div class="flex">
-              <ul class="accountInfo-lists" >
+              <ul class="accountInfo-lists">
                 <li v-for="(data, index) in filterDatas()" :key="data.accountId">
                   <div class="items">
                     <div class="ico">
                       <img :src="`data:image/png;base64,${data.iconBase64}`">
                     </div>
                     <div class="coin">{{data.symbol}}</div>
-                    <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero" >
+                    <div class="f-right " :title="toFixed(data.totalBalance)|removeEndZero">
                       {{toFixed(data.totalBalance)|removeEndZero}}
                     </div>
                     <div class="f-right "
@@ -46,7 +47,8 @@
                          :title="data.frozenBalance">{{data.frozenBalance | removeEndZero}}
                     </div>
                     <div class="f-right" style="width:230px"
-                         :title="(data.currencyValuation || 0) + getCurrency">{{data.currencyValuation || 0 }}{{' '+getCurrency}}
+                         :title="(data.currencyValuation || 0) + getCurrency">{{toFixed(data.currencyValuation, 2) || 0
+                      }}{{getCurrency}}
                     </div>
                     <moreinfo class="action"
                               :googleState="getUserInfo.googleAuthEnable"
@@ -117,10 +119,15 @@
     computed: {
       ...mapGetters(['getBTCValuation', 'getUSDCNY', 'getCoinSign', 'getCurrency']),
       USDCNY () {
-        console.log(this.getUSDCNY)
-        this.getList();
-        return numUtils.mul(this.getBTCValuation, this.getUSDCNY).toFixed(2).toMoney()
+        let num = 0
+        this.filterDatas().filter(res => {
+          num += res.currencyValuation
+        })
+        return num.toFixed(2).toMoney()
       },
+      BTC () {
+        return numUtils.div(this.USDCNY, this.getUSDCNY).toFixed(8).toMoney()
+      }
     },
     watch: {
       filterTitle (newVal, oldVal) {
@@ -143,8 +150,9 @@
           obj.value = res.availableBalance
           arr.push(obj)
         })
-        // this.polar.legend.data = name
-        // this.polar.series[0].data = arr
+      },
+      getCurrency(){
+        this.getList()
       }
     },
     created () {
@@ -513,7 +521,8 @@
     overflow: hidden;
     align-items: center;
   }
-  .accountInfo-lists li .items > div.ico{
+
+  .accountInfo-lists li .items > div.ico {
     min-width: 60px;
     width: 60px;
   }
@@ -686,7 +695,8 @@
         border-bottom: 1px solid #eeeeee;
       }
     }
-    .thead{
+
+    .thead {
       height: 50px;
       background: rgba(238, 238, 238, 1);
       border-radius: 4px 4px 0px 0px;
@@ -696,17 +706,20 @@
       color: #333333;
       display: flex;
       align-items: center;
-      p{
-        &:first-child{
+
+      p {
+        &:first-child {
           text-indent: 40px;
         }
+
         width: 185px;
 
       }
     }
   }
-  .back:hover{
-    cursor:pointer;
+
+  .back:hover {
+    cursor: pointer;
     color: #00a0e9;
   }
 
