@@ -592,4 +592,16 @@ const location = function (success, error) {
 }
 otc.location = location
 
+// 获取银行
+const bankList = function (data, success, error) {
+  api.get(`${domain}api/v2/otc/bankList?currency=${data}`, (res) => {
+    if (res.rst === 1) {
+      success && success(res.data)
+    } else {
+      error && error(res.msg)
+    }
+  }, error)
+}
+otc.bankList = bankList
+
 export default otc

@@ -194,7 +194,6 @@
 
         .border-bg {
           /*background: url('../assets/img/border-bg.png') no-repeat 100%;*/
-
         }
       }
     }

@@ -1,10 +1,10 @@
-<template>
+<template >
   <Card style="width: 800px">
     <p slot="title">
       {{item ? vm.$t('account.user_center_change'):vm.$t('gcox_otc.add_bankcard')}}
       <span @click="closeDialog" class="icon-close"></span>
     </p>
-    <form class="form-col" ref="bankForm" data-vv-scope="bank_scope">
+    <form class="form-col" ref="bankForm" data-vv-scope="bank_scope" @click="show = false">
       <ul class="form-table">
         <li class="form-row">
           <label class="form-label">{{vm.$t('otc_legal.otc_legal_Name')}}<!--姓名--><em
@@ -15,8 +15,11 @@
           <label class="form-label">{{vm.$t('otc_legal.otc_legal_Bank')}}<!--开户行--><em
             class="asterisk">&nbsp;*</em></label>
           <div class="input_div">
-            <input class="form-input" :class="{error: errors.has('bank_scope.card_bank')}" type="text" name="card_bank"
-                   v-model="bankData.card_bank" v-validate="'required'" maxlength="32"/>
+            <p class="select" @click.stop="show = !show">{{bankData.card_bank}}</p>
+            <input type="hidden" v-model="bankData.card_bank" name="card_bank">
+            <ul v-show="show" class="option">
+              <li v-for="bank in bankList" @click.stop="checkBank(bank);show = false">{{bank.bankName}}</li>
+            </ul>
             <span class="form-error" v-if="errors.has('bank_scope.card_bank')">{{msgs.card_bank[errors.firstRule('card_bank')]}}</span>
           </div>
 
@@ -45,6 +48,7 @@
   import Vue from 'vue'
   import Card from '../../../components/card'
   import otcApi from '@/api/otc'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'dilog',
@@ -54,11 +58,18 @@
       const vm = window.vm
       return {
         vm: vm,
-        bankData: {},
-        status: true
+        bankData: {
+          card_name: null,
+          card_bank: null,
+          card_number: null
+        },
+        status: true,
+        bankList: [],
+        show: false
       }
     },
     computed: {
+      ...mapGetters(['getCurrency']),
       msgs () {
         return {
           card_bank: {required: this.vm.$t('otc_legal.otc_legal_input_bank')}, // 请输入开户行
@@ -84,8 +95,20 @@
         let d = JSON.stringify(this.item)
         this.bankData = JSON.parse(d)
       }
+      this.getBankList()
     },
     methods: {
+      getBankList () {
+        otcApi.bankList(this.getCurrency, res => {
+          this.bankList = res
+        }, msg => {
+
+        })
+      },
+      checkBank (data) {
+        console.log(data)
+        this.bankData.card_bank = data.bankName
+      },
       closeDialog () {
         this.$emit('removeDialog')
       },
@@ -99,9 +122,6 @@
             this.status = false
           }
         }
-        // this.list.filter(res => {
-        //
-        // })
         if (this.status) {
           let formData = new FormData(this.$refs.bankForm)
           this.status = false
@@ -134,6 +154,7 @@
 
       .input_div {
         flex: 1;
+        position: relative;
 
         input {
           display: block;
@@ -156,6 +177,46 @@
         color: #ffffff;
         margin: 10px auto;
         width: 120px;
+      }
+    }
+  }
+  .select{
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #eeeeee;
+    padding: 4px 10px;
+    position: relative;
+    cursor: pointer;
+    &:after{
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      border-top-color: #666666;
+      top: 17px;
+      right: 15px;
+    }
+  }
+  .option{
+    position: absolute;
+    z-index: 99;
+    left: 0;
+    top: 40px;
+    background: #ffffff;
+    box-shadow: 0 10px 15px #dedede;
+    border-radius: 6px;
+    width: 100%;
+    padding: 10px 0;
+    li{
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      text-indent: 20px;
+      &:hover{
+        background: #2C9ED0;
+        color: #fff;
       }
     }
   }
