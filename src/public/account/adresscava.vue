@@ -117,19 +117,6 @@
           this.EOS_MEMO = data
         })
       },
-      getListAccount () {
-        userUtils.myAssets({}, res => {
-          this.allData = res.filter(next => {
-            if (next.type === 1) {
-              if (next.symbol === this.symbol) {
-                this.addr = next.address
-                this.procedureFee = next.procedureFee
-              }
-            }
-            return next.type === 1
-          })
-        })
-      },
       close () {
         this.$emit('removeDialog')
       }

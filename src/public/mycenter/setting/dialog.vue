@@ -209,6 +209,8 @@
     border-radius: 6px;
     width: 100%;
     padding: 10px 0;
+    max-height: 20vh;
+    overflow-y: auto;
     li{
       text-align: center;
       cursor: pointer;
