@@ -126,7 +126,11 @@
         return num
       },
       BTC () {
-        return numUtils.div(Number(this.USDCNY), Number(this.getUSDCNY))
+        if (this.USDCNY) {
+          return numUtils.div(Number(this.USDCNY), Number(this.getUSDCNY))
+        } else {
+          return '0.00000000'
+        }
       }
     },
     watch: {

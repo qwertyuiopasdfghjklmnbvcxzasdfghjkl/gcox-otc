@@ -2,36 +2,9 @@
   <div class="moreinfo">
     <div class="depositBox">
       <div class="filed">
-        <!--<div class="adr-list">-->
-        <!--<label class="active" style="position:relative;">-->
-        <!--{{symbol}} {{$t('account.userRechargeAddress')}}&lt;!&ndash;充值地址&ndash;&gt; ：-->
-        <!--</label>-->
-        <!--<label class="sum" style="display:none;">-->
-        <!--{{$t('account.estimated_value_total')}}&lt;!&ndash;总金额&ndash;&gt;-->
-        <!--</label>-->
-        <!--<label class="yue" style="display:none;">-->
-        <!--{{$t('account.estimated_value_available')}}&lt;!&ndash;可用余额&ndash;&gt;-->
-        <!--</label>-->
-        <!--<label class="xiadan" style="display:none;">-->
-        <!--{{$t('public0.public34')}}&lt;!&ndash;冻结金额&ndash;&gt;-->
-        <!--</label>-->
-        <!--</div>-->
         <div class="lists active">
           <div class="name2">
             <div class="">
-              <!--<input type="text" class="adressName" readonly="readonly" :disabled="Number(item.rechargeFlag) !== 1"-->
-              <!--:value="Number(item.rechargeFlag) !== 1 ? null : getAddress"/>-->
-              <!--<span class="copy icon_copy" :class="{disabled: Number(item.rechargeFlag) !== 1}"-->
-              <!--@click="Number(item.rechargeFlag) !== 1 ? false : copy()" :title="$t('account.user_Copy_address')">-->
-              <!--&lt;!&ndash;复制地址&ndash;&gt;-->
-              <!--</span>-->
-              <!--<span class="reche icon_withdraw" :class="{disabled: !item.openStaking}"-->
-              <!--@click="showStake"-->
-              <!--:title="$t('account.stake')">-->
-              <!--{{$t('account.stake')}}&lt;!&ndash;锁仓&ndash;&gt;-->
-              <!--</span>-->
-
-
               <span class="ewm recharge yellow_button"
                     :class="{disabled: Number(item.rechargeFlag) !== 1}"
                     @click="Number(item.rechargeFlag) !== 1 ? false : scanEWM()"
@@ -44,64 +17,9 @@
                                          :title="$t('account.estimated_value_withdrawal')">
                                 {{$t('usercontent.user70')}}<!--提现-->
                             </span>
-              <!--<span  class="buy icon_recharge"-->
-              <!--:class="{disabled: Number(item.rechargeFlag) !== 1 || Number(item.withdrawFlag) !== 1}"-->
-              <!--@click="(Number(item.rechargeFlag) !== 1) &&(Number(item.withdrawFlag) !== 1) ? false : buy()">-->
-              <!--{{$t('usercontent.user72')}}-->
-              <!--</span>-->
             </div>
           </div>
         </div>
-        <!--<template v-if="item.symbol==='EOS'">-->
-        <!--&lt;!&ndash;<div class="adr-list">&ndash;&gt;-->
-        <!--&lt;!&ndash;<label class="active" style="position:relative;">&ndash;&gt;-->
-        <!--&lt;!&ndash;{{symbol}} {{$t('account.recharge_memo')}}&lt;!&ndash;EOS充值备注&ndash;&gt; ：&ndash;&gt;-->
-        <!--&lt;!&ndash;</label>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--<div class="lists active">-->
-        <!--<div class="name2">-->
-        <!--<div class="name">-->
-        <!--&lt;!&ndash;<input type="text" class="adressName" readonly="readonly" :disabled="Number(item.rechargeFlag) !== 1"&ndash;&gt;-->
-        <!--&lt;!&ndash;:value="Number(item.rechargeFlag) !== 1 ? null : item.address"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<span class="copy icon_copy" :class="{disabled: Number(item.rechargeFlag) !== 1}"&ndash;&gt;-->
-        <!--&lt;!&ndash;@click="Number(item.rechargeFlag) !== 1 ? false : copy_memo()"&ndash;&gt;-->
-        <!--&lt;!&ndash;:title="$t('account.user_Copy_address')">&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;复制地址&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-        <!--&lt;!&ndash;<span class="ewm icon-qrcode" style="color: #4A91FD;"&ndash;&gt;-->
-        <!--&lt;!&ndash;:class="{disabled: Number(item.rechargeFlag) !== 1}"&ndash;&gt;-->
-        <!--&lt;!&ndash;@click="Number(item.rechargeFlag) !== 1 ? false : scanMEMO()">&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;充值&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;<div class="adr-list">&ndash;&gt;-->
-        <!--&lt;!&ndash;<label class="active" style="position:relative;">&ndash;&gt;-->
-        <!--&lt;!&ndash;<i style="color: red;">{{$t('public0.public242')}}：{{$t('account.eos_recharge_warn')}}</i>&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;备注和地址同时使用才能充值EOS成功&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;</label>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</template>-->
-        <!--<div class="addBNB">-->
-        <!--<ul class="tips">-->
-        <!--<li style="display:none;">-->
-        <!--● <strong>{{$t('public0.public32')}}&lt;!&ndash;点击“默认”按钮后会将该钱包设置为OTC专用钱包。&ndash;&gt;</strong>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--● {{$t('account.user_prompt1').format(item.symbol)}}&lt;!&ndash;禁止向{0}地址充值除{0}之外的资产，任何充入{0}地址的非{0}资产将不可找回。&ndash;&gt;-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--● {{$t('account.user_prompt2').format(item.symbol, blockQuantity)}}&lt;!&ndash;使用BTC地址充值需要{1}个区块确认才能到账。&ndash;&gt;-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--● {{$t('account.user_prompt10')}}&lt;!&ndash;充值完成后，你可以进入历史记录页面跟踪进度。&ndash;&gt;-->
-        <!--</li>-->
-        <!--<li style="display:none;">-->
-        <!--● {{$t('account.user_prompt4').format(5)}}&lt;!&ndash;每个币种最多添加5个充值地址，如需更多请联系客服。&ndash;&gt;-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
       </div>
     </div>
   </div>
@@ -217,39 +135,6 @@
         })
       },
       withdrawDalog () {
-        // if (this.verifyState !== 2) {
-        //   Vue.$confirmDialog({
-        //     id: 'KYC_AUTH_FIRST',
-        //     showCancel: false,
-        //     content: this.$t(`error_code.KYC_AUTH_FIRST`), // 请先完成实名认证
-        //     okCallback: () => {
-        //       this.$router.push({name: 'mycenter_menu', params: {menu: 'mycenter'}})
-        //     }
-        //   })
-        //   return
-        // }
-        // if (this.getUserInfo().googleAuthEnable !== 1) {
-        //   Vue.$confirmDialog({
-        //     id: 'GOOGLEAUTH_OR_SMSAUTH_FIRST',
-        //     showCancel: false,
-        //     content: this.$t('error_code.GOOGLE_CELLPHONE_AUTH_FIRST'), // 请先进行谷歌验证或短信验证
-        //     okCallback: () => {
-        //       this.$router.push({name: 'mycenter_menu', params: {menu: 'mycenter'}})
-        //     }
-        //   })
-        //   return
-        // }
-        // if (!this.getUserInfo.email && this.mobileState !== 1) {
-        //   Vue.$confirmDialog({
-        //     id: 'SMS_AUTH_FIRST',
-        //     showCancel: false,
-        //     content: this.$t('error_code.CELLPHONE_AUTH_FIRST'), // 请先进行短信验证
-        //     okCallback: () => {
-        //       this.$router.push({name: 'mycenter_menu', params: {menu: 'safety'}})
-        //     }
-        //   })
-        //   return
-        // }
         let data = {
           symbol: this.item.symbol,
           symbolType: this.item.symbolType,
@@ -259,14 +144,6 @@
           minWithdraw: this.item.minWithdraw,
           fromAccount: this.item.accountId,
         }
-        // this.$router.push({
-        //   name: 'account_menu',
-        //   params: {
-        //     menu: 'withdrawInfo',
-        //     item: data,
-        //     allData: this.allData
-        //   }
-        // })
         utils.setDialog(withdrawInfo, {
           item: data,
           all_data: this.allData,
@@ -276,15 +153,7 @@
         })
       },
       scanEWM () {
-        // this.$router.push({
-        //   name: 'account_menu',
-        //   params: {
-        //     menu: 'adresscava',
-        //     symbol: this.symbol,
-        //   }
-        // })
-        utils.setDialog(adressCava, {paramSymbol: this.symbol})
-
+        utils.setDialog(adressCava, {paramSymbol: this.symbol, item: this.item})
       },
       buy () {
         let market = this.getMarketList.filter(item => {

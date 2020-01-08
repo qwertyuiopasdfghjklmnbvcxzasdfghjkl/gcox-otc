@@ -52,7 +52,7 @@
   import {mapGetters} from 'vuex'
 
   export default {
-    props: ['paramSymbol'],
+    props: ['paramSymbol', 'item'],
     data () {
       return {
         addr: null,
@@ -91,7 +91,9 @@
     },
     created () {
       this.symbol = this.paramSymbol || 'ETH'
-      this.getListAccount()
+
+      this.addr = this.item.address
+      this.procedureFee = this.item.procedureFee
       this.$nextTick(() => {
         utils.qrcode(this.$refs.qrcode, {
           text: this.getAddress,
