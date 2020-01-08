@@ -1,4 +1,4 @@
-<template >
+<template>
   <Card style="width: 800px">
     <p slot="title">
       {{item ? vm.$t('account.user_center_change'):vm.$t('gcox_otc.add_bankcard')}}
@@ -100,7 +100,9 @@
     methods: {
       getBankList () {
         otcApi.bankList(this.getCurrency, res => {
-          this.bankList = res
+          this.bankList = res.sort((n1, n2) => {
+            return n1.orderSort > n2.orderSort ? -1 : 1
+          })
         }, msg => {
 
         })
@@ -180,14 +182,16 @@
       }
     }
   }
-  .select{
+
+  .select {
     height: 30px;
     line-height: 30px;
     border: 1px solid #eeeeee;
     padding: 4px 10px;
     position: relative;
     cursor: pointer;
-    &:after{
+
+    &:after {
       content: '';
       position: absolute;
       display: block;
@@ -199,7 +203,8 @@
       right: 15px;
     }
   }
-  .option{
+
+  .option {
     position: absolute;
     z-index: 99;
     left: 0;
@@ -211,12 +216,14 @@
     padding: 10px 0;
     max-height: 20vh;
     overflow-y: auto;
-    li{
+
+    li {
       text-align: center;
       cursor: pointer;
       transition: 0.3s;
       text-indent: 20px;
-      &:hover{
+
+      &:hover {
         background: #2C9ED0;
         color: #fff;
       }
