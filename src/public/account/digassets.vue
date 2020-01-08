@@ -3,9 +3,9 @@
     <div class="hcontainer">
       <div class="chargeWithdraw" v-if="!showLoaing">
         <div class="total">
-          <h2>{{$t('gcox_otc.appraisement')}}：<!--估计资产价值：--><span>{{BTC}} BTC</span>
+          <h2>{{$t('gcox_otc.appraisement')}}：<!--估计资产价值：--><span>{{BTC.toFixed(8).toMoney()}} BTC</span>
           </h2>
-          <h4>≈ {{USDCNY}} {{getCurrency}} </h4>
+          <h4>≈ {{USDCNY.toFixed(4).toMoney()}} {{getCurrency}} </h4>
         </div>
         <div v-if="!showHistory">
           <div class="balance_search">
@@ -76,7 +76,7 @@
 
 <script>
   import Vue from 'vue'
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import numUtils from '@/assets/js/numberUtils'
   import userUtils from '@/api/wallet'
   import utils from '@/assets/js/utils'
@@ -123,14 +123,16 @@
         this.filterDatas().filter(res => {
           num += res.currencyValuation
         })
-        return num.toFixed(4).toMoney()
+        return num
       },
       BTC () {
-        console.log(this.USDCNY, this.getUSDCNY)
-        return numUtils.div(this.USDCNY, this.getUSDCNY).toFixed(8).toMoney()
+        return numUtils.div(Number(this.USDCNY), Number(this.getUSDCNY))
       }
     },
     watch: {
+      BTC (e) {
+        this.getBtcPrice(e)
+      },
       filterTitle (newVal, oldVal) {
         if (!newVal) {
           return
@@ -152,7 +154,7 @@
           arr.push(obj)
         })
       },
-      getCurrency(){
+      getCurrency () {
         this.getList()
       }
     },
@@ -162,14 +164,12 @@
         this.pandectShow = false
       }
       this.getList()
-      this.getBtcPrice()
+      // this.getBtcPrice()
     },
     methods: {
-      ...mapGetters(['getUserInfo', 'getLang', 'setBTCValuation']),
-      getBtcPrice () {
-        marketApi.getBtcPrice(res => {
-          this.setBTCValuation(numUtils.BN(res.btcAmount).toFixed(8)) // 当前转换人民币
-        })
+      ...mapActions(['getUserInfo', 'getLang', 'setBTCValuation']),
+      getBtcPrice (data) {
+        this.setBTCValuation(numUtils.BN(data).toFixed(8)) // 当前转换人民币
       },
       showStake (accountName) {
         let data = this.myAssets.filter(item => {
