@@ -373,7 +373,7 @@ market.getBtcPrice = getBtcPrice
 const getPrice = function (success, error) {
   api.get(`${domain}api/v2/account2/getBtcPrice `, (res) => {
     if (res.rst === 1) {
-      success && success(res)
+      success && success(res.btcPrice)
     } else {
       error && error(res.msg)
     }

@@ -44,11 +44,11 @@
                          :title="data.availableBalance">{{data.availableBalance}}
                     </div>
                     <div class="f-right "
-                         :title="data.frozenBalance">{{data.frozenBalance | removeEndZero}}
+                         :title="data.frozenBalance">{{data.frozenBalance |removeEndZero}}
                     </div>
                     <div class="f-right" style="width:230px"
-                         :title="(data.currencyValuation || 0) + getCurrency">{{toFixed(data.currencyValuation, 2) || 0
-                      }}{{getCurrency}}
+                         :title="(data.currencyValuation || 0) + getCurrency">{{toFixed(data.currencyValuation, 4) || 0
+                      }} {{getCurrency}}
                     </div>
                     <moreinfo class="action"
                               :googleState="getUserInfo.googleAuthEnable"
@@ -123,9 +123,10 @@
         this.filterDatas().filter(res => {
           num += res.currencyValuation
         })
-        return num.toFixed(2).toMoney()
+        return num.toFixed(4).toMoney()
       },
       BTC () {
+        console.log(this.USDCNY, this.getUSDCNY)
         return numUtils.div(this.USDCNY, this.getUSDCNY).toFixed(8).toMoney()
       }
     },
