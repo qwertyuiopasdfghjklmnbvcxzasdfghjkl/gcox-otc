@@ -129,7 +129,7 @@
         if (this.USDCNY) {
           return numUtils.div(Number(this.USDCNY), Number(this.getUSDCNY))
         } else {
-          return '0.00000000'
+          return 0
         }
       }
     },

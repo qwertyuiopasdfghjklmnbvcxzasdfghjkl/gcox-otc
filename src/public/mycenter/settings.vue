@@ -106,7 +106,6 @@
         }
       },
       add () {
-        // 先判断是否实名
         utils.setDialog(dialog, {
           list: this.bankList,
           okCallback: () => {
