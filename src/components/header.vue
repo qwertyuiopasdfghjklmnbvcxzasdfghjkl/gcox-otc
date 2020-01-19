@@ -132,6 +132,7 @@
             <div class="popover-menu">
               <p class="lang" @click="setLanguage('zh-CN')">简体中文</p>
               <p class="lang" @click="setLanguage('en')">ENGLISH</p>
+              <p class="lang" @click="setLanguage('kr')">한국어</p>
               <!--<a href="javascript:void($zopim.livechat.setLanguage('en'))">English</a>-->
             </div>
           </div>
@@ -220,6 +221,8 @@
             return 'ENGLISH'
           case 'zh-CN':
             return '简体中文'
+          case 'kr':
+            return '한국어'
         }
       }
     },
@@ -322,8 +325,8 @@
           case 'en' :
             $zopim.livechat.setLanguage('en')
             break
-          case 'vi-vn' :
-            $zopim.livechat.setLanguage('vi_vn')
+          case 'kr' :
+            $zopim.livechat.setLanguage('ko')
         }
       },
       logout () {
