@@ -132,7 +132,7 @@
             <div class="popover-menu">
               <p class="lang" @click="setLanguage('zh-CN')">简体中文</p>
               <p class="lang" @click="setLanguage('en')">ENGLISH</p>
-              <p class="lang" @click="setLanguage('vi-vn')">ViệtName</p>
+              <p class="lang" @click="setLanguage('vn')">ViệtName</p>
               <!--<a href="javascript:void($zopim.livechat.setLanguage('en'))">English</a>-->
             </div>
           </div>
@@ -194,7 +194,7 @@
           case 'en' :
             href = 'https://gcoxotc.zendesk.com/hc/en-us'
             break
-          case 'vi-vn' :
+          case 'vn' :
             href = 'https://gcoxotc.zendesk.com/hc/vi-vn'
         }
         return href
@@ -221,7 +221,7 @@
             return 'ENGLISH'
           case 'zh-CN':
             return '简体中文'
-          case 'vi-vn':
+          case 'vn':
             return 'ViệtName'
         }
       }
@@ -325,7 +325,7 @@
           case 'en' :
             $zopim.livechat.setLanguage('en')
             break
-          case 'vi-vn' :
+          case 'vn' :
             $zopim.livechat.setLanguage('vi_VN')
         }
       },
