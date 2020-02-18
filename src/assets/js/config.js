@@ -1,4 +1,4 @@
-// let domain = process.env.NODE_ENV === 'development' ? 'otc.gcox.sit.koall.io' : location.host.split(':')[0]
+// let domain = process.env.NODE_ENV === 'development' ? 'gcoxotc.com' : location.host.split(':')[0]
 let domain = process.env.NODE_ENV === 'development' ? 'gcoxotc-test.lab.ssss.so' : location.host.split(':')[0]
 // let domain = process.env.NODE_ENV === 'development' ? 'gcoxotc-dev.lab.ssss.so' : location.host.split(':')[0]
 const config = {

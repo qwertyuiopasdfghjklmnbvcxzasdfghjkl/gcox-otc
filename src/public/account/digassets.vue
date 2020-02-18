@@ -7,7 +7,7 @@
           </h2>
           <h4>≈ {{USDCNY.toFixed(4).toMoney()}} {{getCurrency}} </h4>
         </div>
-        <div v-if="!showHistory">
+        <div v-if="!showHistory&&!showAddress">
           <div class="balance_search">
             <div class="f-fr">
               <div class="icon-checkbox f-fl" @click.stop="hideZero=!hideZero">
@@ -16,6 +16,8 @@
                 <!--{{$t('gcox_otc.show_all_symbol')}}&lt;!&ndash;显示所有货币&ndash;&gt;-->
                 <!--</label>-->
               </div>
+              <a href="javascript:;" class="f-c-main" @click="showAddress = true">{{$t('usercontent.user69')}}
+                <!--地址管理--></a>
               <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}
                 <!--历史记录--></a>
             </div>
@@ -62,10 +64,17 @@
             </div>
           </div>
         </div>
-        <div v-else>
+        <div v-else-if="showHistory">
           <historyrecord>
             <span class="back" @click="showHistory = false">{{$t('usercontent.user64')}}</span>
           </historyrecord>
+        </div>
+        <div v-else-if="showAddress">
+          <p class="bet">
+            <span>{{$t('usercontent.user69')}}<!--地址管理--></span>
+            <span class="back" @click="showAddress = false">{{$t('usercontent.user64')}}</span>
+          </p>
+          <address-manage/>
         </div>
       </div>
 
@@ -87,6 +96,7 @@
   import ProgressBar from './progress-bar'
   import Historyrecord from './historyrecord'
   import marketApi from '@/api/market'
+  import AddressManage from './addressManage'
 
   export default {
     props: ['pandect'],
@@ -107,10 +117,12 @@
         pandectShow: true,
         echart: null,
         polar: {},
-        showHistory: false
+        showHistory: false,
+        showAddress: false
       }
     },
     components: {
+      AddressManage,
       Historyrecord,
       ProgressBar,
       moreinfo,
@@ -398,10 +410,12 @@
     display: flex;
     position: relative;
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
-
+  .balance_search .f-fr a{
+    padding-left: 10px;
+  }
   .balance_search .f-fr p {
     flex-shrink: 1;
     flex-grow: 1;
@@ -726,6 +740,10 @@
   .back:hover {
     cursor: pointer;
     color: #00a0e9;
+  }
+  .bet{
+    display: flex;
+    justify-content: space-between;
   }
 
 </style>

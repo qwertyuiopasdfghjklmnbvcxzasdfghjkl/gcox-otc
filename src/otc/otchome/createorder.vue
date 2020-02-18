@@ -693,12 +693,10 @@
       createAds () {
         var formData = JSON.parse(JSON.stringify(this.formData))
         otcApi.createAdvertisement(formData, (msg) => {
-          this.locked = false
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           this.params.newAdCount++
           this.$router.push({name: 'control_deal', params: {'ip': 4}})
         }, (msg) => {
-          this.locked = false
           let errMsg = typeof msg === 'string' ? msg : msg[0]
           let errArr = errMsg.split(' ')
           errMsg = errArr.length === 1 ? this.$t(`error_code.${errArr[0]}`) : this.$t(`error_code.${errArr[0]}`) + this.$t('public0.public260') + this.$t(`error_code.${errArr[1]}`)
@@ -708,17 +706,16 @@
             errMsg += '\u0020' + this.formData.symbol
           }
           Vue.$confirmDialog({showCancel: false, content: errMsg})
+          this.locked = false
         })
       },
       updateAds () {
         var formData = JSON.parse(JSON.stringify(this.formData))
         otcApi.updateAdvertisement(this.ad_id, formData, (msg) => {
-          this.locked = false
           Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${msg}`)})
           this.params.newAdCount++
           this.$emit('back')
         }, (msg) => {
-          this.locked = false
           let errMsg = typeof msg === 'string' ? msg : msg[0]
           let errArr = errMsg.split(' ')
           errMsg = errArr.length === 1 ? this.$t(`error_code.${errArr[0]}`) : this.$t(`error_code.${errArr[0]}`) + this.$t('public0.public260') + this.$t(`error_code.${errArr[1]}`)
@@ -728,6 +725,7 @@
             errMsg += '\u0020' + this.formData.symbol
           }
           Vue.$confirmDialog({showCancel: false, content: errMsg})
+          this.locked = false
         })
       },
       maket (id) {

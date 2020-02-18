@@ -90,11 +90,14 @@
     width: 600px;
     color: #606266;
     font-size: 14px;
-    padding: 30px;
     background: #fff;
     position: relative;
-    border-radius: 2px;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    h4{
+      border-bottom: 1px solid #ededed;
+      padding: 15px 20px;
+    }
 
     .inp {
       padding-top: 30px;
@@ -102,47 +105,56 @@
 
       label {
         position: relative;
-        height: 94px;
-        padding-top: 30px;
-        display: block;
-
+        display: flex;
+        margin: 18px auto;
+        justify-content: flex-start;
+        align-items: center;
         p {
-          position: absolute;
-          top: 0;
-          left: 0;
+          display: inline-block;
+          width: 160px;
+          text-align: right;
+          padding-right: 15px;
         }
 
         input {
-          border-bottom: 2px solid rgba(21, 23, 32, .08);
+          background: #eeeeee;
           height: 34px;
           line-height: 30px;
-          width: 100%;
+          width: 300px;
+          padding-left: 10px;
+          border-radius:4px;
         }
 
         .error {
           position: absolute;
-          top: 72px;
-          left: 0;
+          top: 8px;
+          left: 185px;
           color: #f1304a;
+          width: 300px;
+          text-align: left;
+          z-index: 99;
         }
       }
     }
 
     .btn {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
+      margin: 40px auto;
 
       button {
-        border-bottom: 2px solid #151720;
-        color: #151720;
-        line-height: 28px;
+        padding: 4px 20px;
+        min-width: 100px;
         cursor: pointer;
         background: none;
+        background: #eeeeee;
+        color: #666666;
+        border-radius:4px;
 
         &.active {
-          border-bottom: 2px solid #00a0e9;
+          background: #F0B936;
           line-height: 28px;
-          color: #00a0e9;
+          color: #ffffff;
           margin-left: 40px;
           cursor: pointer;
         }

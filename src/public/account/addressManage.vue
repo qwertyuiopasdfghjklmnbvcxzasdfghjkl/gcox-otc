@@ -1,14 +1,14 @@
 <template>
   <div class="cont" @click="showDropdown=false">
-    <p class="title">
-      <router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}<!--我的资产--></router-link>
+    <!--<p class="title">
+      <router-link :to="'/account/digassets'">{{$t('usercontent.user58')}}</router-link>
       >
-      <span>{{$t('usercontent.user69')}}<!--地址管理--></span>
-    </p>
+      <span>{{$t('usercontent.user69')}}</span>
+    </p>-->
     <div class="content">
       <div class="select">
-        <p>{{$t('usercontent.user86')}}<!--币种--></p>
         <div class="select-li">
+          <span>{{$t('usercontent.user86')}}<!--币种--></span>
           <p @click.stop="showDropdown=!showDropdown">
             <span>{{symbol}}</span>
             <i class="icon-arrow-down2"></i>
@@ -34,6 +34,9 @@
           <span>{{item.memo}}</span>
           <span></span>
           <span><button class="btn" @click="del(item.withdrawId)">{{$t('public0.public3')}}</button></span>
+        </dd>
+        <dd v-show="!addressList.length">
+          <p class="no_data">{{$t('public0.public50')}}</p>
         </dd>
       </dl>
     </div>
@@ -72,12 +75,13 @@
       this.getAddressList()
       if (this.getUserInfo().googleAuthEnable !== 1) {
         Vue.$koallTipBox({icon: 'notification', message: this.$t('usercontent.user35')})
-        this.$router.push('/account/digassets')
+        this.$router.push({name: 'control_wallet'})
       }
+      /*
       if (this.getUserInfo().kycState !== 1) {
         Vue.$koallTipBox({icon: 'notification', message: this.$t('usercontent.user36')})
-        this.$router.push('/account/digassets')
-      }
+        this.$router.push({name: 'control_wallet'})
+      }*/
     },
     methods: {
       ...mapGetters(['getUserInfo']),
@@ -122,17 +126,16 @@
 
 <style scoped lang="less">
   .cont {
-    background: rgba(27, 26, 31, 0.9);
-    color: #ffffff;
-    padding: 0 18px 16px;
-    font-size: 12px;
+    background: #ffffff;
+    color: #222222;
+    font-size: 14px;
 
     .title {
       padding-top: 20px;
       font-size: 14px;
 
       a {
-        color: #ffffff;
+        color: #222222;
       }
 
       span {
@@ -149,28 +152,27 @@
           float: right;
           cursor: pointer;
           padding: 10px;
-
-          span {
-            color: #00B5FF;
-          }
+          color: #F0B936;
         }
 
         .select-li {
-          display: inline-block;
-          width: 340px;
+          display: inline-flex;
+          align-items: center;
+          width: 440px;
           height: 45px;
           position: relative;
 
           p {
-            border-bottom: 1px solid #2D2C2F;
+            border: 1px solid #EEEEEE;
             height: 36px;
             line-height: 36px;
-            padding-top: 10px;
+            margin-left: 20px;
             font-size: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-left: 10px;
+            padding:5px 10px;
+            width: 200px;
 
             i {
               cursor: pointer;
@@ -182,7 +184,7 @@
             top: 46px;
             left: 0;
             z-index: 9;
-            background: #151517;
+            background: #ffffff;
             width: 340px;
             max-height: 200px;
             overflow-y: auto;
@@ -191,13 +193,13 @@
               padding: 10px;
               font-size: 14px;
               transition: background 0.3s;
-              border-bottom: 1px solid #1d1c1e;
+              border-bottom: 1px solid #eeeeee;
               &.active{
                 color: #00B5FF;
               }
 
               &:hover {
-                background: #2D2C2F
+                background: #efefef
               }
             }
           }
@@ -206,15 +208,17 @@
 
       .tab {
         display: block;
-        margin-top: 40px;
+        margin-top: 20px;
+        border:1px solid #eee;
 
         dt, dd {
           display: flex;
           justify-content: space-between;
-          padding: 6px 2px;
+          padding: 12px 20px;
+          background: #eeeeee;
 
           span {
-            color: #979799;
+            color: #222222;
 
             &:nth-child(1) {
               width: 300px;
@@ -233,6 +237,17 @@
             }
           }
         }
+        dd{
+          background: #ffffff;
+          border-bottom: 1px solid #eeeeee;
+          &:last-child{
+            border-bottom: none;
+          }
+          .no_data{
+            text-align: center;
+            width: 100%;
+          }
+        }
       }
     }
 
@@ -240,8 +255,7 @@
       cursor: pointer;
       font-size: 12px;
       color: #f1f1f2;
-      background-color: #2e2c3c;
-      border: 1px solid #312e45;
+      background-color: #F0B936;
       padding: 2px 10px;
     }
   }
