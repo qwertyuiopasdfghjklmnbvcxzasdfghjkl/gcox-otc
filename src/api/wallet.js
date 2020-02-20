@@ -132,9 +132,9 @@ const getAllSymbol = function (data, success, error) {
 }
 wallet.getAllSymbol = getAllSymbol
 
-// 提现地址列表 /api/v2/account2/gcox/withdraw/address
+// 提现地址列表
 const addressList = function (data, success, error) {
-  api.post(`${domain}api/v2/account2/gcox/withdraw/address/list`, data, (res) => {
+  api.post(`${domain}api/v2/account2/withdraw/address/list`, data, (res) => {
     if (res.rst === 1) {
       success && success(res.data)
     } else {
@@ -146,7 +146,7 @@ wallet.addressList = addressList
 
 // 新增提现地址
 const addAddress = function (data, success, error) {
-  api.post(`${domain}api/v2/account2/gcox/withdraw/address/add`, data, (res) => {
+  api.post(`${domain}api/v2/account2/withdraw/address/add`, data, (res) => {
     if (res.rst === 1) {
       success && success(res)
     } else {
@@ -157,8 +157,8 @@ const addAddress = function (data, success, error) {
 wallet.addAddress = addAddress
 
 // 删除提现地址
-const deleteAddress = function (withdrawId, success, error) {
-  api.delete(`${domain}api/v2/account2/gcox/withdraw/address/delete/${withdrawId}`, (res) => {
+const deleteAddress = function (data, success, error) {
+  api.post(`${domain}api/v2/account2/withdraw/address/delete`,data, (res) => {
     if (res.rst === 1) {
       success && success(res)
     } else {

@@ -16,7 +16,7 @@
                 <!--{{$t('gcox_otc.show_all_symbol')}}&lt;!&ndash;显示所有货币&ndash;&gt;-->
                 <!--</label>-->
               </div>
-              <a href="javascript:;" class="f-c-main" @click="showAddress = true">{{$t('usercontent.user69')}}
+              <a href="javascript:;" class="f-c-main" @click="showAddree()">{{$t('usercontent.user69')}}
                 <!--地址管理--></a>
               <a href="javascript:;" class="f-c-main" @click="showHistory = true">{{$t('account.userViewTheHistory')}}
                 <!--历史记录--></a>
@@ -74,7 +74,7 @@
             <span>{{$t('usercontent.user69')}}<!--地址管理--></span>
             <span class="back" @click="showAddress = false">{{$t('usercontent.user64')}}</span>
           </p>
-          <address-manage/>
+          <address-manage :list="myAssets"/>
         </div>
       </div>
 
@@ -129,7 +129,7 @@
       loading
     },
     computed: {
-      ...mapGetters(['getBTCValuation', 'getUSDCNY', 'getCoinSign', 'getCurrency']),
+      ...mapGetters(['getBTCValuation', 'getUSDCNY', 'getCoinSign', 'getCurrency','getUserInfo', 'getLang']),
       USDCNY () {
         let num = 0
         this.filterDatas().filter(res => {
@@ -183,7 +183,16 @@
       // this.getBtcPrice()
     },
     methods: {
-      ...mapActions(['getUserInfo', 'getLang', 'setBTCValuation']),
+      ...mapActions(['setBTCValuation']),
+      showAddree () {
+        console.log(this.getUserInfo)
+        if (this.getUserInfo.googleAuthEnable !== 1) {
+          this.showAddress = false
+          Vue.$koallTipBox({icon: 'notification', message: this.$t('usercontent.user35')})
+        } else {
+          this.showAddress = true
+        }
+      },
       getBtcPrice (data) {
         this.setBTCValuation(numUtils.BN(data).toFixed(8)) // 当前转换人民币
       },
@@ -260,11 +269,11 @@
         return numUtils.BN(value || 0).toFixed(fixed === undefined ? 8 : fixed).toMoney()
       },
       address () {
-        if (this.getUserInfo().googleAuthEnable !== 1) {
+        if (this.getUserInfo.googleAuthEnable !== 1) {
           Vue.$koallTipBox({icon: 'notification', message: this.$t('usercontent.user35')})
           return
         }
-        if (this.getUserInfo().kycState !== 1) {
+        if (this.getUserInfo.kycState !== 1) {
           Vue.$koallTipBox({icon: 'notification', message: this.$t('usercontent.user36')})
           return
         }
@@ -413,9 +422,11 @@
     justify-content: flex-end;
     align-items: center;
   }
-  .balance_search .f-fr a{
+
+  .balance_search .f-fr a {
     padding-left: 10px;
   }
+
   .balance_search .f-fr p {
     flex-shrink: 1;
     flex-grow: 1;
@@ -741,7 +752,8 @@
     cursor: pointer;
     color: #00a0e9;
   }
-  .bet{
+
+  .bet {
     display: flex;
     justify-content: space-between;
   }

@@ -15,7 +15,8 @@
           </p>
           <ul v-show="showDropdown" class="ul">
             <li v-for="item in symbolList" :class="{'active': item.symbol === symbol}"
-                @click.prevent="selAdd(item.symbol)">{{item.symbol}}</li>
+                @click.prevent="selAdd(item.symbol)">{{item.symbol}}
+            </li>
           </ul>
         </div>
         <label class="add">
@@ -56,6 +57,10 @@
       symbol: {
         type: String,
         default: 'ETH'
+      },
+      list: {
+        type: Array,
+        default: []
       }
     },
     data () {
@@ -86,14 +91,10 @@
     methods: {
       ...mapGetters(['getUserInfo']),
       getAllSymbol () {
-        walletApi.myAssets({}, res => {
-          this.symbolList = res.filter(item => {
-              return item.type === 1
-          })
+        this.symbolList = this.list.filter(item => {
+          return item.type === 1
         })
-        // walletApi.getAllSymbol({}, data=>{
-        //
-        // })
+
       },
       selAdd (sym) {
         this.showDropdown = false
@@ -113,9 +114,9 @@
         })
       },
       del (id) {
-        walletApi.deleteAddress(id, res => {
+        walletApi.deleteAddress({withdrawId: id}, res => {
           this.getAddressList()
-          Vue.$koallTipBox({icon: 'success', message: this.$t(`error_code.${res.msg}`)})
+          Vue.$koallTipBox({icon: 'success', message: this.$t(`${res.msg}`)})
         }, msg => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
@@ -171,7 +172,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding:5px 10px;
+            padding: 5px 10px;
             width: 200px;
 
             i {
@@ -182,11 +183,12 @@
           ul {
             position: absolute;
             top: 46px;
-            left: 0;
+            left: 47px;
             z-index: 9;
             background: #ffffff;
-            width: 340px;
+            width: 225px;
             max-height: 200px;
+            box-shadow: 2px 2px 12px #eee;
             overflow-y: auto;
 
             li {
@@ -194,7 +196,8 @@
               font-size: 14px;
               transition: background 0.3s;
               border-bottom: 1px solid #eeeeee;
-              &.active{
+
+              &.active {
                 color: #00B5FF;
               }
 
@@ -209,7 +212,7 @@
       .tab {
         display: block;
         margin-top: 20px;
-        border:1px solid #eee;
+        border: 1px solid #eee;
 
         dt, dd {
           display: flex;
@@ -237,13 +240,16 @@
             }
           }
         }
-        dd{
+
+        dd {
           background: #ffffff;
           border-bottom: 1px solid #eeeeee;
-          &:last-child{
+
+          &:last-child {
             border-bottom: none;
           }
-          .no_data{
+
+          .no_data {
             text-align: center;
             width: 100%;
           }
@@ -256,7 +262,8 @@
       font-size: 12px;
       color: #f1f1f2;
       background-color: #F0B936;
-      padding: 2px 10px;
+      padding: 7px 20px;
+      border-radius: 4px;
     }
   }
 </style>
