@@ -395,7 +395,7 @@
       }
     },
     created () {
-      this.getAssets()
+      //this.getAssets()
       this.getListDepositHistory()
       this.getListWithdrawHistory()
     },
