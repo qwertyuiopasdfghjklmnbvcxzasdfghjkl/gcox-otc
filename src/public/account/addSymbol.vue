@@ -73,10 +73,10 @@
               this.showLoading = false
               this.$emit('okCallback', data)
               this.close()
-              Vue.$koallTipBox({icon: 'notification', message: this.$t(`${res.msg}`)})
+              Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${res.msg}`)})
             }, msg => {
               this.showLoading = false
-              Vue.$koallTipBox({icon: 'notification', message: this.$t(`${msg}`)})
+              Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
             })
           }
         })
