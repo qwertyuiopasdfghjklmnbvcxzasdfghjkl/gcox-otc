@@ -27,13 +27,13 @@
         <dt>
           <span>{{$t('usercontent.user88')}}<!--提币地址--></span>
           <span>{{$t('usercontent.user89')}}<!--标签--></span>
-          <span>{{$t('usercontent.user90')}}<!--备注--></span>
+          <!--<span>{{$t('usercontent.user90')}}<--备注</span>-->
           <span>{{$t('usercontent.user91')}}<!--操作--></span>
         </dt>
         <dd v-if="addressList" v-for="item in addressList">
           <span>{{item.address}}</span>
           <span>{{item.memo}}</span>
-          <span></span>
+          <!--<span></span>-->
           <span><button class="btn" @click="del(item.withdrawId)">{{$t('public0.public3')}}</button></span>
         </dd>
         <dd v-show="!addressList.length">
