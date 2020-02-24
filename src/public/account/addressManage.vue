@@ -40,7 +40,11 @@
           <p class="no_data">{{$t('public0.public50')}}</p>
         </dd>
       </dl>
+
     </div>
+    <page v-if="addressList.length" :pageIndex="page"
+          :pageSize="size"
+          :total="total" @changePageIndex="pageChange"/>
   </div>
 </template>
 
@@ -50,6 +54,7 @@
   import walletApi from '../../api/wallet'
   import utils from '@/assets/js/utils'
   import add from './addSymbol'
+  import page from '@/components/page'
 
   export default {
     name: 'addressManage',
@@ -63,11 +68,15 @@
         default: []
       }
     },
+    components:{page},
     data () {
       return {
         showDropdown: false,
         symbolList: [],
-        addressList: []
+        addressList: [],
+        page: 1,
+        size: 10,
+        total: 0
       }
     },
     watch: {
@@ -101,8 +110,14 @@
         this.symbol = sym
       },
       getAddressList () {
-        walletApi.addressList({symbol: this.symbol}, res => {
+        let data = {
+          symbol: this.symbol,
+          page: this.page,
+          size: this.size
+        }
+        walletApi.addressList(data, (res, total) => {
           this.addressList = res
+          this.total = total
         })
       },
       addAddress () {
@@ -120,6 +135,10 @@
         }, msg => {
           Vue.$koallTipBox({icon: 'notification', message: this.$t(`error_code.${msg}`)})
         })
+      },
+      pageChange(e){
+        this.page = e
+        this.getAddressList()
       }
     }
   }
@@ -147,6 +166,7 @@
     .content {
       padding: 40px 0;
       min-height: 200px;
+      padding-bottom: 20px;
 
       .select {
         .add {

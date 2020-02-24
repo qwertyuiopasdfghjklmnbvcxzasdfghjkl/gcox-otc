@@ -136,7 +136,7 @@ wallet.getAllSymbol = getAllSymbol
 const addressList = function (data, success, error) {
   api.post(`${domain}api/v2/account2/withdraw/address/list`, data, (res) => {
     if (res.rst === 1) {
-      success && success(res.data)
+      success && success(res.data, res.total)
     } else {
       error && error(res.msg)
     }
