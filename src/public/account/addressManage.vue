@@ -252,7 +252,7 @@
             }
 
             &:nth-child(3) {
-              width: 60px;
+              width: 110px;
             }
 
             &:nth-child(4) {
