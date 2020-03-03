@@ -130,6 +130,7 @@
       },
       del (id) {
         walletApi.deleteAddress({withdrawId: id}, res => {
+          this.page = 1
           this.getAddressList()
           Vue.$koallTipBox({icon: 'success', message: this.$t(`${res.msg}`)})
         }, msg => {
