@@ -106,6 +106,7 @@
 
       },
       selAdd (sym) {
+        this.page = 1;
         this.showDropdown = false
         this.symbol = sym
       },
